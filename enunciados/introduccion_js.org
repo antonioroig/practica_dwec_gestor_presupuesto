@@ -71,7 +71,7 @@ Para poder realizar esta práctica y que funcione adecuadamente el entorno de te
     El REPL es muy útil a la hora de hacer pruebas rápidas o pequeños prototipos. Podemos acceder al REPL de JavaScript en el *navegador* y en *NodeJS*.
     
 **** El REPL en el navegador
-     Para acceder al REPL en el navegador, accede a las [[https://antonioroig.github.io/post/herramientas-desarrollo/#herramientas-de-desarrollo-de-navegadores][herramientas de desarrollo]] (en la mayoría de los casos se accede pulsando ~F12~). Una vez ahí, selecciona *consola*.
+     Para acceder al REPL en el navegador, accede a las [[https://https://pedroprieto.github.io/post/herramientas-desarrollo/#herramientas-de-desarrollo-de-navegadores][herramientas de desarrollo]] (en la mayoría de los casos se accede pulsando ~F12~). Una vez ahí, selecciona *consola*.
 
      Si estás en una pestaña vacía (sin ninguna web cargada) no habrá ningún código JavaScript cargado; si por el contrario no lo está, seguramente haya algún código JavaScript cargado con el que podrías interactuar.
 
