@@ -2,13 +2,23 @@
 
 // TODO: Variable global
 
+var presupuesto = 0;
+var gastos = [];
 
-function actualizarPresupuesto() {
-    // TODO
+function actualizarPresupuesto(valor) {
+    if(valor >= 0)
+    {
+        return presupuesto = valor;
+    }
+    else
+    {
+        console.log("Error.\nHa introducido un valor negativo");
+        return -1;
+    }
 }
 
 function mostrarPresupuesto() {
-    // TODO
+    
 }
 
 function CrearGasto() {
