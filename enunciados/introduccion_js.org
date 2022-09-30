@@ -3,7 +3,7 @@
   El objetivo de esta práctica es conocer la historia y los fundamentos de JavaScript, así como instalar las herramientas necesarias para comenzar a trabajar con dicho lenguaje.
   
 ** Repositorio de la práctica
-   El *repositorio base* de la práctica está disponible en: https://github.com/antonioroig/practica_dwec_gestor_presupuesto
+   El *repositorio base* de la práctica está disponible en: https://github.com/antonioroig/practica_dwec_gestor_presupuesto, bajo invitación pues es privado.
 
    En esta primera práctica se deberá realizar un /fork/ del repositorio base. Al realizar dicho /fork/, se creará un repositorio copia del original en tu cuenta de usuario. *Será sobre este repositorio personal sobre el que deberás trabajar*.
 
@@ -21,7 +21,7 @@ Para poder realizar esta práctica y que funcione adecuadamente el entorno de te
 
 ** Preparación
 1. Instalar los requisitos de software indicados
-2. Hacer un /fork/ del repositorio base https://github.com/antroher/practica_dwec_gestor_presupuesto.git en tu cuenta de GitHub
+2. Hacer un /fork/ del repositorio base https://github.com/antonioroig/practica_dwec_gestor_presupuesto.git en tu cuenta de GitHub
 3. Abrir un terminal
 4. Clonar *tu repositorio* (el que se ha creado en tu cuenta al hacer el /fork/, no el repositorio base) al equipo local mediante ~git clone~
 5. Acceder a la carpeta del repositorio
@@ -71,7 +71,7 @@ Para poder realizar esta práctica y que funcione adecuadamente el entorno de te
     El REPL es muy útil a la hora de hacer pruebas rápidas o pequeños prototipos. Podemos acceder al REPL de JavaScript en el *navegador* y en *NodeJS*.
     
 **** El REPL en el navegador
-     Para acceder al REPL en el navegador, accede a las [[https://antroher.github.io/post/herramientas-desarrollo/#herramientas-de-desarrollo-de-navegadores][herramientas de desarrollo]] (en la mayoría de los casos se accede pulsando ~F12~). Una vez ahí, selecciona *consola*.
+     Para acceder al REPL en el navegador, accede a las [[https://pedroprieto.github.io/post/herramientas-desarrollo/#herramientas-de-desarrollo-de-navegadores][herramientas de desarrollo]] (en la mayoría de los casos se accede pulsando ~F12~). Una vez ahí, selecciona *consola*.
 
      Si estás en una pestaña vacía (sin ninguna web cargada) no habrá ningún código JavaScript cargado; si por el contrario no lo está, seguramente haya algún código JavaScript cargado con el que podrías interactuar.
 
