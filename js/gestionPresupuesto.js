@@ -44,7 +44,7 @@ function CrearGasto(descripcion,valor) {
     this.actualizarValor = function(ActualizarValor){
         if (ActualizarValor >= 0 && typeof ActualizarValor === "number")
         {
-            this.valor = ActualizarValor;
+            this.valor = ActualizarValor ;
         }
     }
 }
