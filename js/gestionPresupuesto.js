@@ -59,7 +59,7 @@ function CrearGasto(descripcion,valor) {
         if(valorActualizado >= 0 && typeof valorActualizado === "number")
         {
 
-            this.valor = valorActualizado ;
+            this.valor = valorActualizado;
 
         }
 
