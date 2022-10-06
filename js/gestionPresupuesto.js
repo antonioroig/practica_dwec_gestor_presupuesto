@@ -26,7 +26,7 @@ function mostrarPresupuesto() {
 function CrearGasto(descripcion,valor) {
     // TODO
     this.descripcion=descripcion;
-    if (valor <0 && typeof valor==='number') {
+    if (valor <0 || typeof valor!=='number') {
         this.valor = 0;
     }else 
     {
