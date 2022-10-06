@@ -22,7 +22,7 @@ function mostrarPresupuesto() {
 
 function CrearGasto(pdescripcion,pvalor) {
 
-    if(pvalor < 0 || typeof(pvalor) !== `number`)
+    if(pvalor < 0 || typeof(pvalor) !== `number` )
     {
         pvalor = 0; 
     }
