@@ -1,6 +1,6 @@
 // TODO: Crear las funciones, objetos y variables indicadas en el enunciado 
 
-// TODO: Variable global
+// TODO: Variable global 
 
 let presupuesto = 0;
 
