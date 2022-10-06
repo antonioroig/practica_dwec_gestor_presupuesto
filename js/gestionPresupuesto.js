@@ -19,18 +19,28 @@ function mostrarPresupuesto() {
 
 function CrearGasto(pdescripcion, pvalor) {
     // TODO
-    if(typeof pvalor === "number" && pvalor >= 0)
-        if(pvalor < 0)
-        {
+    if(typeof pvalor !== 'number' || pvalor <= 0)
+    {
             pvalor = 0;
-        }
+    }
         
             this.valor = pvalor,
             this.descripcion = pdescripcion,
 
             this.mostrarGasto = function() {
-                console.log(`Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €`)
+                return(`Gasto correspondiente a ${pdescripcion} con valor ${pvalor} €`)
             };
+            this.actualizarDescripcion = function(descripcion){
+                this.descripcion = descripcion;
+            }
+            this.actualizarValor = function(valor){
+                if(valor > 0)
+                {
+                    this.valor = valor;
+                }
+                
+            }
+        
     
     
         
