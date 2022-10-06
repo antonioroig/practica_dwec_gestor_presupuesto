@@ -1,5 +1,5 @@
 // TODO: Crear las funciones, objetos y variables indicadas en el enunciado
-
+// David Llinares
 // TODO: Variable global
 let presupuesto = 0;
 function actualizarPresupuesto(parametro) {
