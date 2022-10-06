@@ -5,7 +5,7 @@ let presupuesto = 0;
 actualizarPresupuesto(-5);
 console.log(presupuesto);
 function actualizarPresupuesto(number) {
-    // TODO
+
     if(number >= 0 && typeof number === "number"){
     presupuesto = number;
     return number;
