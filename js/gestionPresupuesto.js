@@ -44,8 +44,6 @@ function mostrarPresupuesto() {
         }
     }
    }
-   let gasto = new CrearGasto("hola", 50);    
-
            
   
 
