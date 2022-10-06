@@ -1,18 +1,45 @@
 // TODO: Crear las funciones, objetos y variables indicadas en el enunciado
 
 // TODO: Variable global
+var presupuesto = 0;
 
-
-function actualizarPresupuesto() {
-    // TODO
+function actualizarPresupuesto(nuevoPresupuesto) {
+    if (nuevoPresupuesto >= 0)
+    {
+        presupuesto = nuevoPresupuesto;
+        return presupuesto;
+    }else
+    {
+        console.log('el valor es inferior a 0');
+        return -1;
+    }
 }
 
 function mostrarPresupuesto() {
-    // TODO
+    return ('Tu presupuesto actual es de ' + presupuesto + ' €');
 }
 
-function CrearGasto() {
-    // TODO
+function CrearGasto(descripcion,valor) {
+    this.descripcion=descripcion;
+    this.valor=0;
+    if(valor >= 0){
+        this.valor=valor;
+    };
+
+    this.mostrarGasto = function(){
+        return (`Gasto correspondiente a ` + this.descripcion + ` con valor ` + this.valor + ` €`);
+    }
+
+    this.actualizarDescripcion = function(nuevaDescripcion){
+        this.descripcion = nuevaDescripcion;
+    }
+
+    this.actualizarValor = function(nuevoValor){
+        if (nuevoValor > 0)
+        {
+            this.valor = nuevoValor;
+        }
+    }
 }
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
