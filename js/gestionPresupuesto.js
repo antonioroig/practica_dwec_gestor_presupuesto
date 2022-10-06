@@ -15,7 +15,7 @@ function actualizarPresupuesto(valor) {
         }
     }
     else{
-        return -1;
+        return 9999999999999999999999999;
     }
 }
 
