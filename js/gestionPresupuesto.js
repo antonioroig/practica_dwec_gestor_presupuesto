@@ -40,7 +40,16 @@ function CrearGasto(descripcion,valor) {
    {
     return (`Gasto correspondiente a ${this.descripcion} con valor ${this.valor}`)
    }
-   this.
+   this.actualizarDescripcion =function(nuevaDescripcion)
+   {(
+        this.descripcion = nuevaDescripcion 
+   );
+   }
+   this.actualizarValor =function(nuevoValor)
+   {(
+     this.valor=nuevoValor
+   );
+   }
     // TODO
 }
 
