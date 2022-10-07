@@ -2,6 +2,7 @@
 
 
 // TODO: Variable global
+"use strict"
 let presupuesto = 0 ;
  
 function actualizarPresupuesto(dinero)
@@ -25,31 +26,35 @@ function mostrarPresupuesto()
 }
 
 
-function CrearGasto(descripcion,valor) {
+function CrearGasto(descripcion,valor)
+ {
 
-    this.descripcion = descripcion;
+        this.descripcion = descripcion;
 
-    if (typeof valor ==="number" > 0)
-    {
-        this.valor =valor;
-    }else{
-        this.valor=0;
-    }
-  
-   this.mostrarGasto = function() 
-   {
-    return (`Gasto correspondiente a ${this.descripcion} con valor ${this.valor}`)
-   }
-   this.actualizarDescripcion =function(nuevaDescripcion)
-   {(
-        this.descripcion = nuevaDescripcion 
-   );
-   }
-   this.actualizarValor =function(nuevoValor)
-   {(
-     this.valor=nuevoValor
-   );
-   }
+        if (typeof valor ==="number" && valor > 0)
+        {
+            this.valor =valor;
+        }else{
+            this.valor=0;
+        }
+        
+        this.mostrarGasto = function() 
+        {
+            return (`Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €`)
+        }
+        this.actualizarDescripcion =function(nuevaDescripcion)
+        {
+            this.descripcion = nuevaDescripcion
+        }
+        this.actualizarValor =function(nuevoValor)
+        {
+            if (typeof valor ==="number"){
+                this.valor=nuevoValor
+            }
+            
+            
+        
+        }
     // TODO
 }
 
@@ -66,7 +71,7 @@ function CrearGasto(descripcion,valor) {
 export   {
     mostrarPresupuesto,
     actualizarPresupuesto,
-    CrearGasto,
+    CrearGasto
    
 }
  
