@@ -29,7 +29,7 @@ function CrearGasto(descripcion,valor) {
 
     this.descripcion = descripcion;
 
-    if (typeof this.valor ==="number" > 0)
+    if (typeof valor ==="number" > 0)
     {
         this.valor =valor;
     }else{
@@ -40,8 +40,15 @@ function CrearGasto(descripcion,valor) {
    {
     return (`Gasto correspondiente a ${this.descripcion} con valor ${this.valor}`)
    }
+   this.
     // TODO
 }
+
+
+
+
+
+
 
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
