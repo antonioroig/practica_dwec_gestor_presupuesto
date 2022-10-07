@@ -36,16 +36,14 @@ function CrearGasto(descripcion,valor) {
         this.valor=0;
     }
   
-   
+   this.mostrarGasto = function() 
+   {
+    return (`Gasto correspondiente a ${this.descripcion} con valor ${this.valor}, siendo VALOR y DESCRIPCION`)
+   }
     // TODO
 }
 
 
-function mostrarGasto(){
-    let descripcion = CrearGasto.descripcion;
-    return (`Gasto correspondiente a ${descripcion} con valor VALOR €, siendo VALOR y DESCRIPCION`)
-
-}
 
 
 
@@ -59,7 +57,7 @@ export   {
     mostrarPresupuesto,
     actualizarPresupuesto,
     CrearGasto,
-    mostrarGasto
+   
 }
  
  
