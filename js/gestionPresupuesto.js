@@ -20,20 +20,39 @@ function mostrarPresupuesto() {
     return (`Tu presupuesto actual es de ${presupuesto} €`);
 }
 
-function CrearGasto(pdescripcion,pvalor) {
+function CrearGasto(descripcion,valor,fecha,etiqueta) {
 
-    if(pvalor < 0 || typeof(pvalor) !== `number` )
+    if(valor < 0 || typeof(valor) !== `number` )
     {
-        pvalor = 0; 
+        valor = 0; 
     }
+    if(etiqueta === undefined)
+    {
+         this.etiquetas = [];
+    }else
+    {
+        this.etiquetas = [].push(`${etiqueta}`);
+    }
+    if(fecha === undefined || typeof fecha !== `string`)
+    {
+        this.fecha = new Date();
+    }else
+    {
+        this.fecha = new Date(fecha);
+    }
+
+    this.descripcion= `${descripcion}`,
+    this.valor = valor
         
-        this.descripcion= `${pdescripcion}`,
-        this.valor = pvalor,
-
-
     this.mostrarGasto = function()
     {
-        return (`Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €`);
+        var textoEtiquetas = ``;
+        for(i =0;i < this.etiquetas.length;i++){
+            textoEtiquetas += `-` + this.etiquetas[i] + `\n`;
+        }
+
+        return (`Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €\n`
+                + `Fecha: ${this.fecha.toLocaleDateString()}\n` + textoEtiquetas);
     },
     
     this.actualizarDescripcion  = function(descripcion)
@@ -48,8 +67,29 @@ function CrearGasto(pdescripcion,pvalor) {
             this.valor = valor;
         }
     } 
+
+    this.actualizarFecha(fecha ){
+        if()
+    }
         
 }
+    var gastos = [];
+    var idGasto = 0;
+    function listarGastos(){
+        return gastos;
+    };
+
+
+    function anyadirGasto(){};
+
+
+    function borrarGasto(){};
+
+
+    function calcularTotalGastos(){};
+
+
+    function calcularBalance(){};
 
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
@@ -58,5 +98,10 @@ function CrearGasto(pdescripcion,pvalor) {
 export   {
     mostrarPresupuesto,
     actualizarPresupuesto,
+    listarGastos,
+    anyadirGasto,
+    borrarGasto,
+    calcularTotalGastos,
+    calcularBalance,
     CrearGasto
 }
