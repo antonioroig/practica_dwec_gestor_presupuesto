@@ -5,6 +5,8 @@
 "use strict"
 
 var presupuesto = 0;
+var gastos = [];
+var idGasto = 0;
 
 function actualizarPresupuesto(valor) {
     if(valor >= 0 && typeof valor === `number`){
@@ -15,19 +17,37 @@ function actualizarPresupuesto(valor) {
         return -1;
     }
 }
+function listarGastos()
+{
+    return (gastos);
+}
 
 function mostrarPresupuesto() {
     return (`Tu presupuesto actual es de ${presupuesto} €`); 
 }
 
-   function CrearGasto(pdescripcion,pValor){
+   function CrearGasto(pdescripcion,pValor,pfecha,petiqueta){
 
     if(pValor < 0 || typeof(pValor) !== `number`){
         pValor = 0;
     }
 
+    if( pfecha === undefined)
+    {
+        this.fecha = new Date.now();
+    }
+
+
+    if(petiqueta === undefined)
+    {
+        this.etiqueta = [];    
+    }else{
+        this.etiqueta = [].push(petiqueta);
+    }
+
     this.valor = pValor,
     this.descripcion=`${pdescripcion}`,
+
     
 
     this.mostrarGasto = function(){
@@ -53,5 +73,11 @@ function mostrarPresupuesto() {
 export   {
     mostrarPresupuesto,
     actualizarPresupuesto,
-    CrearGasto
+    CrearGasto,
+    listarGastos,
+    anyadirGasto,
+    borrarGasto,
+    calcularTotalGastos,
+    calcularBalance,
+    
 }
