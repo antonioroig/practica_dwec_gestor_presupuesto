@@ -5,6 +5,8 @@
 "use strict"
 
 var presupuesto = 0;
+let gastos = [];
+let idGasto = 0;
 
 function actualizarPresupuesto(numero) {
     if(numero > 0){
@@ -21,31 +23,40 @@ function mostrarPresupuesto() {
     return (`Tu presupuesto actual es de ${presupuesto} €`);
 }
 
-function CrearGasto(descripcion,valor) {
+function listarGastos(){
+    return gastos;
+}
 
-    if(valor < 0 || typeof(valor) !== `number`)
-    {
+function CrearGasto(descripcion,valor,fecha, etiquetas) {
+
+    if(valor < 0 || typeof(valor) !== `number`){
         valor = 0; 
+    }
+    if(etiquetas == undefined){
+        this.etiquetas = [];
+    }
+    if(fecha == undefined){
+        this.fecha = getDate();
+    }else{
+        if(fecha == typeof(Text)){
+            
+        }
     }
 
         this.descripcion= `${descripcion}`,
         this.valor = valor,
 
 
-    this.mostrarGasto = function()
-    {
+    this.mostrarGasto = function(){
         return (`Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €`);
     },
     //
-    this.actualizarDescripcion  = function(descripcion)
-    {
+    this.actualizarDescripcion  = function(descripcion){
         this.descripcion = descripcion;
     },
     //
-    this.actualizarValor = function(valor)
-    {
-        if(valor >= 0 && typeof(valor) === `number`)
-        {
+    this.actualizarValor = function(valor){
+        if(valor >= 0 && typeof(valor) === `number`){
             this.valor = valor;
         }
     } 
@@ -59,5 +70,10 @@ function CrearGasto(descripcion,valor) {
 export   {
     mostrarPresupuesto,
     actualizarPresupuesto,
-    CrearGasto
+    CrearGasto,
+    listarGastos,
+    anyadirGasto,
+    borrarGasto,
+    calcularTotalGastos,
+    calcularBalance
 }
