@@ -2,6 +2,8 @@
 // David Llinares
 // TODO: Variable global
 let presupuesto = 0;
+let gatos = [];
+gatos.idGastos = 0;
 function actualizarPresupuesto(parametro) {
     if(parametro >= 0)
     {
@@ -17,15 +19,27 @@ function mostrarPresupuesto() {
     return(`Tu presupuesto actual es de ${presupuesto} €`);
 }
 
-function CrearGasto(pdescripcion, pvalor) {
+function CrearGasto(pdescripcion, pvalor, petiqueta, pfecha) {
     // TODO
     if(typeof pvalor !== 'number' || pvalor <= 0)
     {
             pvalor = 0;
     }
+    if(petiqueta == null){
+        this.etiqueta = [];
+    } else{
+        this.petiqueta = petiqueta,
+    }
+    if(pfecha == null){
+        this.fecha == 0;//poner fecha actual
+    } else{
+        this.fecha = pfecha
+    }
         
             this.valor = pvalor,
             this.descripcion = pdescripcion,
+            
+            
 
             this.mostrarGasto = function() {
                 return(`Gasto correspondiente a ${pdescripcion} con valor ${pvalor} €`)
@@ -45,12 +59,31 @@ function CrearGasto(pdescripcion, pvalor) {
     
         
 }
+function listarGastos(){
+    return gatos;
+}
+function anyadirGasto(){
 
+}
+function borrarGasto(){
+
+}
+function calcularTotalGastos(){
+
+}
+function calcularBalance(){
+
+}
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
 // Las funciones y objetos deben tener los nombres que se indican en el enunciado
 // Si al obtener el código de una práctica se genera un conflicto, por favor incluye todo el código que aparece aquí debajo
 export   {
     mostrarPresupuesto,
     actualizarPresupuesto,
-    CrearGasto
+    CrearGasto,
+    listarGastos,
+    anyadirGasto,
+    borrarGasto,
+    calcularTotalGastos,
+    calcularBalance
 }
