@@ -3,6 +3,9 @@
 // TODO Variable global
 let presupuesto = 0;
 
+/*let gastos = new Array[0];*/
+
+
 function actualizarPresupuesto(valor) {
     // TODO
     if (!isNaN(valor)){
