@@ -20,10 +20,12 @@ function actualizarPresupuesto(valor) {
 function mostrarPresupuesto(){
     return `Tu presupuesto actual es de ${presupuesto} €`;
 }
+
 function CrearGasto(descripcion, valor, fecha, etiquetas) { //Función constructora, tiene que empezar por mayus
     
     this.descripcion = descripcion;
     this.fecha = new Date();
+    this.etiquetas = new Array();
 
     if(valor >= 0 && typeof valor === 'number'){
         this.valor = valor;
@@ -37,7 +39,7 @@ function CrearGasto(descripcion, valor, fecha, etiquetas) { //Función construct
     }else{
         this.etiquetas = new Array();
     }
-    
+
     // Revisar
     if(fecha != null && Date.parse(fecha)){
         this.fecha = fecha;
@@ -46,8 +48,14 @@ function CrearGasto(descripcion, valor, fecha, etiquetas) { //Función construct
     }
 
     //Métodos:
-    this.mostrarGasto = function(){
-        return(`Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €`);
+    // Modificar
+    this.mostrarGastoCompleto = function(){
+
+        return(
+            `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €.
+            Fecha : ${this.Fecha}.
+            Etiquetas: ${this.etiquetas}`
+            );
     },
     this.actualizarDescripcion = function(descripcionActualizada){
         if(typeof descripcionActualizada === 'string'){
@@ -65,8 +73,9 @@ function listarGastos(){
     return gastos;
 }
 //Revisar
-function anyadirGasto(id){
+function anyadirGasto(gasto){
     id = idGasto;
+    gastos.push(gasto);
     idGasto++;
 }
 // Revisar
