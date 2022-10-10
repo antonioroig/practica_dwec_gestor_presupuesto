@@ -24,10 +24,16 @@ function mostrarPresupuesto() {
 }
 
 
-function CrearGasto(pdescripcion,pvalor) {
+function CrearGasto(pdescripcion,pvalor,pfecha,petiquetas) {
     // TODO
     if(pvalor < 0 || typeof(pvalor) !== `number`){
         pvalor = 0;
+    }
+    if(petiquetas === undefined){
+        petiqueta = new Array();
+    }
+    if(pfecha === undefined || typeof(pfecha) !== `date`){
+        
     }
     
         this.valor = pvalor,
@@ -49,6 +55,28 @@ function CrearGasto(pdescripcion,pvalor) {
 
     
 }
+let gastos = new Array();
+gastos.idGasto = 0;
+
+function listarGastos(){
+    return(gastos);
+}
+
+function anyadirGasto(){
+
+}
+
+function borrarGasto(){
+
+}
+
+function calcularTotalGastos (){
+
+}
+
+function calcularBalance (){
+
+}
 
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
@@ -57,5 +85,10 @@ function CrearGasto(pdescripcion,pvalor) {
 export   {
     mostrarPresupuesto,
     actualizarPresupuesto,
+    listarGastos,
+    anyadirGasto,
+    borrarGasto,
+    calcularTotalGastos,
+    calcularBalance,
     CrearGasto
 }
