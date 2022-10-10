@@ -19,21 +19,27 @@ function actualizarPresupuesto(valor) {
 function mostrarPresupuesto() {
     return (`Tu presupuesto actual es de ${presupuesto} €`);
 }
+    var gastos = [];
+    var idGasto = 0;
 
-function CrearGasto(descripcion,valor,fecha,etiqueta) {
+function listarGastos(){
+    return gastos;
+};
+//parametro rest
+function CrearGasto(descripcion,valor,fecha,etiqueta ) {
 
     if(valor < 0 || typeof(valor) !== `number` )
     {
         valor = 0; 
     }
-    if(etiqueta === undefined)
+    if(etiqueta === `undefined`)
     {
          this.etiquetas = [];
     }else
     {
         this.etiquetas = [].push(`${etiqueta}`);
     }
-    if(fecha === undefined || typeof fecha !== `string`)
+    if(fecha === `undefined` || typeof fecha !== `string`)
     {
         this.fecha = new Date();
     }else
@@ -48,7 +54,7 @@ function CrearGasto(descripcion,valor,fecha,etiqueta) {
     {
         var textoEtiquetas = ``;
         for(i =0;i < this.etiquetas.length;i++){
-            textoEtiquetas += `-` + this.etiquetas[i] + `\n`;
+            textoEtiquetas += `- ` + this.etiquetas[i] + `\n`;
         }
 
         return (`Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €\n`
@@ -66,18 +72,15 @@ function CrearGasto(descripcion,valor,fecha,etiqueta) {
         {
             this.valor = valor;
         }
-    } 
+    },
 
-    this.actualizarFecha(fecha ){
-        if()
+    this.actualizarFecha(fecha){
+        if(typeof fecha === `string` )
     }
         
 }
-    var gastos = [];
-    var idGasto = 0;
-    function listarGastos(){
-        return gastos;
-    };
+    
+    
 
 
     function anyadirGasto(){};
