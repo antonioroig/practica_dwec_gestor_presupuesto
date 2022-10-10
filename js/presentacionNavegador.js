@@ -1,2 +1,0 @@
-alert("Aurora Alemañ Fuster");
-
