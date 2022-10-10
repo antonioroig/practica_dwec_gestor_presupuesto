@@ -42,18 +42,17 @@ function CrearGasto(descripcion,valor)
         {
             return (`Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €`)
         }
+
         this.actualizarDescripcion =function(nuevaDescripcion)
         {
             this.descripcion = nuevaDescripcion
         }
+
         this.actualizarValor =function(nuevoValor)
         {
-            if (typeof valor ==="number"){
+            if (typeof nuevoValor ==="number" && nuevoValor >= 0){
                 this.valor=nuevoValor
             }
-            
-            
-        
         }
     // TODO
 }
