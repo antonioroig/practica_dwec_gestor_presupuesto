@@ -2,6 +2,8 @@
 "use strict";
 // TODO: Variable global
 let presupuesto = 0;
+let gastos = [];
+let idGasto = 0;
 
 function actualizarPresupuesto(valor) {
     if(valor >= 0 && typeof valor === 'number')
@@ -19,8 +21,10 @@ function mostrarPresupuesto() {
     return(`Tu presupuesto actual es de ${presupuesto} €`);
 }
 
-function CrearGasto(descripcion, valor) { //Función constructora, tiene que empezar por mayus
+function CrearGasto(descripcion, valor, fecha, etiquetas) { //Función constructora, tiene que empezar por mayus
     this.descripcion = descripcion;
+    this.fecha = new Date();
+    this.etiquetas = [];
     if(valor >= 0 && typeof valor === 'number'){
         this.valor = valor;
     }
@@ -41,9 +45,37 @@ function CrearGasto(descripcion, valor) { //Función constructora, tiene que emp
         if( valorActualizado >= 0 && typeof  valorActualizado === 'number'){
             this.valor = valorActualizado;
         }
+    },
+
+    this.mostrarGastoCompleto = function(){
+
+    },
+    this.actualizarFecha = function(nueva_fecha){
+
+    },
+    this.anyadirEtiquetas = function(nueva_etiqueta){
+
+    },
+    this.borrarEtiquetas = function(){
+
     }
 }
 
+function listarGastos(){
+    return gastos;
+};
+function anyadirGasto(gasto){
+
+};
+function borrarGasto(id){
+
+};
+function calcularTotalGastos(){
+
+};
+function calcularBalance(){
+
+};
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
 // Las funciones y objetos deben tener los nombres que se indican en el enunciado
@@ -51,5 +83,10 @@ function CrearGasto(descripcion, valor) { //Función constructora, tiene que emp
 export   {
     mostrarPresupuesto,
     actualizarPresupuesto,
-    CrearGasto
+    CrearGasto,
+    listarGastos,
+    anyadirGasto,
+    borrarGasto,
+    calcularTotalGastos,
+    calcularBalance
 }
