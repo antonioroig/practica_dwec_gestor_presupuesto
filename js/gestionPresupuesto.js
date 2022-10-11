@@ -23,7 +23,7 @@ function mostrarPresupuesto()
     return `Tu presupuesto actual es de ${presupuesto} €`;
 }
 // revisar
-function CrearGasto(Descripcion,Valor)
+function crearGasto(Descripcion,Valor,Fecha,...Etiquetas)
 {
 
     this.descripcion = String(Descripcion);
@@ -59,6 +59,14 @@ function CrearGasto(Descripcion,Valor)
             console.log(`El valor ${cambioVal} no es válido, no se ha alterado el valor actual.`);
         }
     }
+
+    if(typeof Fecha === "undefined")
+    {
+        Fecha = new Date();
+    }
+}
+function listarGastos(){
+    return gastos;
 }
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
@@ -68,7 +76,7 @@ export   {
 
     mostrarPresupuesto,
     actualizarPresupuesto,
-    CrearGasto,
+    crearGasto,
     listarGastos,
     anyadirGasto,
     borrarGasto,
