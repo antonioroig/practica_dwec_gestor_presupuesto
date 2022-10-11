@@ -1,6 +1,7 @@
 // TODO: Crear las funciones, objetos y variables indicadas en el enunciado
 let presupuesto = 0;
-//Commit maker
+let gastos = new Array();
+let idGasto = 0;
 
 function actualizarPresupuesto(valor)
 {
@@ -67,6 +68,11 @@ export   {
 
     mostrarPresupuesto,
     actualizarPresupuesto,
-    CrearGasto
+    CrearGasto,
+    listarGastos,
+    anyadirGasto,
+    borrarGasto,
+    calcularTotalGastos,
+    calcularBalance
 }
 
