@@ -23,8 +23,9 @@ function mostrarPresupuesto()
     return "Tu presupuesto actual es de " + presupuesto + " €";
 }
 // revisar
-function CrearGasto(descripción,valor,fecha,...etiquetas)
+function CrearGasto(descripcion,valor,fecha,...etiquetas)
 {
+    this.myEtiquetas = [];
     if(valor < 0 || isNaN(valor))
     {
         this.myValor = 0;
@@ -33,11 +34,23 @@ function CrearGasto(descripción,valor,fecha,...etiquetas)
     {
         this.myValor = valor;
     }
-    this.myEtiquetas = etiquetas;
+    if(Date.parse(fecha) == NaN)
+    {
+        this.myFecha = new Date();
+    }
+    else
+    {
+        this.myFecha = Date.parse(fecha);
+    }
+    this.myEtiquetas = [...etiquetas]
     this.myDescripcion = descripcion;
     this.mostrarGasto = function () 
     {
-        return "Gasto correspondiente a " + this.descripcion + " con valor " + this.valor + " €";
+        return "Gasto correspondiente a " + this.myDescripcion + " con valor " + this.myValor + " €";
+    }
+    this.mostrarGastoCompleto = function () 
+    {
+        return "Gasto correspondiente a " + this.myDescripcion + " con valor " + this.myValor + " €\nFecha: " + this.myFecha + "\n" + "Etiquetas:\n" + this.myEtiquetas;
     }
     this.actualizarValor = function (nuevovalor) 
     {
@@ -49,6 +62,25 @@ function CrearGasto(descripción,valor,fecha,...etiquetas)
     this.actualizarDescripcion = function (nuevadescripcion) 
     {
         this.descripcion = nuevadescripcion;
+    }
+    this.actualizarFecha = function (nuevafecha) 
+    {
+        if(Date.parse(fecha) == NaN)
+        {
+            this.myFecha = new Date();
+        }
+    else
+        {
+            this.myFecha = Date.parse(fecha);
+        }
+    }
+    this.anyadirEtiquetas(...nuevasetiquetas)
+    {
+        this.myEtiquetas = this.myEtiquetas + [...nuevasetiquetas];
+    }
+    this.borrarEtiquetas ()
+    {
+        this.myEtiquetas = [];
     }
 }
 function listarGastos()
