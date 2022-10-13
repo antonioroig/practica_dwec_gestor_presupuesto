@@ -1,10 +1,18 @@
 // TODO: Crear las funciones, objetos y variables indicadas en el enunciado
-
+"use strict";
 // TODO: Variable global
 
+let presupuesto = 0;
 
-function actualizarPresupuesto() {
+function actualizarPresupuesto(valor) {
     // TODO
+    if(valor >= 0){
+        presupuesto = valor;
+        return presupuesto;
+    }else{
+        alert("El valor introducido no es un numero positivo");
+        return -1;
+    }
 }
 
 function mostrarPresupuesto() {
