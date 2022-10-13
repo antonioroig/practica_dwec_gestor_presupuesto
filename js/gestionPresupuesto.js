@@ -1,5 +1,5 @@
 // TODO: Crear las funciones, objetos y variables indicadas en el enunciado
-
+"use strict"
 // TODO: Variable global
 let presupuesto = 0;
 actualizarPresupuesto(-5);
@@ -23,17 +23,20 @@ function mostrarPresupuesto() {
    return (`Tu presupuesto actual es de ${presupuesto} €`);
 }
 
-
-function CrearGasto(pdescripcion,pvalor,pfecha,petiquetas) {
+let gastos = new Array();
+let idGasto = 0;
+function CrearGasto(pdescripcion,pvalor,pfecha = Date.now(),... petiquetas) {
     // TODO
     if(pvalor < 0 || typeof(pvalor) !== `number`){
         pvalor = 0;
     }
     if(petiquetas === undefined){
-        petiqueta = new Array();
+        this.petiqueta = new Array();
     }
-    if(pfecha === undefined || typeof(pfecha) !== `date`){
-        
+    if(!isNaN(Date.parse(pfecha))){
+        this.pfecha = Date.now();
+    }else{
+        this.pfecha = Date.parse();
     }
     
         this.valor = pvalor,
@@ -49,35 +52,28 @@ function CrearGasto(pdescripcion,pvalor,pfecha,petiquetas) {
             if(pvalor >= 0 && typeof pvalor === `number`){
                 this.valor = pvalor;
             }
-        
+        }
+        this.anyadirEtiquetas = function(){
+            
+        } 
     }
-    
-
-    
-}
-let gastos = new Array();
-gastos.idGasto = 0;
-
 function listarGastos(){
-    return(gastos);
-}
+            return gastos;
+        }
+function anyadirGasto(pid){
+            pid = idGasto;
+            this.idGasto++;
+        }
+function borrarGasto(pid){
 
-function anyadirGasto(){
+        }
+function calcularTotalGastos(){
 
-}
+        }
+function calcularBalance(){
 
-function borrarGasto(){
-
-}
-
-function calcularTotalGastos (){
-
-}
-
-function calcularBalance (){
-
-}
-
+        }
+        
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
 // Las funciones y objetos deben tener los nombres que se indican en el enunciado
@@ -85,10 +81,10 @@ function calcularBalance (){
 export   {
     mostrarPresupuesto,
     actualizarPresupuesto,
+    CrearGasto,
     listarGastos,
     anyadirGasto,
     borrarGasto,
     calcularTotalGastos,
-    calcularBalance,
-    CrearGasto
+    calcularBalance
 }
