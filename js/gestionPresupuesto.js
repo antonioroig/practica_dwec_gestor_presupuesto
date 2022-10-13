@@ -23,7 +23,7 @@ function mostrarPresupuesto() {
     return "Tu presupuesto actual es de " + presupuesto + " €";
 }
 
-function CrearGasto(descripcion,valor,fecha ) {
+function CrearGasto(descripcion,valor,fecha,...etiquetas ) {
     // TODO
     if(valor < 0 || isNaN(valor))
     {
@@ -33,15 +33,32 @@ function CrearGasto(descripcion,valor,fecha ) {
     {
         this.valor = valor;
     }
-    this.descripcion = descripcion;    
+
+    this.etiquetas = etiquetas;
+
+    if(Date.parse(fecha) == NaN)
+    {
+        this.fecha = new Date();
+    }
+    this.fecha = fecha;
+
+    this.descripcion = descripcion;
+
     this.mostrarGasto = function()
     {
         return "Gasto correspondiente a " + descripcion + " con valor " + valor + " €";
     }
+
+    this.mostrarGastoCompleto = function()
+    {
+        return "Gasto correspondiente a " + descripcion + " con valor " + valor + " €." + "\n" + "Fecha: " + fecha + "\n" + "Etiquetas:" + etiquetas;
+    }
+
     this.actualizarDescripcion = function(newdescripcion)
     {
         this.descripcion = newdescripcion;
     }
+
     this.actualizarValor = function(newvalor)
     {
         if(newvalor >= 0)
@@ -55,8 +72,8 @@ function listarGastos(){
     return gastos;
 }
 
-function anyadirGasto(){
-
+function anyadirGasto(gasto){
+    add
 }
 
 function borrarGasto(){
