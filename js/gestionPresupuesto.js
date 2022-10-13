@@ -21,11 +21,11 @@ function mostrarPresupuesto(){
     return `Tu presupuesto actual es de ${presupuesto} €`;
 }
 
-function CrearGasto(descripcion, valor, fecha, etiquetas) { //Función constructora, tiene que empezar por mayus
+function CrearGasto(descripcion, valor, fecha,...etiquetas) { //Función constructora, tiene que empezar por mayus
     
     this.descripcion = descripcion;
     this.fecha = new Date();
-    this.etiquetas = new Array();
+    this.etiquetas = etiquetas;
 
     if(valor >= 0 && typeof valor === 'number'){
         this.valor = valor;
@@ -33,29 +33,16 @@ function CrearGasto(descripcion, valor, fecha, etiquetas) { //Función construct
     else{
         this.valor = 0;
     }
-    // Revisar
-    if(etiquetas != null){
-        this.etiquetas = etiquetas;
-    }else{
-        this.etiquetas = new Array();
-    }
 
-    // Revisar
-    if(fecha != null && Date.parse(fecha)){
-        this.fecha = fecha;
-    }else{
-        this.fecha = now.getDate();
-    }
-
-    //Métodos:
-    // Modificar
+    ///Métodos:
     this.mostrarGastoCompleto = function(){
-
-        return(
-            `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €.
-            Fecha : ${this.Fecha}.
-            Etiquetas: ${this.etiquetas}`
-            );
+        let res =  `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €.`
+        res += `Fecha : ${this.Fecha}.`
+        res+=`Etiquetas :`
+        for (let etiquetas of etiquetas){
+            res += `-${this.etiquetas} \n`
+        }        
+        return res ;
     },
     this.actualizarDescripcion = function(descripcionActualizada){
         if(typeof descripcionActualizada === 'string'){
@@ -68,7 +55,7 @@ function CrearGasto(descripcion, valor, fecha, etiquetas) { //Función construct
         }
     }
 }
-// Revisar
+// check 
 function listarGastos(){
     return gastos;
 }
@@ -80,13 +67,10 @@ function anyadirGasto(gasto){
 }
 // Revisar
 function borrarGasto(id){
-
-    gastos.forEach((id ) => {
-        delete gastos[id]
-    })
+    
 
 }
-// check 
+// Revisar
 function calcularTotalGastos(){
 
     let valorTotal = 0 ;
