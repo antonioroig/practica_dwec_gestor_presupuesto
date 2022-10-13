@@ -2,7 +2,7 @@
 
 // TODO: Variable global
 
-"use strict"
+"use strict";
 
 var presupuesto = 0;
 var gastos = [];
@@ -17,28 +17,30 @@ function actualizarPresupuesto(valor) {
         return -1;
     }
 }
-function listarGastos()
-{
-    return (gastos);
-}
+
 
 function mostrarPresupuesto() {
     return (`Tu presupuesto actual es de ${presupuesto} €`); 
 }
 
-   function CrearGasto(pdescripcion,pValor,pfecha,petiqueta){
+   function CrearGasto(pdescripcion,pValor,pfecha,...petiqueta){
 
     if(pValor < 0 || typeof(pValor) !== `number`){
         pValor = 0;
     }
 
-    if( pfecha === undefined)
+
+    if( pfecha === `undefined` || Date.parse(pfecha) !== `number`)
     {
-        this.fecha = new Date.now();
+        this.fecha = new Date();
+    }else
+    {
+
+        this.fecha = Date.parse(pfecha);
     }
 
 
-    if(petiqueta === undefined)
+    if(petiqueta === `undefined`)
     {
         this.etiqueta = [];    
     }else{
@@ -59,11 +61,24 @@ function mostrarPresupuesto() {
     },
 
     this.actualizarValor = function(valor){
-        if(valor >= 0 && typeof(valor) === `number`){
+        if(valor >= 0 && typeof(valor) === `number`)
+        {
         this.valor = valor;
         }
     }
    }
+
+   function listarGastos()
+{
+    return gastos;
+}
+function anyadirGasto(pid){}
+
+function borrarGasto(){}
+
+function calcularTotalGastos(){}
+
+function calcularBalance(){}
            
   
 
@@ -78,6 +93,6 @@ export   {
     anyadirGasto,
     borrarGasto,
     calcularTotalGastos,
-    calcularBalance,
+    calcularBalance
     
 }
