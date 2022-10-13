@@ -10,8 +10,8 @@ function actualizarPresupuesto(valor) {
         presupuesto = valor;
         return presupuesto;
     }else{
-        alert("El valor introducido no es un numero positivo");
-        return -1;
+        console.log("El valor introducido no es un numero positivo")
+        return (-1);
     }
 }
 
@@ -22,31 +22,30 @@ function mostrarPresupuesto() {
 
 function CrearGasto(descripcion, valor) {
     // TODO
-    let gasto = 
-    { 
-        descripcion: "",
-        valor: 0,
+    
+    this.descripcion = descripcion;
 
-        mostrarGasto: function(){
-            return `Gasto correspondiente a ${this.descripcion} con valor ${this.valor}`
-        },
+    if((typeof(valor) == "number") && (valor >= 0)){
+        
+        this.valor = valor;
+    }else(this.valor = 0)
 
-        actualizarDescripcion: function(newDescripcion){
-            this.descripcion = newDescripcion;
-        },
+   
+    this.mostrarGasto = function(){
+        return `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €`
+    },
 
-        actualizarValor: function(newValor){
+    this.actualizarDescripcion = function(newDescripcion){
+        this.descripcion = newDescripcion;
+    },
+
+    this.actualizarValor = function(newValor){
+        if((typeof(newValor) == "number") && (newValor >= 0)){
+            
             this.valor = newValor;
         }
     }
 
-    if((typeof(valor) == "number") && (valor >= 0)){
-        
-        gasto.actualizarValor(valor);
-    }
-    gasto.actualizarDescripcion(descripcion);
-
-    return gasto;
 }
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
