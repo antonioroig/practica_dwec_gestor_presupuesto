@@ -28,11 +28,7 @@ function mostrarPresupuesto() {
     return (`Tu presupuesto actual es de ${presupuesto} €`);
 }
 
-//CrearGasto - Función constructora que se encargará de crear un objeto gasto. 
-//Esta función devolverá un objeto de tipo gasto. Deberá comprobar que el valor introducido sea un núḿero no negativo; 
-//en caso contrario, asignará a la propiedad valor el valor 0.
-
-function CrearGasto(descripcion, valor) {
+function CrearGasto(descripcion, valor, fecha, ... etiquetas) {
     // TODO
 
     if (isNaN(valor) || valor < 0){
@@ -42,12 +38,29 @@ function CrearGasto(descripcion, valor) {
     descripcion = descripcion + '';
 
     this.descripcion = descripcion,
-    this.valor = valor,
+    this.valor = valor;
 
+    /* FECHA Y ETIQUETAS COMPROBACIÓN*/
+    // FECHA
+    if(isNaN(Date.parse(fecha))){
+        this.fecha = Date.now();
+    }else{
+        this.fecha = Date.parse(fecha);
+    }
+    // ETIQUETAS
+    if([...etiquetas] === undefined){
+        this.etiquetas = [];
+    }else{
+        this.etiquetas = [...etiquetas]
+    };
+
+
+
+    // METODOS 
     this.mostrarGasto = function(){
         return (`Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €`);
     }
-    // !!!!!!!!!!!!!!!!!!!!!!
+    
     this.actualizarDescripcion = function(descripcion){
         descripcion = descripcion + '';
         this.descripcion = descripcion;
@@ -56,10 +69,60 @@ function CrearGasto(descripcion, valor) {
         if(valor >= 0){
             this.valor = valor;
         }
-    
     };
+    // * * * * * * * * * * * * * * * *
+    // Actividad 2 - Métodos
+    // mostrarGastoCompleto
+    this.mostrarGastoCompleto = function(){
+        let resp = `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €.\n`;
+        resp += `Fecha: ` + (new Date (this.fecha)).toLocaleString() + `\n`;
+        resp += `Etiquetas:` + `\n`;
+        for (var i = 0; i < etiquetas.length; i++) {
+            resp += '- ' + etiquetas[i] + `\n`;
+        }
+          return resp;
+    };
+    // actualizarFecha
+    this.actualizarFecha = function(fecha){
+        if(!isNaN(Date.parse(fecha))){
+            this.fecha = Date.parse(fecha);
+        }
+    }
+    // anyadirEtiquetas
+    this.anyadirEtiquetas = function(etiqueta){
+        
+        
+
+
+
+
+        
+        /*let etiquetasRepetidas = false;
+
+        console.log(etiqueta.length + " " + etiqueta)
+
+        for (var i = 0; i < etiqueta.length; i++) {
+           
+           for(var j = 0; j < etiquetas.length; j++){
+
+            if(etiquetas[j] == etiqueta[i]){
+                etiquetasRepetidas = true;
+                break;
+               }
+           }
+           if(!etiquetasRepetidas){
+            this.etiquetas.push(etiqueta[i])
+            etiquetasRepetidas = false;
+           }*/
+        }
+        
     
-}
+    }    
+
+    
+   
+    
+
 /* - - - - - - - - - - - - - - - - */
 //++++
 function listarGastos(){
