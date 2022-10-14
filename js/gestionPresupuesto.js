@@ -23,19 +23,19 @@ function mostrarPresupuesto()
     return `Tu presupuesto actual es de ${presupuesto} €`;
 }
 // revisar
-function crearGasto(Descripcion,Valor,Fecha,...Etiquetas)
+function CrearGasto(descripcion,valor,fecha=Date.now(), ...etiquetas)
 {
 
-    this.descripcion = String(Descripcion);
+    this.descripcion = String(descripcion);
 
-    if(Valor >= 0 && (typeof Valor === "number"))
+    if(valor >= 0 && (typeof valor === "number"))
     {
-        this.valor = Valor;
+        this.valor = valor;
     }
     else
     {
         this.valor = 0;
-        console.log(`El valor ${Valor} no es válido.`);
+        console.log(`El valor ${valor} no es válido.`);
     }
 
     this.mostrarGasto = function()
@@ -60,13 +60,49 @@ function crearGasto(Descripcion,Valor,Fecha,...Etiquetas)
         }
     }
 
-    if(typeof Fecha === "undefined")
+    if((typeof Fecha === "string") && (!isNaN(Date.parse(fecha))))
     {
-        Fecha = new Date();
+        this.fecha = Date.parse(fecha);
     }
+    else
+    {
+        this.fecha = Date.now();
+    }
+
+    this.etiquetas = [...etiquetas];
 }
-function listarGastos(){
+
+function listarGastos()
+{
     return gastos;
+}
+
+function anyadirGasto(gasto)
+{
+    gasto.id = idGasto;
+    idGasto++;
+    gastos.push(gasto);
+}
+
+function borrarGasto(id)
+{
+    for (let i = 0; i < gastos.length; i++) 
+    {
+        if(id = gastos[i].id)
+        {
+            gastos.splice(gastos[i], 1);
+        }
+    }    
+}
+
+function calcularTotalGastos()
+{
+    
+}
+
+function calcularBalance()
+{
+    
 }
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
@@ -76,7 +112,7 @@ export   {
 
     mostrarPresupuesto,
     actualizarPresupuesto,
-    crearGasto,
+    CrearGasto,
     listarGastos,
     anyadirGasto,
     borrarGasto,
