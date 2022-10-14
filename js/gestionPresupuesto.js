@@ -23,7 +23,7 @@ function mostrarPresupuesto() {
     return "Tu presupuesto actual es de " + presupuesto + " €";
 }
 
-function CrearGasto(descripcion,valor,fecha,...etiquetas ) {
+function CrearGasto(descripcion,valor,fecha = Date.now(), ...etiquetas ) {
     // TODO
     if(valor < 0 || isNaN(valor))
     {
@@ -34,25 +34,49 @@ function CrearGasto(descripcion,valor,fecha,...etiquetas ) {
         this.valor = valor;
     }
 
-    this.etiquetas = etiquetas;
-
-    if(Date.parse(fecha) == NaN)
-    {
-        this.fecha = new Date();
-    }
     this.fecha = fecha;
 
-    this.descripcion = descripcion;
+    if(typeof fecha === "string" && !isNaN(Date.parse(fecha)))
+    {
+        this.fecha = Date.parse(fecha);
+    }
+    else
+    {
+        this.fecha = Date.now();
+    }
 
     this.mostrarGasto = function()
     {
-        return "Gasto correspondiente a " + descripcion + " con valor " + valor + " €";
+        return "Gasto correspondiente a " + this.descripcion + " con valor " + this.valor + " €";
+    }
+
+    this.etiquetas = etiquetas;
+
+    this.anyadirEtiquetas = function()
+    {
+
+    }
+
+    this.borrarEtiquetas = function(etiquetaIN)
+    {
+        etiquetas.forEach(etiqueta => {
+            if(etiquetaIN === etiqueta)
+            {
+
+            }
+        });
     }
 
     this.mostrarGastoCompleto = function()
     {
-        return "Gasto correspondiente a " + descripcion + " con valor " + valor + " €." + "\n" + "Fecha: " + fecha + "\n" + "Etiquetas:" + etiquetas;
+        var text= "Gasto correspondiente a " + this.descripcion + " con valor " + this.valor + " €." + "\n" + "Fecha: " + this.fecha.toLocaleString('en-GB') + "\n" + "Etiquetas:\n" ;
+        etiquetas.forEach(etiqueta => {
+            text = text + "- " + etiqueta + "\n";
+        });
+        return text;
     }
+
+    this.descripcion = descripcion;
 
     this.actualizarDescripcion = function(newdescripcion)
     {
@@ -73,15 +97,22 @@ function listarGastos(){
 }
 
 function anyadirGasto(gasto){
-    add
+    gasto[idGasto]
 }
 
-function borrarGasto(){
-
+function borrarGasto(idGasto){
+    array.forEach(gastos => {
+        if(gasto[idGasto] == idGasto){
+            
+        }
+    });
 }
 
 function calcularTotalGastos(){
-
+    var total;
+    array.forEach(gastos => {
+        total = total + gastos.valor;
+    });
 }
 
 function calcularBalance(){
