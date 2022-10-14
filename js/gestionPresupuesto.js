@@ -31,15 +31,26 @@ function mostrarPresupuesto() {
 
 
 
-function CrearGasto(descripcion, valor) {
+function CrearGasto(descripcion, valor, fecha=Date.now(), ...etiquetas) {
     this.descripcion = descripcion
     if (valor <= 0 || typeof valor !== 'number')
     {
         valor = 0;
     }
+    if (typeof fecha === 'string' && !isNaN(Date.parse(fecha)))
+    {
+    this.fecha = Date.parse(fecha)
+    }
+    else
+    {
+        this.fecha = Date.now()
+    }
 
-    this.valor = valor
-    this.descripcion = descripcion
+    this.valor = valor;
+    this.descripcion = descripcion;
+    this.fecha = new Date();
+    this.etiquetas = [];
+
     this.mostrarGasto = function mostrarGasto () {
         return ("Gasto correspondiente a " + descripcion + " con valor " + this.valor + " €")
     }
@@ -59,11 +70,36 @@ function CrearGasto(descripcion, valor) {
             this.valor = valornuevo;
         }
     }
+    this.mostrarGastoCompleto()
+    {
+        resultado = (`Gasto Correspondiente a ${this.descripcion} con valor ${this.valor}  €.\n Fecha: ${this.fecha.toLocaleString()}\n}`);
+        return;
+    }
+
+    this.anyadiretiquetas = function()
 
     // TODO   
     //comentario para que se activen los test en github
 }
 
+function anyadirGasto(gasto)
+{
+    gasto.id = idGasto
+    idGasto++;
+    gastos.push(gasto);
+}
+
+function borrarGasto(id) {
+    
+}
+
+function calcularBalance(){
+
+}
+
+function calcularTotalGastos() {
+    
+}
 
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
