@@ -27,7 +27,16 @@ function mostrarPresupuesto() {
 
 function CrearGasto(descripcion, valor, fecha = Date.now(), ...etiquetas) {
     // TODO
-    this.fecha = fecha;
+    this.etiquetas = [...etiquetas] 
+    /*if (typeof fecha === 'string')
+    {
+        this.fecha = Date.parse(fecha);
+        
+    }else
+    {
+        this.fecha = fecha;
+    }*/
+    this.fecha = (typeof fecha === 'string') ?  Date.parse(fecha) : fecha;
     this.descripcion = descripcion;
     if (valor <0 || typeof valor!=='number') {
         this.valor = 0;
@@ -70,7 +79,20 @@ function CrearGasto(descripcion, valor, fecha = Date.now(), ...etiquetas) {
             strigEtiquetas += `- ${etiqueta}\n`
         }
         return strigEtiquetas;
+    },
+    this.actualizarFecha = function(stringFecha)
+    {
+		let aux=Date.parse(stringFecha);
+		if (!isNaN(aux))
+        {
+			this.fecha=aux;
+        }
+	},
+    this.anyadirEtiquetas = function(...etiquetas)
+    {
+
     }
+
 } 
 
 function listarGastos(){
