@@ -42,6 +42,7 @@ function CrearGasto() {
             console.log(`El valor introducido es negativo, no ha podido ser cambiado`)
         };
     };
+
 }
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
