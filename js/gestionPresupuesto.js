@@ -24,12 +24,11 @@ function mostrarPresupuesto() {
     return 'Tu presupuesto actual es de '+presupuesto+' €';
 }
 
-function CrearGasto(descripcion,valor,fecha,...etiqs) 
+function CrearGasto(descripcion,valor,fecha = Date.now(), ...etiquetas) 
 {
     // TODO
-    let now = new Date();
-
     this.descripcion = descripcion;
+    this.etiquetas = [...etiquetas];
 
     if(valor > 0 && !isNaN(valor))
     {
@@ -40,12 +39,27 @@ function CrearGasto(descripcion,valor,fecha,...etiqs)
         this.valor = 0;
     };
 
-    if(fecha )
+    if(typeof fecha === 'string' && !isNaN(Date.parse(fecha)))
+    {
+        this.fecha = Date.parse(fecha);    
+    }
+    else
+    {
+        this.fecha = Date.now();
+    };
+
     
     this.mostrarGasto = function()
     {
         return "Gasto correspondiente a " +this.descripcion+" con valor "+this.valor+" €";
     };
+
+    this.mostrarGastoCompleto = function()
+    {
+        let texto = "";
+        return texto;
+    };
+
     this.actualizarValor = function(nwvalor)
     {
         if(nwvalor >= 0)
@@ -57,9 +71,25 @@ function CrearGasto(descripcion,valor,fecha,...etiqs)
             console.log('El valor introducido no es valido, no ha podido ser cambiado')
         };
     };
+    
     this.actualizarDescripcion = function(nwdesc)
     {
         this.descripcion = nwdesc;
+    };
+
+    this.actualizarFecha = function()
+    {
+
+    };
+
+    this.anyadirEtiquetas = function()
+    {
+
+    };
+
+    this.borrarEtiquetas = function()
+    {
+
     };
 }
 
@@ -68,14 +98,22 @@ function listarGastos()
     return gastos;
 }
 
-function anyadirGasto()
+function anyadirGasto(gast)
 {
-
+    gast.id = idGastos;
+    idGastos++;
+    gastos.push(gast);
 }
 
-function borrarGasto()
+function borrarGasto(gID)
 {
-
+    for(let i = 0; i < gastos.length; i++)
+    {
+        if(gID = gastos[i].id)
+        {
+            gastos.splice(gastos[i],1);
+        }
+    }
 }
 
 function calcularTotalGastos()
