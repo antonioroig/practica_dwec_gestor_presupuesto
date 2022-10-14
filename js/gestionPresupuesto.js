@@ -21,10 +21,9 @@ function mostrarPresupuesto(){
     return `Tu presupuesto actual es de ${presupuesto} €`;
 }
 
-function CrearGasto(descripcion, valor, fecha= Date.now(), ...etiquetas) { 
+function CrearGasto(descripcion, valor, fecha/*= Date.now()*/, ...etiquetas) { 
     
     this.descripcion = descripcion;
-    this.fecha = fecha;
     this.etiquetas = new Array();
     
     // Comprueba el valor
@@ -34,12 +33,11 @@ function CrearGasto(descripcion, valor, fecha= Date.now(), ...etiquetas) {
     else{
         this.valor = 0;
     }
-
-    // Comprueba etiquetas
-    if(this.etiquetas.size != 0){
-        this.etiquetas.add(etiquetas);
+    if(Date.parse(fecha) != `NaN` && typeof fecha === 'string'){
+        let aux = (new Date(fecha).getTime());
+        this.fecha = aux; 
     }else{
-        this.etiquetas = new Array();
+        this.fecha = fecha.Date.now();
     }
     
     // Métodos:
@@ -66,8 +64,15 @@ function CrearGasto(descripcion, valor, fecha= Date.now(), ...etiquetas) {
     this.anyadirEtiquetas = function (... etiquetas){
         this.etiquetas.add(etiquetas);
     },
+    // Revisar
     this.borrarEtiquetas = function (... etiquetas){
 
+    },
+    //Revisar
+    this.actualizarFecha= function(fechaIntroducida){
+        if(!Date.parse(fechaIntroducida) === `NaN` && typeof fechaIntroducida === 'string'){
+            this.fecha = Date.parse(fechaIntroducida).getTime();
+        }
     }
 }
 // Check 
