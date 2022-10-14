@@ -21,10 +21,22 @@ function CrearGasto() {
     if(Valor > 0 && ! isNaN(Valor)){
 
         this.valor = Valor;
+    }
 
-    }else{
+    else{
         this.valor = 0;
     };
+
+    this.mostrarGasto = function (){
+        return `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €`;
+    };
+    
+    this.actualizarDescripcion = function(cadena){
+        this.descripcion = cadena;
+    };
+
+
+
 
 }
 
