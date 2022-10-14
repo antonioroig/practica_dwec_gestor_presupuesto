@@ -21,12 +21,13 @@ function mostrarPresupuesto(){
     return `Tu presupuesto actual es de ${presupuesto} €`;
 }
 
-function CrearGasto(descripcion, valor, fecha,...etiquetas) { //Función constructora, tiene que empezar por mayus
+function CrearGasto(descripcion, valor, fecha= Date.now(), ...etiquetas) { 
     
     this.descripcion = descripcion;
-    this.fecha = new Date();
-    this.etiquetas = etiquetas;
-
+    this.fecha = fecha;
+    this.etiquetas = new Array();
+    
+    // Comprueba el valor
     if(valor >= 0 && typeof valor === 'number'){
         this.valor = valor;
     }
@@ -34,11 +35,18 @@ function CrearGasto(descripcion, valor, fecha,...etiquetas) { //Función constru
         this.valor = 0;
     }
 
-    ///Métodos:
+    // Comprueba etiquetas
+    if(this.etiquetas.size != 0){
+        this.etiquetas.add(etiquetas);
+    }else{
+        this.etiquetas = new Array();
+    }
+    
+    // Métodos:
     this.mostrarGastoCompleto = function(){
-        let res =  `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €.`
-        res += `Fecha : ${this.Fecha}.`
-        res+=`Etiquetas :`
+        let res =  `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €.\n`
+        res += `Fecha: ${this.Fecha}.\n`
+        res +=`Etiquetas:\n`
         for (let etiquetas of etiquetas){
             res += `-${this.etiquetas} \n`
         }        
@@ -53,34 +61,47 @@ function CrearGasto(descripcion, valor, fecha,...etiquetas) { //Función constru
         if( valorActualizado >= 0 && typeof  valorActualizado === 'number'){
             this.valor = valorActualizado;
         }
+    },
+    // Revisar
+    this.anyadirEtiquetas = function (... etiquetas){
+        this.etiquetas.add(etiquetas);
+    },
+    this.borrarEtiquetas = function (... etiquetas){
+
     }
 }
-// check 
+// Check 
 function listarGastos(){
     return gastos;
 }
-//Revisar
+// Check
 function anyadirGasto(gasto){
-    id = idGasto;
+    gasto[`id`] = idGasto;
     gastos.push(gasto);
     idGasto++;
 }
-// Revisar
+// Check
 function borrarGasto(id){
-    
+    for(let i = 0; i <= gastos.length; i++){
+        if(gastos[i].id == id){
+           gastos.splice(i,1)
+           break;
+        }
+    }
 
 }
-// Revisar
+// Check
 function calcularTotalGastos(){
+    let sum = 0;
 
-    let valorTotal = 0 ;
-    for (let i = 0;i < gastos.length; i++) {
-        valorTotal += gastos.valor;
+    for(let gasto of gastos){
+        sum += gasto.valor
     }
-    return valorTotal;
-};
+    return sum;
+}
+// Check
 function calcularBalance(){
-
+     return (presupuesto - calcularTotalGastos());
 }
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
 // Las funciones y objetos deben tener los nombres que se indican en el enunciado
