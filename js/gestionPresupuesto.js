@@ -26,27 +26,54 @@ function mostrarPresupuesto() {
 function listarGastos(){
     return gastos;
 }
+//
+function anyadirGasto(){
 
-function CrearGasto(descripcion,valor,fecha, etiquetas) {
+}
+//
+function borrarGasto(){
+
+}
+//
+function calcularTotalGastos(){
+
+}
+//
+function calcularBalance(){
+    
+}
+function CrearGasto(descripcion,valor,fecha,...etiqueta) {
 
     if(valor < 0 || typeof(valor) !== `number`){
         valor = 0; 
     }
-    if(etiquetas == undefined){
+    if([...etiqueta] === `undefined`){
         this.etiquetas = [];
+    }else{
+        this.etiquetas = [...etiqueta]
     }
     if(fecha == undefined){
-        this.fecha = getDate();
+        this.fecha = Date.now();
     }else{
-        if(fecha == typeof(Text)){
-            
+        if(isNaN(Date.parse(fecha))){
+            this.fecha = Date.now();
+        }else{
+            this.fecha = Date.parse(fecha);
         }
     }
 
         this.descripcion= `${descripcion}`,
         this.valor = valor,
 
+    //
+    this.mostrarGastoCompleto = function(){
 
+        var texto = ``;
+        for(let eti of this.etiquetas) {
+            texto += `- ${eti}\n`;
+        }
+        return (`Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €.\nFecha: ${new Date(this.fecha).toLocaleString()}\nEtiquetas:\n${texto}`)
+    },
     this.mostrarGasto = function(){
         return (`Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €`);
     },
@@ -59,7 +86,7 @@ function CrearGasto(descripcion,valor,fecha, etiquetas) {
         if(valor >= 0 && typeof(valor) === `number`){
             this.valor = valor;
         }
-    } 
+    }
     //
 }
 
