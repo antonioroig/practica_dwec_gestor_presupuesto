@@ -27,7 +27,7 @@ function listarGastos(){
     return gastos;
 }
 //
-function anyadirGasto(){
+function anyadirGasto(gasto){
 
 }
 //
@@ -74,6 +74,17 @@ function CrearGasto(descripcion,valor,fecha,...etiqueta) {
         }
         return (`Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €.\nFecha: ${new Date(this.fecha).toLocaleString()}\nEtiquetas:\n${texto}`)
     },
+    //
+    this.actualizarFecha = function(fecha){
+        if(!isNaN(Date.parse(fecha))){
+            this.fecha = Date.parse(fecha);
+        }
+    }
+    //
+    this.anyadirEtiquetas = function(){
+        
+    }
+    //
     this.mostrarGasto = function(){
         return (`Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €`);
     },
