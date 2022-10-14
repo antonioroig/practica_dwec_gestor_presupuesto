@@ -4,6 +4,9 @@
 
 
 var presupuesto = 0;
+let gastos = [];
+var idGasto = 0;
+
 function actualizarPresupuesto(num) {
     // TODO
 
@@ -33,9 +36,12 @@ function mostrarPresupuesto() {
 
 }
 
-function CrearGasto(descripcion, valor) {
+function CrearGasto(descripcion, valor, fecha = Date.now() , ...etiquetas) {
     // TODO
     this.descripcion = descripcion;
+    
+   
+   
    
 
     if(valor >= 0 && typeof valor === "number")
@@ -64,8 +70,34 @@ function CrearGasto(descripcion, valor) {
        }
     }
 
+    this.etiquetas = [...etiquetas];
+
+    if(typeof fecha === 'string' && !isNaN(Date.Parse(fecha)))
+    {
+       this.fecha = fecha;
+    }
+  
 }
 
+function listarGastos(){
+    return (gastos)
+}
+
+function anyadirGasto(){
+
+}
+
+function borrarGasto(){
+
+}
+
+function calcularTotalGastos(){
+
+}
+
+function calcularBalance(){
+
+}
 
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
@@ -74,5 +106,10 @@ function CrearGasto(descripcion, valor) {
 export   {
     mostrarPresupuesto,
     actualizarPresupuesto,
-    CrearGasto
+    CrearGasto,
+    listarGastos,
+    anyadirGasto,
+    borrarGasto,
+    calcularTotalGastos,
+    calcularBalance
 }
