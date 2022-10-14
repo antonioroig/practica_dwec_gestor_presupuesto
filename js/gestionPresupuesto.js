@@ -25,7 +25,7 @@ function mostrarPresupuesto() {
         return mostrarP;
     }
 
-function CrearGasto(descripcion,valor) {
+function CrearGasto(descripcion,valor,) {
     // TODO
     this.descripcion=descripcion;
     if (valor <0 || typeof valor!=='number') {
@@ -54,13 +54,17 @@ function CrearGasto(descripcion,valor) {
 function listarGastos(){
     return gastos;
 }
-function anyadirGasto(){
+function anyadirGasto(gasto){
     gasto.id = idGasto;
     idGasto++;
     gastos.push(gasto);
 }
-function borrarGasto(){
-    
+function borrarGasto(id){
+    let aux = gastos.findIndex(gasto => gasto.id == id); //guardo la posicion en la que esta el objeto con dicho id//
+    if(aux !== -1) //si devuelve -1 es que el objeto no existe entonces no se haria nada//
+    {
+        gastos.splice(aux, 1);//si el aux no es -1 entonces se borra el gasto desado de gastos//
+    }
 }
 function calcularTotalGastos(){
     
