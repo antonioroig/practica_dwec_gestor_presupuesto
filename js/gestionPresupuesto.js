@@ -15,7 +15,6 @@ function actualizarPresupuesto(valor) {
         return -1;
     }
 }
-
 function mostrarPresupuesto() {
     return (`Tu presupuesto actual es de ${presupuesto} €`);
 }
@@ -24,42 +23,67 @@ function mostrarPresupuesto() {
 
 function listarGastos(){
     return gastos;
-};
+}
 //parametro rest
-function CrearGasto(descripcion,valor,fecha,etiqueta ) {
+function CrearGasto(descripcion,valor,fecha,...etiqueta) {
+
+    if([...etiqueta] === `undefined`)
+    {
+        this.etiquetas = []; 
+    }
+    else
+    {
+        this.etiquetas = [...etiqueta];
+    }
+
+    if(isNaN(Date.parse(fecha)))
+    { 
+        this.fecha = Date.now();
+    }else
+    {
+        this.fecha = Date.parse(`${fecha}`); 
+    }
 
     if(valor < 0 || typeof(valor) !== `number` )
     {
         valor = 0; 
     }
-    if(etiqueta === `undefined`)
-    {
-         this.etiquetas = [];
-    }else
-    {
-        this.etiquetas = [].push(`${etiqueta}`);
-    }
-    if(fecha === `undefined` || typeof fecha !== `string`)
-    {
-        this.fecha = new Date();
-    }else
-    {
-        this.fecha = new Date(fecha);
-    }
-
+    
+    
+    
+    //
+    
+    
     this.descripcion= `${descripcion}`,
-    this.valor = valor
+    this.valor = valor,
         
     this.mostrarGasto = function()
     {
-        var textoEtiquetas = ``;
-        for(i =0;i < this.etiquetas.length;i++){
-            textoEtiquetas += `- ` + this.etiquetas[i] + `\n`;
-        }
-
-        return (`Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €\n`
-                + `Fecha: ${this.fecha.toLocaleDateString()}\n` + textoEtiquetas);
+        
     },
+
+    this.mostrarGastoCompleto = function()
+    {
+        var textoEtiquetas = ``;
+        for(let eti of this.etiquetas)
+        {
+            textoEtiquetas += `- ${eti}\n`;
+        }
+        return (`Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €.\nFecha: ${new Date(this.fecha).toLocaleString()}\nEtiquetas:\n${textoEtiquetas}`);
+    },
+
+    this.actualizarFecha = function(fechaNueva )
+    {
+        if(!isNaN(Date.parse(fechaNueva)))
+        { 
+            this.fecha = Date.parse(fechaNueva);
+        }
+    },
+
+    this.anyadirEtiquetas = function(...etiquetasAAnyadir){
+
+    } 
+
     
     this.actualizarDescripcion  = function(descripcion)
     {
@@ -72,27 +96,27 @@ function CrearGasto(descripcion,valor,fecha,etiqueta ) {
         {
             this.valor = valor;
         }
-    },
-
-    this.actualizarFecha(fecha){
-        if(typeof fecha === `string` )
     }
-        
+
+    
+    //this.actualizarFecha(fecha){
+      //  if(typeof fecha === `string` )
+    //}
 }
     
     
 
 
-    function anyadirGasto(){};
+    function anyadirGasto(){}
 
 
-    function borrarGasto(){};
+    function borrarGasto(){}
 
 
-    function calcularTotalGastos(){};
+    function calcularTotalGastos(){}
 
 
-    function calcularBalance(){};
+    function calcularBalance(){}
 
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
