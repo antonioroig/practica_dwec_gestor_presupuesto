@@ -25,23 +25,38 @@ function mostrarPresupuesto() {
 
 let gastos = new Array();
 let idGasto = 0;
-function CrearGasto(pdescripcion,pvalor,pfecha = Date.now(),... petiquetas) {
+function CrearGasto(pdescripcion, pvalor, pfecha = Date.now(), ... petiquetas) {
     // TODO
     if(pvalor < 0 || typeof(pvalor) !== `number`){
         pvalor = 0;
     }
-    if(petiquetas === undefined){
-        this.petiqueta = new Array();
+    if([...petiquetas] === `undefined`){
+        this.etiquetas = [];
     }
-    if(!isNaN(Date.parse(pfecha))){
-        this.pfecha = Date.now();
+    else{
+        this.etiquetas = [...petiquetas];
+    }
+    if(isNaN(Date.parse(pfecha))){
+        this.fecha = Date.now();
     }else{
-        this.pfecha = Date.parse();
+        this.fecha = Date.parse(pfecha);
     }
     
         this.valor = pvalor,
         this.descripcion = `${pdescripcion}`,
 
+        this.mostrarGastoCompleto = function(){
+            let etiquetas = ``;
+            for(let etiq of this.etiquetas){
+                etiquetas += `- ${etiq}\n`
+            }
+            return (`Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €.\nFecha: ${new Date(this.fecha).toLocaleString()}\nEtiquetas:\n${etiquetas}`)
+        }
+        this.actualizarFecha = function(pfecha){
+            if(!isNaN(Date.parse(pfecha))){
+                this.fecha = Date.parse(pfecha);
+            }
+        }
         this.mostrarGasto = function(){
            return (`Gasto correspondiente a ${pdescripcion} con valor ${pvalor} €`)
         },
@@ -53,9 +68,16 @@ function CrearGasto(pdescripcion,pvalor,pfecha = Date.now(),... petiquetas) {
                 this.valor = pvalor;
             }
         }
-        this.anyadirEtiquetas = function(){
-            
-        } 
+        this.anyadirEtiquetas = function(... petiquetas){
+            for(let etiq of this.etiquetas){
+                for(let petiq of [...petiquetas]){
+                    if(etiq !== petiq){
+                        
+                    }
+                }
+            }
+           
+        }
     }
 function listarGastos(){
             return gastos;
