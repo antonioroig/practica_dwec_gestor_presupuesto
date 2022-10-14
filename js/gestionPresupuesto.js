@@ -31,25 +31,24 @@ function mostrarPresupuesto() {
 
 
 
-function CrearGasto(descripcion, valor, fecha=Date.now(), ...etiquetas) {
+function CrearGasto(descripcion, valor ,fecha = Date.now(), ...etiquetas) {
     this.descripcion = descripcion
     if (valor <= 0 || typeof valor !== 'number')
     {
         valor = 0;
     }
-    if (typeof fecha === 'string' && !isNaN(Date.parse(fecha)))
-    {
-    this.fecha = Date.parse(fecha)
-    }
-    else
-    {
-        this.fecha = Date.now()
-    }
 
     this.valor = valor;
     this.descripcion = descripcion;
     this.fecha = new Date();
-    this.etiquetas = [];
+    this.etiquetas = [...etiquetas];
+    
+    if (typeof fecha === 'string' && !isNaN(Date.parse(fecha))){
+    this.fecha = Date.parse(fecha)
+    }
+    else{
+        this.fecha = Date.now();
+    }
 
     this.mostrarGasto = function mostrarGasto () {
         return ("Gasto correspondiente a " + descripcion + " con valor " + this.valor + " €")
@@ -70,35 +69,55 @@ function CrearGasto(descripcion, valor, fecha=Date.now(), ...etiquetas) {
             this.valor = valornuevo;
         }
     }
-    this.mostrarGastoCompleto()
+
+    this.actualizarFecha = function(nuevaFecha) {
+        if (typeof nuevaFecha === 'string' && !isNaN(Date.parse(nuevaFecha)))
     {
-        resultado = (`Gasto Correspondiente a ${this.descripcion} con valor ${this.valor}  €.\n Fecha: ${this.fecha.toLocaleString()}\n}`);
-        return;
+    this.fecha = Date.parse(nuevaFecha)
+    }
     }
 
-    this.anyadiretiquetas = function()
+    this.anyadiretiquetas = function anyadiretiquetas(nuevasEtiquetas)
+    {
+        nuevasEtiquetas.array.forEach(element => {
+            if (!this.etiquetas.includes(element))
+            {
+                this.etiquetas.push(element)
+            }
+            
+        });
+    }
 
+    this.mostrarGastoCompleto = function mostrarGastoCompleto()
+    {
+        return (`Gasto Correspondiente a ${this.descripcion} con valor ${this.valor}  €.\n Fecha: ${this.fecha.toLocaleString()}\n Etiquetas: \n ${this.etiquetas}}`);
+    }
     // TODO   
     //comentario para que se activen los test en github
 }
 
 function anyadirGasto(gasto)
 {
-    gasto.id = idGasto
+    gasto.id = idGasto;
     idGasto++;
     gastos.push(gasto);
-}
+};
 
 function borrarGasto(id) {
     
 }
 
-function calcularBalance(){
+function calcularBalance() {
+    return (presupuesto-calcularTotalGastos())
 
 }
 
 function calcularTotalGastos() {
-    
+    let total = 0;
+    gastos.forEach(gasto => {
+        total += gasto.valor;
+    });
+    return total;
 }
 
 
