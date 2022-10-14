@@ -1,5 +1,7 @@
 
 var presupuesto = 0;
+let gastos = new Array();
+let idGastos = 0;
 function actualizarPresupuesto(num_int) 
 {
     
@@ -21,10 +23,14 @@ function mostrarPresupuesto()
     return `Tu presupuesto actual es de ${presupuesto} €`;
 }
 
-function CrearGasto(descripcion,valor_actual) 
+function CrearGasto(descripcion,valor_actual,fecha,...etiquetas) 
 {
     this.descripcion = descripcion;
 
+    if(typeof fecha ==='undefined')
+    {
+        fecha = new Date();
+    }
     if(valor_actual > 0 && typeof valor_actual ==='number')
     {
 
@@ -59,12 +65,23 @@ function CrearGasto(descripcion,valor_actual)
     };
 }
 
+function listarGastos()
+{ 
+    return gastos;
+}
+
+
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
 // Las funciones y objetos deben tener los nombres que se indican en el enunciado
 // Si al obtener el código de una práctica se genera un conflicto, por favor incluye todo el código que aparece aquí debajo
 export   {
     mostrarPresupuesto,
     actualizarPresupuesto,
-    CrearGasto
+    CrearGasto,
+    listarGastos,
+    anyadirGastos,
+    borrarGastos,
+    calcularTotalGastos,
+    calcularBalance
 }
 
