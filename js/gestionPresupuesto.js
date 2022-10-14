@@ -4,6 +4,7 @@
 let presupuesto = 0;
 let gastos = new Array();
 let idGasto = 0;
+const opciones ={day: 'numeric',month: 'short', year: 'numeric', hour: 'numeric', minutes: 'numeric', seconds: 'numeric'};
 function actualizarPresupuesto(nuevoPresupuesto) {
     // TODO
     if (nuevoPresupuesto >= 0) {
@@ -19,56 +20,65 @@ function mostrarPresupuesto() {
     return ('Tu presupuesto actual es de ' + presupuesto + ' €');
 }
 
-function CrearGasto(descripcion, valor, fecha, etiquetas) {
+function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
     // TODO
     this.descripcion = descripcion;
     this.valor = 0;
-    this.fecha = new Date(timestamp);
-    this.etiquetas = new Array();
+   
+    this.etiquetas = etiquetas;
+
+    if (isNaN(Date.parse(fecha))) 
+    {
+        this.fecha = Date.now();
+    } else {
+        this.fecha = Date.parse(fecha);
+    }
+
+
+
+    if (etiquetas != null) {
+        this.etiquetas = etiquetas;
+    }
     if (valor >= 0) {
         this.valor = valor;
     }
-        this.mostrarGasto = function(){
-            return ('Gasto correspondiente a ' + this.descripcion + ' con valor ' + this.valor + ' €');
-        }
-    this.actualizarDescripcion = function(nuevaDescripcion)
-    {
+    this.mostrarGasto = function () {
+        return ('Gasto correspondiente a ' + this.descripcion + ' con valor ' + this.valor + ' €');
+    }
+    this.actualizarDescripcion = function (nuevaDescripcion) {
         this.descripcion = nuevaDescripcion;
         return this.descripcion;
     }
-    this.actualizarValor = function(nuevoValor)
-    {
-        if(nuevoValor >=0)
-        {
+    this.actualizarValor = function (nuevoValor) {
+        if (nuevoValor >= 0) {
             this.valor = nuevoValor;
         }
         return this.valor;
     }
-    this.mostrarGastoCompleto = function()
-    {
-        return('Gasto correspondiente a '+ this.descripcion+' con valor' + this.valor+ '€.\n'+
-                'Fecha: '+ this.fecha + '\nEtiquetas: \n')
+    this.mostrarGastoCompleto = function () {
+        
+         let gasto = ('Gasto correspondiente a ' + this.descripcion + ' con valor ' + this.valor + '€.\n' +
+            'Fecha: ' + Date("this.fecha") + '\nEtiquetas:')
+             this.etiquetas.forEach(element => {
+                gasto += "\n- " + element;
+            });
+            return gasto;
     }
 }
-function listarGastos()
-{
+function listarGastos() {
     return gastos;
 }
-function anyadirGasto()
-{
+function anyadirGasto() {
 
 }
-function borrarGasto()
-{
-    
+function borrarGasto() {
+
 }
-function calcularTotalGastos()
-{
-    
+function calcularTotalGastos() {
+
 }
-function calcularBalance()
-{
-    
+function calcularBalance() {
+
 }
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
 // Las funciones y objetos deben tener los nombres que se indican en el enunciado
