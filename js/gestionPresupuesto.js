@@ -25,9 +25,10 @@ function mostrarPresupuesto() {
         return mostrarP;
     }
 
-function CrearGasto(descripcion,valor,) {
+function CrearGasto(descripcion, valor, fecha = Date.now(), ...etiquetas) {
     // TODO
-    this.descripcion=descripcion;
+    this.fecha = fecha;
+    this.descripcion = descripcion;
     if (valor <0 || typeof valor!=='number') {
         this.valor = 0;
     }else 
@@ -37,17 +38,38 @@ function CrearGasto(descripcion,valor,) {
     this.mostrarGasto = function()
     {
         return `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €`;
-    }
-    this.actualizarDescripcion =function (descrip)
+    },
+    this.actualizarDescripcion = function (descrip)
     {
         this.descripcion=descrip;
-    }
-    this.actualizarValor = function(valoact) 
+    },
+    this.actualizarValor = function(valoActualizar) 
     {
-        if (valoact >= 0) 
+        if (valoActualizar >= 0) 
         {
-            this.valor = valoact;
+            this.valor = valoActualizar;
         }
+    },
+    this.mostrarGastoCompleto = function() 
+    {
+        let auxF;
+        let strigEtiquetas;
+        if (typeof this.fecha === "string")
+        {
+            auxF = Date.parse(this.fecha);
+        }else 
+        {
+            auxF = this.fecha;
+        }
+        /*let auxFecha = new Date(auxF);*/
+        strigEtiquetas = `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €.
+        Fecha: ${(auxF.toLocaleString())}
+        Etiquetas:`;
+        for(let etiqueta of this.etiquetas) 
+        {
+            strigEtiquetas += `- ${etiqueta}\n`
+        }
+        return strigEtiquetas;
     }
 } 
 
@@ -56,8 +78,8 @@ function listarGastos(){
 }
 function anyadirGasto(gasto){
     gasto.id = idGasto;
-    idGasto++;
     gastos.push(gasto);
+    idGasto++;
 }
 function borrarGasto(id){
     let aux = gastos.findIndex(gasto => gasto.id == id); //guardo la posicion en la que esta el objeto con dicho id//
@@ -67,7 +89,7 @@ function borrarGasto(id){
     }
 }
 function calcularTotalGastos(){
-    
+    let total = 0;  
 }
 function calcularBalance(){
     
