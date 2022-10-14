@@ -23,34 +23,35 @@ function mostrarPresupuesto()
     return "Tu presupuesto actual es de " + presupuesto + " €";
 }
 // revisar
-function CrearGasto(descripcion,valor,fecha,...etiquetas)
+function CrearGasto(descripcion,valor,fecha = Date.now(), ...etiquetas)
 {
-    this.myEtiquetas = [];
     if(valor < 0 || isNaN(valor))
     {
-        this.myValor = 0;
+        this.valor = 0;
     }    
     else
     {
-        this.myValor = valor;
+        this.valor = valor;
     }
-    if(Date.parse(fecha) == NaN)
+    if(typeof fecha === "string" && !isNaN(Date.parse(fecha)))
     {
-        this.myFecha = new Date();
+        this.fecha = Date.parse(fecha);
     }
     else
     {
-        this.myFecha = Date.parse(fecha);
+        this.fecha = Date.now()
     }
-    this.myEtiquetas = [...etiquetas]
-    this.myDescripcion = descripcion;
+    this.etiquetas = etiquetas
+    this.descripcion = descripcion;
     this.mostrarGasto = function () 
     {
-        return "Gasto correspondiente a " + this.myDescripcion + " con valor " + this.myValor + " €";
+        return "Gasto correspondiente a " + this.descripcion + " con valor " + this.valor + " €";
     }
     this.mostrarGastoCompleto = function () 
     {
-        return "Gasto correspondiente a " + this.myDescripcion + " con valor " + this.myValor + " €\nFecha: " + this.myFecha + "\n" + "Etiquetas:\n" + this.myEtiquetas;
+        let text = "Gasto correspondiente a " + this.descripcion + " con valor " + this.valor + " €.\nFecha: " + this.fecha.toLocaleString('en-GB') + "\n" + "Etiquetas:\n";
+        etiquetas.forEach(etiqueta =>{text += "- " + etiqueta + "\n"});
+        return text;
     }
     this.actualizarValor = function (nuevovalor) 
     {
@@ -65,22 +66,22 @@ function CrearGasto(descripcion,valor,fecha,...etiquetas)
     }
     this.actualizarFecha = function (nuevafecha) 
     {
-        if(Date.parse(fecha) == NaN)
+        if(typeof nuevafecha === "string" && !isNaN(Date.parse(nuevafecha)))
         {
-            this.myFecha = new Date();
+            this.fecha = Date.parse(nuevafecha);
         }
-    else
+        else
         {
-            this.myFecha = Date.parse(fecha);
+            this.fecha = Date.now()
         }
     }
-    this.anyadirEtiquetas(...nuevasetiquetas)
+    this.anyadirEtiquetas = function( )
     {
-        this.myEtiquetas = this.myEtiquetas + [...nuevasetiquetas];
+        
     }
-    this.borrarEtiquetas ()
+    this.borrarEtiquetas = function ()
     {
-        this.myEtiquetas = [];
+        this.etiquetas = [];
     }
 }
 function listarGastos()
