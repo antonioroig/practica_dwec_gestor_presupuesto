@@ -27,6 +27,16 @@ function CrearGasto(descripcion,valor,fecha=Date.now(), ...etiquetas)
 {
 
     this.descripcion = String(descripcion);
+    this.etiquetas = [...etiquetas];
+
+    if((typeof fecha === "string") && (!isNaN(Date.parse(fecha))))
+    {
+        this.fecha = Date.parse(fecha);
+    }
+    else
+    {
+        this.fecha = Date.now();
+    }
 
     if(valor >= 0 && (typeof valor === "number"))
     {
@@ -59,17 +69,6 @@ function CrearGasto(descripcion,valor,fecha=Date.now(), ...etiquetas)
             console.log(`El valor ${cambioVal} no es válido, no se ha alterado el valor actual.`);
         }
     }
-
-    if((typeof Fecha === "string") && (!isNaN(Date.parse(fecha))))
-    {
-        this.fecha = Date.parse(fecha);
-    }
-    else
-    {
-        this.fecha = Date.now();
-    }
-
-    this.etiquetas = [...etiquetas];
 }
 
 function listarGastos()
@@ -88,9 +87,9 @@ function borrarGasto(id)
 {
     for (let i = 0; i < gastos.length; i++) 
     {
-        if(id = gastos[i].id)
+        if(id === gastos[i].id)
         {
-            gastos.splice(gastos[i], 1);
+            gastos.splice(i, 1);
         }
     }    
 }
