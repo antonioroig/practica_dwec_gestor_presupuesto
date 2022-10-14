@@ -80,10 +80,30 @@ function CrearGasto(descripcion,valor,fecha,...etiqueta) {
         }
     },
 
-    this.anyadirEtiquetas = function(...etiquetasAAnyadir){
+    this.anyadirEtiquetas = function(...etiquetasAAnyadir)
+    {
+        if(etiquetasAAnyadir !== `undefined`)
+        {
+            for(let i= 0;i < etiquetasAAnyadir.length; i++)
+            {
+                if(!this.etiquetas.includes(etiquetasAAnyadir[i]))
+                {
+                    this.etiquetas.push(etiquetasAAnyadir[i]);
+                }
+            }
+        } 
+    },
 
-    } 
-
+    this.borrarEtiquetas = function(...nombre)
+    {
+        for(let i= 0;i < this.etiquetas.length; i++)
+        {
+            if(this.etiquetas[i] === nombre)
+            {
+                this.etiquetas.jsLibraries.filter((item) => item !== this.etiquetas[i])
+            }
+        }
+    },
     
     this.actualizarDescripcion  = function(descripcion)
     {
