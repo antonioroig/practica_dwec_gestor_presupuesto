@@ -22,7 +22,6 @@ function CrearGasto() {
 
         this.valor = Valor;
     }
-
     else{
         this.valor = 0;
     };
@@ -30,14 +29,19 @@ function CrearGasto() {
     this.mostrarGasto = function (){
         return `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €`;
     };
-    
+
     this.actualizarDescripcion = function(cadena){
         this.descripcion = cadena;
     };
 
-
-
-
+    this.actualizarValor = function(valorActualizado){
+        if(valorActualizado >= 0){
+            this.valor = valorActualizado
+        }
+        else{
+            console.log(`El valor introducido es negativo, no ha podido ser cambiado`)
+        };
+    };
 }
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
