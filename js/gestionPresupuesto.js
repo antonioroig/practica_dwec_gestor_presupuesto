@@ -12,7 +12,8 @@ function actualizarPresupuesto(valor) {
     if(valor >= 0 && typeof valor === `number`){
          presupuesto = valor;
          return valor;
-    }else{
+    }else
+    {
         console.log("error: el numero es menor a 0");
         return -1;
     }
@@ -23,34 +24,48 @@ function mostrarPresupuesto() {
     return (`Tu presupuesto actual es de ${presupuesto} €`); 
 }
 
-   function CrearGasto(pdescripcion,pValor,pfecha,...petiqueta){
+   function CrearGasto(pdescripcion,pValor,pfecha,...petiqueta)
+   {
 
+    if([...petiqueta] === `undefined`)
+    {
+        this.etiquetas = [];
+    }else
+    {
+        this.etiquetas = [...petiqueta];
+    }
+
+    if(isNaN(Date.parse(pfecha)))
+    {
+        this.fecha = Date.now();   
+    }else{
+        
+        this.fecha = Date.parse(pfecha);
+    }
+
+    
     if(pValor < 0 || typeof(pValor) !== `number`){
         pValor = 0;
     }
 
 
-    if( pfecha === `undefined` || Date.parse(pfecha) !== `number`)
-    {
-        this.fecha = new Date();
-    }else
-    {
-
-        this.fecha = Date.parse(pfecha);
-    }
-
-
-    if(petiqueta === `undefined`)
-    {
-        this.etiqueta = [];    
-    }else{
-        this.etiqueta = [].push(petiqueta);
-    }
-
     this.valor = pValor,
-    this.descripcion=`${pdescripcion}`,
+    this.descripcion= pdescripcion,
 
-    
+    this.mostrarGastoCompleto = function(){
+        let etiquetas = ``;
+        for(let eti of this.etiquetas){
+            etiquetas += `- ${eti}\n`;
+        }
+        return (`Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €.\nFecha: ${new Date(this.fecha).toLocaleString()}\nEtiquetas:\n${etiquetas}`)
+    },
+
+    this.actualizarFecha = function(pfecha){
+            if(!isNaN(Date.parse(pfecha)))
+        {
+            this.fecha = Date.parse(pfecha);   
+        }
+    }
 
     this.mostrarGasto = function(){
        return (`Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €`);
