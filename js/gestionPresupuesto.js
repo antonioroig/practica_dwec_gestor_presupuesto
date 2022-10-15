@@ -68,9 +68,14 @@ function CrearGasto(descripcion,valor, fecha = Date.now(), ...etiquetas) {
     },
 
     this.mostrarGastoCompleto = function(){
-       
-        return(`Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €.\nFecha: ${this.fecha.toLocaleString()}\nEtiquetas:\n${etiquetas}`);
-    
+
+        let mostrarPantalla = `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €.\nFecha: ${new Date(this.fecha).toLocaleString()}\nEtiquetas:\n`;
+
+        for(let i = 0; i < this.etiquetas.length; i++){
+            mostrarPantalla += "- " + this.etiquetas[i]+`\n`;
+        }
+        return mostrarPantalla;
+        
     },
 
     this.actualizarFecha = function(nuevaFecha){
@@ -81,7 +86,7 @@ function CrearGasto(descripcion,valor, fecha = Date.now(), ...etiquetas) {
         }
     },
     
-    this.anyadirEtiquetas = function(nuevasEtiquetas){
+    this.anyadirEtiquetas = function(...nuevasEtiquetas){
         nuevasEtiquetas.forEach(element => {
             if(!this.etiquetas.includes(element))
             {
@@ -90,8 +95,14 @@ function CrearGasto(descripcion,valor, fecha = Date.now(), ...etiquetas) {
         });
     },
     
-    this.borrarEtiquetas = function(){
-        //this.etiquetas = [...etiquetas];
+    this.borrarEtiquetas = function(...viejasEtiquetas){
+
+        viejasEtiquetas.forEach(element => {
+            if(this.etiquetas.includes(element))
+            {
+                this.etiquetas.splice(this.etiquetas.indexOf(element),1)
+            }
+        });
         
     }
 
