@@ -27,7 +27,9 @@ function mostrarPresupuesto() {
 
 function CrearGasto(descripcion, valor, fecha = Date.now(), ...etiquetas) {
     // TODO
-    this.etiquetas = [...etiquetas] 
+    this.etiquetas = [...etiquetas];
+    this.fecha = (typeof fecha === 'string') ?  Date.parse(fecha) : fecha;
+    //forma diferente de hace el método de la línea anterior (forma más larga)//
     /*if (typeof fecha === 'string')
     {
         this.fecha = Date.parse(fecha);
@@ -36,7 +38,6 @@ function CrearGasto(descripcion, valor, fecha = Date.now(), ...etiquetas) {
     {
         this.fecha = fecha;
     }*/
-    this.fecha = (typeof fecha === 'string') ?  Date.parse(fecha) : fecha;
     this.descripcion = descripcion;
     if (valor <0 || typeof valor!=='number') {
         this.valor = 0;
@@ -76,8 +77,8 @@ function CrearGasto(descripcion, valor, fecha = Date.now(), ...etiquetas) {
         Etiquetas:`;
         for(let etiqueta of this.etiquetas) 
         {
-            strigEtiquetas += `- ${etiqueta}\n`
-        }
+            strigEtiquetas += `- ${etiqueta}\n`;
+        };
         return strigEtiquetas;
     },
     this.actualizarFecha = function(stringFecha)
@@ -89,9 +90,13 @@ function CrearGasto(descripcion, valor, fecha = Date.now(), ...etiquetas) {
         }
 	},
     this.anyadirEtiquetas = function(...etiquetas)
-    {
-
-    }
+    {  
+        if ( etiquetas.length > 0 )
+        {
+            const aux = new Set ([...etiquetas]);
+            this.etiquetas.push(Array.from(aux));           
+        }
+    }  
 
 } 
 
