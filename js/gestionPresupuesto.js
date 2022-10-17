@@ -2,7 +2,7 @@
 
 // TODO: Variable global
 var presupuesto = 0;
-var gastos = new Array();
+var gastos = [];
 var idGasto = 0;
 
 function actualizarPresupuesto(valor) {
@@ -52,28 +52,37 @@ function CrearGasto(descripcionGasto, valorGasto, fecha = Date.now(), ...etiquet
         }
     }
     this.mostrarGastoCompleto = function(){
-        console.log(`Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €.`);
-        console.log(`Fecha: ${this.fecha}`);
-        console.log(`Etiquetas:`);
+        return `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €.
+        Fecha: ${Date(this.fecha.toFixed())}
+        Etiquetas: 
+        - ${etiquetas()}`;
     }
 }
 
 function listarGastos(){
     return gastos;
 }
-function anyadirGasto(id){
-    var gastoNuevo = CrearGasto();
-    gastos.push(gastos(gastoNuevo));
+function anyadirGasto(gasto){
+    gasto.id = idGasto;
     idGasto++;
+    gastos.push(gasto);
 }
 function borrarGasto(id){
-    gastos.splice(id, 1);
+    for(let i = 0; i < gastos.length; i++){
+        if(gastos[i].id == id){
+            gastos.splice(i, 1);
+        }
+    }
 }
 function calcularTotalGastos(){
-
+    var total = 0;
+    gastos.forEach(gasto => {
+        total += gasto.valor;
+    });
+    return total;
 }
 function calcularBalance(){
-
+    return presupuesto - calcularTotalGastos();
 }
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
 // Las funciones y objetos deben tener los nombres que se indican en el enunciado
