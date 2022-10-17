@@ -72,7 +72,7 @@ function CrearGasto(descripcion, valor, fecha, ... etiquetas) {
     };
     // * * * * * * * * * * * * * * * *
     // Actividad 2 - Métodos
-    // mostrarGastoCompleto
+    // Método 'mostrarGastoCompleto' del objeto gasto
     this.mostrarGastoCompleto = function(){
         let resp = `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €.\n`;
         resp += `Fecha: ` + (new Date (this.fecha)).toLocaleString() + `\n`;
@@ -82,64 +82,82 @@ function CrearGasto(descripcion, valor, fecha, ... etiquetas) {
         }
           return resp;
     };
-    // actualizarFecha
+    // Método 'actualizarFecha' del objeto gasto
     this.actualizarFecha = function(fecha){
         if(!isNaN(Date.parse(fecha))){
             this.fecha = Date.parse(fecha);
         }
     }
-    // anyadirEtiquetas
-    this.anyadirEtiquetas = function(etiqueta){
+    // Método 'anyadirEtiquetas' del objeto gasto
+    this.anyadirEtiquetas = function(... etiqueta){
         
-        
+        // Para comprobar valores Repetidas / Duplicadas
+        let etiquetasRepetidas = false;       
 
+        for(let i = 0; i < etiqueta.length; i++){
 
+            for(let j = 0; j < this.etiquetas.length; j++){
+                // comprobar si es repetida
+                if(etiqueta[i] == this.etiquetas[j]){
+                    etiquetasRepetidas = true;
+                }
+            }
+            // Añadir si no es repetida
+            if(!etiquetasRepetidas){
+                this.etiquetas.push(etiqueta[i]);
+            }
+            etiquetasRepetidas = false;       
+        }
+    }
+    // Método 'borrarEtiquetas' del objeto gasto
+    this.borrarEtiquetas = function(... etiqueta){
 
-
-        
-        /*let etiquetasRepetidas = false;
-
-        console.log(etiqueta.length + " " + etiqueta)
-
-        for (var i = 0; i < etiqueta.length; i++) {
-           
-           for(var j = 0; j < etiquetas.length; j++){
-
-            if(etiquetas[j] == etiqueta[i]){
-                etiquetasRepetidas = true;
-                break;
+        for(let i = 0; i < etiqueta.length; i++){
+           for(let j = 0; j < this.etiquetas.length; j++){
+               // comprobar si existe
+               if(etiqueta[i] == this.etiquetas[j]){
+                   this.etiquetas.splice(j,1);
+                   break;
                }
            }
-           if(!etiquetasRepetidas){
-            this.etiquetas.push(etiqueta[i])
-            etiquetasRepetidas = false;
-           }*/
         }
-        
+    }
+}
     
-    }    
-
-    
-   
-    
-
 /* - - - - - - - - - - - - - - - - */
 //++++
 function listarGastos(){
     return gastos;
 }
-
-function anyadirGasto(){
-
+//Añade el gasto que se pasa como parámetro a la variable global 'gastos'
+function anyadirGasto(gasto){
+    gasto.id = idGasto;
+    idGasto += 1;
+    gastos.push(gasto);
 }
-function borrarGasto(){
+// Elimina de la variable global 'gastos' el gasto cuyo id se pasa como parámetro
+function borrarGasto(idToDelete){
 
+    for(let i = 0; i < gastos.length;i++){
+        if(gastos[i].id == idToDelete){
+            gastos.splice(i,1);
+            break;
+        }
+    }
 }
+// Calcula la suma de todos los gastos presentes en la variable global 'gastos'
 function calcularTotalGastos(){
 
+    let result = 0;
+    for(let i = 0; i < gastos.length; i++){
+        result += gastos[i].valor;
+    }
+    return result;
 }
+// Calcula el balance (presupuesto - gastos totales) a partir de los gastos almacenados en la variable global 'gastos':
 function calcularBalance (){
-
+    let balance = presupuesto - calcularTotalGastos();
+    return balance;
 }
 /* NO MODIFICAR A PARTIR DE AQUÍ exportación de funciones y objetos creados para poder ejecutar los tests.
 Las funciones y objetos deben tener los nombres que se indican en el enunciado
