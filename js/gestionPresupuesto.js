@@ -46,10 +46,14 @@ function CrearGasto(descripcion,valor,fecha,...etiquetas) {
     }
 
     this.mostrarGastoCompleto = function(){
+        var texto =`Gasto correspondiente a ` + this.descripcion + ` con valor ` + this.valor + ` €.\n`
+        this.fecha = Date
+        texto += (`Fecha: ` + `\nEtiquetas:\n`)
         
-        return (`Gasto correspondiente a ` + this.descripcion + ` con valor ` + this.valor + ` €.\n
-        Fecha: ` + this.fecha.toLocaleString() + `\n Etiquetas: \n`)
-        
+        this.etiquetas.forEach(etiqueta => 
+            texto += `- ` + etiqueta + `\n`
+        );
+        return texto;
     }
 
     this.actualizarDescripcion = function(nuevaDescripcion){
@@ -70,8 +74,8 @@ function CrearGasto(descripcion,valor,fecha,...etiquetas) {
     }
 /*
     this.anyadirEtiquetas(...arrEtiq) = function(){
-        let nuevoSet = new Set();//No se pueden meter duplicados
-        //array tiene una funcion para pasar a set, es decir que se borran los duplicados del array
+        let nuevasEtiq = new Set(arrEtiq);
+        etiquetas.concat(nuevasEtiq);
     }    */
 }
 
