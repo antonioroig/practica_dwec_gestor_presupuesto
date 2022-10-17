@@ -57,6 +57,25 @@ function CrearGasto(descripcionGasto, valorGasto, fecha = Date.now(), ...etiquet
         Etiquetas: 
         - ${etiquetas()}`;
     }
+    this.actualizarFecha = function(fecha){
+        if((!isNaN(Date.parse(fecha))) && typeof fecha === 'string'){
+            this.fecha = Date.parse(fecha);
+        }
+    }
+    this.anyadirEtiquetas = function(...etiquetas){
+        let repetido = 0;
+        for(let i = 0; i < etiquetas.length; i++){
+            for(let j = 0; j < this.etiquetas; j++){
+                if(etiquetas[i] == this.etiquetas[j]){
+                    repetido = 1;
+                }
+            }
+            this.etiquetas.push(etiqueta);
+        }
+    }
+    this.borrarEtiquetas = function(){
+
+    }
 }
 
 function listarGastos(){
