@@ -2,7 +2,8 @@
 "use strict";
 // TODO: Variable global
 var presupuesto = 0;
-
+var gastos = [];
+var idGasto = 0;
 function actualizarPresupuesto(valor) {
     if(valor >= 0  && typeof valor === `number`)
     {
@@ -18,12 +19,7 @@ function actualizarPresupuesto(valor) {
 function mostrarPresupuesto() {
     return (`Tu presupuesto actual es de ${presupuesto} €`);
 }
-    var gastos = [];
-    var idGasto = 0;
 
-function listarGastos(){
-    return gastos;
-}
 //parametro rest
 function CrearGasto(descripcion,valor,fecha,...etiqueta) {
 
@@ -96,11 +92,11 @@ function CrearGasto(descripcion,valor,fecha,...etiqueta) {
 
     this.borrarEtiquetas = function(...nombre)
     {
-        for(let n  of nombre)
+        for(let j = 0;j < nombre.length;j++)
         {
             for(let i= 0;i < this.etiquetas.length; i++)
             {
-                if(this.etiquetas[i] == n)
+                if(nombre[j] === this.etiquetas[i])
                 {
                     this.etiquetas.splice(i,1);
                 }
@@ -130,9 +126,7 @@ function CrearGasto(descripcion,valor,fecha,...etiqueta) {
     
     function anyadirGasto(gasto)
     {
-        gasto={
-            id :idGasto,
-        }
+        gasto.id =idGasto;
         idGasto++;
         gastos.push(gasto);
     }
@@ -140,7 +134,8 @@ function CrearGasto(descripcion,valor,fecha,...etiqueta) {
 
     function borrarGasto(id)
     {
-        for(let i = 0; i < gastos.length;i++)
+
+        for(let i = 0; i < gastos.length; i++)
         {
             if(gastos[i].id === id)
             {
@@ -148,17 +143,24 @@ function CrearGasto(descripcion,valor,fecha,...etiqueta) {
             }
         }
     }
+    
 
+    function listarGastos(){
+        return gastos;
+    }
 
     function calcularTotalGastos()
     {
-        return gastos.reduce((suma,gasto) => suma + gasto.valor);
+        let suma = 0;
+        for(let i = 0;i < gastos.length;i++)
+        suma += gastos[i].valor;
+        return suma;
     }
 
 
     function calcularBalance()
     {
-
+        return presupuesto - calcularTotalGastos();
     }
 
 
