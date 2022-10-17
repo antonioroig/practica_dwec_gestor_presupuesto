@@ -2,9 +2,9 @@
 
 // TODO: Variable global
 
-var presupuesto = 0;
-var gastos = '';
-var idGasto = 0;
+let presupuesto = 0;
+let gastos = [];
+let idGasto = 0;
 
 function actualizarPresupuesto(valor) {
     if(valor >= 0)
@@ -60,7 +60,7 @@ function CrearGasto(descGasto, valor, fec = Date.now(), ...etiquetas) {
     }
 
     this.mostrarGastoCompleto = function(){
-
+        return `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €.\nFecha: ${this.fecha.toLocaleString('en-UK')}\nEtiquetas:\n${this.etiquetas}`;
     }
 
     this.actualizarFecha = function(){
@@ -80,11 +80,13 @@ function listarGastos() {
     return gastos;
 }
 
-function anyadirGasto() {
-
+function anyadirGasto(gasto) {
+    gasto.id = idGasto;
+    idGasto++;
+    gastos.push(gasto);
 }
 
-function borrarGasto() {
+function borrarGasto(id) {
 
 }
 
