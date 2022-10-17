@@ -22,13 +22,14 @@ function actualizarPresupuesto(dinero)
  
 function mostrarPresupuesto()
 {
-    return `Tu presupuesto actual es de ${presupuesto} €`;
+    return (`Tu presupuesto actual es de ${presupuesto} €`);
     // TODO
 }
 
 
 function CrearGasto(descripcion,valor,fecha= Date.now(), ...etiquetas )
  { 
+
 
     if (typeof fecha ==="string" )
     {
@@ -59,6 +60,23 @@ function CrearGasto(descripcion,valor,fecha= Date.now(), ...etiquetas )
                 this.valor=nuevoValor
             }
         }
+
+         this.mostrarGastoCompleto = function()
+         {
+            return (
+                `Gasto correspondiente a ${descripcion} con valor ${valor} €.
+                    Fecha: FECHA_EN_FORMATO_LOCALIZADO
+                    Etiquetas:
+                    - ETIQUETA 1
+                    - ETIQUETA 2
+                    - ETIQUETA 3`
+                    )
+        }
+        function actualizarFecha(fecha)
+{
+
+}
+        
     // TODO
 }
 
@@ -70,9 +88,12 @@ function listarGastos(){
 }
 function anyadirGasto(gasto){
 
-    gasto=[
-        id = idgastos
-    ];
+    gasto={
+        "id" : idgastos,
+        "fecha" :new Date(),
+        "etiqutas" : [],
+    }
+    
     
     idgastos++;
     gastos.push(gasto);
@@ -103,7 +124,18 @@ function calcularBalance(){
 }
 
 
+function actualizarFecha(fecha)
+{
 
+}
+function anyadirEtiquetas()
+{
+        
+}
+
+function borrarEtiquetas(){
+
+}
 
 
 
