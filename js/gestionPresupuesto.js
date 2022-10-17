@@ -4,7 +4,8 @@
 // TODO: Variable global
 "use strict"
 let presupuesto = 0 ;
- 
+ let gastos=[];
+ let idgastos;
 function actualizarPresupuesto(dinero)
 {
    if (typeof dinero ==="number" && dinero > 0 ){
@@ -26,9 +27,13 @@ function mostrarPresupuesto()
 }
 
 
-function CrearGasto(descripcion,valor)
- {
+function CrearGasto(descripcion,valor,fecha= Date.now(), ...etiquetas )
+ { 
 
+    if (typeof fecha ==="string" )
+    {
+        this.fecha =fecha;
+    }
         this.descripcion = descripcion;
 
         if (typeof valor ==="number" && valor > 0)
@@ -57,7 +62,45 @@ function CrearGasto(descripcion,valor)
     // TODO
 }
 
+function listarGastos(){
 
+        
+    return gastos; 
+
+}
+function anyadirGasto(gasto){
+
+    gasto=[
+        id = idgastos
+    ];
+    
+    idgastos++;
+    gastos.push(gasto);
+    
+}
+function borrarGasto(id){
+for (let i =0 ; i< gastos.length ; i++){
+
+    if (gastos[i].id== id)
+    {
+       delete gastos[i];
+    }
+}
+    
+}
+function calcularTotalGastos(){
+    let totalGasto ;
+    for (let i =0 ; i< gastos.length ; i++){
+        
+        totalGasto += gastos[i]
+    }
+    return totalGasto;
+}
+function calcularBalance(){
+    let totalGasto= calcularTotalGastos();
+    let balance = presupuesto - totalGasto;
+    return balance;
+}
 
 
 
@@ -70,7 +113,12 @@ function CrearGasto(descripcion,valor)
 export   {
     mostrarPresupuesto,
     actualizarPresupuesto,
-    CrearGasto
+    CrearGasto,
+    listarGastos, 
+    anyadirGasto, 
+    borrarGasto, 
+    calcularTotalGastos ,
+     calcularBalance 
    
 }
  
