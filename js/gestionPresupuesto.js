@@ -21,10 +21,10 @@ function mostrarPresupuesto(){
     return `Tu presupuesto actual es de ${presupuesto} €`;
 }
 
-function CrearGasto(descripcion, valor, fecha/*= Date.now()*/, ...etiquetas) { 
+function CrearGasto(descripcion, valor, fecha = Date.now(), ...etiquetas) { 
     
     this.descripcion = descripcion;
-    this.etiquetas = new Array();
+    this.etiquetas =[ ... etiquetas];
     
     // Comprueba el valor
     if(valor >= 0 && typeof valor === 'number'){
@@ -33,22 +33,30 @@ function CrearGasto(descripcion, valor, fecha/*= Date.now()*/, ...etiquetas) {
     else{
         this.valor = 0;
     }
-    if(Date.parse(fecha) != `NaN` && typeof fecha === 'string'){
-        let aux = (new Date(fecha).getTime());
-        this.fecha = aux; 
+    if(typeof fecha === 'string'){
+        if(!isNaN(Date.parse(fecha)) && typeof fecha === 'string'){
+            this.fecha =  Date.parse(fecha);
+        }else{
+            this.fecha = Date.now();
+        }
     }else{
-        this.fecha = fecha.Date.now();
+        this.fecha = Date.now();
     }
     
     // Métodos:
+    // Revisar
     this.mostrarGastoCompleto = function(){
-        let res =  `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €.\n`
-        res += `Fecha: ${this.Fecha}.\n`
-        res +=`Etiquetas:\n`
-        for (let etiquetas of etiquetas){
-            res += `-${this.etiquetas} \n`
-        }        
-        return res ;
+        let etiquetasAux = this.etiquetas;
+        let fechaAux = new Date(this.fecha);
+        fechaAux = fechaAux.getTime();
+        let aux = "";
+        for (let i = 0; i < etiquetas.length; i++){
+            aux += `\n- ${etiquetasAux[i]}`
+        }
+        let res =  `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €.`
+        res += `\nFecha: ${fechaAux}.`
+        res +=`\nEtiquetas:`
+        return res + aux;
     },
     this.actualizarDescripcion = function(descripcionActualizada){
         if(typeof descripcionActualizada === 'string'){
@@ -60,18 +68,20 @@ function CrearGasto(descripcion, valor, fecha/*= Date.now()*/, ...etiquetas) {
             this.valor = valorActualizado;
         }
     },
-    // Revisar
+    // Revisar - OJO
     this.anyadirEtiquetas = function (... etiquetas){
-        this.etiquetas.add(etiquetas);
+        this.etiquetas.push(... etiquetas);
     },
     // Revisar
     this.borrarEtiquetas = function (... etiquetas){
 
     },
-    //Revisar
+    // Check
     this.actualizarFecha= function(fechaIntroducida){
-        if(!Date.parse(fechaIntroducida) === `NaN` && typeof fechaIntroducida === 'string'){
-            this.fecha = Date.parse(fechaIntroducida).getTime();
+        if(typeof fechaIntroducida === 'string'){
+            if(!isNaN(Date.parse(fechaIntroducida) )){
+                this.fecha = Date.parse(fechaIntroducida);
+            }
         }
     }
 }
