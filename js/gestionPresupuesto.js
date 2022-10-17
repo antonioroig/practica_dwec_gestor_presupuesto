@@ -55,7 +55,7 @@ function CrearGasto(descripcion,valor,fecha,...etiqueta) {
         
     this.mostrarGasto = function()
     {
-        
+        return (`Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €`);
     },
 
     this.mostrarGastoCompleto = function()
