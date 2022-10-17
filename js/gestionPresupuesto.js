@@ -60,13 +60,13 @@ function CrearGasto(pdescripcion, pvalor, pfecha = Date.now(), ... petiquetas) {
                 petiquetas.forEach((pitem) =>{
                     esta = 0,
                     this.etiquetas.forEach((item) =>{
-                        if(item === pitem)
+                        if(pitem === item)
                         {
                             esta = 1
                         }
                     })
                     if(esta === 0){
-                        this.etiquetas.push(petiquetas)
+                        this.etiquetas.push(pitem)
                     }
                 });
                 
@@ -87,9 +87,24 @@ function CrearGasto(pdescripcion, pvalor, pfecha = Date.now(), ... petiquetas) {
                     this.fecha = Date.parse(pfecha);
                 }
             }
-    
+            this.borrarEtiquetas = function(... petiquetas){
+                let item
+                let pitem
+                for (let i = 0; i < petiquetas.length; i++) {
+                    pitem = petiquetas[i]
+                    for(let j = this.etiquetas.length; j >= 0; j--) {
+                        item = this.etiquetas[j]
+                        if(pitem == item){
+                            this.etiquetas.splice(j, 1)
+
+                        }
+                    }
+                  }
+                };
+                
+            }
         
-}
+
 function listarGastos(){
     return gatos;
 }
