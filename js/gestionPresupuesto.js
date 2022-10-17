@@ -63,8 +63,10 @@ function CrearGasto(descGasto, valor, fec = Date.now(), ...etiquetas) {
         return `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €.\nFecha: ${this.fecha.toLocaleString('en-UK')}\nEtiquetas:\n${this.etiquetas}`;
     }
 
-    this.actualizarFecha = function(){
-
+    this.actualizarFecha = function(newFecha){
+        if((typeof newFecha === 'string') && (!isNaN(Date.parse(newFecha)))){
+            this.fecha = Date.parse(newFecha);
+        }
     }
 
     this.anyadirEtiquetas = function(){
