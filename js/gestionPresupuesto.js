@@ -61,12 +61,33 @@ function mostrarPresupuesto() {
     },
 
     this.actualizarFecha = function(pfecha){
+
             if(!isNaN(Date.parse(pfecha)))
         {
             this.fecha = Date.parse(pfecha);   
         }
-    }
+    },
 
+    this.anyadirEtiquetas = function(...petiqueta){
+        if(petiqueta !== `undefined`){
+            for(let i = 0; i < petiqueta.length; i++){
+                if(!this.etiquetas.includes(petiqueta[i])){
+                    this.etiquetas.push(petiqueta[i]);
+                }
+            }
+        }
+    },
+
+    this.borrarEtiquetas = function(...petiqueta){
+        for(let j = 0; j < petiqueta.length; j++){
+            for(let i = 0; i < this.etiquetas.length; i++){
+                if(petiqueta[j] === this.etiquetas[i]){
+                    this.etiquetas.splice(i, 1)
+                }
+            }
+        }    
+    },
+    
     this.mostrarGasto = function(){
        return (`Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €`);
     },
@@ -87,13 +108,32 @@ function mostrarPresupuesto() {
 {
     return gastos;
 }
-function anyadirGasto(pid){}
+function anyadirGasto(gasto){
+    gasto.id = idGasto
+    idGasto++;
+    gastos.push(gasto);
+}
 
-function borrarGasto(){}
+function borrarGasto(id){
+        for(let i= 0; i < gastos.length; i++){
+            if(gastos[i].id === id){
+                gastos.splice(i, 1)
+            }
+        }
+}
 
-function calcularTotalGastos(){}
+function calcularTotalGastos(){
+    let suma = 0;
+    for(let i = 0; i < gastos.length; i++){
+        suma += gastos[i].valor;
+    }
+    return suma;
+}
 
-function calcularBalance(){}
+function calcularBalance(){
+    let gastoTotal = calcularTotalGastos();
+    return presupuesto - gastoTotal;
+}
            
   
 
