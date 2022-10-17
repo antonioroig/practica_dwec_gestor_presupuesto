@@ -24,7 +24,7 @@ function mostrarPresupuesto() {
 
 function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
     // TODO
-    
+
     this.descripcion = descripcion;
 
     if((typeof(valor) == "number") && (valor >= 0)){
@@ -33,7 +33,9 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
     }else(this.valor = 0)
 
     if((fecha == undefined) || Date.parse(fecha) == "NaN"){
-        this.fecha = Date(Date.now())
+        this.fecha = Date.now();
+    }else{
+        this.fecha = Date.parse(fecha);
     }
    
     this.etiquetas = [];
@@ -53,6 +55,14 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
         }
     }
 
+    if(etiquetas = `undefined`){
+        this.etiquetas = etiquetas;
+    }
+    
+    this.anyadirEtiquetas  = function(...etiquetas){
+        if (this.etiquetas.find())
+        etiquetas.forEach(etiqueta => this.etiquetas.push(etiqueta));
+    }
 }
 
 function listarGastos(){
