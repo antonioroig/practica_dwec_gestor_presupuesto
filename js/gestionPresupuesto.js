@@ -2,8 +2,8 @@
 // David Llinares
 // TODO: Variable global
 let presupuesto = 0;
-let gatos = [];
-gatos.idGastos = 0;
+let gastos = new Array();
+let idGastos = 0;
 function actualizarPresupuesto(parametro) {
     if(parametro >= 0)
     {
@@ -106,19 +106,31 @@ function CrearGasto(pdescripcion, pvalor, pfecha = Date.now(), ... petiquetas) {
         
 
 function listarGastos(){
-    return gatos;
+    return gastos;
 }
-function anyadirGasto(){
-
+function anyadirGasto(pgasto){
+    pgasto.id=idGastos;
+    idGastos++;
+    gastos.push(pgasto)
 }
-function borrarGasto(){
-
+function borrarGasto(pid){
+    for(let i = 0; i < gastos.length; i++){
+        if(gastos[i].id == pid){
+            gastos.splice(i, 1);
+        }
+    }
 }
 function calcularTotalGastos(){
-
+    let total = 0;
+    for(let i = 0; i < gastos.length; i++){
+        total = total + gastos[i].valor;
+    }
+    return(total);
 }
 function calcularBalance(){
-
+    let balance;
+    balance = presupuesto - calcularTotalGastos();
+    return(balance);
 }
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
 // Las funciones y objetos deben tener los nombres que se indican en el enunciado
