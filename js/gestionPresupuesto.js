@@ -4,6 +4,9 @@
 
 var presupuesto = 0;
 
+var gastos = [];
+var idGasto = 0;
+
 function actualizarPresupuesto(valor) {
     if(valor >= 0)
     {
@@ -20,8 +23,18 @@ function mostrarPresupuesto() {
     return `Tu presupuesto actual es de ${presupuesto} €`;
 }
 
-function CrearGasto(descripcion, valor) {
+function CrearGasto(descripcion, valor, fecha=Date.now(), ...etiquetas) {
     this.descripcion = descripcion;
+    this.etiquetas = [...etiquetas];
+    if(typeof fecha == 'string')
+    {
+        this.fecha = Date.parse(fecha);
+    }
+    else
+    {
+        this.fecha = fecha;
+    }
+
     if(valor > -1)
     {
         this.valor = valor;
@@ -30,7 +43,7 @@ function CrearGasto(descripcion, valor) {
         this.valor = 0;
     }
     this.mostrarGasto = function(){
-        return `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €`;;
+        return `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €`;
     };
     this.actualizarDescripcion = function(nueva_descripcion){
         this.descripcion = nueva_descripcion;
@@ -41,6 +54,31 @@ function CrearGasto(descripcion, valor) {
             this.valor = nuevo_valor;
         }
     }
+    this.anyadirEtiquetas = function(...etiquetas){
+        if(etiquetas.length >= 1)
+        {
+            const aux = set(...etiquetas);
+            etiquetas.push(aux);
+        }
+    }
+}
+
+function listarGastos() {
+    return gastos;
+}
+function anyadirGasto(gasto) {
+    gasto.id = idGasto;
+    idGasto++;
+
+}
+function borrarGasto(idGasto) {
+    
+}
+function calcularTotalGastos() {
+
+}
+function calcularBalance() {
+
 }
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
@@ -49,5 +87,10 @@ function CrearGasto(descripcion, valor) {
 export   {
     mostrarPresupuesto,
     actualizarPresupuesto,
-    CrearGasto
+    CrearGasto,
+    listarGastos,
+    anyadirGasto,
+    borrarGasto,
+    calcularTotalGastos,
+    calcularBalance
 }
