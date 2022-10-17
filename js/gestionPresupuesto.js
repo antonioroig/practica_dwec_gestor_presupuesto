@@ -43,6 +43,18 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
         return (`Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €`);
     }
 
+    this.mostrarGastoCompleto = function(){
+        let fechaBien = Date(this.fecha);
+        var dia = fechaBien.getDay();
+        var texto = "Gasto correspondiente a "+this.descripcion+" con valor "+ this.valor;
+        texto+= " €.\nFecha: "+ dia+"\nEtiquetas:\n";
+        this.etiquetas.forEach(etiqueta=>{
+            texto+="- "+etiqueta+"\n";
+        });
+
+        return texto;
+    }
+
     this.actualizarDescripcion = function(descripcion){
         this.descripcion = descripcion;
     }
@@ -54,7 +66,7 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
     }
 
     this.anyadirEtiquetas = function(etiquetas){
-        this.etiquetas= etiquetas;
+        this.etiquetas = etiquetas;
     }
 
     this.anyadirEtiquetas(etiquetas);
