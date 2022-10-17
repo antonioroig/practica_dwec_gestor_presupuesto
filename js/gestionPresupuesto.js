@@ -46,16 +46,10 @@ function CrearGasto(descripcion, valor, fecha = Date.now(), ...etiquetas) {
     // Métodos:
     // Revisar
     this.mostrarGastoCompleto = function(){
-        let etiquetasAux = this.etiquetas;
-        let fechaAux = new Date(this.fecha);
-        fechaAux = fechaAux.getTime();
+        let fecAux = new Date(this.fecha);
         let aux = "";
-        for (let i = 0; i < etiquetas.length; i++){
-            aux += `\n- ${etiquetasAux[i]}`
-        }
-        let res =  `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €.`
-        res += `\nFecha: ${fechaAux}.`
-        res +=`\nEtiquetas:`
+        let res =  `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €.\nFecha: ${fecAux.getDate()}/${(fecAux.getMonth() + 1) }/${fecAux.getFullYear()} ${fecAux.getHours()}:${fecAux.getMinutes()}:${fecAux.getMilliseconds()}.\nEtiquetas:`
+        this.etiquetas.forEach(element => aux += `\n- ${element}`)
         return res + aux;
     },
     this.actualizarDescripcion = function(descripcionActualizada){
@@ -70,11 +64,16 @@ function CrearGasto(descripcion, valor, fecha = Date.now(), ...etiquetas) {
     },
     // Revisar - OJO
     this.anyadirEtiquetas = function (... etiquetas){
-        this.etiquetas.push(... etiquetas);
+        for(let i = 0 ; i < etiquetas.length; i++){
+            if(!etiquetas[i] == this.etiquetas[i]){
+                this.etiquetas.push(etiquetas[i])
+            };
+        }
+        // this.etiquetas.push(... etiquetas);
     },
     // Revisar
     this.borrarEtiquetas = function (... etiquetas){
-
+       
     },
     // Check
     this.actualizarFecha= function(fechaIntroducida){
