@@ -28,19 +28,29 @@ function listarGastos(){
 }
 //
 function anyadirGasto(gasto){
-
+    gasto.id = idGasto;
+    idGasto++;
+    gastos.push(gasto);
 }
 //
-function borrarGasto(){
-
+function borrarGasto(id){
+    for(var i = 0; i < gastos.length; i++){
+        if(gastos[i].id === id){
+            gastos.splice(i,1);
+        }
+    }
 }
 //
 function calcularTotalGastos(){
-
+    let valorGastos = 0;
+    for(var i = 0; i < gastos.length; i++){
+        valorGastos += gastos[i].valor;
+    }
+    return valorGastos;
 }
 //
 function calcularBalance(){
-    
+    return (presupuesto - calcularTotalGastos())
 }
 function CrearGasto(descripcion,valor,fecha,...etiqueta) {
 
@@ -81,8 +91,22 @@ function CrearGasto(descripcion,valor,fecha,...etiqueta) {
         }
     }
     //
-    this.anyadirEtiquetas = function(){
-        
+    this.anyadirEtiquetas = function(...etis){
+        for(var i = 0; i < etis.length; i++){
+            if(!this.etiquetas.includes(etis[i])){
+                this.etiquetas.push(etis[i]);
+            }
+        }
+    }
+    //
+    this.borrarEtiquetas = function(...etis){
+        for(var i = 0; i < etis.length; i++){
+            for(var j = 0; j < this.etiquetas.length; j++){
+                if(etis[i] === this.etiquetas[j]){
+                    this.etiquetas.splice(j,1);
+                }
+            }
+        }
     }
     //
     this.mostrarGasto = function(){
