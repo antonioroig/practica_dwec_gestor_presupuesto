@@ -96,13 +96,17 @@ function CrearGasto(descripcion,valor,fecha,...etiqueta) {
 
     this.borrarEtiquetas = function(...nombre)
     {
-        for(let i= 0;i < this.etiquetas.length; i++)
+        for(let n  of nombre)
         {
-            if(this.etiquetas[i] === nombre)
+            for(let i= 0;i < this.etiquetas.length; i++)
             {
-                this.etiquetas.jsLibraries.filter((item) => item !== this.etiquetas[i])
+                if(this.etiquetas[i] == n)
+                {
+                    this.etiquetas.splice(i,1);
+                }
             }
         }
+        
     },
     
     this.actualizarDescripcion  = function(descripcion)
@@ -124,19 +128,38 @@ function CrearGasto(descripcion,valor,fecha,...etiqueta) {
     //}
 }
     
-    
+    function anyadirGasto(gasto)
+    {
+        gasto={
+            id :idGasto,
+        }
+        idGasto++;
+        gastos.push(gasto);
+    }
 
 
-    function anyadirGasto(){}
+    function borrarGasto(id)
+    {
+        for(let i = 0; i < gastos.length;i++)
+        {
+            if(gastos[i].id === id)
+            {
+                gastos.splice(i,1);
+            }
+        }
+    }
 
 
-    function borrarGasto(){}
+    function calcularTotalGastos()
+    {
+        return gastos.reduce((suma,gasto) => suma + gasto.valor);
+    }
 
 
-    function calcularTotalGastos(){}
+    function calcularBalance()
+    {
 
-
-    function calcularBalance(){}
+    }
 
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
