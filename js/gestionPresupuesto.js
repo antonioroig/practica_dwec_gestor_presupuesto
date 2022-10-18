@@ -1,7 +1,7 @@
 // TODO: Crear las funciones, objetos y variables indicadas en el enunciado
 
 // TODO: Variable global
-var presupuesto = 0;
+let presupuesto = 0;
 let gastos = [];
 let idGasto = 0;
 
@@ -36,6 +36,14 @@ function CrearGasto(descripcion,valor,fecha = Date.now(), ...etiquetas ) {
 
     this.fecha = fecha;
 
+    this.actualizarFecha = function(newfecha)
+    {
+        if(typeof newfecha === "string" && !isNaN(Date.parse(newfecha)))
+        {
+            this.fecha = Date.parse(newfecha);
+        }
+    }
+
     if(typeof fecha === "string" && !isNaN(Date.parse(fecha)))
     {
         this.fecha = Date.parse(fecha);
@@ -52,24 +60,31 @@ function CrearGasto(descripcion,valor,fecha = Date.now(), ...etiquetas ) {
 
     this.etiquetas = etiquetas;
 
-    this.anyadirEtiquetas = function()
+    this.anyadirEtiquetas = function( ...newetiquetas)
     {
-
+        newetiquetas.forEach(newetiqueta => {
+            if(!this.etiquetas.includes(newetiqueta))
+            {
+                this.etiquetas.push(newetiqueta);
+            }
+        });              
     }
 
-    this.borrarEtiquetas = function(etiquetaIN)
+    this.borrarEtiquetas = function(...deletiquetas)
     {
-        etiquetas.forEach(etiqueta => {
-            if(etiquetaIN === etiqueta)
+        deletiquetas.forEach(deletiqueta => {
+            let buscar = this.etiquetas.indexOf(deletiqueta);
+            if(buscar != -1)
             {
-
-            }
+                this.etiquetas.splice(buscar,1);
+            }         
         });
     }
 
     this.mostrarGastoCompleto = function()
     {
-        var text= "Gasto correspondiente a " + this.descripcion + " con valor " + this.valor + " €." + "\n" + "Fecha: " + this.fecha.toLocaleString('en-GB') + "\n" + "Etiquetas:\n" ;
+        let fechalocate = new Date (this.fecha);
+        let text= "Gasto correspondiente a " + this.descripcion + " con valor " + this.valor + " €." + "\n" + "Fecha: " + fechalocate.toLocaleString() + "\n" + "Etiquetas:\n" ;
         etiquetas.forEach(etiqueta => {
             text = text + "- " + etiqueta + "\n";
         });
@@ -101,7 +116,7 @@ function anyadirGasto(gasto){
 }
 
 function borrarGasto(idGasto){
-    array.forEach(gastos => {
+    gastos.forEach(gasto => {
         if(gasto[idGasto] == idGasto){
             
         }
@@ -109,10 +124,11 @@ function borrarGasto(idGasto){
 }
 
 function calcularTotalGastos(){
-    var total;
-    array.forEach(gastos => {
-        total = total + gastos.valor;
+    var total = 0;
+    gastos.forEach(gasto => {
+        total = total + gasto.valor;
     });
+    return total;
 }
 
 function calcularBalance(){
