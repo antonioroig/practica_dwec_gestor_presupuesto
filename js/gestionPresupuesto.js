@@ -72,9 +72,13 @@ function CrearGasto(descripcion, valor, fecha = Date.now() , ...etiquetas) {
 
     this.etiquetas = [...etiquetas];
 
-    if(typeof fecha === 'string' && !isNaN(Date.Parse(fecha)))
+    if(typeof fecha === 'string' && !isNaN(Date.parse(fecha)))
     {
-       this.fecha = fecha;
+       this.fecha = Date.parse(fecha);
+    }
+    else
+    {
+        this.fecha = Date.now();
     }
   
 }
@@ -83,15 +87,33 @@ function listarGastos(){
     return (gastos)
 }
 
-function anyadirGasto(){
+function anyadirGasto(gasto1){
+
+    gasto1.id = idGasto;
+    idGasto++;
+    gastos.push(gasto1);
+
 
 }
 
-function borrarGasto(){
+function borrarGasto(id){
+
+   
+for(let i = 0; i < gastos.length; i++)
+{
+
+    if(gastos[i].id === id)
+    {
+        gastos.splice(i, 1);
+    }
+   
+}
 
 }
 
 function calcularTotalGastos(){
+
+   
 
 }
 
