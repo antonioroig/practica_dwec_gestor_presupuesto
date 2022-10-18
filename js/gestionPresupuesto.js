@@ -119,7 +119,8 @@ function anyadirGasto(gasto)
 };
 
 function borrarGasto(id) {
-    
+    let indice = gastos.findIndex(gasto => gasto.id === id);
+    gastos.splice(indice, 1);
 }
 
 function calcularBalance() {
