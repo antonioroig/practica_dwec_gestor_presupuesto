@@ -1,12 +1,12 @@
-name: 01 - Fundamentos de JS I - Tests
+name: 03 - Fundamentos de JS III - Tests
 
 on:
   push:
-    # Ejecutar la acción al hacer un push a la rama "master"
-    branches: [ master ]
+    # Ejecutar la acción al hacer un push a la rama "main"
+    branches: [ main ]
   pull_request:
-    # Ejecutar la acción al hacer una pull request a la rama "master"
-    branches: [ master ]
+    # Ejecutar la acción al hacer una pull request a la rama "main"
+    branches: [ main ]
 
 jobs:
   build:
@@ -27,5 +27,5 @@ jobs:
         run: npm ci
       # Ejecución de los tests
       - name: Ejecutar tests
-        run: npm run test1
+        run: npm run test3
 
