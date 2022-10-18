@@ -59,7 +59,12 @@ function CrearGasto(descripcion,valor,fecha = Date.now(), ...etiquetas)
     this.mostrarGastoCompleto = function()
     {
         let fechita = new Date(this.fecha);
-        return "Gasto correspondiente a " + this.descripcion + " del gasto con valor " + this.valor + " €.\n Fecha: " + fechita.toLocaleString('es-ES', { timeZone: 'UTC' }) + "\nEtiquetas:\n";
+        let ret = "Gasto correspondiente a " + this.descripcion + " con valor " + this.valor + " €.\nFecha: " + fechita.toLocaleString() + "\nEtiquetas:\n";
+        for(let i = 0; i < etiquetas.length; i++)
+        {
+            ret += '- ' + etiquetas[i]+'\n';
+        };
+        return ret;
     };
 
     this.actualizarValor = function(nwvalor)
@@ -98,7 +103,7 @@ function CrearGasto(descripcion,valor,fecha = Date.now(), ...etiquetas)
 
     this.borrarEtiquetas = function()
     {
-        
+        etiquetas.splice(0,4);
     };
 }
 
