@@ -53,22 +53,30 @@ function CrearGasto(descripcion, valor, fecha=Date.now() , ...etiquetas) { //Fun
     },
 
     this.mostrarGastoCompleto = function(){
-        return(`Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €. \nFecha: ${this.fecha.toLocaleString()}. \nEtiquetas:\n${this.etiquetas}`);
+        let res = `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €.\nFecha: ${new Date(this.fecha).toLocaleString()}\nEtiquetas:\n`;
+        for(let i = 0; i < this.etiquetas.length; i++){
+            res += "- " + this.etiquetas[i]+`\n`;
+        }
+        return res;
     },
     this.actualizarFecha = function(nueva_fecha){
         if(typeof nueva_fecha === 'string' && !isNaN(Date.parse(nueva_fecha))){
             this.fecha = Date.parse(nueva_fecha);
         }
     },
-    this.anyadirEtiquetas = function(nueva_etiqueta){
+    this.anyadirEtiquetas = function(...nueva_etiqueta){
         nueva_etiqueta.forEach(element => {
-            if(this.etiquetas.includes(element)){
+            if(!this.etiquetas.includes(element)){
                 this.etiquetas.push(element);
             }
         });
     },
-    this.borrarEtiquetas = function(){
-        this.etiquetas = [...etiquetas];
+    this.borrarEtiquetas = function( ...etiqueta_borrada){
+        etiqueta_borrada.forEach(element =>{
+            if(this.etiquetas.includes(element)){
+                this.etiquetas.splice(this.etiquetas.indexOf(element), 1)
+            }
+        });
     }
 }
 
@@ -81,7 +89,11 @@ function anyadirGasto(gasto){
     gastos.push(gasto);
 };
 function borrarGasto(id){
-
+    for(let i = 0; i < gastos.length; i++){
+        if(gastos[i].id === id){
+            gastos.splice(i, 1);
+        }
+    }
 };
 function calcularTotalGastos(){
     let total_gasto = 0;
