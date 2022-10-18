@@ -79,14 +79,15 @@ function CrearGasto(descripcion,valor,fecha = Date.now(), ...etiquetas)
         }
     };
 
-    this.anyadirEtiquetas = function()
+    this.anyadirEtiquetas = function(...new_etiq)
     {
-
+        let ret = [...new Set([...this.etiquetas, ...new_etiq])];
+        this.etiquetas = ret;
     };
 
     this.borrarEtiquetas = function()
     {
-        etiquetas.splice(0,4);
+        
     };
 
     this.mostrarGasto = function()
