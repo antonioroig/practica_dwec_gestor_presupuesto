@@ -1,4 +1,4 @@
-name: 01 - Fundamentos de JS I - Tests
+name: 03 - Fundamentos de JS III - Tests
 
 on:
   push:
@@ -27,5 +27,5 @@ jobs:
         run: npm ci
       # Ejecución de los tests
       - name: Ejecutar tests
-        run: npm run test1
+        run: npm run test3
 
