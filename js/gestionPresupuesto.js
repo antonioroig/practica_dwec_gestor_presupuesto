@@ -50,23 +50,6 @@ function CrearGasto(descripcion,valor,fecha = Date.now(), ...etiquetas)
         this.fecha = Date.now();
     };
 
-    
-    this.mostrarGasto = function()
-    {
-        return "Gasto correspondiente a " +this.descripcion+" con valor "+this.valor+" €";
-    };
-
-    this.mostrarGastoCompleto = function()
-    {
-        let fechita = new Date(this.fecha);
-        let ret = "Gasto correspondiente a " + this.descripcion + " con valor " + this.valor + " €.\nFecha: " + fechita.toLocaleString() + "\nEtiquetas:\n";
-        for(let i = 0; i < etiquetas.length; i++)
-        {
-            ret += '- ' + etiquetas[i]+'\n';
-        };
-        return ret;
-    };
-
     this.actualizarValor = function(nwvalor)
     {
         if(nwvalor >= 0)
@@ -104,6 +87,22 @@ function CrearGasto(descripcion,valor,fecha = Date.now(), ...etiquetas)
     this.borrarEtiquetas = function()
     {
         etiquetas.splice(0,4);
+    };
+
+    this.mostrarGasto = function()
+    {
+        return "Gasto correspondiente a " +this.descripcion+" con valor "+this.valor+" €";
+    };
+
+    this.mostrarGastoCompleto = function()
+    {
+        let fechita = new Date(this.fecha);
+        let ret = "Gasto correspondiente a " + this.descripcion + " con valor " + this.valor + " €.\nFecha: " + fechita.toLocaleString() + "\nEtiquetas:\n";
+        for(let i = 0; i < etiquetas.length; i++)
+        {
+            ret += '- ' + etiquetas[i]+'\n';
+        };
+        return ret;
     };
 }
 
