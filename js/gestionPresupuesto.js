@@ -23,7 +23,7 @@ function mostrarPresupuesto()
     return `Tu presupuesto actual es de ${presupuesto} €`;
 }
 
-function CrearGasto(descripcion,valor_actual,fecha = Date.now(),...etiquetas) 
+function CrearGasto(descripcion,valor_actual,fecha = Date.now(), ...etiquetas) 
 {
     this.descripcion = descripcion;
     this.etiquetas = [...etiquetas];
@@ -81,18 +81,29 @@ function anyadirGasto(g1)
     idGastos++;
     gastos.push(g1);
 }
-function borrarGasto(gasto_id)
+function borrarGasto(gastos_id)
 {
-    for(let i = 0; i < gastos.lenght; i++)
+    for(let i = 0; i < gastos.length; i++)
     {
-        if(gasto_id = gastos[i].id)
+        if(gastos_id === gastos[i].id)
         {
-            gastos.splice(gastos[i],1);
+            gastos.splice(i,1);
         }
     }
 }
-function calcularTotalGastos(){}
-function calcularBalance(){}
+function calcularTotalGastos()
+{
+    let total = 0;
+    for(let i =0; i<gastos.length; i++)
+    {
+        total=total+gastos[i].valor;
+    }
+    return total;
+}
+function calcularBalance()
+{
+    return presupuesto - calcularTotalGastos();
+}
 
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
@@ -103,8 +114,8 @@ export   {
     actualizarPresupuesto,
     CrearGasto,
     listarGastos,
-    anyadirGastos,
-    borrarGastos,
+    anyadirGasto,
+    borrarGasto,
     calcularTotalGastos,
     calcularBalance
 }
