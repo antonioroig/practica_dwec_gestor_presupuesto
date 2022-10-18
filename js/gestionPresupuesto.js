@@ -70,6 +70,14 @@ function CrearGasto(descripcion,valor,fecha=Date.now(), ...etiquetas)
         }
     }
 
+    this.actualizarFecha = function(nueva_fecha)
+    {
+        if((typeof nueva_fecha === "string") && (!isNaN(Date.parse(nueva_fecha))))
+        {
+            this.fecha = Date.parse(nueva_fecha);
+        }
+    }
+
     this.mostrarGastoCompleto = function()
     {
         let date = new Date(this.fecha);
