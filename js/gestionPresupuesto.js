@@ -101,9 +101,8 @@ function CrearGasto(descripcion, valor ,fecha = Date.now(), ...etiquetas) {
 
     this.mostrarGastoCompleto = function()
     {
-        let showScreen = `Gasto Correspondiente a ${this.descripcion} con valor ${this.valor}  €.\n Fecha: ${new Date(this.fecha).toLocaleString()}\n Etiquetas: \n`;
-        
-        for (let i = 0; i < this.etiquetas.length; i++){
+        let showScreen = `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €.\nFecha: ${new Date(this.fecha).toLocaleString()}\nEtiquetas:\n`;
+        for(let i = 0; i < this.etiquetas.length; i++){
             showScreen += "- " + this.etiquetas[i]+'\n';
         }
         return showScreen;
