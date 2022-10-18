@@ -78,6 +78,33 @@ function CrearGasto(descripcion,valor_actual,fecha = Date.now(), ...etiquetas)
             console.log(`El valor introducido es negativo, no se ha podido actualizar`);
         };
     };
+    this.actualizarFecha = function(new_fecha)
+    {
+        if(typeof fecha === 'string' && !isNaN(Date.parse(new_fecha)))
+        {
+            this.fecha = Date.parse(new_fecha);
+        }
+    }
+
+    this.anyadirEtiquetas = function(...new_etq)
+    {
+            
+            let result = [...new Set([...this.etiquetas,...new_etq])];
+            this.etiquetas = result;
+    }
+    this.borrarEtiquetas = function(...elim)
+    {
+        for( let i = 0; i<etiquetas.length; i++)
+        {
+            for(let j = i + 1; j< elim.length; j++)
+            {
+                if(elim[j] === etiquetas[i])
+                {
+                    etiquetas.splice(i,1);
+                }
+            }
+        }
+    }
 }
 
 function listarGastos()
