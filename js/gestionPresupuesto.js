@@ -69,6 +69,19 @@ function CrearGasto(descripcion,valor,fecha=Date.now(), ...etiquetas)
             console.log(`El valor ${cambioVal} no es válido, no se ha alterado el valor actual.`);
         }
     }
+
+    this.mostrarGastoCompleto = function()
+    {
+        let date = new Date(this.fecha);
+        let ret = `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €.\nFecha: ${date.toLocaleString()}\nEtiquetas:\n`;
+
+        for (let i = 0; i < etiquetas.length; i++) 
+        {
+            ret += `- ` + etiquetas[i] + `\n`;
+        }    
+
+        return ret;
+    }
 }
 
 function listarGastos()
