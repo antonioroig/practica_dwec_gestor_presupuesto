@@ -90,6 +90,18 @@ function CrearGasto(descripcion,valor,fecha=Date.now(), ...etiquetas)
 
         return ret;
     }
+
+    this.anyadirEtiquetas = function(...arr)
+    {
+        let etiq = [...new Set([...this.etiquetas, ...arr])];
+
+        this.etiquetas = etiq;
+    }
+
+    this.borrarEtiquetas = function()
+    {
+
+    }
 }
 
 function listarGastos()
