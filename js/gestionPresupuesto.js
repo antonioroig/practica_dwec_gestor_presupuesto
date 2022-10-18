@@ -1,8 +1,8 @@
 // TODO: Variable global
 
-var presupuesto = 0;
+let presupuesto = 0;
 let gastos = [];
-var idgasto = 0;
+let idgasto = 0;
 
 function actualizarPresupuesto(NumIntroducido) {
     // TODO
@@ -24,7 +24,7 @@ function mostrarPresupuesto() {
     return (`Tu presupuesto actual es de ${presupuesto} €`);
 }
 // revisar
-function CrearGasto(descripcion,valor,fecha, ...etiquetas) {
+function CrearGasto(descripcion,valor,fecha = Date.now(), ...etiquetas) {
     this.descripcion = descripcion;
     this.etiquetas = [...etiquetas];
     
@@ -39,7 +39,7 @@ function CrearGasto(descripcion,valor,fecha, ...etiquetas) {
     
     if (typeof fecha === 'string' && !isNaN(Date.parse(fecha)))
     {
-        this.fecha = fecha
+        this.fecha = Date.parse(fecha)
     }
     else 
     {
@@ -66,14 +66,27 @@ function CrearGasto(descripcion,valor,fecha, ...etiquetas) {
 function listarGastos(){
     return (gastos);
 }
-function anyadirGasto(){
-    
+function anyadirGasto(gasto){
+    gasto.id = idgasto // añadir una nueva clave al objeto gasto que se la pasa como parametro
+    idgasto ++;
+    gastos.push(gasto);
 }
-function borrarGasto(){
-    
+function borrarGasto(id){
+        for ( let i = 0; i < gastos.length;i++)
+        {
+           if ( gastos[i].id === id)
+           {
+                gastos.splice(i,1)
+           }
+        }
 }
 function calcularTotalGastos(){
-    
+    let totalGastos = 0;
+    for ( let i = 0; i < gastos.length; i++)
+    {
+        
+    }
+    return totalGastos;
 }
 function calcularBalance(){
     
