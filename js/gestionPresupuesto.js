@@ -5,6 +5,8 @@ let presupuesto = 0;
 let gastos = [];
 let idGastos = 0;
 
+console.log(Date.now());
+
 function actualizarPresupuesto(num) {
     // TODO
     if(num >= 0 && typeof num === 'number')
@@ -56,8 +58,8 @@ function CrearGasto(descripcion,valor,fecha = Date.now(), ...etiquetas)
 
     this.mostrarGastoCompleto = function()
     {
-        let texto = "";
-        return texto;
+        let fechita = new Date(this.fecha);
+        return "Gasto correspondiente a " + this.descripcion + " del gasto con valor " + this.valor + " €.\n Fecha: " + fechita.toLocaleString('es-ES', { timeZone: 'UTC' }) + "\nEtiquetas:\n";
     };
 
     this.actualizarValor = function(nwvalor)
@@ -77,9 +79,16 @@ function CrearGasto(descripcion,valor,fecha = Date.now(), ...etiquetas)
         this.descripcion = nwdesc;
     };
 
-    this.actualizarFecha = function()
+    this.actualizarFecha = function(nwfecha)
     {
-
+        if(typeof nwfecha === 'string' && !isNaN(Date.parse(nwfecha)))
+        {
+            this.fecha = Date.parse(nwfecha);    
+        }
+        else
+        {
+            console.log('La fecha introducida no es valida, no ha podido ser cambiada');
+        }
     };
 
     this.anyadirEtiquetas = function()
@@ -89,7 +98,7 @@ function CrearGasto(descripcion,valor,fecha = Date.now(), ...etiquetas)
 
     this.borrarEtiquetas = function()
     {
-
+        
     };
 }
 
@@ -109,21 +118,26 @@ function borrarGasto(gID)
 {
     for(let i = 0; i < gastos.length; i++)
     {
-        if(gID = gastos[i].id)
+        if(gID === gastos[i].id)
         {
-            gastos.splice(gastos[i],1);
+            gastos.splice(i,1);
         }
     }
 }
 
 function calcularTotalGastos()
 {
-
+    let total = 0;
+    for(let i = 0; i < gastos.length; i++)
+    {
+        total = total + gastos[i].valor;
+    };
+    return total;
 }
 
 function calcularBalance()
 {
-
+    return presupuesto - calcularTotalGastos();
 }
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
