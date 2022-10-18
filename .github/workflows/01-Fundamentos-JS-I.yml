@@ -2,11 +2,11 @@ name: 01 - Fundamentos de JS I - Tests
 
 on:
   push:
-    # Ejecutar la acción al hacer un push a la rama "master"
-    branches: [ master ]
+    # Ejecutar la acción al hacer un push a la rama "main"
+    branches: [ main ]
   pull_request:
-    # Ejecutar la acción al hacer una pull request a la rama "master"
-    branches: [ master ]
+    # Ejecutar la acción al hacer una pull request a la rama "main"
+    branches: [ main ]
 
 jobs:
   build:
