@@ -1,8 +1,10 @@
 // TODO: Crear las funciones, objetos y variables indicadas en el enunciado 
 
-// TODO: Variable global 
+// TODO: Variable global
 
 let presupuesto = 0;
+let gastos = new Array();
+let idGasto = 0;
 
 function actualizarPresupuesto(parameter1) {
     // TODO
@@ -19,15 +21,29 @@ function mostrarPresupuesto() {
     return 'Tu presupuesto actual es de ' + presupuesto + ' €';
 }
 
-function CrearGasto(descripcion1, valor1) {
+function CrearGasto(descripcion1, valor1, fecha1, ...etiqueta1) {
     // TODO    
     this.descripcion = descripcion1;
     this.valor;
+    this.fecha = fecha1;
+    this.etiqueta = new Array();
 
     if (typeof(valor1) === 'number' && valor1 >= 0) {
         this.valor = valor1;
     } else {
         this.valor = 0;
+    };
+
+    if (etiqueta1 == undefined) {
+        this.etiqueta = new Array();
+    } else {
+        this.etiqueta = etiqueta1;
+    };
+
+    if (Date.parse(fecha1)) {
+        this.fecha =  Date.parse(fecha1).getTime();
+    } else {
+        this.fecha = Date.now().getTime();
     };
 
     this.mostrarGasto = function () {
@@ -45,6 +61,46 @@ function CrearGasto(descripcion1, valor1) {
             this.valor = this.valor;
         }
     };    
+
+    this.anyadirEtiqueta =  function (...newetiquetas) {
+        this.etiqueta.concat(...newetiquetas);
+        this.etiqueta = [this.etiqueta];
+        /*
+        this.etiqueta.concat(...etiquetas);
+        for (let i = 0; i <= this.etiqueta.length - 1; i++) {
+            for (let j = 1; j <= this.etiqueta.length; j++) {               
+                if (this.etiqueta[i] == this.etiqueta[j]) {
+                    this.etiqueta.splice(i, 1);
+                }
+            }
+        }
+        */
+    };
+}
+
+function listarGastos() {
+    return gastos;
+}
+
+function anyadirGasto(ObjGasto) {
+    ObjGasto.id = idGasto;
+    idGasto++;
+    gastos.push(ObjGasto.id);
+}
+
+function borrarGasto(id) {
+    gastos.splice(id, 1);
+}
+
+function calcularTotalGastos() {
+    for (let i = 0; i <= gastos.length() - 1; i++) {
+        i++;
+    }
+    return i;
+}
+
+function calcularBalance() {
+
 }
 
 
@@ -54,5 +110,10 @@ function CrearGasto(descripcion1, valor1) {
 export   {
     mostrarPresupuesto,
     actualizarPresupuesto,
-    CrearGasto
+    CrearGasto,
+    listarGastos,
+    anyadirGasto,
+    borrarGasto,
+    calcularTotalGastos,
+    calcularBalance
 }
