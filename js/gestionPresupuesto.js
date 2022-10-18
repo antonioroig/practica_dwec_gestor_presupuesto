@@ -3,6 +3,10 @@
 
 var presupuesto = 0;
 
+let gastos = [];
+
+var idGasto = 0;
+
 function actualizarPresupuesto(num) {
     // TODO
 
@@ -28,20 +32,38 @@ function mostrarPresupuesto() {
 
 }
 // revisar
-function CrearGasto(descripcion,valor) {
+function CrearGasto(descripcion,valor, fecha = Date.now(), ...etiquetas) {
 
     this.descripcion = descripcion;
 
+    this.etiquetas = [...etiquetas];
+
     if(valor >= 0 && typeof valor === "number")
     {
+
         this.valor = valor;
+
     }
     else
     {
         this.valor = 0;
 
-    };
+    }
+    
+    if(typeof fecha === 'string' && !isNaN(Date.parse(fecha)))
+    {
 
+        this.fecha = Date.parse(fecha);
+
+    }
+    
+    else
+    {
+
+        this.fecha = Date.now();
+
+    }
+    
     this.mostrarGasto = function()
     {
 
@@ -65,8 +87,63 @@ function CrearGasto(descripcion,valor) {
 
     }
 
+
 }
 
+function listarGastos()
+{
+
+    return(gastos);
+
+}
+
+function anyadirGasto(gasto)
+{
+
+    gasto.id = idGasto; //añade la nueva clave al objeto llamado gasto que lo pasa como parámetro     
+    idGasto++;
+    gastos.push(gasto);
+
+}
+
+function borrarGasto()
+{
+
+        for(let i = 0; i < idGasto.lenght; i++)
+        {
+
+            if(gastos.id == id)
+            {
+
+                gastos.splice(i,1)
+
+            }
+
+        }
+}
+
+function calcularTotalGastos()
+{
+
+    let totalGastos = 0;
+
+    for(let i = 0; i < gastos.length; i++)
+    {
+
+        totalGastos += gasto.valor;
+
+    }
+
+    return totalGastos;
+
+}
+
+function calcularBalance()
+{
+
+    
+
+}
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
 // Las funciones y objetos deben tener los nombres que se indican en el enunciado
@@ -74,5 +151,10 @@ function CrearGasto(descripcion,valor) {
 export   {
 mostrarPresupuesto,
 actualizarPresupuesto,
-CrearGasto
+CrearGasto,
+listarGastos,
+anyadirGasto,
+borrarGasto,
+calcularTotalGastos,
+calcularBalance,
 }
