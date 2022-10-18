@@ -32,16 +32,17 @@ function mostrarPresupuesto() {
 
 
 function CrearGasto(descripcion, valor ,fecha = Date.now(), ...etiquetas) {
-    this.descripcion = descripcion
+    this.fecha = new Date();
+    this.etiquetas = [...etiquetas];
+    this.descripcion = descripcion;
+   
     if (valor <= 0 || typeof valor !== 'number')
     {
         valor = 0;
     }
 
     this.valor = valor;
-    this.descripcion = descripcion;
-    this.fecha = new Date();
-    this.etiquetas = [...etiquetas];
+
     
     if (typeof fecha === 'string' && !isNaN(Date.parse(fecha))){
     this.fecha = Date.parse(fecha)
@@ -77,9 +78,9 @@ function CrearGasto(descripcion, valor ,fecha = Date.now(), ...etiquetas) {
     }
     }
 
-    this.anyadiretiquetas = function anyadiretiquetas(nuevasEtiquetas)
+    this.anyadirEtiquetas = function (...nuevasEtiquetas)
     {
-        nuevasEtiquetas.array.forEach(element => {
+        nuevasEtiquetas.forEach(element => {
             if (!this.etiquetas.includes(element))
             {
                 this.etiquetas.push(element)
@@ -88,9 +89,24 @@ function CrearGasto(descripcion, valor ,fecha = Date.now(), ...etiquetas) {
         });
     }
 
-    this.mostrarGastoCompleto = function mostrarGastoCompleto()
+    this.borrarEtiquetas = function (...etiquetasABorrar)
     {
-        return (`Gasto Correspondiente a ${this.descripcion} con valor ${this.valor}  €.\n Fecha: ${this.fecha.toLocaleString()}\n Etiquetas: \n ${this.etiquetas}}`);
+        etiquetasABorrar.forEach(element => {
+            if (this.etiquetas.includes(element))
+            {
+                this.etiquetas.splice(this.etiquetas.indexOf(element),1)
+                }
+        })
+    }
+
+    this.mostrarGastoCompleto = function()
+    {
+        let showScreen = `Gasto Correspondiente a ${this.descripcion} con valor ${this.valor}  €.\n Fecha: ${new Date(this.fecha).toLocaleString()}\n Etiquetas: \n`;
+        
+        for (let i = 0; i < this.etiquetas.length; i++){
+            showScreen += "- " + this.etiquetas[i]+'\n';
+        }
+        return showScreen;
     }
     // TODO   
     //comentario para que se activen los test en github
