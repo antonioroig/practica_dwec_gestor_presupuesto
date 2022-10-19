@@ -25,8 +25,8 @@ function CrearGasto(descripcion1, valor1, fecha1, ...etiqueta1) {
     // TODO    
     this.descripcion = descripcion1;
     this.valor;
-    this.fecha = fecha1;
-    this.etiqueta = new Array();
+    this.fecha;
+    this.etiqueta;
 
     if (typeof(valor1) === 'number' && valor1 >= 0) {
         this.valor = valor1;
