@@ -60,6 +60,38 @@ function CrearGasto(descripcion,valor,fecha = Date.now(), ...etiquetas) {
             this.valor = ActualizarValor;
         }
     }
+
+    this.mostrarGastoCompleto = function(){
+        let mostrarGastos;
+        let modfecha = new Date(this.fecha);
+        mostrarGastos = `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €. \n`;
+        mostrarGastos += `Fecha: ${modfecha.toLocaleString()} \n`;
+        mostrarGastos += `Etiquetas: \n`;
+        for(let i = 0; i < this.etiquetas.length;i++)
+        {
+            mostrarGastos += `- ${this.etiquetas[i]} \n`
+        }
+       return mostrarGastos;
+    }
+    this.actualizarFecha = function(newfecha){
+        if (typeof newfecha === 'string' && !isNaN(Date.parse(newfecha)))
+        {
+            this.fecha = Date.parse(newfecha)
+        }
+    }
+    this.borrarEtiquetas = function(...deletiquetas){
+        let etiq = [...deletiquetas];
+        for(let i = 0; i < etiq.length;i++)
+        {
+            for(let j = 0; j < this.etiquetas.length; j++)
+            {
+                if (etiq[i] === this.etiquetas[j])
+                {
+                    this.etiquetas.splice(j,1)
+                }
+            }
+        }
+    }
     
 }
 
@@ -74,7 +106,7 @@ function anyadirGasto(gasto){
 function borrarGasto(id){
         for ( let i = 0; i < gastos.length;i++)
         {
-           if ( gastos[i].id === id)
+           if (gastos[i].id === id)
            {
                 gastos.splice(i,1)
            }
@@ -84,12 +116,16 @@ function calcularTotalGastos(){
     let totalGastos = 0;
     for ( let i = 0; i < gastos.length; i++)
     {
-        
+        totalGastos += gastos[i].valor
     }
     return totalGastos;
 }
 function calcularBalance(){
-    
+    let balance = 0;
+    let gasto = calcularTotalGastos();
+    balance = presupuesto - gasto;
+    return balance;
+
 }
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
