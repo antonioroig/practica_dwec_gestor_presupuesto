@@ -29,29 +29,26 @@ function mostrarPresupuesto() {
 }
 
 // revisar
-function CrearGasto(descripcion, valor, fecha=Date.now().getTime(), ...etiquetas) {
+function CrearGasto(descripcion, valor, fecha=Date.now(), ...etiquetas) {
     // TODO
     this.descripcion = descripcion;
-    let gasto1 = new crearGasto ();
-    let fecha = new Date(0);
-    this.fecha = fecha;
+    this.valor = valor;
     this.etiquetas = new Array();
 
 
-    if (etiquetas === null){
-        this.etiquetas = etiquetas;
+    if (etiquetas === undefined){
+        this.etiquetas = [...etiquetas];
     }
 
-    if (Date.parse(fecha)){
-        this.fecha = fecha.getTime();
-    }
-    
-    else{
-        this.fecha = Date.now().getTime();
+    if (fecha === undefined){
+        this.fecha = Date.now(); 
     }
 
-    if (typeof fecha === ' string' && fecha !== NaN(Date.parse(fecha))){
-        this.fecha = Date.parse(fecha);
+    if (typeof fecha !== 'string' && fecha === isNaN(Date.parse(fecha))){
+        this.fecha = fecha;
+    }
+    else {
+        this.fecha = Date.now();
     }
 
     if (valor >= 0 && !isNaN(valor))
@@ -83,6 +80,17 @@ function CrearGasto(descripcion, valor, fecha=Date.now().getTime(), ...etiquetas
             console.log('Error: El valor introducido es negativo o no es un valor apto');
         }
     } 
+
+    this.anyadirEtiquetas = function(){
+
+    }
+
+    this.mostrarGastoCompleto = function(){
+        const event = new Date(Date.UTC(fecha));
+
+        let ret = 'Gasto correspondiente a ' + this.descripcion +' con valor ' + this.valor + '€. Fecha: ' + this.fecha  + 'Etiquetas:' + this.etiquetas;
+        return ret;
+    }
 }
 
 function listarGastos(){
@@ -90,9 +98,10 @@ function listarGastos(){
     return gastos;
 }
 
-function anyadirGasto(gasto1){
+function anyadirGasto(...gasto1){
+    let gastos;
 
-    gasto1.id = idGasto; /* otra manera de añadir seria gasto1[id] */
+    gasto1[idGasto]; /* otra manera de añadir seria gasto1[id] */
     idGasto++;
     gastos = gasto1.push();
 }
@@ -110,15 +119,14 @@ function borrarGasto(id){
 
 function calcularTotalGastos(){
 
-    let ret = gastos.reduce((a, b) => a + b, 0);
-    console.log(ret);
+    let total = gastos.reduce((a, b) => a + b, 0);
 
-    return ret;
+    return total;
 }
 
 function calcularBalance(){
     
-    let Tgastos = calcularTotalGastos();
+    let total = calcularTotalGastos();
 
 
 }
