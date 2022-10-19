@@ -164,7 +164,8 @@ function borrarGasto(parId){
 
     if (parId < gastos.length){
 
-        gastos.splice(parId);
+        gastos.splice(parId - 1, 1);
+
     }
 
 }
