@@ -1,11 +1,11 @@
 
 // TODO: Variable global
 
-var presupuesto = 0;
+let presupuesto = 0;
 
 let gastos = [];
 
-var idGasto = 0;
+let idGasto = 0;
 
 function actualizarPresupuesto(num) {
     // TODO
@@ -87,6 +87,63 @@ function CrearGasto(descripcion,valor, fecha = Date.now(), ...etiquetas) {
 
     }
 
+    this.mostrarGastoCompleto = function(){
+
+        let Gastos;
+
+        let fechaMod = new Date(this.fecha);
+
+        Gastos = `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €. \n`;
+
+        Gastos += `Fecha: ${fechaMod.toLocaleString()} \n`;
+
+        Gastos += `Etiquetas: \n`;
+
+        for(let i = 0; i < this.etiquetas.length; i++)
+        {
+
+            Gastos += `- ${this.etiquetas[i]} \n`
+
+        }
+
+        return Gastos;
+
+    }
+
+    this.actualizarFecha = function(nuevaFecha){
+
+        if(typeof nuevaFecha === 'string' && !isNaN(Date.parse(nuevaFecha)))
+        {
+
+            this.fecha = Date.parse(nuevaFecha);
+
+        }
+
+    }
+
+    this.borrarEtiquetas = function(...eliminarEtiquetas){
+
+        let etiqueta = [...eliminarEtiquetas];
+
+        for(let i = 0; i < etiqueta.length; i++)
+        {
+
+            for(let j = 0; j < this,etiquetas.lenght; i++)
+            {
+
+                if(etiqueta[i] === this.etiquetas[j])
+                {
+
+                    this.etiquetas.splice(j,1);
+
+                }
+
+            }
+
+        }
+
+    }
+
 
 }
 
@@ -125,7 +182,7 @@ function calcularTotalGastos()
     for(let i = 0; i < gastos.length; i++)
     {
 
-
+        totalGastos += gastos[i].valor
 
     }
 
@@ -136,7 +193,13 @@ function calcularTotalGastos()
 function calcularBalance()
 {
 
-    
+    let totalBalance = 0;
+
+    let gasto = calcularTotalGastos();
+
+    totalBalance = presupuesto - gasto;
+
+    return totalBalance;
 
 }
 
