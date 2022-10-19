@@ -1,5 +1,5 @@
 
-var presupuesto = 0;
+let presupuesto = 0;
 let gastos = new Array();
 let idGastos = 0;
 function actualizarPresupuesto(num_int) 
@@ -94,16 +94,26 @@ function CrearGasto(descripcion,valor_actual,fecha = Date.now(), ...etiquetas)
     }
     this.borrarEtiquetas = function(...elim)
     {
-        for( let i = 0; i<etiquetas.length; i++)
+        // let j = 0;
+        // for( let i = 0; i<etiquetas.length; i++)
+        // {
+        //     while( j< elim.length)
+        //     {
+        //         if(elim[j] === etiquetas[i])
+        //         {
+        //             etiquetas.splice(i,1);
+        //             j++;
+        //         }
+        //     }
+        // }
+        elim.forEach(del => 
         {
-            for(let j = i + 1; j< elim.length; j++)
-            {
-                if(elim[j] === etiquetas[i])
-                {
-                    etiquetas.splice(i,1);
-                }
-            }
-        }
+          let pos = this.etiquetas.indexOf(del);
+          if(pos != -1)
+          {
+            this.etiquetas.splice(pos,1);
+          }  
+        });
     }
 }
 
