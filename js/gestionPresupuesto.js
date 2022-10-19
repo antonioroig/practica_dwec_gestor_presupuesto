@@ -29,7 +29,7 @@ function mostrarPresupuesto() {
 }
 
 // revisar
-function CrearGasto(descripcion, valor, fecha = Date.parse(Date.now()), ...etiquetas) {
+function CrearGasto(descripcion, valor, fecha = Date.now(), ...etiquetas) {
     // TODO
     this.descripcion = descripcion;
     this.valor = valor;
@@ -44,11 +44,11 @@ function CrearGasto(descripcion, valor, fecha = Date.parse(Date.now()), ...etiqu
     }
 
     if (fecha === undefined){
-        this.fecha = Date.parse(Date.now()); 
+        this.fecha = Date.now(); 
     }
 
     if (typeof fecha !== 'string' || (! isNaN(Date.parse(fecha)))){
-        this.fecha = Date.parse(Date.now()); 
+        this.fecha = Date.now(); 
     }
     else {
         this.fecha = fecha;
@@ -61,7 +61,7 @@ function CrearGasto(descripcion, valor, fecha = Date.parse(Date.now()), ...etiqu
 
     else{
         this.valor = 0;
-    };
+    }
 
     this.setId = function(id){
         this.id = id;
