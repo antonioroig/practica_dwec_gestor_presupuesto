@@ -103,19 +103,22 @@ function CrearGasto(descripcion,valor,fecha=Date.now(), ...etiquetas)
         let j = 0;
         let i = 0;
 
-        while (i < this.etiquetas.length) 
+        if(arr.length > 0)
         {
-            while (j < arr.length)
+            while (i < this.etiquetas.length) 
             {
-                if(arr[j] === this.etiquetas[i])
+                while (j < arr.length)
                 {
-                    this.etiquetas.splice(i, 1);
-                    j++;
-                    i = 0;
-                }
-            }  
-        i++;
-        }    
+                    if(arr[j] === this.etiquetas[i])
+                    {
+                        this.etiquetas.splice(i, 1);
+                        j++;
+                        i = 0;
+                    }
+                }  
+                i++;
+            }    
+        }
     }
 }
 
