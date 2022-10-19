@@ -111,7 +111,7 @@ function CrearGasto(descripcion,valor,fecha=Date.now(), ...etiquetas)
                 {
                     this.etiquetas.splice(i, 1);
                     j++;
-                    i--;
+                    i = 0;
                 }
             }  
         i++;
