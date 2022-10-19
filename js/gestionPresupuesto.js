@@ -3,9 +3,9 @@
 // TODO: Variable global
 
 
-var presupuesto = 0;
+let presupuesto = 0;
 let gastos = [];
-var idGasto = 0;
+let idGasto = 0;
 
 function actualizarPresupuesto(num) {
     // TODO
@@ -40,10 +40,6 @@ function CrearGasto(descripcion, valor, fecha = Date.now() , ...etiquetas) {
     // TODO
     this.descripcion = descripcion;
     
-   
-   
-   
-
     if(valor >= 0 && typeof valor === "number")
     {
         this.valor = valor;
@@ -80,6 +76,32 @@ function CrearGasto(descripcion, valor, fecha = Date.now() , ...etiquetas) {
     {
         this.fecha = Date.now();
     }
+
+    this.mostrarGastoCompleto = function()
+    {
+        let tex
+         tex = `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €. \n`;
+         
+         let fec = new Date(this.fecha);
+         tex = tex + `Fecha: ${fec.toLocaleString()} \n`;
+         tex = tex + `Etiquetas: \n`;
+        for(let i = 0; i < this.etiquetas.length; i++)
+        {
+            tex = tex + `- ${this.etiquetas[i]} \n`;
+        }
+
+        return tex;
+
+
+
+    }
+
+
+    this.borrarEtiquetas = function(...etiquet)
+    {
+        
+    }
+
   
 }
 
@@ -93,7 +115,7 @@ function anyadirGasto(gasto1){
     idGasto++;
     gastos.push(gasto1);
 
-
+    
 }
 
 function borrarGasto(id){
@@ -113,11 +135,27 @@ for(let i = 0; i < gastos.length; i++)
 
 function calcularTotalGastos(){
 
-   
+   let tot = 0;
+
+   for(let i = 0; i < gastos.length; i++)
+   {
+
+        tot = tot + gastos[i].valor;
+
+   }
+
+   return tot;
 
 }
 
 function calcularBalance(){
+
+    let tot = 0;
+    let gas = calcularTotalGastos()
+
+    tot = presupuesto - gas;
+
+    return tot;
 
 }
 
