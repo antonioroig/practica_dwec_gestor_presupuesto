@@ -107,7 +107,7 @@ function CrearGasto(descripcion, valor, fecha = Date.now(), ...etiquetas) {
     this.mostrarGastoCompleto = function(){
         const event = new Date(Date.UTC(this.fecha));
 
-        let ret = 'Gasto correspondiente a ' + this.descripcion +' con valor ' + this.valor + '€.\n Fecha: ' + event.toLocaleString('es-ES')  + '\n Etiquetas: \n';
+        let ret = 'Gasto correspondiente a ' + this.descripcion +' con valor ' + this.valor + ' €.\nFecha: ' + event.toLocaleString('es-ES',{timeZone:'UTC'})  + '\nEtiquetas:\n';
 
         for (let i = 0; i < this.etiquetas.length; i++){
             ret += '-' + this.etiquetas[i] + '\n';
