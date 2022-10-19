@@ -127,9 +127,13 @@ function CrearGasto(descripcion, valor, fecha = Date.now(), ...etiquetas) {
     this.borrarEtiquetas = function(...parEtiquetas){
 
         for (let i = 0; i < parEtiquetas.length; i++){
+
             for (let j = 0; j < this.etiquetas.length; j++ ){
+
                 if (parEtiquetas[i] == this.etiquetas[j] ){
-                    this.etiquetas.splice(parEtiquetas[i]);
+
+                    this.etiquetas.splice(j);
+
                     break;
                 }
 
@@ -158,7 +162,10 @@ this. etiquetas = [...etiquetas];
 
 function borrarGasto(parId){
 
-    gastos.splice(parId);
+    if (parId < gastos.length){
+
+        gastos.splice(parId);
+    }
 
 }
 
