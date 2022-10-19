@@ -97,18 +97,24 @@ function CrearGasto(descripcion,valor,fecha=Date.now(), ...etiquetas)
 
         this.etiquetas = etiq;
     }
- //revisar
+
     this.borrarEtiquetas = function(...arr)
     {
-        for (let i = 0; i < etiquetas.length; i++) 
+        let j = 0;
+        let i = 0;
+
+        while (i < this.etiquetas.length) 
         {
-            for (let j = i + 1; j < arr.length; j++)
+            while (j < arr.length)
             {
-                if(arr[j] === etiquetas[i])
+                if(arr[j] === this.etiquetas[i])
                 {
-                    etiquetas.splice(j, 1);
+                    this.etiquetas.splice(i, 1);
+                    j++;
+                    i--;
                 }
             }  
+        i++;
         }    
     }
 }
