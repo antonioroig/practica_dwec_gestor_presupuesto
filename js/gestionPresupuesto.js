@@ -5,8 +5,6 @@ let presupuesto = 0;
 let gastos = [];
 let idGastos = 0;
 
-console.log(Date.now());
-
 function actualizarPresupuesto(num) {
     // TODO
     if(num >= 0 && typeof num === 'number')
@@ -85,9 +83,27 @@ function CrearGasto(descripcion,valor,fecha = Date.now(), ...etiquetas)
         this.etiquetas = ret;
     };
 
-    this.borrarEtiquetas = function()
+    this.borrarEtiquetas = function(...etiq)
     {
-        
+        // let j = 0
+        // for(let i = 0; i < this.etiquetas.length; i++)
+        // {
+        //     while(j < etiq.length)
+        //     {
+        //         if(etiq[j]===this.etiquetas[i])
+        //         {
+        //             this.etiquetas.splice(i,1);
+        //             j++;
+        //         }
+        //     }
+        // };
+        etiq.forEach(borrar => {
+            let pos = this.etiquetas.indexOf(borrar);
+            if(pos != -1)
+            {
+                this.etiquetas.splice(pos,1);
+            }
+        });
     };
 
     this.mostrarGasto = function()
