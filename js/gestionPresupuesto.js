@@ -31,12 +31,17 @@ function CrearGasto(descripcion,valor ,fecha= Date.now(), ...etiquetas )
  { 
     
 
-    if (typeof fecha ==="string" )
+    this.descripcion = descripcion;
+    this.etiquetas=[...etiquetas]
+  
+    if (typeof fecha ==="string" && Date.parse(fecha))
     {
         this.fecha =fecha;
+    }else 
+    {
+      fecha =Date.now()
     }
-        this.descripcion = descripcion;
-
+       
         if (typeof valor ==="number" && valor >= 0)
         {
             this.valor =valor;
@@ -63,19 +68,31 @@ function CrearGasto(descripcion,valor ,fecha= Date.now(), ...etiquetas )
 
          this.mostrarGastoCompleto = function()
          {
-            return (
-                `Gasto correspondiente a ${descripcion} con valor ${valor} €.
-                    Fecha: FECHA_EN_FORMATO_LOCALIZADO
-                    Etiquetas:
-                    - ETIQUETA 1
-                    - ETIQUETA 2
-                    - ETIQUETA 3`
-                    )
+            let fechaAuxiliar1;
+            let auxiliar="";
+
+            for(let etiqueta of this.etiquetas) 
+            {
+                auxiliar += `- ${etiqueta}\n`;
+            };
+
+            if(typeof this.fecha === 'string')
+            {
+                fechaAuxiliar1 = Date.parse(this.fecha);
+            }else{
+
+                fechaAuxiliar1=this.fecha;
+            }
+
+            let fechaAuxiliar2 =new Date(fechaAuxiliar1);
+
+            let mensaje = (`Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €.\nFecha: ${(fechaAuxiliar2.toLocaleString())}\nEtiquetas:\n`+ auxiliar);
+            return mensaje;
         }
         function actualizarFecha(fecha)
-{
+        {
 
-}
+        }
         
     // TODO
 }
