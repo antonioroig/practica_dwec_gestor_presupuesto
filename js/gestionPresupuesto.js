@@ -153,34 +153,29 @@ function CrearGasto(descripcion, valor, fecha = Date.now() , ...etiquetas) {
     this.anyadirEtiquetas = function(...etiquet)
     {
 
-       
         let e = [...etiquet];
-        let exist = false;
-
+       
         for(let i = 0; i < e.length; i++)
         {
+            let exist = false;
             for(let j = 0; j < this.etiquetas.length; j++)
             {
                 if(e[i] === this.etiquetas[j])
                 {
-                    
-                    break;
+                    exist = true;
                 }
                
-                
             }
-            if(exist == false)
-            {
-                this.etiquetas.push(e[i]);
+
+            if(exist === false)
+             {
+            this.etiquetas.push(e[i]);
             }
-           
+            
         }
-
-       
         
-
+        
     }
-
   
 }
 
