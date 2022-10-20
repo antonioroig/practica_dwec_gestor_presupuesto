@@ -80,14 +80,14 @@ function CrearGasto(descripcion, valor, fecha = Date.now() , ...etiquetas) {
     this.mostrarGastoCompleto = function()
     {
         let tex
-         tex = `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €. \n`;
+         tex = `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €.\n`;
          
          let fec = new Date(this.fecha);
-         tex = tex + `Fecha: ${fec.toLocaleString()} \n`;
-         tex = tex + `Etiquetas: \n`;
+         tex = tex + `Fecha: ${fec.toLocaleString()}\n`;
+         tex = tex + `Etiquetas:\n`;
         for(let i = 0; i < this.etiquetas.length; i++)
         {
-            tex = tex + `- ${this.etiquetas[i]} \n`;
+            tex = tex + `- ${this.etiquetas[i]}\n`;
         }
 
         return tex;
@@ -97,9 +97,88 @@ function CrearGasto(descripcion, valor, fecha = Date.now() , ...etiquetas) {
     }
 
 
+    this.anyadirEtiquetas = function(...etiquet)
+    {
+
+        
+        let et = [...etiquet]
+        let exist = false;
+
+        for(let i = 0; i < gastos.length; i++)
+        {
+            if(et === etiquetas)
+            {
+                exist = true;
+               
+            }
+          
+            if(et !== etiquetas)
+            {
+                
+                this.etiquetas.push(et)
+            }
+
+        }
+
+    }
+
+
+    this.actualizarFecha = function(fec)
+    {
+
+        if(!isNaN(Date.parse(fec)) && typeof fec === "string")
+        {
+            this.fecha = Date.parse(fec);
+        }
+
+    }
+
     this.borrarEtiquetas = function(...etiquet)
     {
+        let e = [...etiquet]
+        for(let i = 0; i < e.length; i++)
+        {
+            for(let j = 0; j < this.etiquetas.length; j++)
+            {
+                if(e[i] === this.etiquetas[j])
+                {
+                    this.etiquetas.splice(j, 1);
+
+                }
+            }
+        }
+    }
+
+
+    this.anyadirEtiquetas = function(...etiquet)
+    {
+
+       
+        let e = [...etiquet];
+        let exist = false;
+
+        for(let i = 0; i < e.length; i++)
+        {
+            for(let j = 0; j < this.etiquetas.length; j++)
+            {
+                if(e[i] === this.etiquetas[j])
+                {
+                    
+                    break;
+                }
+               
+                
+            }
+            if(exist == false)
+            {
+                this.etiquetas.push(e[i]);
+            }
+           
+        }
+
+       
         
+
     }
 
   
