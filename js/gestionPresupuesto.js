@@ -4,6 +4,7 @@
 let presupuesto = 0;
 let gastos = new Array();
 let idGasto = 0;
+
 const opciones = { day: 'numeric', month: 'short', year: 'numeric', hour: 'numeric', minutes: 'numeric', seconds: 'numeric' };
 function actualizarPresupuesto(nuevoPresupuesto) {
     // TODO
@@ -55,21 +56,45 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
         }
         return this.valor;
     }
-    this.actualizarFecha = function(fecha){
-        if (isNaN(Date.parse(fecha))) {
-        } else {
+    this.actualizarFecha = function (fecha) {
+        if (!isNaN(Date.parse(fecha))) {
             this.fecha = Date.parse(fecha);
         }
     }
     this.mostrarGastoCompleto = function () {
-           let fechaNueva = this.fecha
-        let gasto = ('Gasto correspondiente a ' + this.descripcion + ' con valor ' + this.valor + ' €.\n' +
-            'Fecha: ' + fechaNueva + '\nEtiquetas:\n')
+
+        let gasto = 'Gasto correspondiente a ' + this.descripcion + ' con valor ' + this.valor + ' €.\n';
+        gasto += 'Fecha: ' + new Date(this.fecha).toLocaleString() + '\n' + 'Etiquetas:\n';
         this.etiquetas.forEach(element => {
             gasto += "- " + element + "\n";
         });
         return gasto;
     }
+    this.anyadirEtiquetas = function (...arrayEtiq) {
+       arrayEtiq.forEach(element => {
+       if(!this.etiquetas.includes(element,0))
+       {
+        this.etiquetas.push(element);
+       }
+    });
+    }
+
+    this.borrarEtiquetas = function (...arrayEtiq) {
+        let x, y;
+        for (let i = 0; i < arrayEtiq.length; i++) {
+
+            y = arrayEtiq[i];
+
+            for (let j = this.etiquetas.length; j >= 0; j--) {
+
+                x = this.etiquetas[j]
+
+                if (x === y) {
+                    this.etiquetas.splice(j, 1);
+                }
+            }
+        }
+    };
 }
 function listarGastos() {
     return gastos;
@@ -88,10 +113,10 @@ function borrarGasto(id) {
 }
 function calcularTotalGastos() {
     let gastoTotal = 0;
-        gastos.forEach(element => {
-            gastoTotal += element.valor;
-        });
-        return gastoTotal;
+    gastos.forEach(element => {
+        gastoTotal += element.valor;
+    });
+    return gastoTotal;
 }
 function calcularBalance() {
     return presupuesto - calcularTotalGastos();
