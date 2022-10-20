@@ -12,7 +12,8 @@ function actualizarPresupuesto(valor) {
     }
     else
     {
-        console.log(`error, El numero es menor que 0`);
+        console.log(`error, El numero es mayor
+         que 0`);
         return -1;
     }
 }
@@ -118,6 +119,22 @@ function CrearGasto(descripcion,valor,fecha,...etiqueta) {
         }
     }
 
+    this.obtenerPeriodoAgrupacion = function(periodo )
+    {
+        let res;
+        if(periodo === `dia`)
+        {
+            res = new Date(this.fecha).getFullYear() + `-` +  new Date(this.fecha).getMonth() + `-` + new Date(this.fecha).getDay();
+        }
+        if(periodo === `mes`)
+        {
+            res = new Date(this.fecha).getFullYear() + `-` +  new Date(this.fecha).getMonth() + `-` + new Date(this.fecha).getDay();
+        }
+        if(periodo === `año`)
+        {
+            res = new Date(this.fecha).getFullYear() + `-` +  new Date(this.fecha).getMonth() + `-` + new Date(this.fecha).getDay();
+        }
+    }
     
     //this.actualizarFecha(fecha){
       //  if(typeof fecha === `string` )
@@ -163,6 +180,74 @@ function CrearGasto(descripcion,valor,fecha,...etiqueta) {
         return presupuesto - calcularTotalGastos();
     }
 
+    function filtrarGastos(fechaDesde,fechaHasta,valorMinimo,valorMaximo,descripcionContiene,etiquetasTiene)
+    {
+        let res;
+        if(!isNaN(Date.parse(fechaDesde)))
+        {
+            let menor
+             = gastos[1].fecha;
+            res = gastos.filter(function(gasto) {
+                if(gasto.fecha < menor)
+                {
+                    menor= gasto.fecha;
+                }
+            });
+            fechaDesde = menor
+            ;
+        }
+        if(!isNaN(Date.parse(fechaHasta)))
+        {
+            let mayor = gastos[1].fecha;
+            res = gastos.filter(function(gasto) {
+                if(gasto.fecha > mayor)
+                {
+                    mayor
+                     = gasto.fecha;
+                }
+            });
+            fechaHasta = mayor
+            ;
+        }
+        if(typeof valorMinimo !== `undefined`)
+        {
+            let minimo = gastos[1].valor;
+            res = gastos.filter(function(gasto) {
+                if(gasto.valor < mayor )
+                {
+                    mayor = gasto.valor;
+                }
+            });
+            minimo = mayor;
+        }
+        if( typeof(valorMaximo) !== `undefined`)
+        {
+            let maximo = gastos[1].valor;
+            res = gastos.filter(function(gasto) {
+                if(gasto.valor < maximo )
+                {
+                    maximo = gasto.valor;
+                }
+            });
+            minimo = maximo;
+        }
+        if( typeof(descripcionContiene) !== `undefined`)
+        {
+            let maximo = gastos[1].valor;
+            res = gastos.filter(function(gasto) {
+                if(gasto.valor < maximo )
+                {
+                    maximo = gasto.valor;
+                }
+            });
+            minimo = maximo;
+        }
+    }
+
+    function agruparGastos()
+    {
+
+    }
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
 // Las funciones y objetos deben tener los nombres que se indican en el enunciado
@@ -175,5 +260,7 @@ export   {
     borrarGasto,
     calcularTotalGastos,
     calcularBalance,
+    filtrarGastos,
+    agruparGastos,
     CrearGasto
 }
