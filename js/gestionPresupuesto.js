@@ -56,27 +56,28 @@ function CrearGasto(descripcionGasto, valorGasto, fecha = Date.now(), ...etiquet
         gasto += `Fecha: ${new Date(this.fecha).toLocaleString()}\n`;
         gasto += `Etiquetas:\n`;
         this.etiquetas.forEach(etiqueta => {
-            gasto += `- ` + etiqueta + `\n`;
+            gasto += `- ${etiqueta}\n`;
         })
         return gasto;
-
-       // Etiquetas: 
-       // - ${this.etiquetas}`;
     }
     this.actualizarFecha = function(fecha){
         if((!isNaN(Date.parse(fecha))) && typeof fecha === 'string'){
             this.fecha = Date.parse(fecha);
         }
     }
-    this.anyadirEtiquetas = function(...etiquetas){
+    this.anyadirEtiquetas = function(...etiquetasNuevas){
         let repetido = 0;
-        for(let i = 0; i < etiquetas.length; i++){
-            for(let j = 0; j < this.etiquetas; j++){
-                if(etiquetas[i] == this.etiquetas[j]){
+        for(let i = 0; i < etiquetasNuevas.length; i++){
+            for(let j = 0; j < this.etiquetas.length; j++){
+                if(etiquetasNuevas[i] === this.etiquetas[j]){
                     repetido = 1;
+                    break;
                 }
             }
-            this.etiquetas.push(etiqueta);
+            if(repetido === 0){
+                this.etiquetas.push(etiquetasNuevas[i]);
+            }
+            repetido = 0;
         }
     }
     this.borrarEtiquetas = function(){
