@@ -46,7 +46,7 @@ function CrearGasto(descripcion, valor, fecha = Date.now(), ...etiquetas) {
         this.fecha = Date.now(); 
     }
     else {
-        this.fecha = fecha;
+        this.fecha = Date.parse(fecha);
     }
 
     if (valor >= 0 && !isNaN(valor))
