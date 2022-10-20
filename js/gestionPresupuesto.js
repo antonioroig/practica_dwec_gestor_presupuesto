@@ -64,12 +64,12 @@ function CrearGasto(descripcion,valor,fecha = Date.now(), ...etiquetas) {
     this.mostrarGastoCompleto = function(){
         let mostrarGastos;
         let modfecha = new Date(this.fecha);
-        mostrarGastos = `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €. \n`;
-        mostrarGastos += `Fecha: ${modfecha.toLocaleString()} \n`;
-        mostrarGastos += `Etiquetas: \n`;
+        mostrarGastos = `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €.\n`;
+        mostrarGastos += `Fecha: ${modfecha.toLocaleString()}\n`;
+        mostrarGastos += `Etiquetas:\n`;
         for(let i = 0; i < this.etiquetas.length;i++)
         {
-            mostrarGastos += `- ${this.etiquetas[i]} \n`
+            mostrarGastos += `- ${this.etiquetas[i]}\n`
         }
        return mostrarGastos;
     }
@@ -79,20 +79,46 @@ function CrearGasto(descripcion,valor,fecha = Date.now(), ...etiquetas) {
             this.fecha = Date.parse(newfecha)
         }
     }
-    this.borrarEtiquetas = function(...deletiquetas){
-        let etiq = [...deletiquetas];
-        for(let i = 0; i < etiq.length;i++)
-        {
-            for(let j = 0; j < this.etiquetas.length; j++)
-            {
-                if (etiq[i] === this.etiquetas[j])
-                {
-                    this.etiquetas.splice(j,1)
-                }
-            }
-        }
+    this.anyadirEtiquetas = function(...newetiquetas){
+        let concarray = [...etiquetas,...newetiquetas]
+        
+        let mdarray = new Set(concarray);
+        
+        let arrayfinal = [...mdarray];
+        
+        return arrayfinal;
     }
-    
+    this.borrarEtiquetas = function(...deletiquetas){
+        //let etiq = [...deletiquetas];
+        let i = 0;
+        let j = 0;
+        
+        while (i < this.etiquetas.length)
+        {
+            while(j < deletiquetas.length)
+            {
+                if (this.etiquetas[i] === deletiquetas[j])
+                {
+                    this.etiquetas.splice(i,1);
+                    i--;
+                }
+                j++;
+            }
+            j=0;
+            i++;
+        }
+    //     for(let i = 0; i < etiq.length;i++)
+    //    {
+    //        for(let j = 0; j < this.etiquetas.length; j++)
+    //        {
+    //            if (etiq[i] === this.etiquetas[j])
+    //            {
+    //                this.etiquetas.splice(j,1)
+    //            }
+    //        }
+    //    }
+    // }
+    }
 }
 
 function listarGastos(){
