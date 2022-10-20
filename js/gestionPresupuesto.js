@@ -70,7 +70,8 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
     }
 
     this.anyadirEtiquetas = function(...arrEtiq){
-        this.etiquetas = [...this.etiquetas,...arrEtiq];
+        //this.etiquetas = [...this.etiquetas,...arrEtiq];
+        this.etiquetas = this.etiquetas.concat(this.etiquetas,arrEtiq)
         this.etiquetas = Array.from(new Set(this.etiquetas));
     }   
 
