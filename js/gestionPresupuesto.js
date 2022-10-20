@@ -93,16 +93,16 @@ function CrearGasto(descripcion,valor, fecha = Date.now(), ...etiquetas) {
 
         let fechaMod = new Date(this.fecha);
 
-        Gastos = `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €. \n`;
+        Gastos = `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €.\n`;
 
-        Gastos += `Fecha: ${fechaMod.toLocaleString()} \n`;
+        Gastos += `Fecha: ${fechaMod.toLocaleString()}\n`;
 
-        Gastos += `Etiquetas: \n`;
+        Gastos += `Etiquetas:\n`;
 
         for(let i = 0; i < this.etiquetas.length; i++)
         {
 
-            Gastos += `- ${this.etiquetas[i]} \n`
+            Gastos += `- ${this.etiquetas[i]}\n`
 
         }
 
@@ -121,29 +121,44 @@ function CrearGasto(descripcion,valor, fecha = Date.now(), ...etiquetas) {
 
     }
 
+    this.anyadirEtiquetas = function(...nuevaEtiqueta){
+
+        let arrayC = [...etiquetas, ...nuevaEtiqueta];
+
+        let arrayM = new Set(arrayC);
+
+        let arrayDefinitivo = Array.from(arrayM);
+
+        return arrayDefinitivo;
+
+    }
+
     this.borrarEtiquetas = function(...eliminarEtiquetas){
 
-        let etiqueta = [...eliminarEtiquetas];
+        let i = 0;
+        let j = 0;
 
-        for(let i = 0; i < etiqueta.length; i++)
+        while(i < this.etiquetas.length)
         {
 
-            for(let j = 0; j < this,etiquetas.lenght; i++)
+            while(j < eliminarEtiquetas.length)
             {
 
-                if(etiqueta[i] === this.etiquetas[j])
+                if(this.etiquetas[i] === eliminarEtiquetas[j])
                 {
 
-                    this.etiquetas.splice(j,1);
-
+                    this.etiquetas.splice(i,1);
+                    i--;
                 }
+                j++;
 
             }
+            j=0;
+            i++;
 
         }
 
     }
-
 
 }
 
@@ -165,7 +180,7 @@ function anyadirGasto(gasto)
 
 function borrarGasto(id)
 {
-        for(let i = 0; i < gastos.lenght; i++)
+        for(let i = 0; i < gastos.length; i++)
         {
             if(gastos[i].id === id)
             {
