@@ -52,10 +52,16 @@ function CrearGasto(descripcionGasto, valorGasto, fecha = Date.now(), ...etiquet
         }
     }
     this.mostrarGastoCompleto = function(){
-        return `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €.
-        Fecha: ${Date(this.fecha.toFixed())}
-        Etiquetas: 
-        - ${etiquetas()}`;
+        let gasto = `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €.\n`;
+        gasto += `Fecha: ${new Date(this.fecha).toLocaleString()}\n`;
+        gasto += `Etiquetas:\n`;
+        this.etiquetas.forEach(etiqueta => {
+            gasto += `- ` + etiqueta + `\n`;
+        })
+        return gasto;
+
+       // Etiquetas: 
+       // - ${this.etiquetas}`;
     }
     this.actualizarFecha = function(fecha){
         if((!isNaN(Date.parse(fecha))) && typeof fecha === 'string'){
