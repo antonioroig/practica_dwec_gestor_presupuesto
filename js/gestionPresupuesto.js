@@ -80,13 +80,17 @@ function CrearGasto(descGasto, valor, fec = Date.now(), ...etiquetas) {
 
         for(let i = 0; i < etiquetasAAnyadir.length; i++){
             for(let j = 0; j < this.etiquetas.length; j++){
-                if(etiquetasAAnyadir[i] == this.etiquetas[j]){
+                if(etiquetasAAnyadir[i] === this.etiquetas[j]){
                     contador = 1;
+                    break;
                 }
             }
-            if(contador == 0){
+
+            if(contador === 0){
                 this.etiquetas.push(etiquetasAAnyadir[i]);
             }
+
+            contador = 0;
         }
     }
     
