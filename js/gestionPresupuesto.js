@@ -35,7 +35,6 @@ function CrearGasto(descripcion, valor, fecha = Date.now(), ...etiquetas) {
     this.valor = valor;
     let id;
 
-
     if (etiquetas === undefined){
         this.etiquetas = new Array();
     }
@@ -43,11 +42,7 @@ function CrearGasto(descripcion, valor, fecha = Date.now(), ...etiquetas) {
         this.etiquetas = [...etiquetas];
     }
 
-    if (fecha === undefined){
-        this.fecha = Date.now(); 
-    }
-
-    if (typeof fecha !== 'string' || (! isNaN(Date.parse(fecha)))){
+    if (typeof fecha !== 'string' || (isNaN(Date.parse(fecha)))){
         this.fecha = Date.now(); 
     }
     else {
@@ -68,7 +63,7 @@ function CrearGasto(descripcion, valor, fecha = Date.now(), ...etiquetas) {
     }
 
     this.mostrarGasto = function(){
-        return 'Gasto correspondiente a '+ this.descripcion + ' con valor ' + this.valor + ' €';
+        return 'Gasto correspondiente a '+ this.descripcion + ' con valor ' + this.valor + ' €.';
     }
 
     this.actualizarDescripcion = function(descripcionAct){
@@ -89,27 +84,34 @@ function CrearGasto(descripcion, valor, fecha = Date.now(), ...etiquetas) {
     } 
 
     this.anyadirEtiquetas = function(...parEtiquetas){
+
         for (let i = 0; i < parEtiquetas.length; i++){
+
             let exArray = false; 
+
             for (let j = 0; j < this.etiquetas.length; j++ ){
-                if (parEtiquetas[i] == this.etiquetas[j] ){
+
+                if (parEtiquetas[i] === this.etiquetas[j] ){
+
                     exArray = true;
                     break;
                 }
 
             }
             if (!exArray){
+
                 this.etiquetas.push(parEtiquetas[i]);
             }
         }
     }
 
     this.mostrarGastoCompleto = function(){
-        const event = new Date(Date.UTC(this.fecha));
+       let mFecha = new Date (this.fecha); 
 
-        let ret = 'Gasto correspondiente a ' + this.descripcion +' con valor ' + this.valor + ' €.\nFecha: ' + event.toLocaleString()  + '\nEtiquetas:\n';
+        let ret = this.mostrarGasto() + '\nFecha: ' + mFecha.toLocaleString() + '\nEtiquetas:\n';
 
         for (let i = 0; i < this.etiquetas.length; i++){
+
             ret += '- ' + this.etiquetas[i] + '\n';
         }
 
@@ -118,30 +120,32 @@ function CrearGasto(descripcion, valor, fecha = Date.now(), ...etiquetas) {
 
     this.actualizarFecha = function(parAct){
 
-        if (typeof parAct === 'string' && isNaN(Date.parse(fecha))){
+        // if (typeof parAct === 'string' && isNaN(Date.parse(fecha))){
+
+        //     this.fecha = Date.parse(parAct); 
+        // }
+
+        if (typeof parAct !== 'string' || (isNaN(Date.parse(fecha))))
+        {
             this.fecha = Date.parse(parAct); 
         }
-
     }
 
     this.borrarEtiquetas = function(...parEtiquetas){
 
-        for (let i = 0; i < parEtiquetas.length; i++){
+        for (let i = 0; i < parEtiquetas.length; i++)
+        {
 
-            for (let j = 0; j < this.etiquetas.length; j++ ){
-
-                if (parEtiquetas[i] == this.etiquetas[j] ){
-
-                    this.etiquetas.splice(j);
-
+            for (let j = 0; j < this.etiquetas.length; j++)
+            {
+                if (parEtiquetas[i] === this.etiquetas[j])
+                {
+                    this.etiquetas.splice(j,1);
                     break;
                 }
-
             }
         }
-
     }
-
 }
 
 function listarGastos(){
@@ -150,41 +154,47 @@ function listarGastos(){
 }
 
 function anyadirGasto(gasto){
+
     gasto.setId(idGasto);
+
     idGasto++;
-    gastos.push(gasto);
-}
-
-/* 
-this.etiquetas = etiquetas;
-this. etiquetas = [...etiquetas];
-*/
-
-function borrarGasto(parId){
-
-    if (parId < gastos.length){
-
-        gastos.splice(parId - 1, 1);
-
-    }
-
-}
-
-function calcularTotalGastos(){
-
-        let total = 0;
     
-    for (let i = 0; i < gastos.length; i++){
+    gastos.push(gasto);
+
+}
+
+function borrarGasto(parId)
+{
+    // if (parId < gastos.length && parId >= 0)
+    // {
+    //     gastos.splice(parId, 1);
+    // }
+
+    for (let i = 0; i < gastos.length; i++)
+    {
+        if (parId == i)
+        {
+            gastos.splice(parId, 1);
+            break;
+        }
+    }
+}
+
+function calcularTotalGastos()
+{
+    let total = 0;
+    
+    for (let i = 0; i < gastos.length; i++)
+    {
         total += gastos[i].valor;
     }
 
     return total;
 }
 
-function calcularBalance(){
-    
+function calcularBalance()
+{
     return presupuesto - calcularTotalGastos();
-
 }
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
