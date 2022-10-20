@@ -21,7 +21,7 @@ function mostrarPresupuesto() {
     return ('Tu presupuesto actual es de ' + presupuesto + ' €');
 }
 
-function CrearGasto(descripcion,valor,fecha,...etiquetas) {
+function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
     this.descripcion=descripcion;
 
     this.valor=0;
@@ -31,11 +31,8 @@ function CrearGasto(descripcion,valor,fecha,...etiquetas) {
     }else{
         this.fecha = Date.parse(fecha);
     }
-    this.etiquetas = [];
-
-    if(etiquetas != null){
-        this.etiquetas=etiquetas;
-    }
+    
+    this.etiquetas=etiquetas;
 
     if(valor >= 0){
         this.valor=valor;
@@ -71,11 +68,20 @@ function CrearGasto(descripcion,valor,fecha,...etiquetas) {
             this.fecha = Date.parse(fecha);
         }
     }
-/*
-    this.anyadirEtiquetas(...arrEtiq) = function(){
-        let nuevasEtiq = new Set(arrEtiq);
-        etiquetas.concat(nuevasEtiq);
-    }    */
+
+    this.anyadirEtiquetas = function(...arrEtiq){
+        this.etiquetas = [...this.etiquetas,...arrEtiq];
+        this.etiquetas = Array.from(new Set(this.etiquetas));
+    }   
+
+    this.borrarEtiquetas = function(...arrEtiq){
+        arrEtiq.forEach(etiqueta =>
+            {
+                if(this.etiquetas.includes(etiqueta,0)){
+                    this.etiquetas.splice(this.etiquetas.indexOf(etiqueta,0),1)
+                }
+            })
+    }
 }
 
 
