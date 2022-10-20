@@ -80,8 +80,15 @@ function CrearGasto(descripcionGasto, valorGasto, fecha = Date.now(), ...etiquet
             repetido = 0;
         }
     }
-    this.borrarEtiquetas = function(){
-
+    this.borrarEtiquetas = function(...etiquetasAEliminar){
+        for(let i = 0; i < etiquetasAEliminar.length; i++){
+            for(let j = 0; j < this.etiquetas.length; j++){
+                if(etiquetasAEliminar[i] === this.etiquetas[j]){
+                    this.etiquetas.splice(j, 1); 
+                    break;
+                }
+            }
+        }
     }
 }
 
