@@ -47,8 +47,7 @@ function CrearGasto(descripcion,valor,fecha,...etiquetas) {
 
     this.mostrarGastoCompleto = function(){
         var texto =`Gasto correspondiente a ` + this.descripcion + ` con valor ` + this.valor + ` €.\n`
-        this.fecha = Date
-        texto += (`Fecha: ` + `\nEtiquetas:\n`)
+        texto += (`Fecha: `+ new Date(this.fecha).toLocaleString() + `\nEtiquetas:\n`)
         
         this.etiquetas.forEach(etiqueta => 
             texto += `- ` + etiqueta + `\n`
