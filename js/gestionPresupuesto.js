@@ -97,30 +97,7 @@ function CrearGasto(descripcion, valor, fecha = Date.now() , ...etiquetas) {
     }
 
 
-    this.anyadirEtiquetas = function(...etiquet)
-    {
-
-        
-        let et = [...etiquet]
-        let exist = false;
-
-        for(let i = 0; i < gastos.length; i++)
-        {
-            if(et === etiquetas)
-            {
-                exist = true;
-               
-            }
-          
-            if(et !== etiquetas)
-            {
-                
-                this.etiquetas.push(et)
-            }
-
-        }
-
-    }
+    
 
 
     this.actualizarFecha = function(fec)
