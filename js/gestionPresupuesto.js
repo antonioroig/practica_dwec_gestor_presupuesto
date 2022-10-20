@@ -102,25 +102,47 @@ function CrearGasto(descripcion,valor,fecha=Date.now(), ...etiquetas)
     {
         let j = 0;
         let i = 0;
+        // let stop = true;
 
         if(arr.length > 0)
         {
-            while (i < this.etiquetas.length) 
+            while (j < arr.length)
             {
-                while (j < arr.length)
+                if(arr[j] === this.etiquetas[i])
                 {
-                    if(arr[j] === this.etiquetas[i])
-                    {
-                        this.etiquetas.splice(i, 1);
-                        j++;
-                        i = 0;
-                    }
-                }  
+                    this.etiquetas.splice(i, 1);
+                    i = 0;
+                }
                 i++;
+                if(i > this.etiquetas.length)
+                {
+                    i = 0;
+                    j++;
+                }
             }    
-        }
+        }    
     }
 }
+    // this.borrarEtiquetas = function(...arr)
+    // {
+    //     let j = 0;
+    //     let i = 0;
+
+    //     while(i < this.etiquetas.legth)
+    //     {
+    //         while(j < arr.length)
+    //         {
+    //             if(this.etiquetas[i] === arr[j])
+    //             {
+    //                 this.etiquetas.splice(i,1);
+    //                 i--;
+    //             }
+    //             j++;
+    //         }
+    //         j=0;
+    //         i++;
+    //     }
+    // }
 
 function listarGastos()
 {
