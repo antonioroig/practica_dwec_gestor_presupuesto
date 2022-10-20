@@ -2,7 +2,7 @@
 
 // TODO: Variable global
 var presupuesto = 0;
-var gastos = new Array();
+var gastos = [];
 var idGasto = 0;
 
 function actualizarPresupuesto(nuevoPresupuesto) {
@@ -22,9 +22,9 @@ function mostrarPresupuesto() {
 
 function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
     this.descripcion = descripcion;
-
     
-
+    this.etiquetas=etiquetas;
+    
     this.fecha = Date.parse(fecha);
     
     if(typeof valor==='number' && valor>=0){
@@ -35,19 +35,22 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
   
     if(isNaN(this.fecha)){
       this.fecha = Date.now();
-      console.log('entra');
     }
 
+    this.actualizarFecha = function(fecha){
+
+        if(!isNaN(Date.parse(fecha))){
+            this.fecha = Date.parse(fecha);
+          }
+    }
     
     this.mostrarGasto = function(){
         return (`Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €`);
     }
 
     this.mostrarGastoCompleto = function(){
-        let fechaBien = Date(this.fecha);
-        var dia = fechaBien.getDay();
         var texto = "Gasto correspondiente a "+this.descripcion+" con valor "+ this.valor;
-        texto+= " €.\nFecha: "+ dia+"\nEtiquetas:\n";
+        texto+= " €.\nFecha: "+ new Date(this.fecha).toLocaleString()+"\nEtiquetas:\n";
         this.etiquetas.forEach(etiqueta=>{
             texto+="- "+etiqueta+"\n";
         });
@@ -65,11 +68,22 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
         }
     }
 
-    this.anyadirEtiquetas = function(etiquetas){
-        this.etiquetas = etiquetas;
+    this.anyadirEtiquetas = function(...etiquetas){
+        etiquetas.forEach(etiqueta => {
+            if(!this.etiquetas.includes(etiqueta)){
+                this.etiquetas.push(etiqueta);
+            }
+        });
     }
 
-    this.anyadirEtiquetas(etiquetas);
+    this.borrarEtiquetas = function(...etiquetas){
+        etiquetas.forEach(etiqueta => {
+            let index = this.etiquetas.indexOf(etiqueta);
+            if(index !== -1){
+                this.etiquetas.splice(index, 1);
+            }
+        });
+    }
 
 }
 
@@ -84,7 +98,6 @@ function anyadirGasto(gasto){
 }
 
 function borrarGasto(idGasto){
-    
     for(let i=0; i<gastos.length; i++){
         if(gastos[i].id == idGasto){
             gastos.splice(i, 1);
