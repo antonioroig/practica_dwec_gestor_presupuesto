@@ -95,7 +95,16 @@ function CrearGasto(descGasto, valor, fec = Date.now(), ...etiquetas) {
     }
     
     this.borrarEtiquetas = function(...etiquetasABorrar){
+        let posBorar = 0;
 
+        for(let i = 0; i < etiquetasABorrar.length; i++){
+            for(let j = 0; j < this.etiquetas.length; j++){
+                if(etiquetasABorrar[i] === this.etiquetas[j]){
+                    this.etiquetas.splice(j, 1);
+                    break;
+                }
+            }
+        }
     }
 }
 
