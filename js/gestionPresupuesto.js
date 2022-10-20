@@ -3,7 +3,7 @@
 // TODO: Variable global
 let presupuesto = 0;
 let idGasto = 0;
-let gastos = new Array();
+let gastos = [];
 
 function actualizarPresupuesto(valor) {
     if(valor >= 0 && typeof valor === 'number')
@@ -43,13 +43,14 @@ function CrearGasto(descripcion, valor, fecha = Date.now(), ...etiquetas) {
         this.fecha = Date.now();
     }
     
-    // Métodos:
-    // Revisar
     this.mostrarGastoCompleto = function(){
         let fecAux = new Date(this.fecha);
+
         let aux = "";
-        let res =  `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €.\nFecha: ${fecAux.getDate()}/${(fecAux.getMonth() + 1) }/${fecAux.getFullYear()} ${fecAux.getHours()}:${fecAux.getMinutes()}:${fecAux.getMilliseconds()}.\nEtiquetas:`
-        this.etiquetas.forEach(element => aux += `\n- ${element}`)
+        for(let etiqueta of this.etiquetas){
+            aux = aux + `- ${etiqueta}\n`;
+        }
+        let res =  `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €.\nFecha: ${(fecAux.toLocaleString())}\nEtiquetas:\n`
         return res + aux;
     },
     this.actualizarDescripcion = function(descripcionActualizada){
@@ -62,18 +63,26 @@ function CrearGasto(descripcion, valor, fecha = Date.now(), ...etiquetas) {
             this.valor = valorActualizado;
         }
     },
-    // Revisar - OJO
     this.anyadirEtiquetas = function (... etiquetas){
-        for(let i = 0 ; i < etiquetas.length; i++){
-            if(!etiquetas[i] == this.etiquetas[i]){
-                this.etiquetas.push(etiquetas[i])
-            };
-        }
-        // this.etiquetas.push(... etiquetas);
+        const etiqueta = etiquetas.filter((element) => {
+
+            for(let i = 0 ; i < etiquetas.length; i++){
+                if(!this.etiquetas.includes(element)){
+                    return element;
+                };
+            }
+        });
+        this.etiquetas.push( ... etiqueta);        
     },
-    // Revisar
     this.borrarEtiquetas = function (... etiquetas){
-       
+       etiquetas.forEach((element) => {
+        for (let i = 0; i < this.etiquetas.length; i++) {
+            if (this.etiquetas[i] === element) 
+            {
+                this.etiquetas.splice(i, 1);
+            }
+        }
+       });
     },
     // Check
     this.actualizarFecha= function(fechaIntroducida){
@@ -83,17 +92,17 @@ function CrearGasto(descripcion, valor, fecha = Date.now(), ...etiquetas) {
             }
         }
     }
-}
+};
 // Check 
 function listarGastos(){
     return gastos;
-}
+};
 // Check
 function anyadirGasto(gasto){
     gasto[`id`] = idGasto;
     gastos.push(gasto);
     idGasto++;
-}
+};
 // Check
 function borrarGasto(id){
     for(let i = 0; i <= gastos.length; i++){
@@ -103,7 +112,7 @@ function borrarGasto(id){
         }
     }
 
-}
+};
 // Check
 function calcularTotalGastos(){
     let sum = 0;
@@ -112,11 +121,11 @@ function calcularTotalGastos(){
         sum += gasto.valor
     }
     return sum;
-}
+};
 // Check
 function calcularBalance(){
      return (presupuesto - calcularTotalGastos());
-}
+};
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
 // Las funciones y objetos deben tener los nombres que se indican en el enunciado
 // Si al obtener el código de una práctica se genera un conflicto, por favor incluye todo el código que aparece aquí debajo
