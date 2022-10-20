@@ -1,5 +1,5 @@
 let presupuesto=0;
-let gastos= new Array();
+let gastos = new Array();
 idGasto=0;
 
 
@@ -18,8 +18,10 @@ function mostrarPresupuesto() {
     return 'Tu presupuesto actual es de '+ presupuesto + ' €'
 }
 
-function CrearGasto(Descripcion, valor) {
+function CrearGasto(Descripcion, valor, Fecha=Date.now(), ...etiquetas) {
     this.descripcion = Descripcion;
+    this.fecha=Fecha;
+    this.etiquetas= new Array();
 
     if(valor >=0 && !isNaN(valor)){
 
@@ -42,13 +44,16 @@ function CrearGasto(Descripcion, valor) {
             this.valor = valorActualizado;
         }
         else{
-            console.log('Error: El valor introducido es negativo o valon invalido');
+            console.log('Error: El valor introducido es negativo o valor invalido');
         };
     };
+
+    this.fecha = string (Date.parse(fecha))
+
 };
 
 function listarGastos() {
-
+    return gastos;
 };
 function anyadirGasto () {
 
@@ -59,7 +64,14 @@ function borrarGasto() {
 };
 
 function calcularTotalGastos() {
-
+    let sum = 0;
+    i=0;
+    while (i<gastos.length)
+    {
+        sum+=gastos[i];
+        i++;
+    }
+    return sum;
 };
 
 function calcularBalance() {
@@ -79,3 +91,6 @@ export   {
     calcularTotalGastos, 
     calcularBalance
 }
+
+
+
