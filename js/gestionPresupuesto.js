@@ -89,11 +89,9 @@ function CrearGasto(descripcion,valor ,fecha= Date.now(), ...etiquetas )
             let mensaje = (`Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €.\nFecha: ${(fechaAuxiliar2.toLocaleString())}\nEtiquetas:\n`+ auxiliar);
             return mensaje;
         }
-        function actualizarFecha(fecha)
-        {
 
-        }
-        
+       
+    
     // TODO
 }
 
@@ -141,18 +139,6 @@ function calcularBalance(){
 }
 
 
-function actualizarFecha(fecha)
-{
-
-}
-function anyadirEtiquetas()
-{
-        
-}
-
-function borrarEtiquetas(){
-
-}
 
 
 
