@@ -5,7 +5,7 @@
 "use strict"
 let presupuesto = 0 ;
  let gastos=[];
- let idgastos;
+ let idgastos =0;
 function actualizarPresupuesto(dinero)
 {
    if (typeof dinero ==="number" && dinero > 0 ){
@@ -27,9 +27,9 @@ function mostrarPresupuesto()
 }
 
 
-function CrearGasto(descripcion,valor,fecha= Date.now(), ...etiquetas )
+function CrearGasto(descripcion,valor ,fecha= Date.now(), ...etiquetas )
  { 
-
+    
 
     if (typeof fecha ==="string" )
     {
@@ -37,7 +37,7 @@ function CrearGasto(descripcion,valor,fecha= Date.now(), ...etiquetas )
     }
         this.descripcion = descripcion;
 
-        if (typeof valor ==="number" && valor > 0)
+        if (typeof valor ==="number" && valor >= 0)
         {
             this.valor =valor;
         }else{
