@@ -167,12 +167,12 @@ function borrarGasto(parId)
 {
     // if (parId < gastos.length && parId >= 0)
     // {
-    //     gastos.splice(parId, 1);
+    //     gastos.splice(parId, 1)  22.26.76;
     // }
 
     for (let i = 0; i < gastos.length; i++)
     {
-        if (parId == i)
+        if (parId === i)
         {
             gastos.splice(parId, 1);
             break;
