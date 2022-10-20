@@ -123,7 +123,7 @@ function CrearGasto(descripcion,valor, fecha = Date.now(), ...etiquetas) {
 
     this.anyadirEtiquetas = function(...nuevaEtiqueta){
 
-        let arrayC = [...etiquetas, ...nuevaEtiqueta];
+        let arrayC = [...etiquetas,...nuevaEtiqueta];
 
         let arrayM = new Set(arrayC);
 
