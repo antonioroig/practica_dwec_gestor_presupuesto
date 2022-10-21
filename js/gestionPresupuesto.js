@@ -170,15 +170,15 @@ function calcularBalance(){
     return presupuesto - gastoTotal;
 }
 
-function filtrarGastos(/*{fechaDesde,fechaHasta,valorMinimo,valorMaximo,descripcionContiene,etiquetasTiene}*/ gasto){
+function filtrarGastos(gasto){
 
-    let results = gastos.filter(([gasto, value]){
-        if(gasto.fechaDesde === gastos.fecha)
-    });
+    let results = gastos.filter(([gasto, value]) => value === gasto.fecha);
     return results;
 }
 
-function agruparGastos(){}
+function agruparGastos(periodo,etiquetas,fechaDesde,fechaHasta){
+    
+}
            
   
 
