@@ -51,7 +51,7 @@ function CrearGasto(descripcion1, valor1, fecha1 = Date.now(), ...etiqueta1) {
 
 
     this.mostrarGasto = function () {
-        return 'Gasto correspondiente a ' + this.descripcion + ' con valor ' + this.valor + ' €.'
+        return 'Gasto correspondiente a ' + this.descripcion + ' con valor ' + this.valor + ' €'
     };
 
 
@@ -91,12 +91,13 @@ function CrearGasto(descripcion1, valor1, fecha1 = Date.now(), ...etiqueta1) {
     };
 
     this.mostrarGastoCompleto = function () {
+        let fecha1 = new Date (this.fecha);
         let texto = 
-        this.mostrarGasto + '\n' +
-        'Fecha: ' + Date.parse(this.fecha).toLocaleString() + '\n' + 
+        'Gasto correspondiente a ' + this.descripcion + ' con valor ' + this.valor + ' €.' + '\n' +
+        'Fecha: ' + fecha1.toLocaleString() + '\n' + 
         'Etiquetas:' + '\n';
-        for (i = 0; i < this.etiquetas.length; i++) {
-            texto += ' - ' + this.etiquetas[i] + '\n';
+        for (let i = 0; i < this.etiquetas.length; i++) {
+            texto += '- ' + this.etiquetas[i] + '\n';
         }
         return texto;
     };
@@ -118,23 +119,23 @@ function anyadirGasto(ObjGasto) {
 function borrarGasto(idBorrar) {
     for (let i = 0; i < gastos.length; i++) {
         if (gastos[i].id === idBorrar) {
-            gastos.splice[i, 1];
-            break;
+            gastos.splice(i, 1);
         }
     }
 }
 
 
 function calcularTotalGastos() {
-    for (let i = 0; i < gastos.length(); i++) {
-        i++;
+    let total = 0;
+    for (let i = 0; i < gastos.length; i++) {
+        total += gastos[i].valor;
     };
-    return i;
+    return total;
 }
 
 
 function calcularBalance() {
-
+    return presupuesto - calcularTotalGastos();
 }
 
 
