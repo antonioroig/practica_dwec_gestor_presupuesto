@@ -1,6 +1,6 @@
 let presupuesto=0;
 let gastos = new Array();
-idGasto=0;
+let idGasto = 0;
 
 
 function actualizarPresupuesto(PresAct) {
@@ -20,8 +20,21 @@ function mostrarPresupuesto() {
 
 function CrearGasto(Descripcion, valor, Fecha=Date.now(), ...etiquetas) {
     this.descripcion = Descripcion;
-    this.fecha=Fecha;
-    this.etiquetas= new Array();
+    this.anyadirEtiquetas;
+
+    if (etiquetas===undefined){
+        this.etiquetas=new Array();
+    }
+    else{
+        this.etiquetas=[...etiquetas];
+    }
+
+    if (typeof Fecha==='string' && !isNaN(Date.parse(Fecha))){
+        this.fecha=Date.parse(Fecha);
+    }
+    else {
+        this.fecha=Date.now();
+    }
 
     if(valor >=0 && !isNaN(valor)){
 
