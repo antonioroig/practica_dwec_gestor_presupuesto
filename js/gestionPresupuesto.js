@@ -122,6 +122,21 @@ function CrearGasto(descripcion, valor, fecha, ... etiquetas) {
            }
         }
     }
+    // * * * * * * * * * * * * * * * *
+    // Actividad 3 - Métodos
+
+    // Método 'obtenerPeriodoAgrupacion' del objeto gasto --> dia/mes/anyo
+    this.obtenerPeriodoAgrupacion = function(valor){
+        if(valor === dia){
+            this.fecha.getFullYear();
+        }
+        else if(valor === mes){
+            this.fecha.getMonth();
+        }
+        else if(valor === anyo){
+            this.fecha.getDate();
+        }
+    }
 }
     
 /* - - - - - - - - - - - - - - - - */
@@ -159,6 +174,19 @@ function calcularBalance (){
     let balance = presupuesto - calcularTotalGastos();
     return balance;
 }
+
+
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+//Actividad 3 - Ejercicios
+
+function filtrarGastos(){
+
+}
+
+
+function agruparGastos(){
+
+}
 /* NO MODIFICAR A PARTIR DE AQUÍ exportación de funciones y objetos creados para poder ejecutar los tests.
 Las funciones y objetos deben tener los nombres que se indican en el enunciado
 Si al obtener el código de una práctica se genera un conflicto, por favor incluye todo el código que aparece aquí debajo */
@@ -170,8 +198,8 @@ export   {
    anyadirGasto,
    borrarGasto,
    calcularTotalGastos,
-   calcularBalance
-
-
+   calcularBalance,
+   filtrarGastos,
+   agruparGastos,
 
 }
