@@ -62,19 +62,17 @@ function CrearGasto(descripcion, valor, fecha = Date.now(), ...etiquetas) {
     },
     this.mostrarGastoCompleto = function() 
     {
-        let auxF;
-        let strigEtiquetas;
-        if (typeof this.fecha === "string")
-        {
-            auxF = Date.parse(this.fecha);
-        }else 
-        {
-            auxF = this.fecha;
-        }
+        let auxF = new Date(this.fecha);
+        // if (typeof this.fecha === "string")
+        // {
+        //     auxF = Date.parse(this.fecha);
+        // }else 
+        // {
+        //     auxF = this.fecha;
+        // }
         /*let auxFecha = new Date(auxF);*/
-        strigEtiquetas = `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €.
-        Fecha: ${(auxF.toLocaleString())}
-        Etiquetas:`;
+        
+        let strigEtiquetas = `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €.\nFecha: ${(auxF.toLocaleString())}\nEtiquetas:\n`;
         for(let etiqueta of this.etiquetas) 
         {
             strigEtiquetas += `- ${etiqueta}\n`;
@@ -89,17 +87,27 @@ function CrearGasto(descripcion, valor, fecha = Date.now(), ...etiquetas) {
 			this.fecha=aux;
         }
 	},
-    this.anyadirEtiquetas = function(...etiquetas)
+    this.anyadirEtiquetas = function(...etiquets)
     {  
-        if ( etiquetas.length > 0 )
+        let nuevoArray = [...this.etiquetas, ...etiquets]
+        const aux = new Set (nuevoArray);
+        let result = [...aux];
+        this.etiquetas.push(result);          
+    },
+    this.borrarEtiquetas = function(...etiquets)
+    {   
+        for (let i = 0; i < etiquets.length; i++)
         {
-            const aux = new Set ([...etiquetas]);
-            this.etiquetas.push(Array.from(aux));           
+            for (let j = 0; j < etiquetas.length; j++)
+            {
+                if (etiquets[i] === this.etiquetas[j])
+                {
+                   this.etiquetas.splice(i, 1);      
+                }
+            }
         }
-    }  
-
+    }
 } 
-
 function listarGastos(){
     return gastos;
 }
@@ -117,9 +125,13 @@ function borrarGasto(id){
 }
 function calcularTotalGastos(){
     let total = 0;  
+    gastos.forEach((x) => {
+        total += x.valor;
+    })
+    return total;
 }
 function calcularBalance(){
-    
+    return presupuesto - calcularTotalGastos();
 }
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
 // Las funciones y objetos deben tener los nombres que se indican en el enunciado
