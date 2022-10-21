@@ -18,6 +18,7 @@ function actualizarPresupuesto(dinero)
        return -1;
     }
     // TODO
+    
 }
  
 function mostrarPresupuesto()
@@ -94,13 +95,41 @@ function CrearGasto(descripcion,valor ,fecha= Date.now(), ...etiquetas )
         this.actualizarFecha=function(fechaDada)
         {
             let fechaActual=Date.parse(fechaDada);
-            if ( !isNaN(fechaActual) )
-            {
-                this.fecha= fechaActual;            
-            }
+            this.fecha =(!isNaN(fechaActual)) ? fechaActual : this.fecha;
         }
 
        
+        this.anyadirEtiquetas = function(...etiquetas) 
+        {
+            
+            let value=[];
+            for (let i = 0; i < etiquetas.length; i++)
+            {
+                value.push(etiquetas[i]);
+
+               if (this.etiquetas.includes(etiquetas[i])) 
+                {
+                  value.pop();
+                }
+
+            }
+
+            this.etiquetas.push(...value);
+        }
+    
+        this.borrarEtiquetas = function(...etiquetas) 
+        {
+            for (let i = 0; i < etiquetas.length; i++)
+            {
+                for (let j = 0; j < this.etiquetas.length; j++) 
+                {
+                    if (this.etiquetas[j] === etiquetas[i]) 
+                    {
+                        this.etiquetas.splice(j, 1);
+                    }
+                }
+            }
+        }
     
     // TODO
 }
