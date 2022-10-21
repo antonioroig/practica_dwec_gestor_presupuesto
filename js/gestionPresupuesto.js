@@ -102,7 +102,6 @@ function CrearGasto(descripcion,valor,fecha=Date.now(), ...etiquetas)
     {
         let j = 0;
         let i = 0;
-        // let stop = true;
 
         if(arr.length > 0)
         {
@@ -122,28 +121,13 @@ function CrearGasto(descripcion,valor,fecha=Date.now(), ...etiquetas)
             }    
         }    
     }
+
+    this.obtenerPeriodoAgrupacion(valor)
+    {
+        
+    }
 }
-    // this.borrarEtiquetas = function(...arr)
-    // {
-    //     let j = 0;
-    //     let i = 0;
-
-    //     while(i < this.etiquetas.legth)
-    //     {
-    //         while(j < arr.length)
-    //         {
-    //             if(this.etiquetas[i] === arr[j])
-    //             {
-    //                 this.etiquetas.splice(i,1);
-    //                 i--;
-    //             }
-    //             j++;
-    //         }
-    //         j=0;
-    //         i++;
-    //     }
-    // }
-
+   
 function listarGastos()
 {
     return gastos;
@@ -184,6 +168,16 @@ function calcularBalance()
     return presupuesto - calcularTotalGastos();
 }
 
+function filtrarGastos()
+{
+
+}
+
+function agruparGastos()
+{
+
+}
+
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
 // Las funciones y objetos deben tener los nombres que se indican en el enunciado
 // Si al obtener el código de una práctica se genera un conflicto, por favor incluye todo el código que aparece aquí debajo
@@ -196,6 +190,8 @@ export   {
     anyadirGasto,
     borrarGasto,
     calcularTotalGastos,
-    calcularBalance
+    calcularBalance,
+    filtrarGastos,
+    agruparGastos
 }
 
