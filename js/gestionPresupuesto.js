@@ -119,21 +119,45 @@ function CrearGasto(descripcion,valor,fecha,...etiqueta) {
         }
     }
 
-    this.obtenerPeriodoAgrupacion = function(periodo )
+    this.obtenerPeriodoAgrupacion = function(periodo)
     {
         let res;
-        if(periodo === `dia`)
+
+        let f = new Date(this.fecha);
+
+        let dia = f.getDate();
+
+        let mes = (parseInt(f.getMonth()) + 1);
+        
+        let anyo = f.getFullYear();
+        let b = `-`;
+        let a = `-`;
+        if(parseInt(dia) < 10)
         {
-            res = new Date(this.fecha).getFullYear() + `-` +  new Date(this.fecha).getMonth() + `-` + new Date(this.fecha).getDay();
+            b += `0`
         }
-        if(periodo === `mes`)
+
+        if(parseInt(mes) < 10)
         {
-            res = new Date(this.fecha).getFullYear() + `-` +  new Date(this.fecha).getMonth() + `-` + new Date(this.fecha).getDay();
+            a += `0`
         }
-        if(periodo === `año`)
+
+        if(periodo == `dia`)
         {
-            res = new Date(this.fecha).getFullYear() + `-` +  new Date(this.fecha).getMonth() + `-` + new Date(this.fecha).getDay();
+            res =  anyo + a +  mes + b + dia;
         }
+        if(periodo == `mes`)
+        {
+            
+            res = anyo + a +  mes;
+        }
+        if(periodo == `anyo`)
+        {
+            res = anyo;
+        }
+        b = `-`;
+        a = `-`;
+        return res;
     }
     
     //this.actualizarFecha(fecha){
@@ -180,68 +204,9 @@ function CrearGasto(descripcion,valor,fecha,...etiqueta) {
         return presupuesto - calcularTotalGastos();
     }
 
-    function filtrarGastos(fechaDesde,fechaHasta,valorMinimo,valorMaximo,descripcionContiene,etiquetasTiene)
+    function filtrarGastos(gasto)
     {
-        let res;
-        if(!isNaN(Date.parse(fechaDesde)))
-        {
-            let menor
-             = gastos[1].fecha;
-            res = gastos.filter(function(gasto) {
-                if(gasto.fecha < menor)
-                {
-                    menor= gasto.fecha;
-                }
-            });
-            fechaDesde = menor
-            ;
-        }
-        if(!isNaN(Date.parse(fechaHasta)))
-        {
-            let mayor = gastos[1].fecha;
-            res = gastos.filter(function(gasto) {
-                if(gasto.fecha > mayor)
-                {
-                    mayor
-                     = gasto.fecha;
-                }
-            });
-            fechaHasta = mayor
-            ;
-        }
-        if(typeof valorMinimo !== `undefined`)
-        {
-            let minimo = gastos[1].valor;
-            res = gastos.filter(function(gasto) {
-                if(gasto.valor < mayor )
-                {
-                    mayor = gasto.valor;
-                }
-            });
-            minimo = mayor;
-        }
-        if( typeof(valorMaximo) !== `undefined`)
-        {
-            let maximo = gastos[1].valor;
-            res = gastos.filter(function(gasto) {
-                if(gasto.valor < maximo )
-                {
-                    maximo = gasto.valor;
-                }
-            });
-            minimo = maximo;
-        }
-        if( typeof(descripcionContiene) !== `undefined`)
-        {
-            let maximo = gastos[1].valor;
-            res = gastos.filter(function(gasto) {
-                if(gasto.valor < maximo )
-                {
-                    maximo = gasto.valor;
-                }
-            });
-            minimo = maximo;
-        }
+            
     }
 
     function agruparGastos()
