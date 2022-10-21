@@ -63,7 +63,7 @@ function CrearGasto(descripcion, valor, fecha = Date.now(), ...etiquetas) {
     }
 
     this.mostrarGasto = function(){
-        return 'Gasto correspondiente a '+ this.descripcion + ' con valor ' + this.valor + ' €.';
+        return 'Gasto correspondiente a '+ this.descripcion + ' con valor ' + this.valor + ' €';
     }
 
     this.actualizarDescripcion = function(descripcionAct){
@@ -108,7 +108,7 @@ function CrearGasto(descripcion, valor, fecha = Date.now(), ...etiquetas) {
     this.mostrarGastoCompleto = function(){
        let mFecha = new Date (this.fecha); 
 
-        let ret = this.mostrarGasto() + '\nFecha: ' + mFecha.toLocaleString() + '\nEtiquetas:\n';
+        let ret = 'Gasto correspondiente a '+ this.descripcion + ' con valor ' + this.valor + ' €.' + '\nFecha: ' + mFecha.toLocaleString() + '\nEtiquetas:\n';
 
         for (let i = 0; i < this.etiquetas.length; i++){
 
