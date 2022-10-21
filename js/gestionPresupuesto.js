@@ -110,24 +110,31 @@ function CrearGasto(descripcion, valor, fecha = Date.now(), ...etiquetas) {
     this.obtenerPeriodoAgrupacion = function (periodo)
     {
         let fech = new Date(this.fecha);
-        dia = fech.getDate();
-        mes = fech.getMonth();
-        anyo = fech.getFullYear();
-        let aux ; 
-        if (periodo==="dia")
+        let dia = `${fech.getDate()}`;
+        let mes = `${(fech.getMonth() + 1)}`;
+        let anyo = `${fech.getFullYear()}`;
+        if (this.mes > 0 ||  this.mes < 9)
         {
-            aux = dia;
-
-        }else if (periodo==="mes")
-        {
-            aux = anyo + mes;
-
-
-        }else if (periodo==="anyo")
-        {
-            aux = anyo;
+            this.mes = `0${mes}`
         }
+        if (dia > 0 || dia < 9 )
+        {
+            this.dia = `0${dia}`
+        }
+        let aux = `${anyo}-${mes}-${dia}`;
+        if (periodo === "dia")
+        {
+            aux = aux;
 
+        }else if (periodo === "mes")
+        {
+            aux = `${anyo}-0${mes}`
+
+        }else if (periodo === "anyo")
+        {
+            aux = `${anyo}`;
+        }
+        return aux;
     }
 } 
 function listarGastos(){
@@ -155,6 +162,12 @@ function calcularTotalGastos(){
 function calcularBalance(){
     return presupuesto - calcularTotalGastos();
 }
+function filtrarGastos(){
+
+}
+function agruparGastos(){
+    
+}
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
 // Las funciones y objetos deben tener los nombres que se indican en el enunciado
 // Si al obtener el código de una práctica se genera un conflicto, por favor incluye todo el código que aparece aquí debajo
@@ -169,4 +182,5 @@ export   {
     filtrarGastos,
     agruparGastos,
     CrearGasto
+ 
 }
