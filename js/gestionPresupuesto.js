@@ -107,7 +107,7 @@ function CrearGasto(descripcion,valor, fecha = Date.now(), ...etiquetas) {
     }
 
     this.obtenerPeriodoAgrupacion = function(periodo){
-        let resultadoFecha = "";
+        let resultadoFecha = " ";
         let fecha = new Date(this.fecha);
         switch (periodo) {
             case dia:
@@ -117,10 +117,10 @@ function CrearGasto(descripcion,valor, fecha = Date.now(), ...etiquetas) {
             case anyo:
                 return fecha.toISOString().substring(0,4);
             default:
-                console.log("Periodo no válido");
+                break;
         }
         return resultadoFecha;
-    }
+    }       //No funciona :(
 
 }
     //Funciones de gastos
@@ -155,12 +155,62 @@ function CrearGasto(descripcion,valor, fecha = Date.now(), ...etiquetas) {
     };
 
     function filtrarGastos(objeto){
+        let gastosFiltrados = gastos.filtre(gasto => {
+            if (objeto.hasOwnProperty('fechaDesde') && typeof objeto.valor === 'number') {
+                if (gasto.fecha < Date.parse(objeto.fechaDesde)) {
 
-    };
+                    return false;
+                }
+              
+            }         
+        
+             if (objeto.hasOwnProperty('fechaHasta') && typeof objeto.valor === 'number') {
+                if (gasto.fecha > Date.parse(objeto.fechaDesde)) {
+                    
+                    return false;
+                }
+              
+            }
 
-    function agruparGastos(periodo, etiquetas, fechadesde, fechahasta){
+             if(objeto.hasOwnProperty('valorMinimo') && typeof objeto.valor === 'number'){
+                if(gasto.valor < gastosFiltrados.valorMinimo)
+                {
+                    return false;
+                }
+            }
 
-    };
+            if(objeto.hasOwnProperty('valorMaximo') && typeof objeto.valor === 'number'){
+                if(gasto.valor > gastosFiltrados.valorMaximo)
+                {
+                    return false;
+                }
+            }
+
+            if(objeto.hasOwnProperty('descripcionContiene') && typeof objeto.descripcion === 'string'){
+            {
+                if(!gasto.descripcion.includes(gastosFiltrados.descripcion))
+                {
+                    return false;
+                }
+            }
+        }
+            if(objeto.hasOwnProperty('etiquetasTiene') && Array.isArray(objeto.etiquetas) === 0){
+            {
+                if(!gasto.etiquetas.includes(gastosFiltrados.etiquetas))
+                {
+                    return false;
+                }
+            }
+        }
+    });
+};
+
+    function agruparGastos(periodo = 'mes', etiquetas = [], fechadesde, fechahasta){
+        let gastosAgrupados = gastos.reduce((acumulador, gasto) => {
+
+  
+    });
+}
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
 // Las funciones y objetos deben tener los nombres que se indican en el enunciado
@@ -176,8 +226,6 @@ export   {
     calcularBalance,
     filtrarGastos,
     agruparGastos
-
-
 }
 
 
