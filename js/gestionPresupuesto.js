@@ -21,8 +21,8 @@ function actualizarPresupuesto(valorIntroducido) {
 
 function mostrarPresupuesto() {
     // TODO
-        let mostrarP ="Tu presupuesto actual es de " + presupuesto + " €";
-        return mostrarP;
+        let mostrarPres ="Tu presupuesto actual es de " + presupuesto + " €";
+        return mostrarPres;
     }
 
 function CrearGasto(descripcion, valor, fecha = Date.now(), ...etiquetas) {
