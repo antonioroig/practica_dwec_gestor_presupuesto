@@ -106,6 +106,22 @@ function CrearGasto(descripcion,valor, fecha = Date.now(), ...etiquetas) {
         
     }
 
+    this.obtenerPeriodoAgrupacion = function(periodo){
+        let resultadoFecha = "";
+        let fecha = new Date(this.fecha);
+        switch (periodo) {
+            case dia:
+                return fecha.toISOString().substring(0,10);
+            case mes:
+                return fecha.toISOString().substring(0,7);
+            case anyo:
+                return fecha.toISOString().substring(0,4);
+            default:
+                console.log("Periodo no válido");
+        }
+        return resultadoFecha;
+    }
+
 }
     //Funciones de gastos
     function listarGastos(){
@@ -138,6 +154,14 @@ function CrearGasto(descripcion,valor, fecha = Date.now(), ...etiquetas) {
         
     };
 
+    function filtrarGastos(objeto){
+
+    };
+
+    function agruparGastos(periodo, etiquetas, fechadesde, fechahasta){
+
+    };
+
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
 // Las funciones y objetos deben tener los nombres que se indican en el enunciado
 // Si al obtener el código de una práctica se genera un conflicto, por favor incluye todo el código que aparece aquí debajo
@@ -149,7 +173,10 @@ export   {
     anyadirGasto,
     borrarGasto,
     calcularTotalGastos,
-    calcularBalance
+    calcularBalance,
+    filtrarGastos,
+    agruparGastos
+
 
 }
 
