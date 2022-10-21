@@ -106,6 +106,28 @@ function CrearGasto(descripcion, valor, fecha = Date.now(), ...etiquetas) {
                 }
             }
         }
+    },
+    this.obtenerPeriodoAgrupacion = function (periodo)
+    {
+        let fech = new Date(this.fecha);
+        dia = fech.getDate();
+        mes = fech.getMonth();
+        anyo = fech.getFullYear();
+        let aux ; 
+        if (periodo==="dia")
+        {
+            aux = dia;
+
+        }else if (periodo==="mes")
+        {
+            aux = anyo + mes;
+
+
+        }else if (periodo==="anyo")
+        {
+            aux = anyo;
+        }
+
     }
 } 
 function listarGastos(){
@@ -144,5 +166,7 @@ export   {
     borrarGasto, 
     calcularTotalGastos,
     calcularBalance,
+    filtrarGastos,
+    agruparGastos,
     CrearGasto
 }
