@@ -42,7 +42,9 @@ function CrearGasto(descripcion, valor, fecha = Date.now(), ...etiquetas) {
     }else{
         this.fecha = Date.now();
     }
-    
+    this.mostrarGasto = function (){
+        return `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €`;
+    },
     this.mostrarGastoCompleto = function(){
         let fecAux = new Date(this.fecha);
 
@@ -84,26 +86,39 @@ function CrearGasto(descripcion, valor, fecha = Date.now(), ...etiquetas) {
         }
        });
     },
-    // Check
     this.actualizarFecha= function(fechaIntroducida){
         if(typeof fechaIntroducida === 'string'){
             if(!isNaN(Date.parse(fechaIntroducida) )){
                 this.fecha = Date.parse(fechaIntroducida);
             }
         }
+    },
+
+    // Revisar
+    this.obtenerPeriodoAgrupacion = function (periodo){
+        let fecha = new Date(this.fecha);
+        let res = "";
+        res = fecha.to
+        if (periodo === "dia"){
+            res = (fecha.toDateString());
+
+        }else if(periodo === "mes"){
+            res = `${fecha.getFullYear()}-${(fecha.getUTCMonth() + 1)}`;
+
+        }else if (periodo === "anyo"){
+            res = (fecha.getFullYear());
+        };
+        return res;
     }
 };
-// Check 
 function listarGastos(){
     return gastos;
 };
-// Check
 function anyadirGasto(gasto){
     gasto[`id`] = idGasto;
     gastos.push(gasto);
     idGasto++;
 };
-// Check
 function borrarGasto(id){
     for(let i = 0; i <= gastos.length; i++){
         if(gastos[i].id == id){
@@ -113,7 +128,6 @@ function borrarGasto(id){
     }
 
 };
-// Check
 function calcularTotalGastos(){
     let sum = 0;
 
@@ -122,9 +136,15 @@ function calcularTotalGastos(){
     }
     return sum;
 };
-// Check
 function calcularBalance(){
-     return (presupuesto - calcularTotalGastos());
+    return (presupuesto - calcularTotalGastos());
+};
+// Revisar
+function filtrarGastos(){
+
+};
+function agruparGastos(){
+    
 };
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
 // Las funciones y objetos deben tener los nombres que se indican en el enunciado
@@ -137,6 +157,8 @@ export   {
     anyadirGasto,
     borrarGasto,
     calcularTotalGastos,
-    calcularBalance
+    calcularBalance, 
+    filtrarGastos,
+    agruparGastos
 }
 
