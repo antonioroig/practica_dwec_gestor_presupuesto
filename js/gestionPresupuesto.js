@@ -125,9 +125,9 @@ function CrearGasto(descripcion, valor, fecha = Date.now(), ...etiquetas) {
         //     this.fecha = Date.parse(parAct); 
         // }
 
-        if (typeof parAct !== 'string' || (isNaN(Date.parse(fecha))))
+        if (Date.parse(parAct))
         {
-            this.fecha = Date.parse(parAct); 
+            this.fecha = Date.parse(parAct);
         }
     }
 
@@ -155,7 +155,7 @@ function listarGastos(){
 
 function anyadirGasto(gasto){
 
-    gasto.setId(idGasto);
+    gasto.id = idGasto;
 
     idGasto++;
     
@@ -165,18 +165,12 @@ function anyadirGasto(gasto){
 
 function borrarGasto(parId)
 {
-    // if (parId < gastos.length && parId >= 0)
-    // {
-    //     gastos.splice(parId, 1)  22.26.76;
-    // }
-
-    for (let i = 0; i < gastos.length; i++)
+    for ( let i = 0; i < gastos.length; i++)
     {
-        if (parId === i)
+        if (gastos[i].id === parId)
         {
             gastos.splice(parId, 1);
         }
-        i = 0;
     }
 }
 
