@@ -80,13 +80,12 @@ function CrearGasto(descripcion,valor,fecha = Date.now(), ...etiquetas) {
         }
     }
     this.anyadirEtiquetas = function(...newetiquetas){
-        let concarray = [...etiquetas,...newetiquetas]
+        let concarray = [...this.etiquetas,...newetiquetas]
         
         let mdarray = new Set(concarray);
         
-        let arrayfinal = [...mdarray];
+        this.etiquetas = Array.from(mdarray);
         
-        return arrayfinal;
     }
     this.borrarEtiquetas = function(...deletiquetas){
         //let etiq = [...deletiquetas];
