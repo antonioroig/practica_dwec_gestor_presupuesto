@@ -148,7 +148,6 @@ export   {
     anyadirGasto,
     borrarGasto,
     calcularTotalGastos,
-    calcularBalance,
-    filtrarGastos,
-    agruparGastos
+    calcularBalance
 }
+//actualizando
