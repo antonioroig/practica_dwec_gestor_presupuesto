@@ -101,6 +101,41 @@ function mostrarPresupuesto() {
         {
         this.valor = valor;
         }
+    },
+
+    this.obtenerPeriodoAgrupacion = function(periodo){
+        let res;
+        let f = new Date(this.fecha);
+        let mes = parseInt(f.getMonth())+ 1;
+        let day;
+
+        if(parseInt(f.getDate()) < 10){
+            day =  `0${parseInt(f.getDate())}`
+        }else{
+            day = parseInt(f.getDate());
+        }
+
+        if(periodo === "dia"){
+            if(mes < 10){
+                    res = f.getFullYear() + `-0` + mes + `-` + day;
+                
+            }else{
+                res = f.getFullYear() + `-` + mes + `-` + day;
+            }
+        }
+
+        if(periodo === "mes"){
+            if(mes < 10){
+                res = f.getFullYear() + `-0` + mes;
+            }else{
+                res = f.getFullYear() + `-` + mes;
+            }
+        }
+
+        if(periodo === "anyo"){
+            res = f.getFullYear();
+        }
+        return res;
     }
    }
 
@@ -134,6 +169,16 @@ function calcularBalance(){
     let gastoTotal = calcularTotalGastos();
     return presupuesto - gastoTotal;
 }
+
+function filtrarGastos(/*{fechaDesde,fechaHasta,valorMinimo,valorMaximo,descripcionContiene,etiquetasTiene}*/ gasto){
+
+    let results = gastos.filter(([gasto, value]){
+        if(gasto.fechaDesde === gastos.fecha)
+    });
+    return results;
+}
+
+function agruparGastos(){}
            
   
 
@@ -148,6 +193,7 @@ export   {
     anyadirGasto,
     borrarGasto,
     calcularTotalGastos,
-    calcularBalance
-    
+    calcularBalance,
+    filtrarGastos,
+    agruparGastos
 }
