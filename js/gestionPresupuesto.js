@@ -75,7 +75,8 @@ function calcularTotalGastos() {
 };
 
 function calcularBalance() {
-
+    let saldo=presupuesto-sum;
+    return saldo;
 };
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
