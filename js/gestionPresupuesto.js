@@ -32,8 +32,7 @@ function CrearGasto(descripcionGasto, valorGasto, fecha = Date.now(), ...etiquet
     else{
         this.valor = 0;
     }
-
-    if((!isNaN(Date.parse(fecha))) && typeof fecha === 'string'){
+    if((!isNaN(Date.parse(fecha))) && typeof fecha === 'string'){   
         this.fecha = Date.parse(fecha);
     }
     else{
@@ -90,6 +89,38 @@ function CrearGasto(descripcionGasto, valorGasto, fecha = Date.now(), ...etiquet
             }
         }
     }
+    this.obtenerPeriodoAgrupacion = function(periodo){
+        let agrupacion = "";
+        let fecha = new Date(this.fecha);
+        if(periodo === 'dia'){
+            agrupacion += fecha.getFullYear() + "-";
+            if((fecha.getMonth() + 1) < 10){
+                agrupacion += "0" + (fecha.getMonth() + 1) + "-";
+            }
+            else{
+                agrupacion += (fecha.getMonth() + 1) + "-";
+            }
+            if(fecha.getDate() < 10){
+                agrupacion += "0" + fecha.getDate();
+            }
+            else{
+                agrupacion += fecha.getDate();
+            }
+        }
+        if(periodo === 'mes'){
+            agrupacion += fecha.getFullYear() + "-";
+            if((fecha.getMonth() + 1) < 10){
+                agrupacion += "0" + (fecha.getMonth() + 1);
+            }
+            else{
+                agrupacion += (fecha.getMonth() + 1);
+            }
+        }
+        if(periodo === 'anyo'){
+            agrupacion += fecha.getFullYear();
+        }
+        return agrupacion;
+    }
 }
 
 function listarGastos(){
@@ -117,6 +148,12 @@ function calcularTotalGastos(){
 function calcularBalance(){
     return presupuesto - calcularTotalGastos();
 }
+function filtrarGastos(){
+
+}
+function agruparGastos(){
+
+}
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
 // Las funciones y objetos deben tener los nombres que se indican en el enunciado
 // Si al obtener el código de una práctica se genera un conflicto, por favor incluye todo el código que aparece aquí debajo
@@ -128,5 +165,7 @@ export   {
     anyadirGasto,
     borrarGasto,
     calcularTotalGastos,
-    calcularBalance
+    calcularBalance,
+    filtrarGastos,
+    agruparGastos
 }
