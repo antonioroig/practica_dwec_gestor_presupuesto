@@ -1,11 +1,11 @@
 
-
-
 // TODO: Variable global
+
+
 "use strict"
 let presupuesto = 0 ;
  let gastos=[];
- let idgastos =0;
+ let idGasto =0;
 function actualizarPresupuesto(dinero)
 {
    if (typeof dinero ==="number" && dinero > 0 ){
@@ -33,15 +33,16 @@ function CrearGasto(descripcion,valor ,fecha= Date.now(), ...etiquetas )
 
     this.descripcion = descripcion;
     this.etiquetas=[...etiquetas]
-  
-    if (typeof fecha ==="string" && Date.parse(fecha))
+    
+
+    if (typeof fecha ==="string" && !isNaN(Date.parse(fecha)))
     {
-        this.fecha =fecha;
-    }else 
-    {
-      fecha =Date.now()
+        this.fecha =Date.parse(fecha);
+
+    }else  {
+        this.fecha=fecha;
     }
-       
+      
         if (typeof valor ==="number" && valor >= 0)
         {
             this.valor =valor;
@@ -90,48 +91,57 @@ function CrearGasto(descripcion,valor ,fecha= Date.now(), ...etiquetas )
             return mensaje;
         }
 
+        this.actualizarFecha=function(fechaDada)
+        {
+            let fechaActual=Date.parse(fechaDada);
+            if ( !isNaN(fechaActual) )
+            {
+                this.fecha= fechaActual;            
+            }
+        }
+
        
     
     // TODO
 }
 
 function listarGastos(){
-
-        
     return gastos; 
 
 }
-function anyadirGasto(gasto){
 
-    gasto={
-        "id" : idgastos,
-        "fecha" :new Date(),
-        "etiqutas" : [],
-    }
-    
-    
-    idgastos++;
+
+
+function anyadirGasto(gasto) 
+{
+    gasto.id = idGasto;
+    idGasto++;
     gastos.push(gasto);
-    
 }
-function borrarGasto(id){
-for (let i =0 ; i< gastos.length ; i++){
 
-    if (gastos[i].id== id)
-    {
-       delete gastos[i];
+function borrarGasto(id){
+    for (let i =0 ; i< gastos.length ; i++){
+
+        if (gastos[i].id== id)
+        {
+            gastos.splice(i,1);
+        
+        }
     }
-}
     
 }
+
 function calcularTotalGastos(){
-    let totalGasto ;
-    for (let i =0 ; i< gastos.length ; i++){
+    let totalGasto =0;
+    for (let i =0 ; i< gastos.length ; i++)
+    {
+            totalGasto += gastos[i].valor
         
-        totalGasto += gastos[i]
     }
     return totalGasto;
 }
+
+
 function calcularBalance(){
     let totalGasto= calcularTotalGastos();
     let balance = presupuesto - totalGasto;
@@ -158,3 +168,4 @@ export   {
 }
  
  
+
