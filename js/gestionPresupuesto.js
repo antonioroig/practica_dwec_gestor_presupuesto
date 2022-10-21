@@ -26,7 +26,6 @@ function CrearGasto(descripcion, valor, fecha = Date.now(), ...etiquetas) {
     this.descripcion = descripcion;
     this.etiquetas =[ ... etiquetas];
     
-    // Comprueba el valor
     if(valor >= 0 && typeof valor === 'number'){
         this.valor = valor;
     }
@@ -94,16 +93,22 @@ function CrearGasto(descripcion, valor, fecha = Date.now(), ...etiquetas) {
         }
     },
 
-    // Revisar
+    // check
     this.obtenerPeriodoAgrupacion = function (periodo){
         let fecha = new Date(this.fecha);
         let res = "";
-        res = fecha.to
+
         if (periodo === "dia"){
-            res = (fecha.toDateString());
+
+            let aux = (fecha.getMonth() +1 < 10 ) ? `0${(fecha.getMonth() +1)}` : (fecha.getMonth() +1);
+            let aux2 = (fecha.getDate()<10) ? `0${fecha.getDate()}` : fecha.getDate();
+            
+            res = `${fecha.getFullYear()}-${aux}-${aux2}`;
 
         }else if(periodo === "mes"){
-            res = `${fecha.getFullYear()}-${(fecha.getUTCMonth() + 1)}`;
+
+            let aux = (fecha.getMonth() +1 < 10 ) ? `0${(fecha.getMonth() +1)}` : (fecha.getMonth() +1);
+            res = fecha.getFullYear() +"-"+ aux.toString();
 
         }else if (periodo === "anyo"){
             res = (fecha.getFullYear());
@@ -140,11 +145,25 @@ function calcularBalance(){
     return (presupuesto - calcularTotalGastos());
 };
 // Revisar
-function filtrarGastos(){
+function filtrarGastos(fechaDesde, fechaHasta, valorMinimo, valorMaximo, descripcionContiene, ...etiquetasTiene){
 
 };
-function agruparGastos(){
-    
+function agruparGastos(periodo, fechaDesde, fechaHasta, ...etiquetas){
+    // Llamar a la funcion filtrar gastos
+    if(typeof fechaDesde === `string`){
+        if(!isNaN(Date.parse(fechaDesde))){
+
+        }else{
+
+        };
+    };
+    if(typeof fechaHasta === `string`){
+        if(!isNaN(Date.parse(fechaHasta))){
+
+        }else{
+
+       };
+    };
 };
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
 // Las funciones y objetos deben tener los nombres que se indican en el enunciado
