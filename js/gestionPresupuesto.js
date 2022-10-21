@@ -148,10 +148,19 @@ function calcularTotalGastos(){
 function calcularBalance(){
     return presupuesto - calcularTotalGastos();
 }
-function filtrarGastos(){
-
+function Gasto(fechaDesde, fechaHasta, valorMinimo, valorMaximo, descripcion, ...etiquetas){
+    this.fechaDesde = new Date(fechaDesde),
+    this.fechaHasta = new Date(fechaHasta),
+    this.valorMinimo = valorMinimo,
+    this.valorMaximo = valorMaximo,
+    this.descripcion = descripcion,
+    this.etiquetas = [...etiquetas];
 }
-function agruparGastos(){
+function filtrarGastos(gasto){
+    let gasto = new Gasto(gasto);
+    
+}
+function agruparGastos(periodo = new Date.getMonth(), fechaDesde, fechaHasta, ...etiquetas){
 
 }
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
