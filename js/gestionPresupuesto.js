@@ -21,12 +21,13 @@ function mostrarPresupuesto() {
     return 'Tu presupuesto actual es de ' + presupuesto + ' €';
 }
 
-function CrearGasto(descripcion1, valor1, fecha1, ...etiqueta1) {
+function CrearGasto(descripcion1, valor1, fecha1 = Date.now(), ...etiqueta1) {
     // TODO    
     this.descripcion = descripcion1;
     this.valor;
     this.fecha;
-    this.etiqueta;
+    this.etiquetas;
+
 
     if (typeof(valor1) === 'number' && valor1 >= 0) {
         this.valor = valor1;
@@ -34,70 +35,103 @@ function CrearGasto(descripcion1, valor1, fecha1, ...etiqueta1) {
         this.valor = 0;
     };
 
-    if (etiqueta1 == undefined) {
-        this.etiqueta = new Array();
+
+    if (etiqueta1 === undefined) {
+        this.etiquetas = new Array();
     } else {
-        this.etiqueta = etiqueta1;
+        this.etiquetas = [...etiqueta1];
     };
+
 
     if (Date.parse(fecha1)) {
-        this.fecha =  Date.parse(fecha1).getTime();
+        this.fecha =  Date.parse(fecha1);
     } else {
-        this.fecha = Date.now().getTime();
+        this.fecha = Date.now();
     };
 
+
     this.mostrarGasto = function () {
-        return 'Gasto correspondiente a ' + this.descripcion + ' con valor ' + this.valor + ' €'
+        return 'Gasto correspondiente a ' + this.descripcion + ' con valor ' + this.valor + ' €.'
     };
+
 
     this.actualizarDescripcion = function (descripcion1) {
         this.descripcion = descripcion1;
     };
 
+
     this.actualizarValor =  function (valor1) {
-        if (typeof(valor1) === 'number' && valor1 >= 0) {
+        if (typeof(valor1) === 'number' && valor1 >= 0)
             this.valor = valor1;
-        } else {
-            this.valor = this.valor;
-        }
     };    
 
-    this.anyadirEtiqueta =  function (...newetiquetas) {
-        this.etiqueta.concat(...newetiquetas);
-        this.etiqueta = [this.etiqueta];
-        /*
-        this.etiqueta.concat(...etiquetas);
-        for (let i = 0; i <= this.etiqueta.length - 1; i++) {
-            for (let j = 1; j <= this.etiqueta.length; j++) {               
-                if (this.etiqueta[i] == this.etiqueta[j]) {
-                    this.etiqueta.splice(i, 1);
+
+    this.actualizarFecha =  function (fecha1) {
+        if (Date.parse(fecha1)) 
+            this.fecha = Date.parse(fecha1);
+    }; 
+
+
+    this.anyadirEtiquetas =  function (...newetiquetas) {
+        this.etiquetas = [...this.etiquetas, ...newetiquetas]
+        let seteado = [...new Set(this.etiquetas)];
+        this.etiquetas = Array.from(seteado);
+    };
+
+
+    this.borrarEtiquetas =  function (...newetiquetas) {
+        for (let i = 0; i < this.etiquetas.length; i++) {
+            for (let j = 0; j < newetiquetas.length; j++) {
+                if (this.etiquetas[i] === newetiquetas[j]) {
+                    this.etiquetas.splice(i, 1);
+                    i--;
                 }
             }
         }
-        */
+    };
+
+    this.mostrarGastoCompleto = function () {
+        let texto = 
+        this.mostrarGasto + '\n' +
+        'Fecha: ' + Date.parse(this.fecha).toLocaleString() + '\n' + 
+        'Etiquetas:' + '\n';
+        for (i = 0; i < this.etiquetas.length; i++) {
+            texto += ' - ' + this.etiquetas[i] + '\n';
+        }
+        return texto;
     };
 }
+
 
 function listarGastos() {
     return gastos;
 }
 
+
 function anyadirGasto(ObjGasto) {
     ObjGasto.id = idGasto;
     idGasto++;
-    gastos.push(ObjGasto.id);
+    gastos.push(ObjGasto);
 }
 
-function borrarGasto(id) {
-    gastos.splice(id, 1);
+
+function borrarGasto(idBorrar) {
+    for (let i = 0; i < gastos.length; i++) {
+        if (gastos[i].id === idBorrar) {
+            gastos.splice[i, 1];
+            break;
+        }
+    }
 }
+
 
 function calcularTotalGastos() {
-    for (let i = 0; i <= gastos.length() - 1; i++) {
+    for (let i = 0; i < gastos.length(); i++) {
         i++;
-    }
+    };
     return i;
 }
+
 
 function calcularBalance() {
 
