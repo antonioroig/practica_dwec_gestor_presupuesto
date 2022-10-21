@@ -169,7 +169,7 @@ function borrarGasto(parId)
     {
         if (gastos[i].id === parId)
         {
-            gastos.splice(parId, 1);
+            gastos.splice(i, 1);
         }
     }
 }
