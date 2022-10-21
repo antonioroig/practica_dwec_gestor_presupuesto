@@ -88,21 +88,21 @@ function CrearGasto(descripcion, valor, fecha = Date.now(), ...etiquetas) {
         }
 	},
     this.anyadirEtiquetas = function(...etiquets)
-    {  
+    {      
         let nuevoArray = [...this.etiquetas, ...etiquets]
-        const aux = new Set (nuevoArray);
-        let result = [...aux];
-        this.etiquetas.push(result);          
+        let aux = new Set (nuevoArray);
+        let ar = Array.from(aux);
+        this.etiquetas = ar;         
     },
     this.borrarEtiquetas = function(...etiquets)
     {   
         for (let i = 0; i < etiquets.length; i++)
         {
-            for (let j = 0; j < etiquetas.length; j++)
+            for (let j = 0; j < this.etiquetas.length; j++)
             {
                 if (etiquets[i] === this.etiquetas[j])
                 {
-                   this.etiquetas.splice(i, 1);      
+                   this.etiquetas.splice(j, 1);      
                 }
             }
         }
@@ -124,7 +124,7 @@ function borrarGasto(id){
     }
 }
 function calcularTotalGastos(){
-    let total = 0;  
+    let total = 0; 
     gastos.forEach((x) => {
         total += x.valor;
     })
