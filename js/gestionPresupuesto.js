@@ -110,17 +110,17 @@ function CrearGasto(descripcion,valor, fecha = Date.now(), ...etiquetas) {
         let resultadoFecha = " ";
         let fecha = new Date(this.fecha);
         switch (periodo) {
-            case dia:
+            case 'dia':
                 return fecha.toISOString().substring(0,10);
-            case mes:
+            case 'mes':
                 return fecha.toISOString().substring(0,7);
-            case anyo:
+            case 'anyo':
                 return fecha.toISOString().substring(0,4);
             default:
                 break;
         }
         return resultadoFecha;
-    }       //No funciona :(
+    }       
 
 }
     //Funciones de gastos
@@ -155,7 +155,8 @@ function CrearGasto(descripcion,valor, fecha = Date.now(), ...etiquetas) {
     };
 
     function filtrarGastos(objeto){
-        let gastosFiltrados = gastos.filtre(gasto => {
+       if ( typeof objeto === 'string') {
+        let gastosFiltrados = gastos.filter(gasto => {
             if (objeto.hasOwnProperty('fechaDesde') && typeof objeto.valor === 'number') {
                 if (gasto.fecha < Date.parse(objeto.fechaDesde)) {
 
@@ -202,7 +203,9 @@ function CrearGasto(descripcion,valor, fecha = Date.now(), ...etiquetas) {
                 }
             }
         }
-    });
+    }); return gastosFiltrados; 
+    }  
+      
 };
 
     function agruparGastos(periodo = 'mes', etiquetas = [], fechadesde, fechahasta){
