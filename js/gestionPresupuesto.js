@@ -22,31 +22,55 @@ function mostrarPresupuesto() {
     return `Tu presupuesto actual es de ${presupuesto} €`;
 }
 
-function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
+function CrearGasto(descripcion, valor, fecha = Date.now(), ...etiquetas) {
     // TODO
 
-    this.descripcion = descripcion;
-
     if((typeof(valor) == "number") && (valor >= 0)){
-        
         this.valor = valor;
     }else(this.valor = 0)
 
-    if((fecha == undefined) || Date.parse(fecha) == "NaN"){
-        this.fecha = Date.now();
-    }else{
+    this.descripcion = descripcion;
+
+    if(typeof(fecha) == "number"){
+        this.fecha = fecha
+    }
+    else
+    {
+        fecha = new Date(fecha);
         this.fecha = Date.parse(fecha);
     }
-   
-    this.etiquetas = [];
 
+    if(etiquetas == `undefined`){
+        this.etiquetas = [];
+    }else
+    {
+        this.etiquetas = etiquetas
+    }
+    // if((fecha == undefined) || Date.parse(fecha) == "NaN"){
+    //     this.fecha = Date.now();
+    // }else{
+    //     this.fecha = Date.parse(fecha);
+    // }
     this.mostrarGasto = function(){
         return `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €`
-    },
+    }
+    this.mostrarGastoCompleto  = function(){
+        let listaEtiquetas = ``;
+        let fecha = new Date(this.fecha);
+        this.etiquetas.forEach(etiqueta => listaEtiquetas += `- ${etiqueta}\n`)
+        return `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €.\nFecha: ${fecha.toLocaleString()}\nEtiquetas:\n${listaEtiquetas}`
+    }
+
+    this.actualizarFecha = function(newFecha){
+
+        if(isNaN(Date.parse(newFecha))){
+            this.fecha = this.fecha;
+        }else{this.fecha = Date.parse(newFecha)}
+    }
 
     this.actualizarDescripcion = function(newDescripcion){
         this.descripcion = newDescripcion;
-    },
+    }
 
     this.actualizarValor = function(newValor){
         if((typeof(newValor) == "number") && (newValor >= 0)){
@@ -54,13 +78,7 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
             this.valor = newValor;
         }
     }
-
-    if(etiquetas = `undefined`){
-        this.etiquetas = etiquetas;
-    }
-    
     this.anyadirEtiquetas  = function(...etiquetas){
-        if (this.etiquetas.find())
         etiquetas.forEach(etiqueta => this.etiquetas.push(etiqueta));
     }
 }
