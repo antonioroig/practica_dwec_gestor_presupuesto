@@ -46,11 +46,6 @@ function CrearGasto(descripcion, valor, fecha = Date.now(), ...etiquetas) {
     {
         this.etiquetas = etiquetas
     }
-    // if((fecha == undefined) || Date.parse(fecha) == "NaN"){
-    //     this.fecha = Date.now();
-    // }else{
-    //     this.fecha = Date.parse(fecha);
-    // }
     this.mostrarGasto = function(){
         return `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €`
     }
@@ -79,7 +74,19 @@ function CrearGasto(descripcion, valor, fecha = Date.now(), ...etiquetas) {
         }
     }
     this.anyadirEtiquetas  = function(...etiquetas){
-        etiquetas.forEach(etiqueta => this.etiquetas.push(etiqueta));
+        let aux = this.etiquetas;
+        aux = aux.concat(etiquetas);
+        const result = new Set(aux);
+        this.etiquetas = [...result];
+    }
+    this.borrarEtiquetas = function(...etiquetas){
+        for (let i = 0; i < etiquetas.length; i++){
+            for (let j = 0; j < this.etiquetas.length; j++){
+                if (this.etiquetas[j] == etiquetas[i]){
+                    this.etiquetas.splice(j,1)
+                }
+            }
+        }
     }
 }
 
