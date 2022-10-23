@@ -100,12 +100,20 @@ function anyadirGasto(gasto){
     idGasto ++;
 }
 
-function borrarGasto(){
-    
+function borrarGasto(id){
+    for(let i = 0; i < gastos.length; i++){
+        if (gastos[i].id == id){
+            gastos.splice(i,1)
+        }
+    }
 }
 
 function calcularTotalGastos (){
-    
+    let gastosTotales = 0;
+    for(let i = 0; i < gastos.length; i++){
+        gastosTotales += gastos[i].valor;
+    }
+    return gastosTotales;
 }
 
 function calcularBalance (){
