@@ -39,7 +39,6 @@ function CrearGasto(descripcion, valor, fecha = Date.now(), ...etiquetas) {
         fecha = new Date(fecha);
         this.fecha = Date.parse(fecha);
     }
-
     if(etiquetas == `undefined`){
         this.etiquetas = [];
     }else
@@ -55,18 +54,15 @@ function CrearGasto(descripcion, valor, fecha = Date.now(), ...etiquetas) {
         this.etiquetas.forEach(etiqueta => listaEtiquetas += `- ${etiqueta}\n`)
         return `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €.\nFecha: ${fecha.toLocaleString()}\nEtiquetas:\n${listaEtiquetas}`
     }
-
     this.actualizarFecha = function(newFecha){
 
         if(isNaN(Date.parse(newFecha))){
             this.fecha = this.fecha;
         }else{this.fecha = Date.parse(newFecha)}
     }
-
     this.actualizarDescripcion = function(newDescripcion){
         this.descripcion = newDescripcion;
     }
-
     this.actualizarValor = function(newValor){
         if((typeof(newValor) == "number") && (newValor >= 0)){
 
@@ -117,7 +113,7 @@ function calcularTotalGastos (){
 }
 
 function calcularBalance (){
-    
+    return (presupuesto - calcularTotalGastos())
 }
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
