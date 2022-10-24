@@ -145,25 +145,39 @@ function calcularBalance(){
     return (presupuesto - calcularTotalGastos());
 };
 // Revisar
-function filtrarGastos(fechaDesde, fechaHasta, valorMinimo, valorMaximo, descripcionContiene, ...etiquetasTiene){
+function filtrarGastos(item){
+    let fechaDesde
+    
 
+    const grupo = [];
+    if(item.hasOwnProperty(fechaDesde)){
+        
+    }
+    grupo = gastos.filter(() => objeto.descripcion.toLocaleLowerCase() === valor.toLocaleLowerCase());
+
+    
 };
 function agruparGastos(periodo, fechaDesde, fechaHasta, ...etiquetas){
     // Llamar a la funcion filtrar gastos
-    if(typeof fechaDesde === `string`){
-        if(!isNaN(Date.parse(fechaDesde))){
+    let  desc;
+    let arrayAux;
+    let fechaMaxAux , fechaMinAux;
+    let valorMaxAux, valorMinAux;
+    fechaMaxAux = (objeto.hasOwnProperty(fechaMaxima)) ? objeto.fechaMaxima : ""
+    fechaMinAux = (objeto.hasOwnProperty(fechaMinima)) ? objeto.fechaMinima : ""
 
-        }else{
+    valorMaxAux = (objeto.hasOwnProperty(valorMaximo)) ? objeto.valorMaximo : ""
+    valorMaxAux = (objeto.hasOwnProperty(valorMinimo)) ? objeto.valorMinimo : ""
 
-        };
-    };
-    if(typeof fechaHasta === `string`){
-        if(!isNaN(Date.parse(fechaHasta))){
+    desc = (objeto.hasOwnProperty(descripcion))?desc = descripcion.toLocaleLowerCase() : ""
 
-        }else{
+    if(objeto.hasOwnProperty(...etiquetas)){
 
-       };
-    };
+        arrayAux = [...etiquetas]
+        arrayAux.forEach ((element) => element.toLocaleLowerCase());
+    }
+
+
 };
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
 // Las funciones y objetos deben tener los nombres que se indican en el enunciado
