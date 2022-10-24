@@ -125,17 +125,32 @@ function CrearGasto(descripcion, valor, fecha, ... etiquetas) {
     // * * * * * * * * * * * * * * * *
     // Actividad 3 - Métodos
 
-    // Método 'obtenerPeriodoAgrupacion' del objeto gasto --> dia/mes/anyo
+    // Método 'obtenerPeriodoAgrupacion' del objeto gasto --> dia (aaaa-mm-dd) /mes (aaaa-mm) /anyo (aaaa)
     this.obtenerPeriodoAgrupacion = function(valor){
-        if(valor === dia){
-            this.fecha.getFullYear();
+
+        let resp = "";
+        let d = new Date(this.fecha);
+           
+        if(valor === "anyo"){
+
+            let resp1 = d.getFullYear();
+            
+            resp = resp1;
         }
-        else if(valor === mes){
-            this.fecha.getMonth();
+        else if(valor === "mes"){
+            let resp1 = d.getFullYear();
+            let resp2 = d.getMonth();
+            
+            resp = resp1 + "-" + resp2;
         }
-        else if(valor === anyo){
-            this.fecha.getDate();
+        else if(valor === "dia"){
+            let resp1 = d.getFullYear();
+            let resp2 = d.getMonth();
+            let resp3 = d.getDate();
+
+            resp = resp1 + "-" + resp2 + "-" + resp3;
         }
+        return resp;         
     }
 }
     
@@ -187,6 +202,9 @@ function filtrarGastos(){
 function agruparGastos(){
 
 }
+
+
+
 /* NO MODIFICAR A PARTIR DE AQUÍ exportación de funciones y objetos creados para poder ejecutar los tests.
 Las funciones y objetos deben tener los nombres que se indican en el enunciado
 Si al obtener el código de una práctica se genera un conflicto, por favor incluye todo el código que aparece aquí debajo */
