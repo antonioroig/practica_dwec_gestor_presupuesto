@@ -149,8 +149,53 @@ function calcularBalance(){
     return presupuesto - calcularTotalGastos();
 }
 
-function filtrarGastos(){
-
+function filtrarGastos(objeto){
+    //{fechaDesde,fechaHasta,valorMinimo,valorMaximo,descripcionContiene,...etiquetasTiene}
+    if(Object.entries(objeto).length === 0){
+        return gastos;
+    }else{
+        let fecDes = null;
+        if(objeto.hasOwnProperty(`fechaDesde`)){
+            if(!isNaN(Date.parse(objeto.fechaDesde))){
+                fecDes=objeto.fechaDesde;
+            }
+        }
+        let fecHas = null;
+        if(objeto.hasOwnProperty(`fechaHasta`)){
+            if(!isNaN(Date.parse(objeto.fechaHasta))){
+                fecHas=objeto.fechaHasta;
+            }
+        }
+        let valMin = null;
+        let results = gastos.filter(function(item){
+            if(new Date(fecDes) < new Date(item.fecha) && fecDes != null){
+                return true;
+            }
+            if(new Date(fecHas) > new Date(item.fecha) && fecHas != null){
+                return true;
+            }
+            if(objeto.valorMinimo < item.valor){
+                return true;
+            }
+            if(objeto.hasOwnProperty(`valorMaximo`)){
+                if(objeto.valorMaximo < item.valor){
+                    return true;
+                }
+            }
+            if(objeto.hasOwnProperty(`descripcionContiene`)){
+                if(item.descripcion.includes(objeto.descripcionContiene)){
+                    return true;
+                }
+            }
+            if(objeto.hasOwnProperty(`etiquetasTiene`)){
+                if(objeto.etiquetas.filter()){
+                    return true;
+                }
+            }
+        });
+    
+        return results;
+    }
 }
 function agruparGastos(){
     
