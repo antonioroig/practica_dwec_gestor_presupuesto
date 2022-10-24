@@ -141,7 +141,12 @@ function calcularBalance(){
             balance = presupuesto - calcularTotalGastos();
             return balance
         }
-function filtrarGastos(){
+function filtrarGastos({fechaDesde,fechaHasta,valorMinimo,ValorMaximo,descripcionContiene,etiquetasTiene = []}){
+    let fd;
+    let fh;
+
+    let resultado = gasto.filter(objeto => objeto.fechaDesde === fechaDesde)
+    
 
 }
 function agruparGastos(){
