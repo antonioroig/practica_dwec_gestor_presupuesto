@@ -113,13 +113,13 @@ function CrearGasto(descripcion, valor, fecha = Date.now(), ...etiquetas) {
         let dia = `${fech.getDate()}`;
         let mes = `${(fech.getMonth() + 1)}`;
         let anyo = `${fech.getFullYear()}`;
-        if (this.mes > 0 ||  this.mes < 9)
+        if (mes > 0 &&  mes  <= 9)
         {
-            this.mes = `0${mes}`
+            mes = `0${mes}`
         }
-        if (dia > 0 || dia < 9 )
+        if (dia > 0 && dia < 9 )
         {
-            this.dia = `0${dia}`
+            dia = `0${dia}`
         }
         let aux = `${anyo}-${mes}-${dia}`;
         if (periodo === "dia")
@@ -128,7 +128,7 @@ function CrearGasto(descripcion, valor, fecha = Date.now(), ...etiquetas) {
 
         }else if (periodo === "mes")
         {
-            aux = `${anyo}-0${mes}`
+            aux = `${anyo}-${mes}`
 
         }else if (periodo === "anyo")
         {
@@ -162,11 +162,56 @@ function calcularTotalGastos(){
 function calcularBalance(){
     return presupuesto - calcularTotalGastos();
 }
-function filtrarGastos(){
-
+function filtrarGastos({fechaDesde, fechaHasta, valorMinimo, valorMaximo, descripcionContiene, etiquetasTiene}){
+    let filGastos = gastos.filter(function(gasto)
+    {
+        let existe = true;
+        if (fechaDesde)
+        {
+            if(gasto.fecha < Date.parse(fechaDesde)) existe = false;
+        }
+        if (fechaHasta)
+        {
+            if(gasto.fecha > Date.parse(fechaHasta)) existe = false;
+            
+        }
+        if (valorMinimo)
+        {
+            if(gasto.valor < valorMinimo) existe = false;
+        }
+        if (valorMaximo)
+        {
+            if(gasto.valor > valorMaximo) existe = false;
+        }
+        if (descripcionContiene)
+        {
+            if(!gasto.descripcion.includes(descripcionContiene)) existe = false;
+        }       
+        if(etiquetasTiene)
+        {
+            let tiene = false;                   
+                for (let i = 0; i < gasto.etiquetas.length; i++) 
+                {                   
+                    for (let j= 0; j < etiquetasTiene.length; j++) 
+                    {
+                        if(gasto.etiquetas[i] == etiquetasTiene[j]) tiene = true;                  
+                    }
+                }
+            if(tiene == false) existe = false;
+        }
+        return existe; 
+    })
+    return filGastos;
 }
-function agruparGastos(){
-    
+function agruparGastos(periodo = "mes", etiquetas, fechaDesde, fechaHasta){
+
+    let filtrargast = filtrarGastos({fechaDesde , fechaHasta, etiquetas});
+    let reducfiltrargast = filtrargast.reduce()
+    {
+
+    }
+    return reducfiltrargast;
+
 }
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
 // Las funciones y objetos deben tener los nombres que se indican en el enunciado
