@@ -204,11 +204,32 @@ function CrearGasto(descripcion,valor,fecha,...etiqueta) {
         return presupuesto - calcularTotalGastos();
     }
 
-    function filtrarGastos(gasto)
+    function filtrarGastos(objeto /* {fechaDesde = undefined,fechaHasta = undefined,valorMinimo = undefined, valorMaximo = undefined,descripcionContiene = undefined,etiquetasTiene = undefined} */ )
     {
-            
-    }
 
+        if( objeto != `null`   /* fechaDesde == `undefined` && fechaHasta == `undefined` && valorMinimo == `undefined` && valorMaximo == `undefined` && descripcionContiene == `undefined` && etiquetasTiene == `undefined`*/ )
+        {
+            return gastos;
+        }
+        else{
+            if(isNaN(Date.parse(objeto.fechaDesde)))
+            {
+                objeto.fechaDesde = undefined;
+            }
+    
+            if(isNaN(Date.parse(objeto.fechaHasta)))
+            {
+                objeto.fechaDesde = undefined;
+            }
+            
+
+
+            let array = gastos.filter(gasto => gasto.fecha > objeto.fechaDesde && gasto.fecha < objeto.fechaHasta && gasto.valor > objeto.valorMinimo && gasto.valor < objeto.valorMaximo && gasto.descripcion === objeto.descripcionContiene && gasto.etiquetas.includes(objeto.etiquetasTiene));
+                return array;
+        }
+        
+    }
+   
     function agruparGastos()
     {
 
