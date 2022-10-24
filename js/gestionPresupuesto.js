@@ -170,10 +170,47 @@ function calcularBalance(){
     return presupuesto - gastoTotal;
 }
 
-function filtrarGastos(gasto){
+function filtrarGastos(objetos){
+    
+    if(!objetos.hasOwnProperty(fechaDesde)){
+        if(!isNaN(Date.parse(fechaDesde))){
+            objetos.fechaDesde = undefined;
+        }
+    }
 
-    let results = gastos.filter(([gasto, value]) => value === gasto.fecha);
-    return results;
+    if(!objetos.hasOwnProperty(fechaHasta)){
+        if(!isNaN(Date.parse(fechaHasta))){
+            objetos.fechaHasta = undefined;
+        }
+    }
+
+    if(!objetos.hasOwnProperty(valorMinimo)){
+        objetos.valorMinimo = undefined;
+    }
+    
+    if(!objetos.hasOwnProperty(valorMaximo)){
+        objetos.descripcionContiene = undefined;
+    }
+
+    if(!objetos.hasOwnProperty(etiquetasTiene)){
+        objetos.etiquetasTiene = undefined;
+    }
+
+    if(objetos !== `null`){
+        
+        
+        let results = gastos.filter(objeto => objeto.fecha >= fechaDesde && objeto.fecha <= fechaHasta &&
+            objeto.valor >= valorMinimo && objeto.valor <= valorMaximo &&
+            objeto.descripcion === descripcionContiene &&
+            objeto.etiquetas.includes(etiquetasTiene))
+            
+            return results;
+    }else{
+        return gastos;
+    }
+
+    
+    
 }
 
 function agruparGastos(periodo,etiquetas,fechaDesde,fechaHasta){
