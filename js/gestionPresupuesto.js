@@ -116,6 +116,9 @@ function CrearGasto(Descripcion, valor, Fecha = Date.now(), ...etiquetas) {
             console.log('Error: El valor introducido es negativo o valor invalido');
         }
     }
+    this.obtenerPeriodoAgrupacion = function(periodo){
+
+    }
 }
 
 function listarGastos() {
@@ -158,7 +161,7 @@ function filtrarGastos(){
 }
 
 function agruparGastos(){
-    
+
 }
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
