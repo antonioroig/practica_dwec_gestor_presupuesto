@@ -158,6 +158,65 @@ function CrearGasto(descripcion,valor, fecha = Date.now(), ...etiquetas) {
 
     }
 
+    this.obtenerPeriodoAgrupacion = function(format) {
+        
+        let group = "";
+
+        let fecha = new Date(this.fecha);
+
+        if(format === 'dia')
+        {
+
+            group += fecha.getFullYear() + "-";
+
+
+            if((fecha.getMonth() + 1) < 10)
+            {
+
+                group += "0" + (fecha.getMonth + 1) + "-";
+
+            }
+                else{
+
+                    group += (fecha.getMonth + 1) + "-";
+
+                }
+
+            if(fecha.getDate() < 10)
+            {
+
+                group += "0" + fecha.getDate + 1();
+
+            }
+                else{
+
+                    group += fecha.getDate();
+
+                }
+        }
+
+        if(format === 'mes')
+        {
+
+            group += fecha.getFullYear() + "-";
+
+            if((fecha.getMonth() + 1) < 10)
+            {
+
+                group += "0" + (fecha.getMonth + 1);
+
+            }
+                else
+                {
+
+                    group += "0" + (fecha.getMonth + 1);
+                    
+                }
+
+        }
+
+    }
+
 }
 
 function listarGastos()
@@ -225,7 +284,7 @@ function filtrarGastos(){
 function agruparGastos(){
 
 
-    
+
 }
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
