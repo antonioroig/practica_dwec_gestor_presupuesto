@@ -102,6 +102,43 @@ function CrearGasto(descripcion, valor, fecha=Date.now(), ...etiquetas) {
             string += `- ${this.etiquetas[i]}\n`;
         }
         return string;
+    },
+    this.obtenerPeriodoAgrupacion = function(periodo){
+        let salida = '';
+        let fFecha = new Date(this.fecha);
+        // let mes = fecha.getMonth() + 1; Hay que sumarle uno porque el método calcula los meses de 0 a 11.
+        if(periodo === 'anyo')
+        {
+            salida = `${fFecha.getFullYear()}`;
+        }
+        if(periodo === 'mes')
+        {
+            if((fFecha.getMonth()+1) >= 1 && (fFecha.getMonth()+1) <= 9)
+            {
+                salida = `${fFecha.getFullYear()}-0${fFecha.getMonth()+1}` ;
+            }
+            else
+            {
+                salida = `${fFecha.getFullYear()}-${fFecha.getMonth()+1}` ;
+            }
+        }
+        if(periodo === 'dia')
+        {
+            if((fFecha.getMonth()+1) >= 1 && (fFecha.getMonth()+1) <= 9)
+            {
+                salida = `${fFecha.getFullYear()}-0${fFecha.getMonth()+1}` ;
+            }
+            if(fFecha.getDate() >= 1 && fFecha.getDate() <= 9)
+            {
+                salida += `-0${fFecha.getDate()}` ;
+            }
+            else
+            {
+                salida = `${fFecha.getFullYear()}-${fFecha.getMonth()+1}-${fFecha.getDate()}` ;
+            }
+            
+        }
+        return salida;
     }
 }
 function listarGastos() {
@@ -132,6 +169,71 @@ function calcularTotalGastos() {
 function calcularBalance() {
     return presupuesto - calcularTotalGastos();    
 }
+function filtrarGastos({fechaDesde, fechaHasta, valorMinimo, valorMaximo, descripcionContiene, etiquetasTiene}) {
+    let nuevoArray = gastos.filter(function(gasto)
+    {
+        let existe = 1;
+        if(fechaDesde)
+        {
+            if(gasto.fecha < Date.parse(fechaDesde))
+            {
+                existe = 0;
+            }
+        }
+        if(fechaHasta)
+        {
+            if(gasto.fecha > Date.parse(fechaHasta))
+            {
+                existe = 0;
+            }
+        }
+        if(valorMinimo)
+        {
+            if(gasto.valor < valorMinimo)
+            {
+                existe = 0;
+            }
+        }
+        if(valorMaximo)
+        {
+            if(gasto.valor > valorMaximo)
+            {
+                existe = 0;
+            }
+        }
+        if(descripcionContiene)
+        {
+            if(!gasto.descripcion.includes(descripcionContiene))
+            {
+                existe = 0;
+            }
+        }
+        if(etiquetasTiene)
+        {
+            let contieneEtiqueta = 0;
+            for(let i = 0; i < gasto.etiquetas.length; i++)
+            {
+                for(let j = 0; j < etiquetasTiene.length; j++)
+                {
+                    if(gasto.etiquetas[i] === etiquetasTiene[j])
+                    {
+                        contieneEtiqueta = 1;
+                    }
+                }
+            }
+            if(contieneEtiqueta == 0)
+            {
+                existe = 0;
+            }
+        }
+        return existe;
+    });
+    return nuevoArray;  
+}
+
+function agruparGastos() {
+
+}
 
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
@@ -145,5 +247,7 @@ export   {
     anyadirGasto,
     borrarGasto,
     calcularTotalGastos,
-    calcularBalance
+    calcularBalance,
+    filtrarGastos,
+    agruparGastos
 }
