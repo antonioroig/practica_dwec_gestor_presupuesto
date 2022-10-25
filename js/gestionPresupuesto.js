@@ -74,7 +74,7 @@ function CrearGasto(descripcion1, valor1, fecha1 = Date.now(), ...etiqueta1) {
 
     this.anyadirEtiquetas =  function (...newetiquetas) {
         this.etiquetas = [...this.etiquetas, ...newetiquetas]
-        let seteado = [...new Set(this.etiquetas)];
+        let seteado = new Set(this.etiquetas);
         this.etiquetas = Array.from(seteado);
     };
 
@@ -101,6 +101,30 @@ function CrearGasto(descripcion1, valor1, fecha1 = Date.now(), ...etiqueta1) {
         }
         return texto;
     };
+
+    this.obtenerPeriodoAgrupacion = function(periodo) {
+        let fecha1 = new Date (this.fecha);
+        let fechaMostrar = fecha1.getFullYear().toLocaleString();
+        if (periodo === 'anyo') {
+            return fechaMostrar;
+        } else if (periodo === 'mes') {
+            fechaMostrar += '-';
+            if (fecha1.getMonth() + 1 < 10) {
+                fechaMostrar += '0';
+            }
+            return fechaMostrar += fecha1.getMonth() + 1;
+        } else if (periodo === 'dia') {
+            fechaMostrar += '-';
+            if (fecha1.getMonth() + 1 < 10) {
+                fechaMostrar += '0';
+            }
+            fechaMostrar += fecha1.getMonth() + 1 + '-';
+            if (fecha1.getDate() < 10) {
+                fechaMostrar += '0';
+            }
+            return fechaMostrar += fecha1.getDate();
+        }
+    }
 }
 
 
@@ -138,6 +162,15 @@ function calcularBalance() {
     return presupuesto - calcularTotalGastos();
 }
 
+function filtrarGastos() {
+    //toLowerCase convierte en minusculas EJ: 'Interfaz'.toLowerCase()
+
+}
+
+function agruparGastos() {
+
+}
+
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
 // Las funciones y objetos deben tener los nombres que se indican en el enunciado
@@ -150,5 +183,7 @@ export   {
     anyadirGasto,
     borrarGasto,
     calcularTotalGastos,
-    calcularBalance
+    calcularBalance,
+    filtrarGastos,
+    agruparGastos
 }
