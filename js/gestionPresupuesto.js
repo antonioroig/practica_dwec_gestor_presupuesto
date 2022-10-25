@@ -109,22 +109,41 @@ function CrearGasto(descripcion,valor,fecha = Date.now(), ...etiquetas ) {
     this.obtenerPeriodoAgrupacion = function(periodo)
     {
         let fechaAgrupacion = new Date (this.fecha)
+        let dia;
+        let mes;
+        let anyo = fechaAgrupacion.getFullYear();
+
+        if(fechaAgrupacion.getDate() > 9)
+        {
+            dia = fechaAgrupacion.getDate();
+        }
+        else
+        {
+            dia = "0" + fechaAgrupacion.getDate();
+        }
+        if(fechaAgrupacion.getMonth() > 9)
+        {
+            mes = fechaAgrupacion.getMonth() + 1;
+        }
+        else
+        {
+            mes = "0" + (fechaAgrupacion.getMonth() + 1);
+        }
+
         if(periodo === "dia")
         {
-            fechaAgrupacion = fechaAgrupacion.getFullYear() + "-" + fechaAgrupacion.getMonth() + "-" + fechaAgrupacion.getDay();
+            return anyo + "-" + mes + "-" + dia;
         }
 
         if(periodo === "mes")
         {
-            fechaAgrupacion = fechaAgrupacion.getFullYear() + "-" + fechaAgrupacion.getMonth();
+            return anyo + "-" + mes;
         }
 
         if(periodo === "anyo")
         {
-            fechaAgrupacion = fechaAgrupacion.getFullYear();
+            return anyo;
         }
-
-        return fechaAgrupacion;
     }
 }
 
@@ -160,8 +179,18 @@ function calcularBalance(){
     return presupuesto - calcularTotalGastos();
 }
 
-function filtrarGastos(){
-
+function filtrarGastos({fechaDesde, fechaHasta, valorMinimo, valorMaximo, descripcionContiene, ...etiquetasTiene}){
+    fechaDesde = Date.parse(fechaDesde);
+    fechaHasta = Date.parse(fechaHasta);
+    let buscarGastos = gastos.filter(function(gastobuscado,index) 
+    {
+        fechaDesde => gastobuscado.fecha >= fechaDesde;
+        fechaHasta => gastobuscado.fecha <= fechaHasta;
+        valorMinimo => gastobuscado.valor >= valorMinimo;
+        valorMaximo => gastobuscado.valor <= valorMaximo;
+        descripcionContiene => gastobuscado.descripcion.toUpperCase().indexOf(descripcionContiene.toUpperCase());
+    });
+    return buscarGastos;
 }
 
 function agruparGastos(){
