@@ -80,7 +80,13 @@ function CrearGasto(Descripcion, valor, Fecha = Date.now(), ...etiquetas) {
             {
                 if(Etiquetas[i] === this.etiquetas[j])
                 {
+                    this.etiquetas.splice(j,1);
+                    break;
+                }
+            }
+        }
     }
+}
 
     this.mostrarGastoCompleto = function(){
         let mFecha = new Date (this.fecha); 
@@ -112,7 +118,6 @@ function CrearGasto(Descripcion, valor, Fecha = Date.now(), ...etiquetas) {
         };
     };
 
-};
 
 function listarGastos() {
     return gastos;
@@ -162,6 +167,3 @@ export   {
     calcularTotalGastos, 
     calcularBalance
 }
-
-
-
