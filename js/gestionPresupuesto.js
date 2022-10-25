@@ -51,12 +51,12 @@ function CrearGasto(descripcion, valor, fecha = Date.now() , ...etiquetas) {
 
     this.mostrarGasto = function(){
         return(`Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €`);
-    }
+    },
 
     this.actualizarDescripcion = function(desc)
     {
         this.descripcion = desc;
-    }
+    },
 
    this.actualizarValor = function(val)
     {
@@ -64,7 +64,7 @@ function CrearGasto(descripcion, valor, fecha = Date.now() , ...etiquetas) {
        {
         this.valor = val;
        }
-    }
+    },
 
     this.etiquetas = [...etiquetas];
 
@@ -94,10 +94,7 @@ function CrearGasto(descripcion, valor, fecha = Date.now() , ...etiquetas) {
 
 
 
-    }
-
-
-    
+    },
 
 
     this.actualizarFecha = function(fec)
@@ -108,7 +105,7 @@ function CrearGasto(descripcion, valor, fecha = Date.now() , ...etiquetas) {
             this.fecha = Date.parse(fec);
         }
 
-    }
+    },
 
     this.borrarEtiquetas = function(...etiquet)
     {
@@ -124,7 +121,7 @@ function CrearGasto(descripcion, valor, fecha = Date.now() , ...etiquetas) {
                 }
             }
         }
-    }
+    },
 
 
     this.anyadirEtiquetas = function(...etiquet)
@@ -151,9 +148,50 @@ function CrearGasto(descripcion, valor, fecha = Date.now() , ...etiquetas) {
             
         }
         
-        
+    },
+
+    this.obtenerPeriodoAgrupacion = function(period)
+    {
+
+        let tot = "";
+        let fec = new Date(this.fecha);
+
+        if(period === 'anyo')
+       {
+        tot = (fec.getFullYear());
+       }
+
+
+       if(period === 'dia')
+       {
+        if((fec.getDate() + 1) < 10)
+        {
+            tot = ("0" +fec.getDate + "-");
+        }
+        else
+        {
+            tot = (fec.getDate + "-");
+        }
+       }
+
+       
+    if(period === 'mes')
+    {
+        tot += fec.getFullYear(this.fecha);
+     if((fec.getMonth() + 1) < 10)
+     {
+     tot =  "0" + ((fec.getMonth() + 1)) 
+     }
+     else
+     {
+         tot = ("-" + (fec.getMonth() + 1))  
+     }
     }
-  
+
+       return tot;
+
+    }
+
 }
 
 function listarGastos(){
@@ -202,11 +240,74 @@ function calcularTotalGastos(){
 function calcularBalance(){
 
     let tot = 0;
-    let gas = calcularTotalGastos()
-
+    let gas = calcularTotalGastos();
     tot = presupuesto - gas;
 
     return tot;
+
+}
+
+
+function fechaDesde(fec){
+
+    let fecha;
+    if(!isNaN(Date.parse(fec)) && typeof fec === "string")
+    {
+        fecha = Date.parse(fec);
+    }
+    else
+    {
+        fecha = Date.now();
+    }
+
+    return fecha;
+
+}
+
+
+function fechaHasta(fec, fecDesde){
+
+
+    let fecha;
+    let fechades = fechaDesde(fecDesde);
+    if(!isNaN(Date.parse(fec)) && typeof fec === "string")
+    {
+        if(fechades < fec)
+        {
+            fecha = Date.parse(fec);
+        }
+    }
+    else
+    {
+        fecha = Date.now();
+    }
+
+    return fecha;
+
+}
+
+
+
+function valorMinimo(){
+
+    
+
+}
+
+function valorMaximo(){
+
+
+
+}
+
+
+function filtrarGastos({fecDesde, fechaHasta, valorMinimo, valorMaximo}){
+
+
+
+}
+
+function agruparGastos(){
 
 }
 
@@ -222,5 +323,7 @@ export   {
     anyadirGasto,
     borrarGasto,
     calcularTotalGastos,
-    calcularBalance
+    calcularBalance,
+    filtrarGastos,
+    agruparGastos
 }
