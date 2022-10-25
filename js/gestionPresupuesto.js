@@ -22,7 +22,7 @@ function CrearGasto(Descripcion, valor, Fecha = Date.now(), ...etiquetas) {
     this.descripcion = Descripcion;
     
     if (etiquetas===undefined){
-        this.etiquetas=new Array();
+        this.etiquetas = new Array();
     }
     else{
         this.etiquetas=[...etiquetas];
@@ -52,31 +52,31 @@ function CrearGasto(Descripcion, valor, Fecha = Date.now(), ...etiquetas) {
 
     this.anyadirEtiquetas = function(...Etiquetas)
     {
-        for (let i = 0;i < Etiquetas.length; i++ )
+        for (let i = 0; i < Etiquetas.length; i++ )
         {
             let coincide = false;
 
-            for (let j = 0;j < this.etiquetas; j++ )
+            for (let j = 0; j < this.etiquetas.length; j++ )
             {
                 if(Etiquetas[i] === this.etiquetas[j])
                 {
-                    coincide=true;
-                    break;
+                    coincide = true;
+                    //break;
                 }
             }
-            if (!coincide)
+            if (coincide === false)
             {
                 this.etiquetas.push(Etiquetas[i]);
             }
         }
     }
     
-    this.borrarEtiquetas = function (...Etiquetas)
+    this.borrarEtiquetas = function(...Etiquetas)
     {
-        for (let i = 0;i < Etiquetas.length; i++ )
+        for (let i = 0; i < Etiquetas.length; i++ )
         {
 
-            for (let j = 0;j < this.etiquetas; j++ )
+            for (let j = 0; j < this.etiquetas.length; j++ )
             {
                 if(Etiquetas[i] === this.etiquetas[j])
                 {
@@ -102,11 +102,11 @@ function CrearGasto(Descripcion, valor, Fecha = Date.now(), ...etiquetas) {
 
     this.mostrarGasto = function (){
         return 'Gasto correspondiente a ' + this.descripcion + ' con valor ' + this.valor +' €';
-    };
+    }
 
     this.actualizarDescripcion = function(cadena){
         this.descripcion = cadena;
-    };
+    }
 
     this.actualizarValor = function(valorActualizado){
         if(valorActualizado >= 0){
@@ -114,18 +114,18 @@ function CrearGasto(Descripcion, valor, Fecha = Date.now(), ...etiquetas) {
         }
         else{
             console.log('Error: El valor introducido es negativo o valor invalido');
-        };
-    };
+        }
+    }
 }
 
 function listarGastos() {
     return gastos;
-};
+}
 function anyadirGasto (gasto) {
     gasto.id=idGasto;
     idGasto++;
     gastos.push(gasto);
-};
+}
 
 function borrarGasto(ID) {
     
@@ -136,7 +136,7 @@ function borrarGasto(ID) {
             gastos.splice(i,1);
         }
     }
-};
+}
 
 function calcularTotalGastos() {
     let sum = 0;
@@ -147,11 +147,11 @@ function calcularTotalGastos() {
         i++;
     }
     return sum;
-};
+}
 
 function calcularBalance() {
     return presupuesto - calcularTotalGastos();
-};
+}
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
 // Las funciones y objetos deben tener los nombres que se indican en el enunciado
