@@ -96,17 +96,38 @@ function CrearGasto(descripcion,valor,fecha = Date.now(), ...etiquetas)
     this.obtenerPeriodoAgrupacion = function (periodo)
     {
         let fechaPeriodo = new Date(this.fecha);
+        let anyo =fechaPeriodo.getFullYear();
+        let mes = 0;
+        if(fechaPeriodo.getMonth() >= 9)
+        {
+            mes = fechaPeriodo.getMonth() + 1;
+        }
+        else
+        {
+            let temp = fechaPeriodo.getMonth() + 1
+           mes = "0" + temp.toString();
+        }
+        let dia = 0;
+        if(fechaPeriodo.getDate() >= 9)
+        {
+            dia = 
+            fechaPeriodo.getDate();
+        }
+        else
+        {
+           dia = "0" + fechaPeriodo.getDate();
+        }
         if(periodo === "dia")
         {
-            return fechaPeriodo.getFullYear() + "-" + fechaPeriodo.getMonth() + "-" +fechaPeriodo.getDay();
+            return anyo + "-" + mes + "-" + dia;
         }
         if(periodo === "mes")
         {
-            return fechaPeriodo.getFullYear() + "-" + fechaPeriodo.getMonth();
+            return anyo + "-" + mes;
         }
         if(periodo === "anyo")
         {
-            return fechaPeriodo.getFullYear();
+            return anyo;
         }
     }
 }
@@ -146,9 +167,20 @@ function agruparGastos()
 {
 
 }
-function filtrarGastos()
+function filtrarGastos({fechaDesde,fechaHasta,valorMinimo,valorMaximo,descripcionContiene, etiquetasTiene})
 {
-
+    fechaDesde = Date.parse(fechaDesde);
+    fechaHasta = Date.parse(fechaHasta);
+    let gastosencontrados = gastos.filter(function(gastobuscado,indice,array)
+    {
+        fechamin => gastobuscado.fecha >= fechaDesde;
+        fechamax => gastobuscado.fecha <= fechaHasta;
+        valormin => gastobuscado.fecha >= valorMinimo;
+        valormax => gastobuscado.fecha <= valorMaximo;
+        desc => (gastobuscado.descripcion.toUpperCase()).includes(descripcionContiene.toUpperCase());
+        etiq => gastobuscado.etiquetas
+    });
+    return gastosencontrados;
 }
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
 // Las funciones y objetos deben tener los nombres que se indican en el enunciado
