@@ -46,7 +46,10 @@ function CrearGasto(descripcion,valor_actual,fecha = Date.now(), ...etiquetas)
     {
         this.valor = 0;
     };
-    
+    this.mostrarGasto = function()
+    {
+        return 'Gasto correspondiente a '+this.descripcion+ ' con valor ' +this.valor +' €';
+    }
     this.mostrarGastoCompleto = function ()
     {
         let dato = new Date(this.fecha); 
@@ -94,18 +97,6 @@ function CrearGasto(descripcion,valor_actual,fecha = Date.now(), ...etiquetas)
     }
     this.borrarEtiquetas = function(...elim)
     {
-        // let j = 0;
-        // for( let i = 0; i<etiquetas.length; i++)
-        // {
-        //     while( j< elim.length)
-        //     {
-        //         if(elim[j] === etiquetas[i])
-        //         {
-        //             etiquetas.splice(i,1);
-        //             j++;
-        //         }
-        //     }
-        // }
         elim.forEach(del => 
         {
           let pos = this.etiquetas.indexOf(del);
