@@ -78,8 +78,17 @@ function CrearGasto(descripcion, valor, fecha=Date.now() , ...etiquetas) { //Fun
             }
         });
     },
-    this.obtenerPeriodoAgrupacion = function(){
-        
+    this.obtenerPeriodoAgrupacion = function(periodo){
+        let fecha = new Date(this.fecha);
+        if(periodo == 'Dia' || periodo == 'dia' || periodo == 'DIA'){
+           return fecha.toISOString().substring(0, 10);
+        }
+        if(periodo == 'Mes' || periodo == 'mes' || periodo == 'MES'){
+            return fecha.toISOString().substring(0, 7);
+        }
+        if(periodo == 'AÑO' || periodo == 'Año' || periodo == 'ANYO' || periodo == 'anyo'){
+            return fecha.toISOString().substring(0, 4);
+        }
     }
 }
 
@@ -108,7 +117,7 @@ function calcularTotalGastos(){
 function calcularBalance(){
     return presupuesto - calcularTotalGastos();
 };
-function filtrarGastos(){
+function filtrarGastos({}){
 
 };
 function agruparGastos(){
