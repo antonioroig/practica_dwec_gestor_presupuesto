@@ -107,6 +107,16 @@ function CrearGasto(descripcion, valor ,fecha = Date.now(), ...etiquetas) {
         }
         return showScreen;
     }
+
+    this.obtenerPeriodoAgrupacion = function(periodo) {
+        let fecha = new Date(this.fecha);
+        if (periodo == 'dia')
+        { return fecha.toISOString().substring(0, 10) }
+        if (periodo == 'mes')
+        { return fecha.toISOString().substring(0, 7) }
+        if (periodo == 'anyo')
+        { return fecha.toISOString().substring(0, 4) }
+    }
     // TODO   
     //comentario para que se activen los test en github
 }
@@ -136,6 +146,21 @@ function calcularTotalGastos() {
     return total;
 }
 
+function filtrarGastos(objeto)
+{
+    if (objeto != undefined && objeto != null)
+    {
+        let arrayfiltrado = gastos.filter(function (fechaDesde, fechaHasta, valorMinimo, valorMaximo, descripcionContiene, etiquetasTiene) {
+        })
+        if (arrayfiltrado == 0)
+            {arrayfiltrado == gastos}
+        return arrayfiltrado;
+    }
+    
+}
+
+function agruparGastos()
+{}
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
 // Las funciones y objetos deben tener los nombres que se indican en el enunciado
@@ -148,6 +173,8 @@ export   {
     anyadirGasto,
     borrarGasto,
     calcularTotalGastos,
-    calcularBalance
+    calcularBalance,
+    filtrarGastos,
+    agruparGastos
 }
 //actualizando
