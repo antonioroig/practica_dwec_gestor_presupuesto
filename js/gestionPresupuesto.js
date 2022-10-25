@@ -86,7 +86,6 @@ function CrearGasto(Descripcion, valor, Fecha = Date.now(), ...etiquetas) {
             }
         }
     }
-}
 
     this.mostrarGastoCompleto = function(){
         let mFecha = new Date (this.fecha); 
@@ -117,7 +116,7 @@ function CrearGasto(Descripcion, valor, Fecha = Date.now(), ...etiquetas) {
             console.log('Error: El valor introducido es negativo o valor invalido');
         };
     };
-
+}
 
 function listarGastos() {
     return gastos;
