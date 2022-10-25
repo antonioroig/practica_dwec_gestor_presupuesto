@@ -107,7 +107,6 @@ function CrearGasto(descripcion,valor, fecha = Date.now(), ...etiquetas) {
     }
 
     this.obtenerPeriodoAgrupacion = function(periodo){
-        let resultadoFecha = " ";
         let fecha = new Date(this.fecha);
         switch (periodo) {
             case 'dia':
@@ -119,7 +118,6 @@ function CrearGasto(descripcion,valor, fecha = Date.now(), ...etiquetas) {
             default:
                 break;
         }
-        return resultadoFecha;
     }       
 
 }
@@ -155,57 +153,51 @@ function CrearGasto(descripcion,valor, fecha = Date.now(), ...etiquetas) {
     };
 
     function filtrarGastos(objeto){
-       if ( typeof objeto === 'string') {
+       if ( objeto != undefined && objeto != null) {
         let gastosFiltrados = gastos.filter(gasto => {
-            if (objeto.hasOwnProperty('fechaDesde') && typeof objeto.valor === 'number') {
+            if (objeto.hasOwnProperty('fechaDesde') && typeof objeto.valor != undefined ) {
                 if (gasto.fecha < Date.parse(objeto.fechaDesde)) {
-
-                    return false;
-                }
-              
-            }         
+                    return;
+                }             
+            }        
         
-             if (objeto.hasOwnProperty('fechaHasta') && typeof objeto.valor === 'number') {
-                if (gasto.fecha > Date.parse(objeto.fechaDesde)) {
-                    
-                    return false;
-                }
-              
+             if (objeto.hasOwnProperty('fechaHasta') && typeof objeto.valor === 'string') {
+                if (gasto.fecha > Date.parse(objeto.fechaDesde)) {                    
+                    return;
+                }              
             }
 
              if(objeto.hasOwnProperty('valorMinimo') && typeof objeto.valor === 'number'){
-                if(gasto.valor < gastosFiltrados.valorMinimo)
-                {
-                    return false;
+                if(gasto.valor < gastosFiltrados.valorMinimo){
+                    return;
                 }
             }
 
-            if(objeto.hasOwnProperty('valorMaximo') && typeof objeto.valor === 'number'){
-                if(gasto.valor > gastosFiltrados.valorMaximo)
-                {
-                    return false;
+            if(objeto.hasOwnProperty('valorMaximo') && typeof objeto.valor === 'number' ){
+                if(gasto.valor > gastosFiltrados.valorMaximo){
+                    return;
                 }
             }
 
             if(objeto.hasOwnProperty('descripcionContiene') && typeof objeto.descripcion === 'string'){
             {
-                if(!gasto.descripcion.includes(gastosFiltrados.descripcion))
-                {
-                    return false;
+                if(!gasto.descripcion.includes(gastosFiltrados.descripcion)){
+                    return;
                 }
             }
         }
-            if(objeto.hasOwnProperty('etiquetasTiene') && Array.isArray(objeto.etiquetas) === 0){
+            if(objeto.hasOwnProperty('etiquetasTiene') && Array.isArray(objeto.etiquetas) != undefined){
             {
-                if(!gasto.etiquetas.includes(gastosFiltrados.etiquetas))
-                {
-                    return false;
-                }
-            }
-        }
+                for(let i = 0; i < etiquetas.length; i++){ 
+                    if(!gasto.etiquetas.includes(this.etiquetas[i]))
+                    {
+                        return;
+                    }
+                 }
+            } 
+        }return gasto;
     }); return gastosFiltrados; 
-    }  
-      
+  } 
 };
 
     function agruparGastos(periodo = 'mes', etiquetas = [], fechadesde, fechahasta){
