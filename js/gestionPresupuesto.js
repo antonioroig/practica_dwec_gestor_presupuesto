@@ -126,31 +126,29 @@ function CrearGasto(descripcion, valor, fecha, ... etiquetas) {
     // Actividad 3 - Métodos
 
     // Método 'obtenerPeriodoAgrupacion' del objeto gasto --> dia (aaaa-mm-dd) /mes (aaaa-mm) /anyo (aaaa)
-    this.obtenerPeriodoAgrupacion = function(valor){
+    // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString - Para mi
+    // toISOString --> devuelve formato ISO de la fecha
+    // substring --> devuelve la cadena de chars 
 
-        let resp = "";
-        let d = new Date(this.fecha);
-           
-        if(valor === "anyo"){
-
-            let resp1 = d.getFullYear();
-            
-            resp = resp1;
-        }
-        else if(valor === "mes"){
-            let resp1 = d.getFullYear();
-            let resp2 = d.getMonth();
-            
-            resp = resp1 + "-" + resp2;
-        }
-        else if(valor === "dia"){
-            let resp1 = d.getFullYear();
-            let resp2 = d.getMonth();
-            let resp3 = d.getDate();
-
-            resp = resp1 + "-" + resp2 + "-" + resp3;
-        }
-        return resp;         
+    /*
+    const today = new Date('05 October 2011 14:48 UTC');
+    console.log(today.toISOString()); // Returns 2011-10-05T14:48:00.000Z
+    */
+    this.obtenerPeriodoAgrupacion = function(periodo){
+        
+        if (periodo != undefined)
+        {
+            if (periodo === 'dia')
+            {
+                return new Date(this.fecha).toISOString().substring(0, 10);
+            }
+            else if (periodo === 'mes'){
+                return new Date(this.fecha).toISOString().substring(0, 7);
+            }
+            else if(periodo === 'anyo'){
+                return new Date(this.fecha).toISOString().substring(0, 4);
+            }
+        }        
     }
 }
     
