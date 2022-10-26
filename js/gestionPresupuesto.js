@@ -173,19 +173,19 @@ function CrearGasto(descripcion,valor, fecha = Date.now(), ...etiquetas) {
             if((fecha.getMonth() + 1) < 10)
             {
 
-                group += "0" + (fecha.getMonth + 1) + "-";
+                group += "0" + (fecha.getMonth() + 1) + "-";
 
             }
                 else{
 
-                    group += (fecha.getMonth + 1) + "-";
+                    group += (fecha.getMonth() + 1) + "-";
 
                 }
 
             if(fecha.getDate() < 10)
             {
 
-                group += "0" + fecha.getDate + 1();
+                group += "0" + fecha.getDate();
 
             }
                 else{
@@ -203,17 +203,26 @@ function CrearGasto(descripcion,valor, fecha = Date.now(), ...etiquetas) {
             if((fecha.getMonth() + 1) < 10)
             {
 
-                group += "0" + (fecha.getMonth + 1);
+                group += "0" + (fecha.getMonth() + 1);
 
             }
                 else
                 {
 
-                    group += "0" + (fecha.getMonth + 1);
+                    group += (fecha.getMonth() + 1);
                     
                 }
 
         }
+
+        if(format === 'anyo')
+        {
+
+            group += fecha.getFullYear();
+
+        }
+
+        return group;
 
     }
 
