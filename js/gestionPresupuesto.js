@@ -263,13 +263,67 @@ function calcularTotalGastos()
     for(let i = 0; i < gastos.length; i++)
     {
 
-        totalGastos += gastos[i].valor
+        totalGastos += gastos[i].valor;
 
     }
 
     return totalGastos;
 
 }
+
+function filtrarGastos(fechaDesde, fechaHasta, minValor, maxValor, descCont, etiqCont)
+{
+
+    let arrayFilter = gastos.filter(function(gasto){
+
+        let anyadir = true;
+    
+            if(gasto.fecha > (Date.parse(fechaDesde)))
+            {
+
+                anyadir = false;
+
+            }
+            if(gasto.fecha > (Date.parse(fechaHasta)))
+            {
+
+                anyadir = false;
+
+            }
+
+            if(gasto.valor > minValor && gasto.valor > maxValor)
+            {
+
+                anyadir = false;
+
+            }
+
+            if(descContains)
+            {
+
+                anyadir = false;
+
+            }
+
+            if(hasEtiquetas)
+            {
+
+                anyadir = false;
+
+            }
+            return anyadir;
+        }
+        );
+
+        return arrayFilter;
+}
+
+function agruparGastos(){
+
+
+
+}
+
 
 function calcularBalance()
 {
@@ -281,18 +335,6 @@ function calcularBalance()
     totalBalance = presupuesto - gasto;
 
     return totalBalance;
-
-}
-
-function filtrarGastos(){
-
-
-    
-}
-
-function agruparGastos(){
-
-
 
 }
 
