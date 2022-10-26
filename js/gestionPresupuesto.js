@@ -126,18 +126,18 @@ function CrearGasto(descripcion,valor,fecha=Date.now(), ...etiquetas)
     {
         let date = new Date(this.fecha);
         let year = date.getFullYear();
-        let month = date.getMonth();
+        let month = date.getMonth() + 1;
         let day = date.getDate();
 
         if(periodo === "dia")
         {
             if (day < 10 && month < 10)
             {
-                return `${year}-0${month + 1}-0${day}`;
+                return `${year}-0${month}-0${day}`;
             }
             else
             {
-                return `${year}-${month + 1}-${day}`;
+                return `${year}-${month}-${day}`;
             }
            
         }
@@ -146,11 +146,11 @@ function CrearGasto(descripcion,valor,fecha=Date.now(), ...etiquetas)
         {
             if(month < 10)
             {
-                return `${year}-0${month + 1}`;
+                return `${year}-0${month}`;
             }
             else 
             {
-                return `${year}-${month + 1}`;
+                return `${year}-${month}`;
             }
             
         }
@@ -202,9 +202,14 @@ function calcularBalance()
     return presupuesto - calcularTotalGastos();
 }
 
-function filtrarGastos(fechaDesde, fechaHasta,valorMinimo,valorMaximo,descripcionContiene,...etiquetasTiene)
+function filtrarGastos({fechaDesde,
+    fechaHasta,
+    valorMinimo,
+    valorMaximo,
+    descripcionContiene,
+    ...etiquetasTiene})
 {
-
+    let arrayfiltrado = gastos.filter();
 }
 
 function agruparGastos()
