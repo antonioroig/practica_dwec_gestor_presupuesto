@@ -207,9 +207,69 @@ function filtrarGastos({fechaDesde,
     valorMinimo,
     valorMaximo,
     descripcionContiene,
-    ...etiquetasTiene})
+    etiquetasTiene})
 {
-    let arrayfiltrado = gastos.filter();
+    let arrayfiltrado = gastos.filter(function(gasto){
+        
+        let anyadir = true;
+
+        if(descripcionContiene != undefined)
+        {
+            gasto.descripcion.toUpperCase();
+            descripcionContiene.toUpperCase();
+
+            if(gasto.descripcion.indexOf(descripcionContiene))
+            {
+                anyadir = true;
+            }
+            else
+            {
+                anyadir = false;
+            }
+        }
+
+        if(fechaDesde != undefined)
+        {
+            if(fechaHasta != undefined)
+            {
+                if(fechaDesde <= gasto.fecha && gasto.fecha <= fechaHasta)
+                {
+                    anyadir = true;
+                }
+                else
+                {
+                    anyadir = false;
+                }
+            }
+            else
+            {
+                if(fechaDesde <= gasto.fecha)
+                {
+                    anyadir = true;
+                }
+                else
+                {
+                    anyadir = false;
+                }
+            }
+        }
+
+        if(fechaHasta != undefined)
+        {
+            if(gasto.fecha <= fechaHasta)
+            {
+                anyadir = true;
+            }
+            else
+            {
+                anyadir = false;
+            }
+        }
+
+        return anyadir;
+    });
+
+    return arrayfiltrado;
 }
 
 function agruparGastos()
