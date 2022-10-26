@@ -155,45 +155,44 @@ function CrearGasto(descripcion,valor, fecha = Date.now(), ...etiquetas) {
     function filtrarGastos(objeto){
        if ( objeto != undefined && objeto != null) {
         let gastosFiltrados = gastos.filter(gasto => {
-            if (objeto.hasOwnProperty('fechaDesde') && typeof objeto.valor != undefined ) {
-                if (gasto.fecha < Date.parse(objeto.fechaDesde)) {
+            if(objeto.hasOwnProperty('fechaDesde') && typeof objeto.fechaDesde !== "undefined" ){
+                if(gasto.fecha < Date.parse(objeto.fechaDesde)){
                     return;
-                }             
-            }        
+                }
+            }       
         
-             if (objeto.hasOwnProperty('fechaHasta') && typeof objeto.valor === 'string') {
-                if (gasto.fecha > Date.parse(objeto.fechaDesde)) {                    
+             if (objeto.hasOwnProperty('fechaHasta') && typeof objeto.fechaHasta !== "undefined") {
+                if (gasto.fecha > Date.parse(objeto.fechaHasta)) {                    
                     return;
                 }              
             }
 
-             if(objeto.hasOwnProperty('valorMinimo') && typeof objeto.valor === 'number'){
-                if(gasto.valor < gastosFiltrados.valorMinimo){
+             if(objeto.hasOwnProperty('valorMinimo') && typeof objeto.valorMinimo !== "undefined"){
+                if(gasto.valor < objeto.valorMinimo){
                     return;
                 }
             }
 
-            if(objeto.hasOwnProperty('valorMaximo') && typeof objeto.valor === 'number' ){
-                if(gasto.valor > gastosFiltrados.valorMaximo){
+            if(objeto.hasOwnProperty('valorMaximo') && typeof objeto.valorMaximo !== "undefined"){
+                if(gasto.valor > objeto.valorMaximo){
                     return;
                 }
             }
 
-            if(objeto.hasOwnProperty('descripcionContiene') && typeof objeto.descripcion === 'string'){
+            if(objeto.hasOwnProperty('descripcionContiene') && typeof objeto.descripcionContiene !== "undefined"){
             {
-                if(!gasto.descripcion.includes(gastosFiltrados.descripcion)){
+                if(!gasto.descripcion.includes(objeto.descripcionContiene)){
                     return;
                 }
             }
         }
-            if(objeto.hasOwnProperty('etiquetasTiene') && Array.isArray(objeto.etiquetas) != undefined){
+            if(objeto.hasOwnProperty('etiquetasTiene') && Array.isArray(objeto.etiquetasTiene) !== "undefined"){
             {
-                for(let i = 0; i < etiquetas.length; i++){ 
-                    if(!gasto.etiquetas.includes(this.etiquetas[i]))
-                    {
-                        return;
-                    }
-                 }
+               for(let etiqueta of objeto.etiquetasTiene){
+                   if(!gasto.etiquetas.includes(etiqueta)){
+                       return;
+                   }
+               }
             } 
         }return gasto;
     }); return gastosFiltrados; 
@@ -202,9 +201,9 @@ function CrearGasto(descripcion,valor, fecha = Date.now(), ...etiquetas) {
 
     function agruparGastos(periodo = 'mes', etiquetas = [], fechadesde, fechahasta){
         let gastosAgrupados = gastos.reduce((acumulador, gasto) => {
-
-  
-    });
+            let fecha = gasto.obtenerPeriodoAgrupacion(periodo);
+            
+});
 }
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
