@@ -176,9 +176,25 @@ function calcularBalance()
 {
     return presupuesto - calcularTotalGastos();
 }
-function filtrarGastos()
+function filtrarGastos(valor_max,valor_min,descripcionContiene,fechaDesde,fechaHasta)
 {
-
+    let anyade = false;
+    let arrayFiltrado = gastos.filter(function(gasto){
+        if (gasto.valor <= valor_max && gasto.valor >= valor_min)
+        {
+             anyade =true;
+        }
+        if(descripcionContiene === gasto.descripcion)
+        {
+             anyade = true;
+        }
+        if(gasto.fecha() >= fechaDesde.Date.Parse() && gasto.fecha.Parse() )
+        {
+            anyade = true;
+        }
+        return anyade;
+    })
+    return arrayFiltrado;
 }
 function agruparGastos()
 {
