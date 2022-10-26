@@ -158,19 +158,29 @@ function CrearGasto(descripcion, valor, fecha = Date.now() , ...etiquetas) {
 
         if(period === 'anyo')
        {
-        tot = (fec.getFullYear());
+        tot = (fec.getFullYear(this.fecha));
        }
 
 
        if(period === 'dia')
        {
-        if((fec.getDate() + 1) < 10)
+        tot += fec.getFullYear(this.fecha) + "-"; 
+        if(fec.getMonth(this.fecha) <10)
         {
-            tot = ("0" +fec.getDate + "-");
+            tot += ("0" + (fec.getMonth(this.fecha) + 1) + "-")
         }
         else
         {
-            tot = (fec.getDate + "-");
+            tot += ((fec.getMonth(this.fecha) + 1) + "-")
+        }
+        if((fec.getDate(this.fecha) + 1) < 10)
+        {
+            
+            tot += ( "0" + fec.getDate(this.fecha));
+        }
+        else
+        {
+            tot += (fec.getDate(this.fecha));
         }
        }
 
@@ -178,13 +188,13 @@ function CrearGasto(descripcion, valor, fecha = Date.now() , ...etiquetas) {
     if(period === 'mes')
     {
         tot += fec.getFullYear(this.fecha);
-     if((fec.getMonth() + 1) < 10)
+     if((fec.getMonth(this.fecha) + 1) < 10)
      {
-     tot =  "0" + ((fec.getMonth() + 1)) 
+     tot +=  "-"+"0" + ((fec.getMonth(this.fecha) + 1)) 
      }
      else
      {
-         tot = ("-" + (fec.getMonth() + 1))  
+         tot += ("-" + (fec.getMonth(this.fecha) + 1))  
      }
     }
 
@@ -301,9 +311,53 @@ function valorMaximo(){
 }
 
 
-function filtrarGastos({fecDesde, fechaHasta, valorMinimo, valorMaximo}){
+function filtrarGastos({fecDesde, fechaHasta, valorMinimo, valorMaximo, descripcionContiene, etiquetasTiene}){
+
+let arrayFiltrado = gastos.filter(function(gasto){
+
+    let anyadir = true;
+    if(isNaN(Date.parse(fecDesde)) && typeof fec !== "string")
+    {
+       anyadir = false;
+    }
+    
+
+    let fechaHas = "";
+    if(isNaN(Date.parse(fechaHasta)) && typeof fec !== "string")
+    {
+       anyadir = false
+    }
+   
+    
+
+    if(gasto.valor < valorMinimo)
+    {
+        anyadir = false;
+    }
+
+    if(gasto.valor > valorMaximo)
+    {
+        anyadir = false;
+    }
+
+    if(descripcionContiene === undefined)
+    {
+        anyadir = false;
+    }    
+
+    if(etiquetasTiene === undefined)
+    {
+        anyadir = false;
+    }
 
 
+
+    return anyadir;
+
+
+});
+
+return arrayFiltrado;
 
 }
 
