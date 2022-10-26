@@ -154,7 +154,7 @@ function filtrarGastos(objeto)
             if(objeto.hasOwnProperty("fechaDesde") && typeof objeto.fechaDesde !== "undefined")
             {
                 if (gasto.fecha < Date.parse(objeto.fechaDesde)) {
-                    
+                    return;
                 }
             }
             if (objeto.hasOwnProperty('fechaHasta') && typeof objeto.fechaHasta !== 'undefined')
@@ -163,7 +163,30 @@ function filtrarGastos(objeto)
                 {
                     return;
                 }
-            }return gasto;
+            }
+            if (objeto.hasOwnProperty('valorMinimo') && typeof objeto.valorMinimo !== 'undefined')
+            {
+                if (gasto.valor < objeto.valorMinimo)
+                {
+                    return;
+                }            
+            }
+            if (objeto.hasOwnProperty('valorMaximo') && typeof objeto.valorMaximo !== 'undefined')
+            {
+                if (gasto.valor > objeto.valorMaximo)
+                {
+                        return;
+                }
+            }
+            if (objeto.hasOwnProperty('descripcionContiene') && typeof objeto.descripcionContiene !== 'undefined')
+            { 
+                if (!gasto.descripcion.includes(objeto.descripcionContiene))
+                { 
+                    return;
+                }
+            }
+            
+            return gasto;
         })
         if (arrayfiltrado == 0)
             {arrayfiltrado = gastos}
