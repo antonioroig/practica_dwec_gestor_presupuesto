@@ -185,6 +185,16 @@ function filtrarGastos(objeto)
                     return;
                 }
             }
+            if (objeto.hasOwnProperty('etiquetasTiene') && typeof objeto.etiquetasTiene !== 'undefined')
+            {
+                for (let etiqueta of objeto.etiquetasTiene)
+                {
+                    if (!gasto.etiquetas.includes(etiqueta))
+                    { 
+                        return;
+                    }
+                }
+            }
             
             return gasto;
         })
