@@ -171,16 +171,131 @@ function filtrarGastos({fechaDesde,fechaHasta,valorMinimo,valorMaximo,descripcio
 {
     fechaDesde = Date.parse(fechaDesde);
     fechaHasta = Date.parse(fechaHasta);
-    let gastosencontrados = gastos.filter(function(gastobuscado,indice,array)
+    let gastosencontrados = gastos.filter(function(posiblegasto)
     {
-        fechamin => gastobuscado.fecha >= fechaDesde;
-        fechamax => gastobuscado.fecha <= fechaHasta;
-        valormin => gastobuscado.fecha >= valorMinimo;
-        valormax => gastobuscado.fecha <= valorMaximo;
-        desc => (gastobuscado.descripcion.toUpperCase()).includes(descripcionContiene.toUpperCase());
-        etiq => gastobuscado.etiquetas
+        let fechaCorrecta = fechaDesdeHasta(posiblegasto.fecha,fechaDesde,fechaHasta);
+        let valorCorrecto = valorMinimoMaximo(posiblegasto.valor,valorMinimo,valorMaximo);
+        let descripcionCorrecto = descripcionContieneTexto(posiblegasto.descripcion,descripcionContiene);
+        let etiquetasCorrecto = etiquetasTieneEtiqueta(posiblegasto.etiquetas,etiquetasTiene);
+        if(fechaCorrecta && valorCorrecto && descripcionCorrecto && etiquetasCorrecto)
+        {
+            return true;
+        }
     });
     return gastosencontrados;
+}
+function etiquetasTieneEtiqueta(Array,ArrayAComparar)
+{
+    for(let i = 0;i < ArrayAComparar.length();i++)
+    {
+        for(let j = 0;j < Array.length();j++)
+        {
+            if(ArrayAComparar[i].toUpperCase() === Array[j].toUpperCase())
+            {
+                i++;
+                Array.splice(j,1);
+                j = 0;
+            }
+        }
+    }
+}
+function descripcionContieneTexto(Cadena,TextoContiene)
+{
+
+}
+function valorMinimoMaximo(ValorAComprobar,ValorMinimo,ValorMaximo)
+{
+    if(ValorMinimo === undefined)
+    {
+        if(ValorMaximo === undefined)
+        {
+            return true;
+        }
+        else
+        {
+            if(ValorAComprobar <= ValorMaximo)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+    }
+    else
+    {
+        if(ValorMaximo === undefined)
+        {
+            if(ValorAComprobar >= ValorMinimo)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+            
+        }
+        else
+        {
+            if(ValorMinimo <= ValorAComprobar <= ValorMaximo)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+    }
+}
+function fechaDesdeHasta(FechaAComprobar,FechaDesde,FechaHasta)
+{
+    if(FechaDesde === undefined)
+    {
+        if(FechaHasta === undefined)
+        {
+            return true;
+        }
+        else
+        {
+            if(FechaAComprobar <= FechaHasta)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+    }
+    else
+    {
+        if(FechaHasta === undefined)
+        {
+            if(FechaAComprobar >= FechaDesde)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+            
+        }
+        else
+        {
+            if(FechaDesde <= FechaAComprobar <= FechaHasta)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+    }
 }
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
 // Las funciones y objetos deben tener los nombres que se indican en el enunciado
@@ -196,6 +311,6 @@ export
     calcularTotalGastos,
     calcularBalance,
     filtrarGastos,
-    agruparGastos
+    agruparGastos,
 }
 //hola
