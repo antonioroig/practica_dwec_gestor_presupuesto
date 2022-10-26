@@ -186,18 +186,35 @@ function filtrarGastos({fechaDesde,fechaHasta,valorMinimo,valorMaximo,descripcio
 }
 function etiquetasTieneEtiqueta(Array,ArrayAComparar)
 {
-    for(let i = 0;i < ArrayAComparar.length();i++)
+    if(ArrayAComparar != undefined)
     {
-        for(let j = 0;j < Array.length();j++)
+        for(let i = 0;i < Array.length();i++)
         {
-            if(ArrayAComparar[i].toUpperCase() === Array[j].toUpperCase())
+            for(let j = 0;j < ArrayAComparar.length();j++)
             {
-                i++;
-                Array.splice(j,1);
-                j = 0;
+                if(ArrayAComparar[j].toUpperCase() === Array[i].toUpperCase())
+                {
+                    i++;
+                    ArrayAComparar.splice(j,1);
+                    j = 0;
+                }
             }
+            break;
+        }
+        if(ArrayAComparar.length() > 0)
+        {
+            return false;
+        }
+        else
+        {
+            return true;
         }
     }
+    else
+    {
+        return true;
+    }
+    
 }
 function descripcionContieneTexto(Cadena,TextoContiene)
 {
