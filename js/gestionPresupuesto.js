@@ -182,16 +182,124 @@ function calcularBalance(){
 function filtrarGastos({fechaDesde, fechaHasta, valorMinimo, valorMaximo, descripcionContiene, ...etiquetasTiene}){
     fechaDesde = Date.parse(fechaDesde);
     fechaHasta = Date.parse(fechaHasta);
-    let buscarGastos = gastos.filter(function(gastobuscado,index) 
-    {
-        fechaDesde => gastobuscado.fecha >= fechaDesde;
-        fechaHasta => gastobuscado.fecha <= fechaHasta;
-        valorMinimo => gastobuscado.valor >= valorMinimo;
-        valorMaximo => gastobuscado.valor <= valorMaximo;
-        descripcionContiene => gastobuscado.descripcion.toUpperCase().indexOf(descripcionContiene.toUpperCase());
+    let buscarGastos = gastos.filter(function(gastobuscado){
+        let anyade = true;
+        let fechaOK = fechaComprobacion(gastobuscado,fechaDesde,fechaHasta);
+        let valorOK = valorComprobacion(gastobuscado,valorMinimo,valorMaximo);
+        let desOK = desComprobacion(gastobuscado,descripcionContiene) ;
+        return anyade;
     });
     return buscarGastos;
 }
+
+function desComprobacion(gastobuscado,descripcionContiene)
+{
+    let desGasto = gastobuscado.descripcion;
+    if(indexOf.desGasto(descripcionContiene) === -1)
+    {
+        return false;
+    }
+    else
+    {
+        return true;
+    }   
+}
+
+function valorComprobacion(gastobuscado,valorMinimo,valorMaximo)
+        {
+            let valorGasto = gastobuscado.valor;
+            if(valorMinimo === undefined)
+            {
+                if(valorMaximo === undefined)
+                {
+                    return true;
+                }
+                else
+                {
+                    if(valorGasto <= valorMaximo)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+            }
+            else
+            {
+                if(valorMaximo === undefined)
+                {
+                    if(valorGasto >= valorMinimo)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+                else
+                {
+                    if(valorMinimo <= valorGasto <= valorMaximo)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+            }    
+        }
+
+function fechaComprobacion(gastobuscado,fechaDesde,fechaHasta)
+        {
+            let fechaGasto = gastobuscado.fecha;
+            if(fechaDesde === undefined)
+            {
+                if(fechaHasta === undefined)
+                {
+                    return true;
+                }
+                else
+                {
+                    if(fechaGasto <= fechaHasta)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+            }
+            else
+            {
+                if(fechaHasta === undefined)
+                {
+                    if(fechaGasto >= fechaDesde)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+                else
+                {
+                    if(fechaDesde <= fechaGasto <= fechaHasta)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+            }    
+        }
 
 function agruparGastos(){
 
