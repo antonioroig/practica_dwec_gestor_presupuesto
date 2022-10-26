@@ -117,7 +117,9 @@ function CrearGasto(Descripcion, valor, Fecha = Date.now(), ...etiquetas) {
         }
     }
     this.obtenerPeriodoAgrupacion = function(periodo){
-
+        let año = getFullYear();
+        getMonth();
+        getDate();
     }
 }
 
