@@ -146,6 +146,124 @@ function CrearGasto(descripcion, valor, fecha = Date.now(), ...etiquetas) {
             }
         }
     }
+
+    this.obtenerPeriodoAgrupacion = function(parPeriodo)
+    {
+        let mFecha = new Date (this.fecha);
+        let periodo = mFecha.getFullYear().toLocaleString();
+
+        if (parPeriodo === "anyo")
+        {
+           return periodo;
+        }
+        else if (parPeriodo === "mes")
+        {
+            periodo += "-";
+            
+            if (mFecha.getMonth() < 10)
+            {
+                periodo += "0";
+            }
+            return periodo += (mFecha.getMonth() + 1);
+        }
+        else if (parPeriodo === "dia")
+        {
+            periodo += "-";
+
+            if (mFecha.getMonth() < 10)
+            {
+                let month = "0" + (mFecha.getMonth() + 1);
+
+                if (mFecha.getDay() < 10)
+                {
+                    let day = "0" + (mFecha.getDate());
+
+                    return periodo += month + "-" + day;
+                }
+                return periodo += month + "-" + mFecha.getDate();
+            }
+            else {
+                return periodo += (mFecha.getMonth() + 1) + "-" + mFecha.getDate();
+            }
+        }
+    }
+}
+
+function filtrarGastos({fechaDesde,
+    fechaHasta,
+    valorMinimo,
+    valorMaximo,
+    descripcionContiene,
+    etiquetasTiene})
+{
+    let ret = gastos.filter(function(gastosFilt)
+    {
+        let anyade = true;
+        let mFecha = gastosFilt.fecha.Date.Date();
+
+        if (mFecha < fechaDesde.getDate())
+        {
+            anyade = false;
+        }
+        if (mFecha > fechaHasta.getDate())
+        {
+            anyade = false;
+        }
+        if (gastosFilt.valor < valorMinimo)
+        {
+            anyade = false;
+        }
+        if (gastosFilt.valor > valorMaximo)
+        {
+            anyade = false;
+        }
+        if (gastosFilt.descripcion.toLowerCase() !== descripcionContiene.toLowerCase())
+        {
+            anyade = false;
+        }
+        if (gastosFilt.etiquetas.toLowerCase() !== etiquetasTiene.toLowerCase())
+        {
+            anyade = false;
+        }
+    
+        return anyade;
+    });
+
+    return ret;
+}
+
+function ValorMinimo()
+{
+    let min = gastos.length[0];
+
+    for (let i = 1; i < gastos.length;i++)
+    {
+        if (min > gastos[i])
+        {
+            min = gastos[i];
+        }
+    }
+
+    return min;
+}
+
+function ValorMaximo()
+{
+    let max = gastos.length[0];
+
+    for (let i = 1; i < gastos.length;i++)
+    {
+        if (max < gastos[i].valor)
+        {
+            max = gastos[i].valor;
+        }
+    }
+
+    return max;
+}
+
+function agruparGastos(){
+
 }
 
 function listarGastos(){
@@ -202,5 +320,7 @@ export   {
     anyadirGasto,
     borrarGasto,
     calcularTotalGastos,
-    calcularBalance
+    calcularBalance,
+    filtrarGastos,
+    agruparGastos
 }
