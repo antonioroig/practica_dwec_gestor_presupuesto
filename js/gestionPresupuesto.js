@@ -150,10 +150,23 @@ function filtrarGastos(objeto)
 {
     if (objeto != undefined && objeto != null)
     {
-        let arrayfiltrado = gastos.filter(function (fechaDesde, fechaHasta, valorMinimo, valorMaximo, descripcionContiene, etiquetasTiene) {
+        let arrayfiltrado = gastos.filter(gasto => {
+            if(objeto.hasOwnProperty("fechaDesde") && typeof objeto.fechaDesde !== "undefined")
+            {
+                if (gasto.fecha < Date.parse(objeto.fechaDesde)) {
+                    
+                }
+            }
+            if (objeto.hasOwnProperty('fechaHasta') && typeof objeto.fechaHasta !== 'undefined')
+            {
+                if (gasto.fecha > Date.parse(objeto.fechaHasta))
+                {
+                    return;
+                }
+            }return gasto;
         })
         if (arrayfiltrado == 0)
-            {arrayfiltrado == gastos}
+            {arrayfiltrado = gastos}
         return arrayfiltrado;
     }
     
