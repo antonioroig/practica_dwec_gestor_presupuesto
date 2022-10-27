@@ -141,39 +141,44 @@ function calcularBalance(){
 }
 
 
-function filtrarGastos({fechaDesde, fechaHasta, valorMaximo, valorMinimo, descripcionContiene}){
-    if(Object.entries(gastoNuevo).length===0){
-        return gastos;
-    }else{
-        if(isNaN(Date.parse(fechaDesde))){
-            fechaDesde=null;
-        }
-        if(isNaN(Date.parse(fechaHasta))){
-            fechaHasta = null;
-        }
-        let gastosCorrectos = gastos.filter(function (gasto){
-            let esCorrecto = true;
-                    if(gasto.fecha < Date.parse(fechaDesde) || fechaDesde===null){
-                        esCorrecto=false;
-                    }
-                    if(gasto.fecha > Date.parse(gastoNuevo.fechaHasta) || gastoNuevo.fechaDesde===null){
-                        esCorrecto=false;
-                    }
-                    if(gasto.valor < gastoNuevo.valorMinimo){
-                        esCorrecto=false;
-                    }
-                    if(gasto.valor > gastoNuevo.valorMaximo){
-                        esCorrecto=false;
-                    }
-                    if(!gasto.descripcion.includes(gastoNuevo.descripcionContiene)){
-                        esCorrecto=false;
-                    }
-        
-                    return esCorrecto;
-        });
-        return gastosCorrectos;
-    }
+function filtrarGastos({fechaDesde, fechaHasta, valorMaximo, valorMinimo, descripcionContiene, etiquetasTiene}){
+    let gastosCorrectos
+    gastosCorrectos= gastos.filter(function (gasto){
+            let filtrado = true;
+            if(fechaDesde && gasto.fecha < Date.parse(fechaDesde)){
+                filtrado=false;
+            }
+            if(fechaHasta && gasto.fecha > Date.parse(fechaHasta)){
+                filtrado=false;
+            }
+            if(valorMaximo && gasto.valor > valorMaximo){
+                filtrado=false;
+            }
+            if(valorMinimo && gasto.valor < valorMinimo){
+                filtrado=false;
+            }
+            if(descripcionContiene && !gasto.descripcion.toLowerCase().includes(descripcionContiene.toLowerCase())){
+                filtrado=false;
+            }
+            let encontrado = false;
+            if(etiquetasTiene){
+                etiquetasTiene.forEach(etiquetaNueva => {
+                    gasto.etiquetas.forEach(etiquetaAntigua => {
+                        if(etiquetaAntigua.toLowerCase()===etiquetaNueva.toLowerCase()){
+                            encontrado=true;
+                        }
+                    })
+                });
+            }
+
+            if(etiquetasTiene && !encontrado){
+                filtrado=false;
+            }
     
+            return filtrado;
+    });
+                
+    return gastosCorrectos;    
 }
 
 
