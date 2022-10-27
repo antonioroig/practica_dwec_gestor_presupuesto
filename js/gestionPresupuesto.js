@@ -148,19 +148,45 @@ function calcularTotalGastos(){
 function calcularBalance(){
     return presupuesto - calcularTotalGastos();
 }
-function Gasto(fechaDesde, fechaHasta, valorMinimo, valorMaximo, descripcion, ...etiquetas){
-    this.fechaDesde = new Date(fechaDesde),
-    this.fechaHasta = new Date(fechaHasta),
-    this.valorMinimo = valorMinimo,
-    this.valorMaximo = valorMaximo,
-    this.descripcion = descripcion,
-    this.etiquetas = [...etiquetas];
-}
-function filtrarGastos(gasto){
-    let gasto = new Gasto(gasto);
-    
+function filtrarGastos({fechaDesde,fechaHasta,valorMinimo,valorMaximo,descripcionContiene,etiquetasTiene}){
+    let aceptar = true;
+    let arrayFilter= gastos.filter(function(gasto){
+            if(fechaDesde && gasto.fecha < Date.parse(fechaDesde)){
+                aceptar = false;
+            }
+            if(fechaHasta && gasto.fecha > Date.parse(fechaHasta)){
+                aceptar = false;
+            }
+            if(valorMaximo && gasto.valor > valorMaximo){
+                aceptar = false;
+            }
+            if(valorMinimo && gasto.valor < valorMinimo){
+                aceptar = false;
+            }
+            if(descripcionContiene && !(gasto.descripcion.toLowerCase() === descripcionContiene.toLowerCase())){
+                aceptar = false;
+            }
+            let coincide = false;
+            if(etiquetasTiene){
+                for(let i = 0; i < gastos.length; i++){ // Recorre el array Gastos
+                    for(let j = 0; j < gastos[i].etiquetas.length; j++){ // Recorre las etiquetas de cada gasto
+                        for(let k = 0; k < etiquetasTiene.length; k++){ // Recorre las etiquetas del objeto pasado como parámetro
+                            if(gastos[i].etiquetas[j].toLowerCase() === etiquetasTiene[k].toLowerCase()){
+                                encontrado=true;
+                            }
+                        }
+                    }
+                }
+            }
+            if(etiquetasTiene && encontrado == 0){
+                aceptar=false;
+            }
+            return aceptar;
+        });
+    return arrayFilter;
 }
 function agruparGastos(periodo = new Date.getMonth(), fechaDesde, fechaHasta, ...etiquetas){
+   
 
 }
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
