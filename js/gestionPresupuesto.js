@@ -183,8 +183,12 @@ function filtrarGastos({fechaDesde, fechaHasta, valorMaximo, valorMinimo, descri
 
 
 
-function agruparGastos(){
+function agruparGastos(periodo = 'mes', etiquetas, fechaDesde, fechaHasta = Date.now()){
+    let gastosAgrupados = filtrarGastos({etiquetasTiene:etiquetas, fechaDesde:fechaDesde, fechaHasta:fechaHasta});
 
+    let objeto = gastosAgrupados.reduce(function (objeto1, gasto){
+        objeto1[gasto.obtenerPeriodoAgrupacion(periodo)] += gasto.valor;
+    },{});
 }
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
