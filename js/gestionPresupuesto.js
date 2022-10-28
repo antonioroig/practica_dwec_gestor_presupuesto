@@ -140,8 +140,8 @@ function calcularBalance (){
     return (presupuesto - calcularTotalGastos())
 }
 
-function filtrarGastos(){
-
+function filtrarGastos(fechaDesde,fechaHasta,valorMinimo,valorMaximo,descripcionContiene,etiquetasTiene){
+    let arr = gastos.filter(gastos.)
 }
 
 function agruparGastos(){
