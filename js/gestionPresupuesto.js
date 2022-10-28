@@ -170,47 +170,36 @@ function calcularBalance(){
     return presupuesto - gastoTotal;
 }
 
-function filtrarGastos(objetos){
+function filtrarGastos({fechaDesde,fechaHasta,valorMinimo,valorMaximo,descripcionContiene,...etiquetasTiene}){
     
-    if(!objetos.hasOwnProperty(fechaDesde)){
-        if(!isNaN(Date.parse(fechaDesde))){
-            objetos.fechaDesde = undefined;
-        }
-    }
+        if(!fechaDesde && !fechaHasta  && !valorMinimo && !valorMaximo  && !descripcionContiene  && !etiquetasTiene){
+            return gastos;
+        }else{
+            let results = gastos.filter(function(gasto){
 
-    if(!objetos.hasOwnProperty(fechaHasta)){
-        if(!isNaN(Date.parse(fechaHasta))){
-            objetos.fechaHasta = undefined;
-        }
-    }
+                for(let i = 0; i < gastos.length; i++){
 
-    if(!objetos.hasOwnProperty(valorMinimo)){
-        objetos.valorMinimo = undefined;
-    }
-    
-    if(!objetos.hasOwnProperty(valorMaximo)){
-        objetos.descripcionContiene = undefined;
-    }
-
-    if(!objetos.hasOwnProperty(etiquetasTiene)){
-        objetos.etiquetasTiene = undefined;
-    }
-
-    if(objetos !== `null`){
-        
-        
-        let results = gastos.filter(objeto => objeto.fecha >= fechaDesde && objeto.fecha <= fechaHasta &&
-            objeto.valor >= valorMinimo && objeto.valor <= valorMaximo &&
-            objeto.descripcion === descripcionContiene &&
-            objeto.etiquetas.includes(etiquetasTiene))
-            
-            return results;
-    }else{
-        return gastos;
-    }
-
-    
-    
+                    if(!isNaN(Date.parse(fechaDesde))){
+                        if(gasto.fecha >= fechaDesde && gasto.fecha <= fechaHasta){
+                            results += results.filter(gasto.fecha >= fechaDesde && gasto.fecha <= fechaHasta);
+                        }
+                    }
+                    if(!isNaN(Date.parse(fechaHasta))){
+                        if(gasto.valor >= valorMinimo && gasto.valor <= valorMaximo){
+                            results += results.filter(gasto.valor >= valorMinimo && gasto.valor <= valorMaximo);
+                        }
+                    }
+                    if(gasto.descripcion === descripcionContiene){
+                        results += results.filter(gasto.descripcion === descripcionContiene);
+                    }
+                    if(gasto.etiquetas.includes(etiquetasTiene)){
+                        results += results.filter(gasto.etiquetas.includes(etiquetasTiene));
+                    }
+                    return comprobar;
+                }
+            })
+                return results;
+        }  
 }
 
 function agruparGastos(periodo,etiquetas,fechaDesde,fechaHasta){
