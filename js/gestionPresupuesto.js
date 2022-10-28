@@ -176,8 +176,13 @@ function filtrarGastos({fechaDesde,
     });
     return arrayFiltrado;  
 };
-function agruparGastos(){
+function agruparGastos(periodo = 'mes', etiquetas, fechaDesde, fechaHasta = Date.now){
+    gastos.filtrarGastos({etiquetasTiene: etiquetas,
+        fechaDesde: fechaDesde, fechaHasta: fechaHasta});
+    let res = gastos.reduce(function(acc, item){
 
+    });
+    return res;
 }
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
