@@ -122,7 +122,6 @@ function CrearGasto(Descripcion, valor, Fecha = Date.now(), ...etiquetas) {
         getDate();
     }
 }
-
 function listarGastos() {
     return gastos;
 }
@@ -131,7 +130,6 @@ function anyadirGasto (gasto) {
     idGasto++;
     gastos.push(gasto);
 }
-
 function borrarGasto(ID) {
     
     for(let i=0;i<gastos.length;i++)
@@ -158,7 +156,7 @@ function calcularBalance() {
     return presupuesto - calcularTotalGastos();
 }
 
-function filtrarGastos(){
+function filtrarGastos({fechaDesde,fechaHasta,valorMin,valorMax,descripcionContiene,etiquetasTiene}){
 
 }
 
