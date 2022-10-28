@@ -145,7 +145,7 @@ function CrearGasto(descGasto, valor, fec = Date.now(), ...etiquetas) {
         if(periodo === 'anyo'){
             agrupacion += fecha.getFullYear();
         }
-        
+
         return agrupacion;
     }
 }
@@ -186,8 +186,49 @@ function agruparGastos(){
 
 }
 
-function filtrarGastos(){
-    
+function filtrarGastos({fechaDesde, fechaHasta, valorMinimo, valorMaximo, descripcionContiene, etiquetasTiene}){
+    let arr = gastos.filter(function(gasto){
+        let check = true;
+        let checkEtiqueta = false;
+
+        if(fechaDesde && gasto.fecha < Date.parse(fechaDesde)){
+            check = false;
+        }
+
+        if(fechaHasta && gasto.fecha > Date.parse(fechaHasta)){
+            check = false;
+        }
+
+        if(valorMinimo && gasto.valor < valorMinimo){
+            check = false;
+        }
+
+        if(valorMaximo && gasto.valor > valorMaximo){
+            check = false;
+        }
+
+        if(descripcionContiene && !(gasto.descripcion.toLowerCase().includes(descripcionContiene.toLowerCase()))){
+            check = false;
+        }
+
+        if(etiquetasTiene){
+            gasto.etiquetas.forEach(etiqueta => {
+                etiquetasTiene.forEach(newEtiquetas => {
+                    if(etiqueta.toLowerCase() === newEtiquetas.toLowerCase()){
+                        checkEtiqueta = true;
+                    }
+                });
+            });
+        }
+
+        if(etiquetasTiene && !checkEtiqueta){
+            check = false;
+        }
+
+        return check;
+    });
+
+    return arr;
 }
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
