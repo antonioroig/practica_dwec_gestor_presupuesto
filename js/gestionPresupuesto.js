@@ -258,77 +258,27 @@ function calcularBalance(){
 }
 
 
-function fechaDesde(fec){
-
-    let fecha;
-    if(!isNaN(Date.parse(fec)) && typeof fec === "string")
-    {
-        fecha = Date.parse(fec);
-    }
-    else
-    {
-        fecha = Date.now();
-    }
-
-    return fecha;
-
-}
-
-
-function fechaHasta(fec, fecDesde){
-
-
-    let fecha;
-    let fechades = fechaDesde(fecDesde);
-    if(!isNaN(Date.parse(fec)) && typeof fec === "string")
-    {
-        if(fechades < fec)
-        {
-            fecha = Date.parse(fec);
-        }
-    }
-    else
-    {
-        fecha = Date.now();
-    }
-
-    return fecha;
-
-}
-
-
-
-function valorMinimo(){
-
-    
-
-}
-
-function valorMaximo(){
-
-
-
-}
-
 
 function filtrarGastos({fecDesde, fechaHasta, valorMinimo, valorMaximo, descripcionContiene, etiquetasTiene}){
 
 let arrayFiltrado = gastos.filter(function(gasto){
 
     let anyadir = true;
-    if(isNaN(Date.parse(fecDesde)) && typeof fec !== "string")
+    let cont = 0;
+   
+
+    if(isNaN(Date.parse(fecDesde)) || typeof fec !== "string")
     {
        anyadir = false;
     }
     
 
-    let fechaHas = "";
+    
     if(isNaN(Date.parse(fechaHasta)) && typeof fec !== "string")
     {
        anyadir = false
     }
    
-    
 
     if(gasto.valor < valorMinimo)
     {
@@ -340,20 +290,30 @@ let arrayFiltrado = gastos.filter(function(gasto){
         anyadir = false;
     }
 
-    if(descripcionContiene === undefined)
-    {
-        anyadir = false;
-    }    
 
-    if(etiquetasTiene === undefined)
+    
+
+    let etiq = false;
+
+    if(etiquetasTiene)
+    {
+    for(let i = 0; i < gasto.etiquetas.length; i++)
+    {
+        for(let j = 0; j < gasto.etiquetas.length; j++)
+        {
+            if(etiquetasTiene[i] === etiquetasTiene[j])
+            {
+                etiq = true;
+            }
+        }
+    }
+
+    if(!etiq)
     {
         anyadir = false;
     }
-
-
-
-    return anyadir;
-
+}
+        return anyadir;
 
 });
 
