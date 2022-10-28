@@ -52,6 +52,25 @@ function calcularTotalGastos(){
 function calcularBalance(){
     return (presupuesto - calcularTotalGastos())
 }
+//
+function filtrarGastos({fechaDesde, fechaHasta, valorMinimo, valorMaximo, descripcionContiene, etiquetasTiene}){
+    if(!fechaDesde && !fechaHasta && !valorMinimo && !valorMaximo && !descripcionContiene && !etiquetasTiene){
+        return gastos;
+    }else{
+        let retArray = [];
+        if(isNaN(Date.parse(fechaDesde))){
+            retArray = gastos.filter(gasto => gasto.fecha >= fechaDesde);
+        }
+        if(isNaN(Date.parse(fechaHasta))){
+            retArray = gastos.filter(gasto => gasto.fecha >= fechaHasta);
+        }
+    }
+}
+//
+function agruparGastos(){
+
+}
+//      
 function CrearGasto(descripcion,valor,fecha,...etiqueta) {
 
     if(valor < 0 || typeof(valor) !== `number`){
@@ -109,6 +128,30 @@ function CrearGasto(descripcion,valor,fecha,...etiqueta) {
         }
     }
     //
+    this.obtenerPeriodoAgrupacion = function(periodo){
+        let date = new Date(fecha);
+        if(periodo === `dia`){
+            if((date.getMonth() + 1) > 9){
+                if(date.getDate() > 9){
+                    return `${date.getFullYear()}` + `-` + `${(date.getMonth() + 1)}` + `-` + `${(date.getDate())}`
+                }else{
+                    return `${date.getFullYear()}` + `-` + `${(date.getMonth() + 1)}` + `-` + `0`+`${(date.getDate())}`
+                }
+            }
+            return `${date.getFullYear()}` + `-` + `0`+`${(date.getMonth() + 1)}` + `-` + `0`+`${(date.getDate())}`
+        }
+        if(periodo === `mes`){
+            if((date.getMonth()+1) > 9){
+                return `${date.getFullYear()}` + `-` + `${(date.getMonth() + 1)}`
+            }else{
+                return `${date.getFullYear()}` + `-` + `0`+`${(date.getMonth() + 1)}`
+            }
+        }
+        if(periodo === `anyo`){
+            return date.getFullYear();
+        }
+    }
+    //
     this.mostrarGasto = function(){
         return (`Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €`);
     },
@@ -137,5 +180,7 @@ export   {
     anyadirGasto,
     borrarGasto,
     calcularTotalGastos,
-    calcularBalance
+    calcularBalance,
+    filtrarGastos,
+    agruparGastos 
 }
