@@ -149,8 +149,8 @@ function calcularBalance(){
     return presupuesto - calcularTotalGastos();
 }
 function filtrarGastos({fechaDesde,fechaHasta,valorMinimo,valorMaximo,descripcionContiene,etiquetasTiene}){
-    let aceptar = true;
     let arrayFilter= gastos.filter(function(gasto){
+            let aceptar = true;
             if(fechaDesde && gasto.fecha < Date.parse(fechaDesde)){
                 aceptar = false;
             }
@@ -163,23 +163,21 @@ function filtrarGastos({fechaDesde,fechaHasta,valorMinimo,valorMaximo,descripcio
             if(valorMinimo && gasto.valor < valorMinimo){
                 aceptar = false;
             }
-            if(descripcionContiene && !(gasto.descripcion.toLowerCase() === descripcionContiene.toLowerCase())){
+            if(descripcionContiene && !(gasto.descripcion.toLowerCase().includes(descripcionContiene.toLowerCase()))){
                 aceptar = false;
             }
             let coincide = false;
             if(etiquetasTiene){
-                for(let i = 0; i < gastos.length; i++){ // Recorre el array Gastos
-                    for(let j = 0; j < gastos[i].etiquetas.length; j++){ // Recorre las etiquetas de cada gasto
-                        for(let k = 0; k < etiquetasTiene.length; k++){ // Recorre las etiquetas del objeto pasado como parámetro
-                            if(gastos[i].etiquetas[j].toLowerCase() === etiquetasTiene[k].toLowerCase()){
-                                encontrado=true;
-                            }
+                for(let i = 0; i < gasto.etiquetas.length; i++){ // Recorre las etiquetas del gasto
+                    for(let j = 0; j < etiquetasTiene.length; j++){ // Recorre las etiquetas del objeto pasado como parámetro
+                        if(gasto.etiquetas[i].toLowerCase() === etiquetasTiene[j].toLowerCase()){
+                            coincide = true;
                         }
                     }
                 }
             }
-            if(etiquetasTiene && encontrado == 0){
-                aceptar=false;
+            if(etiquetasTiene && coincide == 0){
+                aceptar = false;
             }
             return aceptar;
         });
