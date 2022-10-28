@@ -278,15 +278,15 @@ function filtrarGastos(fechaDesde, fechaHasta, valorMinimo, valorMaximo, descrip
 
         let anyadir = true;
 
-        let comprobacion = false;
-    
-            if(gasto.fecha && fechaDesde > Date.parse(fechaDesde))
+        let comprobar = false;
+            
+            if(gasto.fecha <= Date.parse(fechaDesde))
             {
 
                 anyadir = false;
 
             }
-            if(gasto.fecha && fechaHasta > Date.parse(fechaHasta))
+            if(gasto.fecha >= Date.parse(fechaHasta))
             {
 
                 anyadir = false;
@@ -317,7 +317,29 @@ function filtrarGastos(fechaDesde, fechaHasta, valorMinimo, valorMaximo, descrip
             if(etiquetasTiene)
             {
                 
-                
+                for(let i = 0; i < etiquetasTiene.length; i++)
+                {
+
+                    for(j = 0; i < gasto.etiquetas.length; j++)
+                    {
+
+                        if(etiquetasTiene[i] === gasto.etiquetas[j])
+                        {
+
+                            comprobar = true;
+
+                        }
+
+                    }
+                    
+                }
+
+                if(comprobar = false)
+                {
+
+
+
+                }
 
             }
             return anyadir;
