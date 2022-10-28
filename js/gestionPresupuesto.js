@@ -172,41 +172,43 @@ function calcularBalance(){
 
 function filtrarGastos({fechaDesde,fechaHasta,valorMinimo,valorMaximo,descripcionContiene,etiquetasTiene}){
     
-        if(!fechaDesde && !fechaHasta  && !valorMinimo && !valorMaximo  && !descripcionContiene  && !etiquetasTiene){
-            return gastos;
-        }else{
-            let results = gastos.filter(function(gasto){
+        let results = gastos.filter(function(gasto){
 
-                let comprobar = false;
-                for(let i = 0; i < gastos.length; i++){
-
-                    if(!isNaN(Date.parse(fechaDesde))){
-                        if(gasto.fecha >= fechaDesde){
-                            comprobar = true;
+                let comprobar = true;
+                    if(fechaDesde){
+                        if(gasto.fecha < Date.parse(fechaDesde)){
+                            comprobar = false;
+                        }
+                    }       
+                    if(fechaHasta){
+                        if(gasto.fecha < Date.parse(fechaHasta)){
+                            comprobar = false;
                         }
                     }
-                    if(!isNaN(Date.parse(fechaHasta))){
-                        if(gasto.fecha <= fechaHasta){
-                            comprobar = true;
+                    if(valorMinimo){
+                        if(gasto.valor < valorMinimo ){
+                            comprobar = false;
                         }
                     }
-                    if(gasto.valor >= valorMinimo ){
-                        comprobar = true;
+                    if(valorMaximo){
+                        if( gasto.valor > valorMaximo){
+                            comprobar = false;
+                        }
                     }
-                    if( gasto.valor <= valorMaximo){
-                        comprobar = true;
+                    if(descripcionContiene){
+                        if(gasto.descripcion.includes(descripcionContiene)){
+                            comprobar = false;
+                        }
                     }
-                    if(gasto.descripcion === descripcionContiene){
-                        comprobar = true;
-                    }
-                    if(gasto.etiquetas.includes(etiquetasTiene)){
-                        comprobar = true;
+                    if(etiquetasTiene){
+                        if(gasto.etiquetas.includes(etiquetasTiene)){
+                            comprobar = false;
+                        }
                     }
                     return comprobar;
-                }
-            })
+            });
                 return results;
-        }  
+        
 }
 
 function agruparGastos(periodo,etiquetas,fechaDesde,fechaHasta){
