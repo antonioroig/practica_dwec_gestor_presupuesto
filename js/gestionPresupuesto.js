@@ -204,29 +204,59 @@ function CrearGasto(descripcion,valor,fecha,...etiqueta) {
         return presupuesto - calcularTotalGastos();
     }
 
-    function filtrarGastos(objeto /* {fechaDesde = undefined,fechaHasta = undefined,valorMinimo = undefined, valorMaximo = undefined,descripcionContiene = undefined,etiquetasTiene = undefined} */ )
+    function filtrarGastos({fechaDesde,fechaHasta,valorMinimo, valorMaximo,descripcionContiene,...etiquetasTiene})
     {
+        let array = gastos;
 
-        if( objeto != `null`   /* fechaDesde == `undefined` && fechaHasta == `undefined` && valorMinimo == `undefined` && valorMaximo == `undefined` && descripcionContiene == `undefined` && etiquetasTiene == `undefined`*/ )
-        {
-            return gastos;
-        }
-        else{
-            if(isNaN(Date.parse(objeto.fechaDesde)))
+        
+            if(fechaDesde)
             {
-                objeto.fechaDesde = undefined;
-            }
-    
-            if(isNaN(Date.parse(objeto.fechaHasta)))
-            {
-                objeto.fechaDesde = undefined;
+                array = gastos.filter(function(gasto) {
+                gasto.fecha >= Date.parse(fechaDesde);
+            });
             }
             
+            if(fechaHasta)
+            {
+                array = array.filter(function(gasto) { 
+                gasto.fecha <= Date.parse(fechaHasta);
+            });
+            }
+            
+            if(valorMinimo)
+            {
+                array = array.filter(function(gasto) {
+                gasto.valor >= valorMinimo;
+                });
+            }
 
 
-            let array = gastos.filter(gasto => gasto.fecha > objeto.fechaDesde && gasto.fecha < objeto.fechaHasta && gasto.valor > objeto.valorMinimo && gasto.valor < objeto.valorMaximo && gasto.descripcion === objeto.descripcionContiene && gasto.etiquetas.includes(objeto.etiquetasTiene));
-                return array;
-        }
+            if(valorMaximo)
+            {
+                array = array.filter(function(gasto) {
+                gasto.valor <= valorMaximo;
+                });
+            }
+            
+            if(descripcionContiene)
+            {
+                array = array.filter(function(gasto) {
+                gasto.descripcion.toUpperCase() === descripcionContiene.toUpperCase();  
+                });
+            }
+
+
+            if(etiquetasTiene)
+            {
+                array = array.filter(function(gasto) {
+                gasto.etiquetas.includes(etiquetasTiene); 
+            });
+            }
+
+
+        return array;
+
+        
         
     }
    
