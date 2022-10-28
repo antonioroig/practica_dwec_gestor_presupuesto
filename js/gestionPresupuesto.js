@@ -141,13 +141,40 @@ function calcularBalance(){
             balance = presupuesto - calcularTotalGastos();
             return balance
         }
-function filtrarGastos({fechaDesde,fechaHasta,valorMinimo,ValorMaximo,descripcionContiene,etiquetasTiene = []}){
-    let fd;
-    let fh;
+function filtrarGastos({fechaDesde,fechaHasta,valorMinimo,valorMaximo,descripcionContiene,etiquetasTiene}){
 
-    let resultado = gasto.filter(objeto => objeto.fechaDesde === fechaDesde)
-    
-
+    let arrayDevuelto = gastos.filter(function(gasto){{
+        let anyadir = true;
+            
+            if(fechaDesde){
+                if(gasto.fecha < Date.parse(fechaDesde)){
+                    anyadir = false;
+                }
+            }
+            if(fechaHasta){
+                if(gasto.fecha > Date.parse(fechaHasta)){
+                    anyadir = false;
+                }
+            }
+            if(valorMinimo){
+                if(gasto.valor < valorMinimo){
+                    anyadir = false;
+                }
+            }
+            if(valorMaximo){
+                if(gasto.valor > valorMaximo){
+                    anyadir = false;
+                }
+            }
+            if(descripcionContiene){
+                
+            }
+            return anyadir;
+            
+        }
+        
+    });
+    return arrayDevuelto;
 }
 function agruparGastos(){
 
