@@ -238,8 +238,6 @@ function agruparGastos(periodo = "mes", etiquetas ,fechaDesde, fechaHasta){
 
         acumulador[gastoActual.obtenerPeriodoAgrupacion(periodo)] += gastoActual.valor;
 
-        console.log(acumulador);
-
         return acumulador
     },{})
 
