@@ -170,12 +170,10 @@ function calcularBalance(){
     return presupuesto - gastoTotal;
 }
 
-function filtrarGastos({fechaDesde,fechaHasta,valorMinimo,valorMaximo,descripcionContiene,...etiquetasTiene}){
+function filtrarGastos({fechaDesde,fechaHasta,valorMinimo,valorMaximo,descripcionContiene,etiquetasTiene}){
     
         if(!fechaDesde && !fechaHasta  && !valorMinimo && !valorMaximo  && !descripcionContiene  && !etiquetasTiene){
-
             return gastos;
-            
         }else{
             let results = gastos.filter(function(gasto){
 
@@ -192,11 +190,10 @@ function filtrarGastos({fechaDesde,fechaHasta,valorMinimo,valorMaximo,descripcio
                             comprobar = true;
                         }
                     }
-                     if(gasto.valor >= valorMinimo){
-                       
+                    if(gasto.valor >= valorMinimo ){
                         comprobar = true;
                     }
-                    if(gasto.valor <= valorMaximo){
+                    if( gasto.valor <= valorMaximo){
                         comprobar = true;
                     }
                     if(gasto.descripcion === descripcionContiene){
