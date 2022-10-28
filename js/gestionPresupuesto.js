@@ -169,150 +169,29 @@ function agruparGastos()
 }
 function filtrarGastos({fechaDesde,fechaHasta,valorMinimo,valorMaximo,descripcionContiene, etiquetasTiene})
 {
-    fechaDesde = Date.parse(fechaDesde);
-    fechaHasta = Date.parse(fechaHasta);
-    let gastosencontrados = gastos.filter(function(posiblegasto)
+    let gastosencontrados = gastos.filter(function(gasto)
     {
-        let fechaCorrecta = fechaDesdeHasta(posiblegasto.fecha,fechaDesde,fechaHasta);
-        let valorCorrecto = valorMinimoMaximo(posiblegasto.valor,valorMinimo,valorMaximo);
-        let descripcionCorrecto = descripcionContieneTexto(posiblegasto.descripcion,descripcionContiene);
-        let etiquetasCorrecto = etiquetasTieneEtiqueta(posiblegasto.etiquetas,etiquetasTiene);
+        let fechaCorrecta = true;
+        let valorCorrecto = true;
+        let descripcionCorrecto = true;
+        let etiquetasCorrecto = true;
+        fechaDesde = Date.parse(fechaDesde);
+        fechaHasta = Date.parse(fechaHasta);
+        if()
         if(fechaCorrecta && valorCorrecto && descripcionCorrecto && etiquetasCorrecto)
         {
             return true;
+        }
+        else
+        {
+            return false;
         }
     });
     return gastosencontrados;
 }
 function etiquetasTieneEtiqueta(Array,ArrayAComparar)
 {
-    if(ArrayAComparar != undefined)
-    {
-        for(let i = 0;i < Array.length();i++)
-        {
-            for(let j = 0;j < ArrayAComparar.length();j++)
-            {
-                if(ArrayAComparar[j].toUpperCase() === Array[i].toUpperCase())
-                {
-                    i++;
-                    ArrayAComparar.splice(j,1);
-                    j = 0;
-                }
-            }
-            break;
-        }
-        if(ArrayAComparar.length() > 0)
-        {
-            return false;
-        }
-        else
-        {
-            return true;
-        }
-    }
-    else
-    {
-        return true;
-    }
     
-}
-function descripcionContieneTexto(Cadena,TextoContiene)
-{
-
-}
-function valorMinimoMaximo(ValorAComprobar,ValorMinimo,ValorMaximo)
-{
-    if(ValorMinimo === undefined)
-    {
-        if(ValorMaximo === undefined)
-        {
-            return true;
-        }
-        else
-        {
-            if(ValorAComprobar <= ValorMaximo)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-    }
-    else
-    {
-        if(ValorMaximo === undefined)
-        {
-            if(ValorAComprobar >= ValorMinimo)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-            
-        }
-        else
-        {
-            if(ValorMinimo <= ValorAComprobar <= ValorMaximo)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-    }
-}
-function fechaDesdeHasta(FechaAComprobar,FechaDesde,FechaHasta)
-{
-    if(FechaDesde === undefined)
-    {
-        if(FechaHasta === undefined)
-        {
-            return true;
-        }
-        else
-        {
-            if(FechaAComprobar <= FechaHasta)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-    }
-    else
-    {
-        if(FechaHasta === undefined)
-        {
-            if(FechaAComprobar >= FechaDesde)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-            
-        }
-        else
-        {
-            if(FechaDesde <= FechaAComprobar <= FechaHasta)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-    }
 }
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
 // Las funciones y objetos deben tener los nombres que se indican en el enunciado
