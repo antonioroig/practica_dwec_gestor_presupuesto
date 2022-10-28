@@ -145,41 +145,48 @@ function calcularBalance(){
     return (presupuesto - calcularTotalGastos());
 };
 // Revisar
-function filtrarGastos({fechaDesde, fechaHasta, valorMinimo, valorMaximo,descripcionContiene, etiquetasTiene}){
+function filtrarGastos({fechaDesde, fechaHasta, valorMinimo, valorMaximo,descripcionContiene, ...etiquetasTiene}){
     
     if (!fechaDesde && !fechaHasta && !valorMinimo && !valorMaximo && !descripcionContiene && !etiquetasTiene){
+        
         return gastos;
     }
     let arr = gastos.filter((item) => {
         let ok = true;
-        let boolAux = true;
+        let boolAux;
 
         if(fechaDesde){
-            if(Date.parse(fechaDesde) >=  item.fecha) ok = false;
+            if(Date.parse(fechaDesde) > item.fecha) ok = false;
         }
         if(fechaHasta){
-            if(Date.parse(fechaHasta) <= item.fecha) ok = false;
+            if(Date.parse(fechaHasta) < item.fecha) ok = false;
         }
         if(valorMaximo){
-            if(item.valor >= valorMaximo) ok = false;
+            if(item.valor > valorMaximo) ok = false;
         }
         if(valorMinimo){
-            if(item.valor <= valorMinimo) ok = false;
+            if(item.valor < valorMinimo) ok = false;
         }
         if(descripcionContiene){
-            if(item.descripcion.includes(descripcionContiene)) ok = false;
+            if(!item.descripcion.includes(descripcionContiene)) ok = false;
        }
         if(etiquetasTiene){
-            etiquetasTiene.forEach((element) => {
-                for(let i = 0; i < etiquetas.length; i++){
-                    if(element !== item.etiquetas[i]){
+            for(let i = 0; i < etiquetasTiene.length; i++){
+                for(let j =0; j < item.etiquetas; j++){
+                    if(etiquetasTiene.length[i] === item.etiquetas[j]){
+                        boolAux = true;
+                        break;
+                    }else{
                         boolAux = false;
                     }
                 }
-            });
+            }
         }
         
-        if(ok && boolAux){
+        if(ok){
+            if(!boolAux){
+                return false;
+            }
             return true;
 
         }else{
@@ -187,6 +194,7 @@ function filtrarGastos({fechaDesde, fechaHasta, valorMinimo, valorMaximo,descrip
             return false;
         }
     });
+
     
     return arr;
 };
