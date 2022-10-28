@@ -146,125 +146,48 @@ function calcularBalance(){
 };
 // Revisar
 function filtrarGastos({fechaDesde, fechaHasta, valorMinimo, valorMaximo,descripcionContiene, etiquetasTiene}){
-    let arr = [] ;
-
-    if(!fechaDesde && !fechaHasta && !valorMinimo && !valorMaximo && !descripcionContiene && !etiquetasTiene){
+    
+    if (!fechaDesde && !fechaHasta && !valorMinimo && !valorMaximo && !descripcionContiene && !etiquetasTiene){
         return gastos;
-    }else{
-        arr = gastos.filter(function(item) {
-            let ok = true;
-            let boolAux = false;
-            if(fechaDesde || fechaHasta){
-                if(!item.fecha == (fechaDesde || fechaHasta)){
-                   ok = false;
-                }
-            }
-            if(valorMinimo || valorMaximo){
-                if(!item.valor == (valorMinimo || valorMaximo)){
-                    ok = false;
-                }
-            }
-            if(descripcionContiene){
-                if(!(item.descripcion.toLocaleLowerCase()) == (descripcionContiene.toLocaleLowerCase())){
-                    ok = false;
-                }
-            }
-            if(etiquetasTiene){
-                etiquetas.forEach((element) => {
-                    for(let i = 0; i < etiquetasTiene; i++){
-                        if(element === etiquetasTiene[i]){
-                            boolAux = true;
-                        }
-                    }
-                })
-            }
-            
-            if(ok && boolAux){
-                return true;
-            }else{
-                return false;
-            }
-            
-        })
     }
+    let arr = gastos.filter((item) => {
+        let ok = true;
+        let boolAux = true;
 
-
-
-    /*arr = gasto.filter(function(item, index){
         if(fechaDesde){
-            if(typeof fechaDesde === `string`){
-                if(!isNaN(Date.parse(fechaDesde))){
-                    item.fecha == Date.parse(fechaDesde)
-                }
-            }
+            if(Date.parse(fechaDesde) >=  item.fecha) ok = false;
         }
         if(fechaHasta){
-            item.fecha === fechaHasta
-        }
-        if(valorMinimo){
-            item.valor === valorMinimo
+            if(Date.parse(fechaHasta) <= item.fecha) ok = false;
         }
         if(valorMaximo){
-            item.valor === valorMaximo
+            if(item.valor >= valorMaximo) ok = false;
+        }
+        if(valorMinimo){
+            if(item.valor <= valorMinimo) ok = false;
         }
         if(descripcionContiene){
-            item.descripcion.toLocaleLowerCase() === valorMaximo.toLocaleLowerCase()
-        }
-    });
-
-    /*if(fechaDesde){
-        if(typeof fechaDesde === `string`){
-            if(!isNaN(Date.parse(fechaDesde))){
-                arr = gastos.filter(item => item.fecha == Date.parse(fechaDesde))
-    
-            }
-        }
-
-        /*let arr = gastos.filter(function(item){
-            if(typeof objeto.fechaDesde === `string`){
-                if(item.fecha == objeto.fechaDesde){
-                    return true;
-                }
-            }
-        })
-
-        gastos.filter((item) =>{
-            if(typeof objeto.fechaDesde === `string`){
-                if(item.fecha === objeto.fechaDesde && !isNaN(Date.parse(objeto.fechaDesde))){
-                    arr.push (item);
-                }
-            }
-        })
-        gastos.forEach((item)=>{
-            if(typeof objeto.fechaDesde === `string`){
-                if(isNaN(Date.parse(objeto.fechaDesde))){
-                    if(Date.parse(item.fecha) === Date.parse(objeto.fechaDesde)){
-                        arr.push (item);
+            if(item.descripcion.includes(descripcionContiene)) ok = false;
+       }
+        if(etiquetasTiene){
+            etiquetasTiene.forEach((element) => {
+                for(let i = 0; i < etiquetas.length; i++){
+                    if(element !== item.etiquetas[i]){
+                        boolAux = false;
                     }
                 }
-            }
-        })
-    }
-    if(typeof fechaHasta === `string`){
-        if(!isNaN(Date.parse(fechaHasta))){
-                arr = gastos.filter(item => item.fecha === fechaHasta)
-            }
-    }
-    if(valorMinimo){
-        arr = gastos.filter(item => item.valor === valorMinimo)
-    }
-    if(valorMaximo){
-        arr = gastos.filter(item => item.valor === valorMaximo)
-    }
-    if(descripcionContiene){
+            });
+        }
+        
+        if(ok && boolAux){
+            return true;
 
-        arr = gastos.filter(item => item.descripcion.toLocaleLowerCase() === valorMaximo.toLocaleLowerCase())
-    }
-
-    else {
-        return gastos;
-    }*/
-
+        }else{
+            
+            return false;
+        }
+    });
+    
     return arr;
 };
 function agruparGastos(periodo, fechaDesde, fechaHasta, ...etiquetas){
