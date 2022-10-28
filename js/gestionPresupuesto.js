@@ -182,10 +182,6 @@ function calcularBalance() {
     return presupuesto - calcularTotalGastos();
 }
 
-function agruparGastos(){
-
-}
-
 function filtrarGastos({fechaDesde, fechaHasta, valorMinimo, valorMaximo, descripcionContiene, etiquetasTiene}){
     let arr = gastos.filter(function(gasto){
         let check = true;
@@ -231,6 +227,25 @@ function filtrarGastos({fechaDesde, fechaHasta, valorMinimo, valorMaximo, descri
     return arr;
 }
 
+function agruparGastos(periodo = "mes", etiquetas ,fechaDesde, fechaHasta){
+    let gastosFiltrados = filtrarGastos({ etiquetasTiene: etiquetas, fechaDesde: fechaDesde, fechaHasta: fechaHasta});
+    
+    let gastosAgrupados = gastosFiltrados.reduce(function(acumulador, gastoActual){
+
+        if(typeof acumulador[gastoActual.obtenerPeriodoAgrupacion(periodo)] != 'number'){
+            acumulador[gastoActual.obtenerPeriodoAgrupacion(periodo)] = 0;
+        }
+
+        acumulador[gastoActual.obtenerPeriodoAgrupacion(periodo)] += gastoActual.valor;
+
+        console.log(acumulador);
+
+        return acumulador
+    },{})
+
+    return gastosAgrupados;
+}
+
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
 // Las funciones y objetos deben tener los nombres que se indican en el enunciado
 // Si al obtener el código de una práctica se genera un conflicto, por favor incluye todo el código que aparece aquí debajo
@@ -243,6 +258,6 @@ export   {
     borrarGasto,
     calcularTotalGastos,
     calcularBalance,
-    agruparGastos,
-    filtrarGastos
+    filtrarGastos,
+    agruparGastos
 }
