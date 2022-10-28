@@ -149,56 +149,62 @@ function calcularBalance(){
     return presupuesto - calcularTotalGastos();
 }
 
-function filtrarGastos(objeto){
-    //{fechaDesde,fechaHasta,valorMinimo,valorMaximo,descripcionContiene,...etiquetasTiene}
-    if(Object.entries(objeto).length === 0){
-        return gastos;
-    }else{
-        let fecDes = null;
-        if(objeto.hasOwnProperty(`fechaDesde`)){
-            if(!isNaN(Date.parse(objeto.fechaDesde))){
-                fecDes=objeto.fechaDesde;
+function filtrarGastos({fechaDesde,fechaHasta,valorMinimo,valorMaximo,descripcionContiene,etiquetasTiene}){
+    let results = gastos.filter(function(gasto){
+        let itemFiltrado = true;
+        if(fechaDesde){
+            if(Date.parse(fechaDesde) > gasto.fecha){
+                itemFiltrado = false;
             }
-        }
-        let fecHas = null;
-        if(objeto.hasOwnProperty(`fechaHasta`)){
-            if(!isNaN(Date.parse(objeto.fechaHasta))){
-                fecHas=objeto.fechaHasta;
+        }      
+        if(fechaHasta){
+            if(Date.parse(fechaHasta) < gasto.fecha){
+                itemFiltrado = false;
             }
-        }
-        let valMin = null;
-        let results = gastos.filter(function(item){
-            if(new Date(fecDes) < new Date(item.fecha) && fecDes != null){
-                return true;
+        }        
+        if(valorMinimo){
+            if(valorMinimo > gasto.valor){
+                itemFiltrado = false;
             }
-            if(new Date(fecHas) > new Date(item.fecha) && fecHas != null){
-                return true;
+        }        
+        if(valorMaximo){
+            if(valorMaximo < gasto.valor){
+                itemFiltrado = false;
             }
-            if(objeto.valorMinimo < item.valor){
-                return true;
+        }        
+        if(descripcionContiene){
+            if(!gasto.descripcion.toLowerCase().includes(descripcionContiene.toLowerCase())){
+                itemFiltrado = false;
             }
-            if(objeto.hasOwnProperty(`valorMaximo`)){
-                if(objeto.valorMaximo < item.valor){
-                    return true;
+        }     
+        if(etiquetasTiene){
+            let etiquetaCopiada = false;
+            etiquetasTiene.forEach(etiqueta => {
+                gasto.etiquetas.forEach(etiquetaGasto => {
+                    if(etiqueta.toLowerCase()==etiquetaGasto.toLowerCase()){
+                        etiquetaCopiada=true;
+                    }
+                });
+            })  
+            if(!etiquetaCopiada){
+                itemFiltrado = false;
+            }  
+            /*for(let i = 0; i < gasto.etiquetas.length; i++){
+                for(let j = 0; j < etiquetasTiene.length; j++){
+                    if(gasto.etiquetas[i].toLowerCase()==etiquetasTiene[j].toLowerCase()){
+                        etiquetaCopiada=true;
+                    }
                 }
-            }
-            if(objeto.hasOwnProperty(`descripcionContiene`)){
-                if(item.descripcion.includes(objeto.descripcionContiene)){
-                    return true;
-                }
-            }
-            if(objeto.hasOwnProperty(`etiquetasTiene`)){
-                if(objeto.etiquetas.filter()){
-                    return true;
-                }
-            }
-        });
-    
-        return results;
+            }*/
+        }   
+        return itemFiltrado;
+    });
+    if(results.length == 0){
+        results = gastos;
     }
+    return results;
 }
-function agruparGastos(){
-    
+function agruparGastos(periodo = 'mes', etiquetas, fechaDesde, fechaHasta){
 }
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
 // Las funciones y objetos deben tener los nombres que se indican en el enunciado
