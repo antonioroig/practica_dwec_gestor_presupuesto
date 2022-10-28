@@ -80,13 +80,13 @@ function CrearGasto(descripcion, valor, fecha=Date.now() , ...etiquetas) { //Fun
     },
     this.obtenerPeriodoAgrupacion = function(periodo){
         let fecha = new Date(this.fecha);
-        if(periodo == 'Dia' || periodo == 'dia' || periodo == 'DIA'){
+        if(periodo === 'Dia' || periodo === 'dia' || periodo === 'DIA'){
            return fecha.toISOString().substring(0, 10);
         }
-        if(periodo == 'Mes' || periodo == 'mes' || periodo == 'MES'){
+        if(periodo === 'Mes' || periodo === 'mes' || periodo === 'MES'){
             return fecha.toISOString().substring(0, 7);
         }
-        if(periodo == 'AÑO' || periodo == 'Año' || periodo == 'ANYO' || periodo == 'anyo'){
+        if(periodo === 'AÑO' || periodo === 'Año' || periodo === 'ANYO' || periodo === 'anyo'){
             return fecha.toISOString().substring(0, 4);
         }
     }
@@ -117,8 +117,64 @@ function calcularTotalGastos(){
 function calcularBalance(){
     return presupuesto - calcularTotalGastos();
 };
-function filtrarGastos({}){
-
+function filtrarGastos({fechaDesde, 
+    fechaHasta, 
+    valorMinimo, 
+    valorMaximo, 
+    descripcionContiene, 
+    etiquetasTiene}){
+    
+    let arrayFiltrado = gastos.filter(function(gasto){
+        let contain = true;
+        if(fechaDesde)
+        {
+            if(gasto.fecha < Date.parse(fechaDesde)){
+                contain = false;
+            }
+        }
+        if(fechaHasta)
+        {
+            if(gasto.fecha > Date.parse(fechaHasta)){
+                contain = false;
+            }   
+        }
+        if(valorMinimo)
+        {
+            if(gasto.valor < valorMinimo){
+                contain = false;
+            } 
+        }
+        if(valorMaximo)
+        {
+            if(gasto.valor > valorMaximo){
+                contain = false;
+            }
+        }
+        if(descripcionContiene)
+        {
+            if(!gasto.descripcion.includes(descripcionContiene)){
+                contain = false;
+            }
+        }
+        if(etiquetasTiene)
+        {
+            let contain2 = false;                   
+            for (let i = 0; i < gasto.etiquetas.length; i++) 
+            {                   
+                for (let j = 0; j < etiquetasTiene.length; j++) 
+                {
+                    if(gasto.etiquetas[i] == etiquetasTiene[j]){
+                        contain2 = true; 
+                    }                  
+                }
+            }
+            if(contain2 == false){
+                contain = false;
+            }
+        }
+        return contain;
+    });
+    return arrayFiltrado;  
 };
 function agruparGastos(){
 
