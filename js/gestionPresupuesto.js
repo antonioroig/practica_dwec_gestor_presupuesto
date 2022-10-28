@@ -146,13 +146,47 @@ function calcularTotalGastos() {
 function calcularBalance() {
     return presupuesto - calcularTotalGastos();
 }
-function filtrarGastos(filtroGasto){
-if(Object.entries(filtroGasto).length === 0)
-{
-    return gastos;
-}
- let filtrado = gastos.filter(gasto => gasto.fecha < filtroGasto.fechaDesde)
- return filtrado;
+function filtrarGastos({fechaDesde, fechaHasta, valorMaximo, valorMinimo, descripcionContiene, ...etiquetasTiene}){
+    let filtrados = gastos.filter(function (gasto){
+            let ok = true;
+            if(fechaDesde && Date.parse(fechaDesde) > gasto.fecha){
+                ok=false;
+            }
+            if(fechaHasta && Date.parse(fechaHasta)< gasto.fecha){
+                ok=false;
+            }
+            if(valorMaximo &&valorMaximo < gasto.valor){
+                ok=false;
+            }
+            if(valorMinimo && valorMinimo > gasto.valor){
+                ok=false;
+            }
+            if(descripcionContiene && !gasto.descripcion.toLowerCase().includes(descripcionContiene.toLowerCase())){
+                ok=false;
+            }
+            if(etiquetasTiene){
+                let etiquitasIdenticas = false;
+                gasto.etiquetas.forEach(etiqueta1 => {
+                    etiquetasTiene.forEach(etiqueta2 => {
+                        if( etiqueta1.toLowerCase()==etiqueta2.toLowerCase())
+                        {
+                            etiquitasIdenticas = true;
+                        }
+                    })
+                })
+                if(etiquitasIdenticas)
+                {
+                    ok=false;
+                }
+            }
+
+            return ok;
+    });
+    if(filtrados.length == 0)
+    {
+        filtrados = gastos;
+    }
+   return filtrados;
 }
 function agruparGastos(){
 
