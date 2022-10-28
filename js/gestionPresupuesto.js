@@ -127,7 +127,7 @@ function CrearGasto(descripcion,valor,fecha = Date.now(), ...etiquetas)
         let yep = new Date(this.fecha);
         
         let dia = yep.getDate();
-        let mes = yep.getMonth();
+        let mes = yep.getMonth() + 1;
         let anyo = yep.getFullYear();
 
         if(tipo === 'anyo')
@@ -136,11 +136,21 @@ function CrearGasto(descripcion,valor,fecha = Date.now(), ...etiquetas)
         }
         if(tipo === 'mes')
         {
-            return anyo + '-' + mes;    
+            if(mes < 10)
+            {
+                return anyo + '-0' + mes;
+            }
+            else 
+            {
+                return anyo + '-' + mes;
+            }    
         }
         if(tipo === 'dia')
         {
-            return anyo + '-' + mes + '-' + dia;         
+            if(dia < 10 && mes < 10)
+            {
+                return anyo + '-0' + mes + '-0' + dia;
+            }         
         }
         else
         {
@@ -187,40 +197,80 @@ function calcularBalance()
     return presupuesto - calcularTotalGastos();
 }
 
-function fechaDesde(info)
+
+function filtrarGastos({fechaDesde, fechaHasta, valorMinimo, valorMaximo, descripcionContiene, etiquetasTiene})
 {
-    let ret;
-    if(typeof info === 'string')
-    {
-        ret = Date.parse(info);
-    }
-    return ret;
-}
+    let ret = true;
 
-function fechaHasta(info)
-{ 
-    let ret;
-    if(typeof info === 'string')
-    {
-        ret = Date.parse(info);
-    }
-    return ret;
-}
+    let arrayFiltrado = gastos.filter(function(gasto){
+        
+        if(descripcionContiene != undefined)
+        {
+            if(descripcionContiene === gasto.descripcion)
+            {
+                ret = true;
+            }
+            else
+            {
+                ret = false;
+            }
+        }
 
-function descripcionContiene()
-{
+        if((!isNaN(Date.parse(fechaDesde)) && fechaDesde !== undefined)  || (!isNaN(Date.parse(fechaHasta)) && fechaHasta !== undefined))
+        {
+            let fechaD = Date.parse(fechaDesde);
+            let fechaH = Date.parse(fechaHasta);
 
-}
+            if(gasto.fecha >= fechaD)
+            {
+                ret = true;
+            }
+            else
+            {
+                ret = false;
+            }
+            if(gasto.fecha <= fechaH)
+            {
+                ret = true;
+            }
+            else
+            {
+                ret = false;
+            }
+            if(gasto.fecha >= fechaD && gasto.fecha <= fechaH)
+            {
+                ret = true;
+            }
+            else
+            {
+                ret = false;
+            }
+        }
+        
+        if(typeof valorMinimo === 'number' && typeof valorMaximo === 'number')
+        {
+            if(gasto.valor >= valorMinimo)
+            {
+                ret = true;
+            }
+            else
+            {
+                ret = false;
+            }
+            if(gasto.valor <= valorMaximo)
+            {
+                ret = true;
+            }
+            else
+            {
+                ret = false;
+            }
+        }
 
-function etiquetasTiene()
-{
+        return ret;
+    });
 
-}
-
-function filtrarGastos(fechaDesde, fechaHasta, valorMinimo, valorMaximo, descripcionContiene, etiquetasTiene)
-{
-    let arrayFiltrado = gastos.filter();
-
+    return arrayFiltrado;
 }
 
 function agruparGastos()
