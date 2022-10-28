@@ -155,7 +155,21 @@ function calcularBalance(){
     balance = presupuesto - calcularTotalGastos();
     return(balance);
 }
-function filtrarGastos(){
+function filtrarGastos({fechaDesde, fechaHasta, valorMinimo, valorMaximo, descripcionContiene, etiquetasTiene}){
+    let add = true;
+    if(fechaDesde === undefined && fechaHasta === undefined && valorMinimo === undefined && valorMaximo === undefined && descripcionContiene === undefined && etiquetasTiene === undefined){
+        return gastos;
+    } else{
+        let arrayFiltro = gastos.filter(function(gasto){
+            
+            if(isNaN(Date.parse(fechaDesde)) || gasto.fecha < fechaDesde){
+                add = false;
+            }
+            
+            return add;
+        })
+        return arrayFiltro;
+    }
 
 }
 function agruparGastos(){
