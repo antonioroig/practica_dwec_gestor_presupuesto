@@ -145,17 +145,127 @@ function calcularBalance(){
     return (presupuesto - calcularTotalGastos());
 };
 // Revisar
-function filtrarGastos(item){
-    let fechaDesde
-    
+function filtrarGastos({fechaDesde, fechaHasta, valorMinimo, valorMaximo,descripcionContiene, etiquetasTiene}){
+    let arr = [] ;
 
-    const grupo = [];
-    if(item.hasOwnProperty(fechaDesde)){
-        
+    if(!fechaDesde && !fechaHasta && !valorMinimo && !valorMaximo && !descripcionContiene && !etiquetasTiene){
+        return gastos;
+    }else{
+        arr = gastos.filter(function(item) {
+            let ok = true;
+            let boolAux = false;
+            if(fechaDesde || fechaHasta){
+                if(!item.fecha == (fechaDesde || fechaHasta)){
+                   ok = false;
+                }
+            }
+            if(valorMinimo || valorMaximo){
+                if(!item.valor == (valorMinimo || valorMaximo)){
+                    ok = false;
+                }
+            }
+            if(descripcionContiene){
+                if(!(item.descripcion.toLocaleLowerCase()) == (descripcionContiene.toLocaleLowerCase())){
+                    ok = false;
+                }
+            }
+            if(etiquetasTiene){
+                etiquetas.forEach((element) => {
+                    for(let i = 0; i < etiquetasTiene; i++){
+                        if(element === etiquetasTiene[i]){
+                            boolAux = true;
+                        }
+                    }
+                })
+            }
+            
+            if(ok && boolAux){
+                return true;
+            }else{
+                return false;
+            }
+            
+        })
     }
-    grupo = gastos.filter(() => objeto.descripcion.toLocaleLowerCase() === valor.toLocaleLowerCase());
 
+
+
+    /*arr = gasto.filter(function(item, index){
+        if(fechaDesde){
+            if(typeof fechaDesde === `string`){
+                if(!isNaN(Date.parse(fechaDesde))){
+                    item.fecha == Date.parse(fechaDesde)
+                }
+            }
+        }
+        if(fechaHasta){
+            item.fecha === fechaHasta
+        }
+        if(valorMinimo){
+            item.valor === valorMinimo
+        }
+        if(valorMaximo){
+            item.valor === valorMaximo
+        }
+        if(descripcionContiene){
+            item.descripcion.toLocaleLowerCase() === valorMaximo.toLocaleLowerCase()
+        }
+    });
+
+    /*if(fechaDesde){
+        if(typeof fechaDesde === `string`){
+            if(!isNaN(Date.parse(fechaDesde))){
+                arr = gastos.filter(item => item.fecha == Date.parse(fechaDesde))
     
+            }
+        }
+
+        /*let arr = gastos.filter(function(item){
+            if(typeof objeto.fechaDesde === `string`){
+                if(item.fecha == objeto.fechaDesde){
+                    return true;
+                }
+            }
+        })
+
+        gastos.filter((item) =>{
+            if(typeof objeto.fechaDesde === `string`){
+                if(item.fecha === objeto.fechaDesde && !isNaN(Date.parse(objeto.fechaDesde))){
+                    arr.push (item);
+                }
+            }
+        })
+        gastos.forEach((item)=>{
+            if(typeof objeto.fechaDesde === `string`){
+                if(isNaN(Date.parse(objeto.fechaDesde))){
+                    if(Date.parse(item.fecha) === Date.parse(objeto.fechaDesde)){
+                        arr.push (item);
+                    }
+                }
+            }
+        })
+    }
+    if(typeof fechaHasta === `string`){
+        if(!isNaN(Date.parse(fechaHasta))){
+                arr = gastos.filter(item => item.fecha === fechaHasta)
+            }
+    }
+    if(valorMinimo){
+        arr = gastos.filter(item => item.valor === valorMinimo)
+    }
+    if(valorMaximo){
+        arr = gastos.filter(item => item.valor === valorMaximo)
+    }
+    if(descripcionContiene){
+
+        arr = gastos.filter(item => item.descripcion.toLocaleLowerCase() === valorMaximo.toLocaleLowerCase())
+    }
+
+    else {
+        return gastos;
+    }*/
+
+    return arr;
 };
 function agruparGastos(periodo, fechaDesde, fechaHasta, ...etiquetas){
     // Llamar a la funcion filtrar gastos
