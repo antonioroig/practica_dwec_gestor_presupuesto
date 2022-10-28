@@ -173,27 +173,30 @@ function calcularBalance(){
 function filtrarGastos({fechaDesde,fechaHasta,valorMinimo,valorMaximo,descripcionContiene,...etiquetasTiene}){
     
         if(!fechaDesde && !fechaHasta  && !valorMinimo && !valorMaximo  && !descripcionContiene  && !etiquetasTiene){
+
             return gastos;
+            
         }else{
             let results = gastos.filter(function(gasto){
 
+                let comprobar = false;
                 for(let i = 0; i < gastos.length; i++){
 
                     if(!isNaN(Date.parse(fechaDesde))){
                         if(gasto.fecha >= fechaDesde && gasto.fecha <= fechaHasta){
-                            results += results.filter(gasto.fecha >= fechaDesde && gasto.fecha <= fechaHasta);
+                            comprobar = true;
                         }
                     }
                     if(!isNaN(Date.parse(fechaHasta))){
                         if(gasto.valor >= valorMinimo && gasto.valor <= valorMaximo){
-                            results += results.filter(gasto.valor >= valorMinimo && gasto.valor <= valorMaximo);
+                            comprobar = true;
                         }
                     }
                     if(gasto.descripcion === descripcionContiene){
-                        results += results.filter(gasto.descripcion === descripcionContiene);
+                        comprobar = true;
                     }
                     if(gasto.etiquetas.includes(etiquetasTiene)){
-                        results += results.filter(gasto.etiquetas.includes(etiquetasTiene));
+                        comprobar = true;
                     }
                     return comprobar;
                 }
