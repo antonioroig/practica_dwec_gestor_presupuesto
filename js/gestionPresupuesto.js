@@ -196,73 +196,68 @@ function filtrarGastos({fechaDesde,
     descripcionContiene,
     etiquetasTiene})
 {
-    let ret = gastos.filter(function(gastosFilt)
+    let ret = gastos.filter(function(gasto)
     {
         let anyade = true;
-        let mFecha = gastosFilt.fecha.Date.Date();
+        /*Si tengo uno de los dos requisitos en valor o en fecha, se tiene que cumplir y el otro se 
+        puede omitir. Si te dan los 2, se tienen que cumplir los 2*/
 
-        if (mFecha < fechaDesde.getDate())
+        if (fechaDesde)
+        {
+            if (Date.parse(gasto.fecha) < Date.parse(fechaDesde))
+            {
+                anyade = false;
+            }
+        }
+
+        if (fechaHasta)
+        {
+            if (Date.parse(gasto.fecha) > Date.parse(fechaHasta))
+            {
+                anyade = false;
+            }
+        }
+        
+        if (valorMinimo)
+        {
+            if (gasto.valor < valorMinimo)
+            {
+                anyade = false;
+            }
+        }
+        
+        if (valorMaximo)
+        {
+            if (gasto.valor > valorMaximo)
+            {
+                anyade = false;
+            }
+        }
+
+        if (gasto.descripcion.includes(descripcionContiene) || anyade == false)
         {
             anyade = false;
         }
-        if (mFecha > fechaHasta.getDate())
+
+        if (etiquetasTiene === gasto.etiquetas || anyade == false)
         {
             anyade = false;
         }
-        if (gastosFilt.valor < valorMinimo)
-        {
-            anyade = false;
-        }
-        if (gastosFilt.valor > valorMaximo)
-        {
-            anyade = false;
-        }
-        if (gastosFilt.descripcion.toLowerCase() !== descripcionContiene.toLowerCase())
-        {
-            anyade = false;
-        }
-        if (gastosFilt.etiquetas.toLowerCase() !== etiquetasTiene.toLowerCase())
-        {
-            anyade = false;
-        }
-    
+
         return anyade;
     });
 
     return ret;
 }
 
-function ValorMinimo()
-{
-    let min = gastos.length[0];
 
-    for (let i = 1; i < gastos.length;i++)
+function agruparGastos(periodo, etiquetas, fechaDesde, fechaHasta)
+{   
+    /* aw, ite, = index, array */
+    let result = gastos.reduce(function(aw, item)
     {
-        if (min > gastos[i])
-        {
-            min = gastos[i];
-        }
-    }
 
-    return min;
-}
-
-function ValorMaximo()
-{
-    let max = gastos.length[0];
-
-    for (let i = 1; i < gastos.length;i++)
-    {
-        if (max < gastos[i].valor)
-        {
-            max = gastos[i].valor;
-        }
-    }
-
-    return max;
-}
-
-function agruparGastos(){
+    }, {});
 
 }
 
