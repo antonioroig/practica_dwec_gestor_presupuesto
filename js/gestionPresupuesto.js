@@ -160,7 +160,7 @@ function filtrarGastos({fechaDesde,fechaHasta,valorMin,valorMax,descripcionConti
 
 }
 
-function agruparGastos(){
+function agruparGastos(periodo,etiquetas,fechasDesde,fechaHasta){
 
 }
 
