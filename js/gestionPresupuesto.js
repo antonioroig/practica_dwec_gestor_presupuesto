@@ -183,14 +183,21 @@ function filtrarGastos({fechaDesde,fechaHasta,valorMinimo,valorMaximo,descripcio
                 for(let i = 0; i < gastos.length; i++){
 
                     if(!isNaN(Date.parse(fechaDesde))){
-                        if(gasto.fecha >= fechaDesde && gasto.fecha <= fechaHasta){
+                        if(gasto.fecha >= fechaDesde){
                             comprobar = true;
                         }
                     }
                     if(!isNaN(Date.parse(fechaHasta))){
-                        if(gasto.valor >= valorMinimo && gasto.valor <= valorMaximo){
+                        if(gasto.fecha <= fechaHasta){
                             comprobar = true;
                         }
+                    }
+                     if(gasto.valor >= valorMinimo){
+                       
+                        comprobar = true;
+                    }
+                    if(gasto.valor <= valorMaximo){
+                        comprobar = true;
                     }
                     if(gasto.descripcion === descripcionContiene){
                         comprobar = true;
