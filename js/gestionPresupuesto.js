@@ -271,44 +271,53 @@ function calcularTotalGastos()
 
 }
 
-function filtrarGastos(fechaDesde, fechaHasta, minValor, maxValor, descCont, etiqCont)
+function filtrarGastos(fechaDesde, fechaHasta, valorMinimo, valorMaximo, descripcionContiene, etiquetasTiene)
 {
 
     let arrayFilter = gastos.filter(function(gasto){
 
         let anyadir = true;
+
+        let comprobacion = false;
     
-            if(gasto.fecha > (Date.parse(fechaDesde)))
+            if(gasto.fecha && fechaDesde > Date.parse(fechaDesde))
             {
 
                 anyadir = false;
 
             }
-            if(gasto.fecha > (Date.parse(fechaHasta)))
-            {
-
-                anyadir = false;
-
-            }
-
-            if(gasto.valor > minValor && gasto.valor > maxValor)
+            if(gasto.fecha && fechaHasta > Date.parse(fechaHasta))
             {
 
                 anyadir = false;
 
             }
 
-            if(descContains)
+            if(gasto.valor && valorMinimo < valorMinimo)
             {
 
                 anyadir = false;
 
             }
 
-            if(hasEtiquetas)
+            if(gasto.valor && valorMaximo > valorMaximo)
             {
 
                 anyadir = false;
+
+            }
+
+            if(descripcionContiene)
+            {
+
+                anyadir = false;
+
+            }
+
+            if(etiquetasTiene)
+            {
+                
+                
 
             }
             return anyadir;
