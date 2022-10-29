@@ -185,7 +185,8 @@ function CrearGasto(descripcion,valor, fecha = Date.now(), ...etiquetas) {
                 }
             }
         }
-        if(objeto.hasOwnProperty("etiquetasTiene")){         
+        if(objeto.hasOwnProperty("etiquetasTiene")){  
+            if (objeto.etiquetasTiene.length != 0){       
                 let devuelve =false;
                 for(let etiqueta of objeto.etiquetasTiene){
                     if(gasto.etiquetas.includes(etiqueta)){
@@ -196,22 +197,22 @@ function CrearGasto(descripcion,valor, fecha = Date.now(), ...etiquetas) {
                     return;
                 }
         } 
+    }
         return gasto;
     }); return gastosFiltrados; 
   };
 
-
-    function agruparGastos(periodo = 'mes', etiquetas = [], fechaDesde, fechaHasta){  
-        let gastosAgrupados = gastos.reduce((acumulador, gasto) => {
-            let fecha = gasto.obtenerPeriodoAgrupacion(periodo);
-            if(!acumulador.hasOwnProperty(fecha)){
-            if(acumulador[fecha] === undefined)
-                acumulador[fecha] = gasto.valor;
-            else
-                acumulador[fecha] += gasto.valor;
-            }
-                return gasto;
-         }); return gastosAgrupados;   
+    function agruparGastos(periodo = 'mes', etiquetas = [], fechaDesde, fechaHasta = Date.now()){  
+        let resultadoFiltros = filtrarGastos({ etiquetasTiene: etiquetas, fechaDesde: fechaDesde, fechaHasta: fechaHasta });
+        let gastosAgrupados = resultadoFiltros.reduce((acumulador, gasto)=>{
+            let agrupacion = gasto.obtenerPeriodoAgrupacion(periodo);
+            if(acumulador[agrupacion] == null){
+                acumulador[agrupacion] = gasto.valor;
+            }else{
+                 acumulador[agrupacion] += gasto.valor;
+                }
+                return acumulador
+         },{}); return gastosAgrupados;   
         }
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
