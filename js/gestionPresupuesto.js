@@ -147,10 +147,14 @@ function CrearGasto(descripcion,valor,fecha = Date.now(), ...etiquetas)
         }
         if(tipo === 'dia')
         {
-            if(dia < 10 && mes < 10)
+            if(dia < 10 || (mes < 10 && dia < 10))
             {
                 return anyo + '-0' + mes + '-0' + dia;
-            }         
+            }
+            else
+            {
+                return anyo + '-' + mes + '-' + dia;
+            }
         }
         else
         {
@@ -267,6 +271,21 @@ function filtrarGastos({fechaDesde, fechaHasta, valorMinimo, valorMaximo, descri
             }
         }
 
+        if(typeof etiquetasTiene === 'string' && etiquetasTiene !== undefined)
+        {
+            gasto.etiquetas.forEach(found => {
+                let pos = gasto.etiquetas.indexOf(found);
+                if(pos != -1)
+                {
+                    ret = true;
+                }
+                else
+                {
+                    ret = false;
+                }
+            });
+        }
+
         return ret;
     });
 
@@ -274,8 +293,9 @@ function filtrarGastos({fechaDesde, fechaHasta, valorMinimo, valorMaximo, descri
 }
 
 function agruparGastos()
-{
-
+{ 
+    let arrayAgrupado;
+    return arrayAgrupado;
 }
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
