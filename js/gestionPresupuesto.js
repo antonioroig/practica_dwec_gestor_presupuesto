@@ -188,137 +188,63 @@ function calcularBalance (){
     return balance;
 }
 
-
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 //Actividad 3 - Ejercicios
 
 //function filtrarGastos
 // Función de un parámetro que devolverá un subconjunto de los gastos existentes (variable global gastos). Se deberá utilizar la función filter. 
-function filtrarGastos(filtroGasto){
+function filtrarGastos({fechaDesde, fechaHasta,valorMinimo, valorMaximo, descripcionContiene, etiquetasTiene}){
     
-    // creamos una funcion con gastos filtrados (creamos un array con gastos filtrados desde array gastos) -- comprobamos los valores
-    // let result = arr.filter (funcion(item, index, array) --> funcion(valorGasto)) --> para hacer comprobaciones necesarias
+    // result Gastos Filtrados
     let gastosFiltrados = gastos.filter(function(valorGasto){
 
-        let fechaDesde = false; // Date.parse para comprobar formato válido
-        let fechaHasta = false; // Date.parse para comprobar formato válido
+            let result = true;  // salida de filter
+            let EtiquetaComprobada = false; // para comprobar etiqueta
+    
+            fechaDesde && valorGasto.fecha < Date.parse(fechaDesde) ? result = false : valorGasto; // FECHA DESDE           
+            fechaHasta && valorGasto.fecha > Date.parse(fechaHasta) ? result = false : valorGasto; // FECHA HASTA                      
+            valorMinimo && valorGasto.valor < valorMinimo ? result = false : valorGasto; // VALOR MINIMO                         
+            valorMaximo && valorGasto.valor > valorMaximo ? result = false : valorGasto; // VALOR MAXIMO              
+            // DESCRIPCION
+            (descripcionContiene && !valorGasto.descripcion.toLowerCase().includes(descripcionContiene.toLowerCase())) ? result = false : valorGasto;                         
+            // ETIQUETAS TIENE
+            if(etiquetasTiene){ 
+                etiquetasTiene.forEach(et1 => {
+                    valorGasto.etiquetas.forEach( et2 => { 
+                        if(et2.toLowerCase() === et1.toLowerCase())
+                            EtiquetaComprobada = true; 
+                    })
+                });
+            }
+            // Comprobar etiquetas 
+            if(etiquetasTiene){
+                if(!EtiquetaComprobada)
+                    result = false;
+            }
 
-        let valorMinimo = false; // Valor mínimo del gasto para comprobar
-        let valorMaximo = false; // Valor máximo del gasto para comprobar
-        
-        let descBool = false; // Comprobar descripcion 
-        let etiquetas = false; // Comprobar etiquetas si tiene alguna de las etiquetas
-
-        //  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-        // INFORMACIÓN PARA MI - INFORMACIÓN PARA MI - INFORMACIÓN PARA MI - INFORMACIÓN PARA MI - INFORMACIÓN PARA MI 
-        // filter()
-        // https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Array/filter
-        //let result = условие ? значение1 : значение2;
-        /* Сначала вычисляется условие: если оно истинно, тогда возвращается значение1, в противном случае – значение2. */
-
-        // hasOwnProperty:  https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Object/hasOwnProperty
-
-        // Includes() - Метод includes() определяет, содержит ли массив определённый элемент, возвращая в зависимости от этого true или false.
-        // https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Array/includes
-        // INFORMACIÓN PARA MI // - INFORMACIÓN PARA MI // - INFORMACIÓN PARA MI // - INFORMACIÓN PARA MI // - INFORMACIÓN PARA MI //
-        //  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-        if(filtroGasto != undefined){
-
-            // FECHA DESDE
-            if(filtroGasto.hasOwnProperty(`fechaDesde`) && valorGasto.fecha >= Date.parse(filtroGasto.fechaDesde))
-                fechaDesde = true;          
-            else if(!filtroGasto.hasOwnProperty(`fechaDesde`)) // Cannot convert undefined or null to object
-                fechaDesde = true;     
-                            
-            // FECHA HASTA
-            if(filtroGasto.hasOwnProperty(`fechaHasta`) && valorGasto.fecha <= Date.parse(filtroGasto.fechaHasta))
-                fechaHasta = true;
-            else if(!filtroGasto.hasOwnProperty(`fechaHasta`)) // Cannot convert undefined or null to object
-                fechaHasta = true;
-
-            // VALOR MINIMO
-            if(filtroGasto.hasOwnProperty(`valorMinimo`) && valorGasto.valor >= filtroGasto.valorMinimo)
-                valorMinimo = true;
-            else if(!filtroGasto.hasOwnProperty(`valorMinimo`)) // Cannot convert undefined or null to object
-                valorMinimo = true;
-
-            // VALOR MAXIMO
-            if(filtroGasto.hasOwnProperty(`valorMaximo`) && valorGasto.valor <= filtroGasto.valorMaximo)
-                valorMaximo = true;
-            else if(!filtroGasto.hasOwnProperty(`valorMaximo`)) // Cannot convert undefined or null to object
-                valorMaximo = true;
-            
-            // COMPROBAR DESCRIPCION
-            if(filtroGasto.hasOwnProperty(`descripcionContiene`) && valorGasto.descripcion.includes(filtroGasto.descripcionContiene))
-                descBool = true;
-            else if(!filtroGasto.hasOwnProperty(`descripcionContiene`)) // Cannot convert undefined or null to object
-                descBool = true;
-
-            // COMPROBAR ETIQUETAS
-            // https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Array/forEach#:~:text=undefined%20.-,%D0%9E%D0%BF%D0%B8%D1%81%D0%B0%D0%BD%D0%B8%D0%B5,%D0%BC%D0%B0%D1%81%D1%81%D0%B8%D0%B2%D0%B5%20%D0%B8%20%D0%B8%D0%BC%D0%B5%D1%8E%D1%82%20%D0%B7%D0%BD%D0%B0%D1%87%D0%B5%D0%BD%D0%B8%D0%B5%20undefined%20.            
-            // Метод forEach() выполняет указанную функцию один раз для каждого элемента в массиве. valor => operacion
-            if (filtroGasto.hasOwnProperty(`etiquetasTiene`)) 
-                filtroGasto.etiquetasTiene.forEach(valor =>{valorGasto.etiquetas.includes(valor) && etiquetas == false && (etiquetas = true);})  
-            else if (!filtroGasto.hasOwnProperty(`etiquetasTiene`)) // Cannot convert undefined or null to object
-                etiquetas = true;         
-
-            // comprobar todos los valores
-            if (fechaDesde && fechaHasta && valorMaximo && valorMinimo && etiquetas && descBool) 
-                return valorGasto;   
-        }
+            return result; // salida
     });
-    return gastosFiltrados; // devolver Gastos filtrados
+                
+    return gastosFiltrados;     
 }
-
-// -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
-// -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
 // -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
 // Función agruparGastos de cuatro parámetros que devolverá un objeto con los resultados de realizar una agrupación por período temporal.
-function agruparGastos(periodo, etiquetas, fechaDesde, fechaHasta){
-
-    let fechaActual = new Date(Date.now()); // fecha actual
+function agruparGastos(periodo = 'mes', etiquetas, fechaDesde, fechaHasta = Date.now()){
     
-    // periodo - Período utilizado para hacer la agrupación. Podrá ser uno de estos tres valores: dia, mes y anyo. El valor por defecto será mes.
-    if(periodo != `mes` && periodo != `anyo` && periodo != `dia`) 
-        periodo = `mes`;
+    // filtramos gastos 
+    let gastosFiltrados = filtrarGastos({etiquetasTiene:etiquetas, fechaDesde:fechaDesde, fechaHasta:fechaHasta});
     
-    // etiquetas - Array de etiquetas. Solo se seleccionarán los gastos que contengan alguna de esas etiquetas. Si no se indica o es un array vacío, se considerarán todos los gastos.
-    if(etiquetas == undefined || etiquetas == null)
-        etiquetas = new Array();
-    
-    // fechaDesde - Fecha mínima de creación del gasto. Su valor deberá ser un string con formato válido que pueda entender la función Date.parse 
-    // Si no se indica se considerarán todos los gastos independientemente de su fecha.
-
-    if(isNaN(Date.parse(fechaDesde))) // si no es un número en ms
-        fechaDesde = undefined;
-    
-    // fechaHasta - Fecha máxima de creación del gasto. Su valor deberá ser un string con formato válido que pueda entender la función Date.parse. 
-    // Si no se indica se considerará la fecha actual.
-    if(isNaN(Date.parse(fechaHasta))) // si no es un número en ms
-        fechaHasta = fechaActual.toISOString().substring(0, 10);
-
-    // filtro con los valores nuestros
-    let filtro =
-    {
-        fechaDesde: fechaDesde,
-        fechaHasta: fechaHasta,
-        etiquetasTiene: etiquetas,
-    };
-
-    // En primer lugar se llamará a filtrarGastos para obtener el subconjunto de gastos creados entre las 
-    // fechas indicadas y que tengan alguna de las etiquetas proporcionadas en el parámetro correspondiente.
-    let gastosFiltrados = filtrarGastos(filtro);
-
-    let gastosAgrupados = gastosFiltrados.reduce(function(prev, item){
-        
-        
-     
+    let result = gastosFiltrados.reduce(function (prev, itemGasto){
+        // Comprobar que no es un number
+        if(isNaN(prev[itemGasto.obtenerPeriodoAgrupacion(periodo)]))
+            prev[itemGasto.obtenerPeriodoAgrupacion(periodo)] = 0;
+        // Sumar totales por mes
+        prev[itemGasto.obtenerPeriodoAgrupacion(periodo)] += parseFloat(itemGasto.valor); 
         return prev;
-    }, {}
-    );
-    return gastosAgrupados;
-}
+    },{});
 
+    return result;
+}
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
@@ -339,3 +265,23 @@ export   {
    agruparGastos,
 
 }
+
+
+// MIS COSAS
+
+        //  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        // INFORMACIÓN PARA MI - INFORMACIÓN PARA MI - INFORMACIÓN PARA MI - INFORMACIÓN PARA MI - INFORMACIÓN PARA MI 
+        // filter()
+        // https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Array/filter
+        //let result = условие ? значение1 : значение2;
+        /* Сначала вычисляется условие: если оно истинно, тогда возвращается значение1, в противном случае – значение2. */
+
+        // hasOwnProperty:  https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Object/hasOwnProperty
+
+        // Includes() - Метод includes() определяет, содержит ли массив определённый элемент, возвращая в зависимости от этого true или false.
+        // https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Array/includes
+        // INFORMACIÓN PARA MI // - INFORMACIÓN PARA MI // - INFORMACIÓN PARA MI // - INFORMACIÓN PARA MI // - INFORMACIÓN PARA MI //
+        //  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+        // https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Array/forEach#:~:text=undefined%20.-,%D0%9E%D0%BF%D0%B8%D1%81%D0%B0%D0%BD%D0%B8%D0%B5,%D0%BC%D0%B0%D1%81%D1%81%D0%B8%D0%B2%D0%B5%20%D0%B8%20%D0%B8%D0%BC%D0%B5%D1%8E%D1%82%20%D0%B7%D0%BD%D0%B0%D1%87%D0%B5%D0%BD%D0%B8%D0%B5%20undefined%20.            
+        // Метод forEach() выполняет указанную функцию один раз для каждого элемента в массиве. valor => operacion
