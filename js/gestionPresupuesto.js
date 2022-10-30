@@ -194,7 +194,7 @@ function calcularBalance (){
 
 //function filtrarGastos
 // Función de un parámetro que devolverá un subconjunto de los gastos existentes (variable global gastos). Se deberá utilizar la función filter. 
-function filtrarGastos(valorFiltro){
+function filtrarGastos(filtroGasto){
     
     // creamos una funcion con gastos filtrados (creamos un array con gastos filtrados desde array gastos) -- comprobamos los valores
     // let result = arr.filter (funcion(item, index, array) --> funcion(valorGasto)) --> para hacer comprobaciones necesarias
@@ -210,101 +210,69 @@ function filtrarGastos(valorFiltro){
         let etiquetas = false; // Comprobar etiquetas si tiene alguna de las etiquetas
 
         //  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-        // Información para mi 
+        // INFORMACIÓN PARA MI - INFORMACIÓN PARA MI - INFORMACIÓN PARA MI - INFORMACIÓN PARA MI - INFORMACIÓN PARA MI 
         // filter()
         // https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Array/filter
         //let result = условие ? значение1 : значение2;
         /* Сначала вычисляется условие: если оно истинно, тогда возвращается значение1, в противном случае – значение2. */
- 
+
         // hasOwnProperty:  https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Object/hasOwnProperty
 
         // Includes() - Метод includes() определяет, содержит ли массив определённый элемент, возвращая в зависимости от этого true или false.
         // https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Array/includes
+        // INFORMACIÓN PARA MI // - INFORMACIÓN PARA MI // - INFORMACIÓN PARA MI // - INFORMACIÓN PARA MI // - INFORMACIÓN PARA MI //
         //  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-        if(valorFiltro != undefined){
-
-            // Comprobamos que valorFiltro tiene fechaDesde y que es de formato válido ? 1opcion --> fechaDesde  true; 
-            // 2opcion --> si valorFiltro no tiene fechaDesde--> opcion1(opcion2) --> fechaDesde true; opcion2(opcion2) --> valor Gasto 
+        if(filtroGasto != undefined){
 
             // FECHA DESDE
-            /*if(valorFiltro.hasOwnProperty(`fechaDesde`) && valorGasto.fecha >= Date.parse(valorFiltro.fechaDesde))
+            if(filtroGasto.hasOwnProperty(`fechaDesde`) && valorGasto.fecha >= Date.parse(filtroGasto.fechaDesde))
                 fechaDesde = true;          
-            else if(!valorFiltro.hasOwnProperty(`fechaDesde`))
-                fechaDesde = true;                 
-            else
-                valorGasto;*/
-
-            // La opción más corta
-            valorFiltro.hasOwnProperty(`fechaDesde`) && valorGasto.fecha >= Date.parse(valorFiltro.fechaDesde) ? fechaDesde = true : 
-            !valorFiltro.hasOwnProperty(`fechaDesde`) ? fechaDesde = true : valorGasto;
-
+            else if(!filtroGasto.hasOwnProperty(`fechaDesde`)) // Cannot convert undefined or null to object
+                fechaDesde = true;     
+                            
             // FECHA HASTA
-            /*if(valorFiltro.hasOwnProperty(`fechaHasta`) && valorGasto.fecha <= Date.parse(valorFiltro.fechaHasta))
+            if(filtroGasto.hasOwnProperty(`fechaHasta`) && valorGasto.fecha <= Date.parse(filtroGasto.fechaHasta))
                 fechaHasta = true;
-            else if(!valorFiltro.hasOwnProperty(`fechaHasta`))
+            else if(!filtroGasto.hasOwnProperty(`fechaHasta`)) // Cannot convert undefined or null to object
                 fechaHasta = true;
-            else
-                valorGasto;*/
-            // La opción más corta 
-            valorFiltro.hasOwnProperty(`fechaHasta`) && valorGasto.fecha <= Date.parse(valorFiltro.fechaHasta) ? fechaHasta = true :
-            !valorFiltro.hasOwnProperty(`fechaHasta`) ? fechaHasta = true : valorGasto;
 
             // VALOR MINIMO
-            /*if(valorFiltro.hasOwnProperty(`valorMinimo`) && valorGasto.valor >= valorFiltro.valorMinimo)
+            if(filtroGasto.hasOwnProperty(`valorMinimo`) && valorGasto.valor >= filtroGasto.valorMinimo)
                 valorMinimo = true;
-            else if(!valorFiltro.hasOwnProperty(`valorMinimo`))
+            else if(!filtroGasto.hasOwnProperty(`valorMinimo`)) // Cannot convert undefined or null to object
                 valorMinimo = true;
-            else
-                valorGasto;*/
-            // La opción más corta 
-            valorFiltro.hasOwnProperty(`valorMinimo`) && valorGasto.valor >= valorFiltro.valorMinimo ? valorMinimo = true :
-            !valorFiltro.hasOwnProperty(`valorMinimo`) ? valorMinimo = true : valorGasto;
 
             // VALOR MAXIMO
-            /*if(valorFiltro.hasOwnProperty(`valorMaximo`) && valorGasto.valorMaximo <= Date.parse(valorFiltro.valorMaximo))
+            if(filtroGasto.hasOwnProperty(`valorMaximo`) && valorGasto.valor <= filtroGasto.valorMaximo)
                 valorMaximo = true;
-            else if(!valorFiltro.hasOwnProperty(`valorMaximo`))
+            else if(!filtroGasto.hasOwnProperty(`valorMaximo`)) // Cannot convert undefined or null to object
                 valorMaximo = true;
-            else
-                valorGasto;
-            */
-            // La opción más corta
-            valorFiltro.hasOwnProperty(`valorMaximo`) && valorGasto.valor <= valorFiltro.valorMaximo ? valorMaximo = true :
-            !valorFiltro.hasOwnProperty(`valorMaximo`) ? valorMaximo = true : valorGasto;
-
+            
             // COMPROBAR DESCRIPCION
-            /*if(valorFiltro.hasOwnProperty(`descripcionContiene`) && valorGasto.descripcion.includes(valorFiltro.descripcionContiene))
+            if(filtroGasto.hasOwnProperty(`descripcionContiene`) && valorGasto.descripcion.includes(filtroGasto.descripcionContiene))
                 descBool = true;
-            else if(!valorFiltro.hasOwnProperty(`descripcionContiene`))
+            else if(!filtroGasto.hasOwnProperty(`descripcionContiene`)) // Cannot convert undefined or null to object
                 descBool = true;
-            else
-                valorGasto;
-            */
-            valorFiltro.hasOwnProperty(`descripcionContiene`) && valorGasto.descripcion.includes(valorFiltro.descripcionContiene) ? descBool = true :
-            !valorFiltro.hasOwnProperty(`descripcionContiene`) ? descBool = true : valorGasto;
 
             // COMPROBAR ETIQUETAS
             // https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Array/forEach#:~:text=undefined%20.-,%D0%9E%D0%BF%D0%B8%D1%81%D0%B0%D0%BD%D0%B8%D0%B5,%D0%BC%D0%B0%D1%81%D1%81%D0%B8%D0%B2%D0%B5%20%D0%B8%20%D0%B8%D0%BC%D0%B5%D1%8E%D1%82%20%D0%B7%D0%BD%D0%B0%D1%87%D0%B5%D0%BD%D0%B8%D0%B5%20undefined%20.            
             // Метод forEach() выполняет указанную функцию один раз для каждого элемента в массиве. valor => operacion
-            if (valorFiltro.hasOwnProperty(`etiquetasTiene`))
-            {
-                if(valorFiltro.etiquetasTiene.length != 0){
-                    valorFiltro.etiquetasTiene.forEach(valor =>{valorGasto.etiquetas.includes(valor) && etiquetas == false && (etiquetas = true);})
-                }
-                else 
-                    etiquetas = true;
-            }
-            else if (!valorFiltro.hasOwnProperty(`etiquetasTiene`))
+            if (filtroGasto.hasOwnProperty(`etiquetasTiene`)) 
+                filtroGasto.etiquetasTiene.forEach(valor =>{valorGasto.etiquetas.includes(valor) && etiquetas == false && (etiquetas = true);})  
+            else if (!filtroGasto.hasOwnProperty(`etiquetasTiene`)) // Cannot convert undefined or null to object
                 etiquetas = true;         
 
             // comprobar todos los valores
-            if (fechaDesde && fechaHasta && valorMaximo && valorMinimo && etiquetas && descBool)
-                return valorGasto;  
+            if (fechaDesde && fechaHasta && valorMaximo && valorMinimo && etiquetas && descBool) 
+                return valorGasto;   
         }
     });
     return gastosFiltrados; // devolver Gastos filtrados
 }
 
+// -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
+// -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
+// -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
 // Función agruparGastos de cuatro parámetros que devolverá un objeto con los resultados de realizar una agrupación por período temporal.
 function agruparGastos(periodo, etiquetas, fechaDesde, fechaHasta){
 
