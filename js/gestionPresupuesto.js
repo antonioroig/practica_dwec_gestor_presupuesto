@@ -277,13 +277,13 @@ function filtrarGastos(filtroGasto){
 function agruparGastos(periodo, etiquetas, fechaDesde, fechaHasta){
 
     let fechaActual = new Date(Date.now()); // fecha actual
-
+    
     // periodo - Período utilizado para hacer la agrupación. Podrá ser uno de estos tres valores: dia, mes y anyo. El valor por defecto será mes.
     if(periodo != `mes` && periodo != `anyo` && periodo != `dia`) 
         periodo = `mes`;
     
     // etiquetas - Array de etiquetas. Solo se seleccionarán los gastos que contengan alguna de esas etiquetas. Si no se indica o es un array vacío, se considerarán todos los gastos.
-    if(etiquetas == undefined)
+    if(etiquetas == undefined || etiquetas == null)
         etiquetas = new Array();
     
     // fechaDesde - Fecha mínima de creación del gasto. Su valor deberá ser un string con formato válido que pueda entender la función Date.parse 
@@ -309,8 +309,14 @@ function agruparGastos(periodo, etiquetas, fechaDesde, fechaHasta){
     // fechas indicadas y que tengan alguna de las etiquetas proporcionadas en el parámetro correspondiente.
     let gastosFiltrados = filtrarGastos(filtro);
 
-    
-    
+    let gastosAgrupados = gastosFiltrados.reduce(function(prev, item){
+        
+        
+     
+        return prev;
+    }, {}
+    );
+    return gastosAgrupados;
 }
 
 
