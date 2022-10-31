@@ -206,8 +206,7 @@ function filtrarGastos({fechaDesde, fechaHasta, valorMinimo, valorMaximo, descri
 }
 /*=> function*/
 function agruparGastos(periodo = "mes", etiquetas, fechaDesde, fechaHasta){
-
-    let filtrargast = filtrarGastos({fechaDesde , fechaHasta, etiquetas});
+   let filtrargast = filtrarGastos({etiquetasTiene : etiquetas, fechaDesde : fechaDesde, fechaHasta : fechaHasta});
     let respuesta = filtrargast.reduce((acomulador, item) => {
         let aux = item.obtenerPeriodoAgrupacion (periodo);
                 if (!acomulador[aux]) //si no esxiste ese periodo se inicializa con el valor//
