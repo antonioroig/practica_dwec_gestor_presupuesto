@@ -147,11 +147,7 @@ function calcularBalance(){
 // Revisar
 function filtrarGastos({fechaDesde, fechaHasta, valorMinimo, valorMaximo,descripcionContiene, ...etiquetasTiene}){
     
-    if (!fechaDesde && !fechaHasta && !valorMinimo && !valorMaximo && !descripcionContiene && !etiquetasTiene){
-        
-        return gastos;
-    }
-    let arr = gastos.filter(function(item) {
+    let arr= gastos.filter(function(item) {
         let ok = true;
 
         if(fechaDesde){
@@ -181,28 +177,29 @@ function filtrarGastos({fechaDesde, fechaHasta, valorMinimo, valorMaximo,descrip
             
             if(inside == false) ok = false
         }
-        return ok;
+        if(ok){
+            return true;
+        }else{
+            return false;
+        }
     });
-    if(arr == String.apply){
-        return gastos;
-    }
-
-    
     return arr;
 };
 function agruparGastos(periodo, fechaDesde, fechaHasta, ...etiquetas){
-    // Llamar a la funcion filtrar gastos
-    let  desc;
-    let arrayAux;
-    let fechaMaxAux , fechaMinAux;
-    let valorMaxAux, valorMinAux;
-    fechaMaxAux = (objeto.hasOwnProperty(fechaMaxima)) ? objeto.fechaMaxima : ""
-    fechaMinAux = (objeto.hasOwnProperty(fechaMinima)) ? objeto.fechaMinima : ""
+   
+    
 
-    valorMaxAux = (objeto.hasOwnProperty(valorMaximo)) ? objeto.valorMaximo : ""
-    valorMaxAux = (objeto.hasOwnProperty(valorMinimo)) ? objeto.valorMinimo : ""
 
-    desc = (objeto.hasOwnProperty(descripcion))?desc = descripcion.toLocaleLowerCase() : ""
+
+
+
+
+
+
+
+
+
+
 
     if(objeto.hasOwnProperty(...etiquetas)){
 
