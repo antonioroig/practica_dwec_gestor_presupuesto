@@ -151,9 +151,8 @@ function filtrarGastos({fechaDesde, fechaHasta, valorMinimo, valorMaximo,descrip
         
         return gastos;
     }
-    let arr = gastos.filter((item) => {
+    let arr = gastos.filter(function(item) {
         let ok = true;
-        let boolAux;
 
         if(fechaDesde){
             if(Date.parse(fechaDesde) > item.fecha) ok = false;
@@ -171,29 +170,22 @@ function filtrarGastos({fechaDesde, fechaHasta, valorMinimo, valorMaximo,descrip
             if(!item.descripcion.includes(descripcionContiene)) ok = false;
        }
         if(etiquetasTiene){
-            for(let i = 0; i < etiquetasTiene.length; i++){
-                for(let j =0; j < item.etiquetas; j++){
-                    if(etiquetasTiene.length[i] === item.etiquetas[j]){
-                        boolAux = true;
-                        break;
-                    }else{
-                        boolAux = false;
-                    }
+            let inside = false;                   
+            for (let i = 0; i < item.etiquetas.length; i++) 
+            {                   
+                for (let j= 0; j < etiquetasTiene.length; j++) 
+                {
+                    if(item.etiquetas[i] == etiquetasTiene[j]) inside = true;                  
                 }
             }
-        }
-        
-        if(ok){
-            if(!boolAux){
-                return false;
-            }
-            return true;
-
-        }else{
             
-            return false;
+            if(inside == false) ok = false
         }
+        return ok;
     });
+    if(arr == String.apply){
+        return gastos;
+    }
 
     
     return arr;
