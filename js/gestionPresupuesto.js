@@ -172,42 +172,47 @@ function calcularBalance(){
 
 function filtrarGastos({fechaDesde,fechaHasta,valorMinimo,valorMaximo,descripcionContiene,etiquetasTiene}){
     
-        let results = gastos.filter(function(gasto){
+        if(!fechaDesde && !fechaHasta && !valorMinimo && !valorMaximo && !descripcionContiene && !etiquetasTiene){
+            return gastos;
 
-                let comprobar = true;
-                    if(fechaDesde){
-                        if(gasto.fecha < Date.parse(fechaDesde)){
-                            comprobar = false;
-                        }
-                    }       
-                    if(fechaHasta){
-                        if(gasto.fecha < Date.parse(fechaHasta)){
-                            comprobar = false;
-                        }
+        }else{
+            let results = gastos.filter(gasto => {
+
+                if(typeof fechaDesde !== 'undefined'){
+                    if(gasto.fecha < Date.parse(fechaDesde)){
+                        return;
                     }
-                    if(valorMinimo){
-                        if(gasto.valor < valorMinimo ){
-                            comprobar = false;
-                        }
+                }       
+                if(typeof fechaHasta !== 'undefined'){
+                    if(gasto.fecha > Date.parse(fechaHasta)){
+                        return;
                     }
-                    if(valorMaximo){
-                        if( gasto.valor > valorMaximo){
-                            comprobar = false;
-                        }
+                }
+                if(typeof valorMinimo !== 'undefined'){
+                    if(gasto.valor < valorMinimo){
+                        return;
                     }
-                    if(descripcionContiene){
-                        if(gasto.descripcion.includes(descripcionContiene)){
-                            comprobar = false;
-                        }
+                }
+                if(typeof valorMaximo !== 'undefined'){
+                    if( gasto.valor > valorMaximo){
+                        return;
                     }
-                    if(etiquetasTiene){
-                        if(gasto.etiquetas.includes(etiquetasTiene)){
-                            comprobar = false;
-                        }
+                }
+                if(typeof descripcionContiene !== 'undefined'){
+                    if(!gasto.descripcion.includes(descripcionContiene)){
+                        return;
                     }
-                    return comprobar;
-            });
-                return results;
+                }
+                if(typeof etiquetasTiene !== 'undefined'){
+                    if(!gasto.etiquetas.includes(etiquetasTiene)){
+                        return;
+                    }
+                }
+        });
+        return results;
+        }
+        
+                
         
 }
 
