@@ -167,7 +167,20 @@ function filtrarGastos({fechaDesde,fechaHasta,valorMinimo,valorMaximo,descripcio
                 }
             }
             if(descripcionContiene){
-                
+                if(!gasto.descripcion.toLowerCase().includes(descripcionContiene.toLowerCase())){
+                    anyadir = false;
+                }
+            }
+            if(etiquetasTiene){
+                let comprobar = false;
+                for(let i = 0; i < etiquetasTiene.length; i++){
+                    if(gasto.etiquetas.includes(etiquetasTiene[i])){
+                        comprobar = true;
+                    }
+                }
+                if(!comprobar){
+                    anyadir = false;
+                }
             }
             return anyadir;
             
@@ -176,8 +189,18 @@ function filtrarGastos({fechaDesde,fechaHasta,valorMinimo,valorMaximo,descripcio
     });
     return arrayDevuelto;
 }
-function agruparGastos(){
+function agruparGastos(periodo = `mes`,etiquetas,fechaDesde2,fechaHasta2 = Date.now()){
+    let gastosFilt = filtrarGastos({fechaDesde:fechaDesde2,fechaHasta:fechaHasta2,etiquetasTiene:etiquetas});
 
+    let resultado = gastosFilt.reduce(function(sum,gasto){
+        if(isNaN(sum[gasto.obtenerPeriodoAgrupacion(periodo)])){
+            sum[gasto.obtenerPeriodoAgrupacion(periodo)] = 0;
+        }
+        sum[gasto.obtenerPeriodoAgrupacion(periodo)] += gasto.valor;
+        return sum;
+    })
+    return resultado;
+    
 }
 
         
