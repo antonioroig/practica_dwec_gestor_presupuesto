@@ -191,14 +191,15 @@ function filtrarGastos({fechaDesde,fechaHasta,valorMinimo,valorMaximo,descripcio
 }
 function agruparGastos(periodo = `mes`,etiquetas,fechaDesde2,fechaHasta2 = Date.now()){
     let gastosFilt = filtrarGastos({fechaDesde:fechaDesde2,fechaHasta:fechaHasta2,etiquetasTiene:etiquetas});
-
+    let arrayVacio = {};
     let resultado = gastosFilt.reduce(function(sum,gasto){
         if(isNaN(sum[gasto.obtenerPeriodoAgrupacion(periodo)])){
             sum[gasto.obtenerPeriodoAgrupacion(periodo)] = 0;
         }
         sum[gasto.obtenerPeriodoAgrupacion(periodo)] += gasto.valor;
         return sum;
-    })
+    },arrayVacio
+    );
     return resultado;
     
 }
