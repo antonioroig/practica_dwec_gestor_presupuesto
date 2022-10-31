@@ -186,11 +186,20 @@ function filtrarGastos({fechaDesde, fechaHasta, valorMinimo, valorMaximo, descri
             }
             if (descripcionContiene)
             {
-                let gdstring = gasto.descripcion.toLocaleString();
-                let dstring = descripcionContiene.toLocaleString();
-                if(gdstring.toLowerCase() == dstring.toLowerCase()){
+                if(!gasto.descripcion.toLowerCase().includes(descripcionContiene.toLowerCase())){
                     add = false;
                 }
+            }
+            if(etiquetasTiene)
+            {
+                add = false;
+                    for(let i = gasto.etiquetas.length; i >= 0; i--) {
+                        if(gasto.etiquetas[i].toLowerCase().includes(etiquetasTiene.toLowerCase())){
+                            add = true;
+                        }
+                        
+                    }
+                
             }
             return add;
 
@@ -201,7 +210,7 @@ function filtrarGastos({fechaDesde, fechaHasta, valorMinimo, valorMaximo, descri
     
 }
 
-function agruparGastos(){
+function agruparGastos(periodo, etiquetas, fechaDesde, fechaHasta){
     
 }
 
