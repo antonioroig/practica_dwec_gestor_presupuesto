@@ -211,16 +211,15 @@ function filtrarGastos({fechaDesde, fechaHasta,valorMinimo, valorMaximo, descrip
             if(etiquetasTiene){ 
                 etiquetasTiene.forEach(et1 => {
                     valorGasto.etiquetas.forEach( et2 => { 
-                        if(et2.toLowerCase() === et1.toLowerCase())
-                            EtiquetaComprobada = true; 
+                        et2.toLowerCase() === et1.toLowerCase() ? EtiquetaComprobada = true : valorGasto;
                     })
                 });
             }
             // Comprobar etiquetas 
-            if(etiquetasTiene){
+            if(etiquetasTiene)
                 if(!EtiquetaComprobada)
                     result = false;
-            }
+            
 
             return result; // salida
     });
@@ -233,7 +232,7 @@ function agruparGastos(periodo = 'mes', etiquetas, fechaDesde, fechaHasta = Date
     
     // filtramos gastos 
     let gastosFiltrados = filtrarGastos({etiquetasTiene:etiquetas, fechaDesde:fechaDesde, fechaHasta:fechaHasta});
-    
+    // reduce
     let result = gastosFiltrados.reduce(function (prev, itemGasto){
         // Comprobar que no es un number
         if(isNaN(prev[itemGasto.obtenerPeriodoAgrupacion(periodo)]))
