@@ -204,35 +204,79 @@ function CrearGasto(descripcion,valor,fecha,...etiqueta) {
         return presupuesto - calcularTotalGastos();
     }
 
-    function filtrarGastos(objeto /* {fechaDesde = undefined,fechaHasta = undefined,valorMinimo = undefined, valorMaximo = undefined,descripcionContiene = undefined,etiquetasTiene = undefined} */ )
-    {
-
-        if( objeto != `null`   /* fechaDesde == `undefined` && fechaHasta == `undefined` && valorMinimo == `undefined` && valorMaximo == `undefined` && descripcionContiene == `undefined` && etiquetasTiene == `undefined`*/ )
+    function filtrarGastos(objeto) {
+        if (objeto != undefined || objeto != null) 
         {
+            let arrayNuevo = gastos.filter(gasto => {
+                if (objeto.hasOwnProperty("fechaDesde")) 
+                {
+                    if (gasto.fecha < Date.parse(objeto.fechaDesde) && typeof objeto.fechaDesde !== "undefined")
+                    {
+                        return;
+                    } 
+                }
+                if (objeto.hasOwnProperty("fechaHasta") && typeof objeto.fechaHasta !== "undefined") 
+                {
+                    if (gasto.fecha > Date.parse(objeto.fechaHasta)) 
+                    {
+                        return;
+                    }
+                }
+                if (objeto.hasOwnProperty("valorMinimo") && typeof objeto.valorMinimo !== "undefined") 
+                {
+                    if (gasto.valor < objeto.valorMinimo) 
+                    {
+                        return;
+                    }
+                }
+                if (objeto.hasOwnProperty("valorMaximo") && typeof objeto.valorMaximo !== "undefined") 
+                {
+                    if (gasto.valor > objeto.valorMaximo)
+                    {
+                        return;
+                    }
+                }
+                if (objeto.hasOwnProperty("descripcionContiene") && typeof objeto.descripcionContiene !== "undefined") 
+                {
+                    if (!gasto.descripcion.includes(objeto.descripcionContiene))
+                    {
+                        return;
+                    }
+                        
+                }
+                if (objeto.hasOwnProperty("etiquetasTiene") && Array.isArray(objeto.etiquetasTiene) && objeto.etiquetasTiene.length !== 0) 
+                {
+                    let ok= false;
+
+                    for (let descripcion of objeto.etiquetasTiene)
+                    {
+                        if (gasto.etiquetas.includes(descripcion)) 
+                        {
+                            ok = true; 
+                        }
+                        
+                    } 
+                          
+                    if (!ok) 
+                    {
+                        return;
+                    }
+                        
+                }
+                return gasto;
+            });
+                return arrayNuevo;
+        } 
+        else 
             return gastos;
-        }
-        else{
-            if(isNaN(Date.parse(objeto.fechaDesde)))
-            {
-                objeto.fechaDesde = undefined;
-            }
-    
-            if(isNaN(Date.parse(objeto.fechaHasta)))
-            {
-                objeto.fechaDesde = undefined;
-            }
-            
+    };  
 
-
-            let array = gastos.filter(gasto => gasto.fecha > objeto.fechaDesde && gasto.fecha < objeto.fechaHasta && gasto.valor > objeto.valorMinimo && gasto.valor < objeto.valorMaximo && gasto.descripcion === objeto.descripcionContiene && gasto.etiquetas.includes(objeto.etiquetasTiene));
-                return array;
-        }
-        
-    }
-   
-    function agruparGastos()
+    function agruparGastos(periodo = 'mes',etiquetas,fechaDes,fechaHas)
     {
-
+        
+        let array = filtrarGastos({fechaDesde: fechaDes, fechaHasta:fechaHas}).reduce(function(acc, item) {
+            
+          }, [{}]);
     }
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
