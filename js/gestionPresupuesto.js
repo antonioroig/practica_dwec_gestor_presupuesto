@@ -145,7 +145,7 @@ function calcularBalance(){
     return (presupuesto - calcularTotalGastos());
 };
 // Revisar
-function filtrarGastos({fechaDesde, fechaHasta, valorMinimo, valorMaximo,descripcionContiene, ...etiquetasTiene}){
+function filtrarGastos({fechaDesde, fechaHasta, valorMinimo, valorMaximo,descripcionContiene,etiquetasTiene}){
     
     let arr= gastos.filter(function(item) {
         let ok = true;
@@ -177,12 +177,9 @@ function filtrarGastos({fechaDesde, fechaHasta, valorMinimo, valorMaximo,descrip
             
             if(inside == false) ok = false
         }
-        if(ok){
-            return true;
-        }else{
-            return false;
-        }
+        return ok;
     });
+
     return arr;
 };
 function agruparGastos(periodo, fechaDesde, fechaHasta, ...etiquetas){
