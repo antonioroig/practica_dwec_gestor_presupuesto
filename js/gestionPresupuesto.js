@@ -139,15 +139,11 @@ function CrearGasto(descripcion, valor, fecha, ... etiquetas) {
         if (periodo != undefined)
         {
             if (periodo === 'dia')
-            {
-                return new Date(this.fecha).toISOString().substring(0, 10);
-            }
-            else if (periodo === 'mes'){
-                return new Date(this.fecha).toISOString().substring(0, 7);
-            }
-            else if(periodo === 'anyo'){
-                return new Date(this.fecha).toISOString().substring(0, 4);
-            }
+                return new Date(this.fecha).toISOString().substring(0, 10);                
+            else if (periodo === 'mes')
+                return new Date(this.fecha).toISOString().substring(0, 7);           
+            else if(periodo === 'anyo')
+                return new Date(this.fecha).toISOString().substring(0, 4);                
         }        
     }
 }
@@ -201,29 +197,25 @@ function filtrarGastos({fechaDesde, fechaHasta,valorMinimo, valorMaximo, descrip
             let result = true;  // salida de filter
             let EtiquetaComprobada = false; // para comprobar etiqueta
     
-            fechaDesde && valorGasto.fecha < Date.parse(fechaDesde) ? result = false : valorGasto; // FECHA DESDE           
-            fechaHasta && valorGasto.fecha > Date.parse(fechaHasta) ? result = false : valorGasto; // FECHA HASTA                      
-            valorMinimo && valorGasto.valor < valorMinimo ? result = false : valorGasto; // VALOR MINIMO                         
-            valorMaximo && valorGasto.valor > valorMaximo ? result = false : valorGasto; // VALOR MAXIMO              
+            fechaDesde && valorGasto.fecha < Date.parse(fechaDesde) ? result = false : valorGasto; // valorGasto = true  // FECHA DESDE           
+            fechaHasta && valorGasto.fecha > Date.parse(fechaHasta) ? result = false : valorGasto; // valorGasto = true  // FECHA HASTA                      
+            valorMinimo && valorGasto.valor < valorMinimo ? result = false : valorGasto; // valorGasto = true  // VALOR MINIMO                         
+            valorMaximo && valorGasto.valor > valorMaximo ? result = false : valorGasto; // valorGasto = true  // VALOR MAXIMO              
             // DESCRIPCION
-            (descripcionContiene && !valorGasto.descripcion.toLowerCase().includes(descripcionContiene.toLowerCase())) ? result = false : valorGasto;                         
+            (descripcionContiene && !valorGasto.descripcion.toLowerCase().includes(descripcionContiene.toLowerCase())) ? result = false : valorGasto; // valorGasto = true                         
             // ETIQUETAS TIENE
-            if(etiquetasTiene){ 
-                etiquetasTiene.forEach(et1 => {
-                    valorGasto.etiquetas.forEach( et2 => { 
-                        et2.toLowerCase() === et1.toLowerCase() ? EtiquetaComprobada = true : valorGasto;
-                    })
-                });
+            if(etiquetasTiene){
+                for(let i = 0; i < etiquetasTiene.length; i++){
+                    for(let j = 0; j < valorGasto.etiquetas.length; j++){
+                        etiquetasTiene[i].toLowerCase() === valorGasto.etiquetas[j].toLowerCase() ? EtiquetaComprobada = true : valorGasto; // valorGasto = true 
+                    }
+                }
+                // Comprobar etiquetas 
+                (!EtiquetaComprobada) ? result = false : valorGasto; // valorGasto = true 
             }
-            // Comprobar etiquetas 
-            if(etiquetasTiene)
-                if(!EtiquetaComprobada)
-                    result = false;
-            
-
             return result; // salida
-    });
-                
+    }); 
+           
     return gastosFiltrados;     
 }
 // -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
@@ -238,7 +230,7 @@ function agruparGastos(periodo = 'mes', etiquetas, fechaDesde, fechaHasta = Date
         if(isNaN(prev[itemGasto.obtenerPeriodoAgrupacion(periodo)]))
             prev[itemGasto.obtenerPeriodoAgrupacion(periodo)] = 0;
         // Sumar totales por mes
-        prev[itemGasto.obtenerPeriodoAgrupacion(periodo)] += parseFloat(itemGasto.valor); 
+        prev[itemGasto.obtenerPeriodoAgrupacion(periodo)] += parseFloat(itemGasto.valor);
         return prev;
     },{});
 
@@ -284,3 +276,14 @@ export   {
 
         // https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Array/forEach#:~:text=undefined%20.-,%D0%9E%D0%BF%D0%B8%D1%81%D0%B0%D0%BD%D0%B8%D0%B5,%D0%BC%D0%B0%D1%81%D1%81%D0%B8%D0%B2%D0%B5%20%D0%B8%20%D0%B8%D0%BC%D0%B5%D1%8E%D1%82%20%D0%B7%D0%BD%D0%B0%D1%87%D0%B5%D0%BD%D0%B8%D0%B5%20undefined%20.            
         // Метод forEach() выполняет указанную функцию один раз для каждого элемента в массиве. valor => operacion
+
+
+        /* 3-a actividad ETIQUETAS TIENE con ForEach */
+
+        /*if(etiquetasTiene){ 
+                etiquetasTiene.forEach(et1 => {
+                    valorGasto.etiquetas.forEach( et2 => { 
+                        et2.toLowerCase() === et1.toLowerCase() ? EtiquetaComprobada = true : valorGasto;
+                    })
+                });
+            }*/
