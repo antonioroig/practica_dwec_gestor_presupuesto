@@ -187,14 +187,15 @@ function agruparGastos(periodo = `mes`, etiquetas, fechaDesde, fechaHasta){
     let filtrado = filtrarGastos(obj);
 
     let res = filtrado.reduce((acc,item) =>{
-    let fecha = item.obtenerPeriodoAgrupacion(periodo);
-    if(acc[fecha] != null){
-        acc[fecha] += item.valor;
-    }else{
-        acc[fecha] = item.valor;
-    }
-    return acc;
-   }, {});
+        let fecha = item.obtenerPeriodoAgrupacion(periodo);
+        
+        if(acc[fecha] != null){
+            acc[fecha] += item.valor;
+        }else{
+            acc[fecha] = item.valor;
+        }
+        return acc;
+    }, {});
    return res;
 };
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
