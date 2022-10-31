@@ -128,13 +128,16 @@ function CrearGasto(descripcion, valor, fecha=Date.now(), ...etiquetas) {
             {
                 salida = `${fFecha.getFullYear()}-0${fFecha.getMonth()+1}` ;
             }
+            else{
+                salida = `${fFecha.getFullYear()}-${fFecha.getMonth()+1}` ;
+            }
             if(fFecha.getDate() >= 1 && fFecha.getDate() <= 9)
             {
                 salida += `-0${fFecha.getDate()}` ;
             }
             else
             {
-                salida = `${fFecha.getFullYear()}-${fFecha.getMonth()+1}-${fFecha.getDate()}` ;
+                salida += `-${fFecha.getDate()}` ;
             }
             
         }
