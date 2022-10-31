@@ -192,27 +192,42 @@ function filtrarGastos({fechaDesde, fechaHasta, valorMinimo, valorMaximo, descri
             }
             if(etiquetasTiene)
             {
-                add = false;
-                    for(let i = gasto.etiquetas.length; i >= 0; i--) {
-                        if(gasto.etiquetas[i].toLowerCase().includes(etiquetasTiene.toLowerCase())){
-                            add = true;
+                let prueba = false;
+                    for(let i = 0; i < gasto.etiquetas.length; i++) {
+                        for(let j = 0; j < etiquetasTiene.length; j++) {
+                            if(gasto.etiquetas[i].toLowerCase().includes(etiquetasTiene[j].toLowerCase())){
+                               prueba = true;
+                            }
                         }
                         
                     }
-                
+                if(!prueba){
+                    add = false;
+                }
             }
             return add;
 
         });
-        console.log(arrayFiltro);
+       
 
         return arrayFiltro;
     
 }
 
-function agruparGastos(periodo, etiquetas, fechaDesde, fechaHasta){
+function agruparGastos(periodo = "mes", etiquetas, fechaDesde, fechaHasta = Date.now()){
+    let arrayFiltro = filtrarGastos({etiquetasTiene:etiquetas, fechaDesde:fechaDesde, fechaHasta:fechaHasta});
+    let res = arrayFiltro.reduce(function(sum, iGasto){
+        // si los gastos acumulados no son un numero los coloca a 0
+        if(isNaN(sum[iGasto.obtenerPeriodoAgrupacion(periodo)])){
+            sum[iGasto.obtenerPeriodoAgrupacion(periodo)] = 0;
+        }
+        sum[iGasto.obtenerPeriodoAgrupacion(periodo)] += parseFloat(iGasto.valor);
+        return sum;
+    },{});
+    return res;
     
 }
+
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
 // Las funciones y objetos deben tener los nombres que se indican en el enunciado
