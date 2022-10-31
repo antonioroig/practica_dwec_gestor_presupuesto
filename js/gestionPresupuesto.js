@@ -172,51 +172,53 @@ function calcularBalance(){
 
 function filtrarGastos({fechaDesde,fechaHasta,valorMinimo,valorMaximo,descripcionContiene,etiquetasTiene}){
     
-        if(!fechaDesde && !fechaHasta && !valorMinimo && !valorMaximo && !descripcionContiene && !etiquetasTiene){
-            return gastos;
-
-        }else{
-            let results = gastos.filter(gasto => {
-
-                if(typeof fechaDesde !== 'undefined'){
+            let results = gastos.filter(function(gasto){
+                let anydir = true;
+                if(fechaDesde){
                     if(gasto.fecha < Date.parse(fechaDesde)){
-                        return;
+                        anydir = false;
                     }
                 }       
-                if(typeof fechaHasta !== 'undefined'){
+                if(fechaHasta){
                     if(gasto.fecha > Date.parse(fechaHasta)){
-                        return;
+                        anydir = false;
                     }
                 }
-                if(typeof valorMinimo !== 'undefined'){
+                if(valorMinimo){
                     if(gasto.valor < valorMinimo){
-                        return;
+                        anydir = false;
                     }
                 }
-                if(typeof valorMaximo !== 'undefined'){
+                if(valorMaximo){
                     if( gasto.valor > valorMaximo){
-                        return;
+                        anydir = false;
                     }
                 }
-                if(typeof descripcionContiene !== 'undefined'){
-                    if(!gasto.descripcion.includes(descripcionContiene)){
-                        return;
+                if(descripcionContiene){
+                    if(!gasto.descripcion.toLowerCase().includes(descripcionContiene.toLowerCase())){
+                        anydir = false;
                     }
                 }
-                if(typeof etiquetasTiene !== 'undefined'){
-                    if(!gasto.etiquetas.includes(etiquetasTiene)){
-                        return;
+                if(etiquetasTiene){
+                    let comprobar = false;
+                    for(let i = 0; i < etiquetasTiene.length; i++){
+                       if(gasto.etiquetas.includes(etiquetasTiene[i])){
+                        comprobar = true;
+                       }
+                    }
+                    if(!comprobar){
+                        anydir = false;
                     }
                 }
+                return anydir;
         });
-        return results;
-        }
-        
-                
+        return results;                
         
 }
 
-function agruparGastos(periodo,etiquetas,fechaDesde,fechaHasta){
+function agruparGastos(periodo,fechaDesde,fechaHasta,etiquetas){
+    let array = filtrarGastos({fechaDesde, fechaHasta});
+
     
 }
            
