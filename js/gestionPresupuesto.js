@@ -185,12 +185,15 @@ function filtrarGastos(objeto)
                     return;
                 }
             }
-            if (objeto.hasOwnProperty('etiquetasTiene') && typeof objeto.etiquetasTiene !== 'undefined')
-            {
-                for (let etiqueta of objeto.etiquetasTiene)
-                {
-                    if (!gasto.etiquetas.includes(etiqueta))
-                    { 
+            if (objeto.hasOwnProperty("etiquetasTiene")) {
+                if (objeto.etiquetasTiene.length != 0) {
+                    let devuelve = false;
+                    for (let etiqueta of objeto.etiquetasTiene) {
+                        if (gasto.etiquetas.includes(etiqueta)) {
+                            devuelve = true;
+                        }
+                    }
+                    if (!devuelve) {
                         return;
                     }
                 }
