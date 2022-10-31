@@ -6,6 +6,7 @@
 let presupuesto = 0 ;
  let gastos=[];
  let idGasto =0;
+
 function actualizarPresupuesto(dinero)
 {
    if (typeof dinero ==="number" && dinero > 0 ){
@@ -50,7 +51,7 @@ function CrearGasto(descripcion,valor ,fecha= Date.now(), ...etiquetas )
         }else{
             this.valor=0;
         }
-        
+
         this.mostrarGasto = function() 
         {
             return (`Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €`)
@@ -98,7 +99,6 @@ function CrearGasto(descripcion,valor ,fecha= Date.now(), ...etiquetas )
             this.fecha =(!isNaN(fechaActual)) ? fechaActual : this.fecha;
         }
 
-       
         this.anyadirEtiquetas = function(...etiquetas) 
         {
             
@@ -116,7 +116,7 @@ function CrearGasto(descripcion,valor ,fecha= Date.now(), ...etiquetas )
 
             this.etiquetas.push(...value);
         }
-    
+
         this.borrarEtiquetas = function(...etiquetas) 
         {
             for (let i = 0; i < etiquetas.length; i++)
@@ -130,18 +130,28 @@ function CrearGasto(descripcion,valor ,fecha= Date.now(), ...etiquetas )
                 }
             }
         }
+
         this.obtenerPeriodoAgrupacion = function (periodo)
         {
             let fecha=new Date(this.fecha);
+            let mesSumado=(fecha.getMonth()+1)
             if (typeof periodo ==="string") 
             {
                 if(periodo == "dia"){
-                    return (fecha.getFullYear()+fecha.getMonth()+fecha.getDate());
+                    if(mesSumado < 10){
+                        return (fecha.getFullYear()+"-0"+mesSumado+"-0"+fecha.getDate());
+                    }else{
+                        return (fecha.getFullYear()+"-"+mesSumado+"-"+fecha.getDate());
+                    }
                 }
                 if(periodo =="mes"){
-                    let mesSumado=(fecha.getMonth()+1)
-                    return (fecha.getFullYear()+"-0"+mesSumado);
+                    if(mesSumado < 10){
+                        return (fecha.getFullYear()+"-0"+mesSumado);
+                    }else{
+                        return (fecha.getFullYear()+"-"+mesSumado);
+                    }
                 }
+
                 if(periodo == "anyo"){
                     return (fecha.getFullYear());
                 }
@@ -149,6 +159,8 @@ function CrearGasto(descripcion,valor ,fecha= Date.now(), ...etiquetas )
            
 
         }
+
+
     // TODO
 }
 
@@ -196,8 +208,10 @@ function calcularBalance(){
 }
 
 
-function filtrarGastos(){
-
+function filtrarGastos({fechaDesde, fechaHasta, valorMinimo, valorMaximo, descripcionContiene, etiquetasTiene}){
+    
+    let gastosFiltrados= gastos.filter( item =>item.fecha == fechaDesde);
+    return gastosFiltrados;
 }
 function agruparGastos (){
 
