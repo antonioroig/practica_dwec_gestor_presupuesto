@@ -273,6 +273,7 @@ function CrearGasto(descripcion,valor,fecha,...etiqueta) {
    
     function agruparGastos(perdio = "mes",etiquetas,fechad,fechaH)
     {
+        //acabada
         let arrayFiltrado= filtrarGastos({fechaDesde: fechad, fechaHasta:fechaH,etiquetasTiene:etiquetas});
 
         let agrupados = arrayFiltrado.reduce(function(acc,item)
