@@ -100,9 +100,24 @@ function filtrarGastos({fechaDesde, fechaHasta, valorMinimo, valorMaximo, descri
 
 }
 //
-function agruparGastos(periodo = `mes`, etiquetas, fechaDesde, fechaHasta){
+function agruparGastos(periodo = `mes`, etiqueta2, fechaDesde2, fechaHasta2){
 
+    let arrayInicial = filtrarGastos({fechaDesde : fechaDesde2, fechaHasta : fechaHasta2, etiquetasTiene : etiqueta2});
 
+    let arrayFinal = arrayInicial.reduce(function(acc,gasto){
+
+    let periodoObtenido = gasto.obtenerPeriodoAgrupacion(periodo);
+    
+    if(acc.hasOwnProperty(periodoObtenido)){
+        if(!isNaN(acc[periodoObtenido])){
+            acc[periodoObtenido] += gasto.valor;
+        }
+    }else{
+        acc[periodoObtenido] = gasto.valor;
+    }
+    return acc;
+    },{});
+    return arrayFinal;
 
 }
 //      
@@ -172,8 +187,13 @@ function CrearGasto(descripcion,valor,fecha,...etiqueta) {
                 }else{
                     return `${date.getFullYear()}` + `-` + `${(date.getMonth() + 1)}` + `-` + `0`+`${(date.getDate())}`
                 }
+            }else{
+                if(date.getDate() > 9){
+                    return `${date.getFullYear()}` + `-` + `0`+`${(date.getMonth() + 1)}` + `-` +`${(date.getDate())}`
+                }else{
+                    return `${date.getFullYear()}` + `-` + `0`+`${(date.getMonth() + 1)}` + `-` + `0`+`${(date.getDate())}`
+                }
             }
-            return `${date.getFullYear()}` + `-` + `0`+`${(date.getMonth() + 1)}` + `-` + `0`+`${(date.getDate())}`
         }
         if(periodo === `mes`){
             if((date.getMonth()+1) > 9){
