@@ -176,24 +176,55 @@ function calcularBalance()
 {
     return presupuesto - calcularTotalGastos();
 }
-function filtrarGastos(  valor_max ,valor_min,descripcionContiene,fechaDesde,fechaHasta)
+function filtrarGastos({
+    fechaHasta,
+    fechaDesde,
+    valorMinimo,
+    valorMaximo,
+    descripcionContiene,
+    etiquetasTiene})
 {
     
-    let arrayFiltrado = new Array();
     
-    
-        arrayFiltrado = gastos.filter(function(gasto){
+      let arrayFiltrado = gastos.filter(function(gasto){
             let anyade = true;
-            if( valor_max != undefined || valor_min != undefined)
+            if( valorMaximo != undefined )
             {
-                if (gasto.valor >= valor_max && gasto.valor <= valor_min)
+                if (gasto.valor > valorMaximo || isNaN(valorMaximo) )
+                {
+                 anyade = false;
+                }
+            }
+            if( valorMinimo != undefined )
+            {
+                if (gasto.valor < valorMinimo || isNaN(valorMinimo) )
                 {
                  anyade = false;
                 }
             }
             if(descripcionContiene != undefined)
             {
-                if(descripcionContiene != gasto.descripcion)
+                descripcionContiene.toUpperCase();
+                gasto.descripcion.toUpperCase();
+                if( gasto.descripcion.indexOf(descripcionContiene) === -1)
+                {
+                    anyade = false;
+                }
+            }
+            if(etiquetasTiene != undefined)
+            {
+                let tiene = false;
+                for(let i = 0; i <etiquetasTiene.length; i++)
+                {
+                    for( let j = 0; j < gasto.etiquetas.length; j++)
+                    {
+                        if(etiquetasTiene[i] === gasto.estiquetas[j])
+                        {
+                            tiene= true;
+                        }
+                    }
+                }
+                if(tiene === false)
                 {
                     anyade = false;
                 }
@@ -201,14 +232,14 @@ function filtrarGastos(  valor_max ,valor_min,descripcionContiene,fechaDesde,fec
         
             if(fechaDesde != undefined)
             {
-                if(isNan(Date.parse(fechaDesde))  || Date.parse(fechaDesde) > gasto.fecha)
+                if(isNaN(Date.parse(fechaDesde)) || Date.parse(fechaDesde) > gasto.fecha)
                 {
                     anyade = false;   
                 }
             }
             if(fechaHasta != undefined)
             {
-                if(isNan(Date.parse(fechaHasta))  || Date.parse(fechaHasta) < gasto.fecha)
+                if(isNaN(Date.parse(fechaHasta)) || Date.parse(fechaHasta) < gasto.fecha)
                 {
                     anyade = false;
                 }
