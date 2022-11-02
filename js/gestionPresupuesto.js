@@ -278,8 +278,23 @@ function agruparGastos(periodo, etiquetas, fechaDesde, fechaHasta)
     {
         let perAgrup = gastos.obtenerPeriodoAgrupacion(periodo);
 
-        return ;
-    }, {});
+        if (perAgrup == mes)
+        {
+
+        }
+
+        if (perAgrup == dia)
+        {
+
+        }
+
+        if (perAgrup == mes && etiquetas)
+        {
+            
+        }
+
+        return ret;
+    }, [{}]);
 
     return result;
 }
