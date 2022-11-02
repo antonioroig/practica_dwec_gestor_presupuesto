@@ -182,141 +182,65 @@ function calcularBalance(){
 function filtrarGastos({fechaDesde, fechaHasta, valorMinimo, valorMaximo, descripcionContiene,etiquetasTiene}){
     let buscarGastos = gastos.filter(function(gastobuscado){
         let anyade = true;
-        let fechaOK = true;
-        let valorOK = true;
+        let fechaDesdeOK = true;
+        let fechaHastaOK = true;
+        let valorMinimoOK = true;
+        let valorMaximoOK = true;
         let desOK = true;
         let etiOK = true;
-        /*Comprobar Gasto*/
+
+        /*Comprobar Descripción*/
         let desGasto = gastobuscado.descripcion;
-        if(descripcionContiene !== undefined)
+        if(descripcionContiene !== undefined && (desGasto.toUpperCase()).indexOf(descripcionContiene.toUpperCase()) == -1)
         {
-            if((desGasto.toUpperCase()).indexOf(descripcionContiene.toUpperCase()) !== -1)
-            {
-                desOK = true;
-            }            
-            else
-            {
-                desOK = false;
-            }
-        }      
+            desOK = false;
+        }     
+
         /*Comprobar Valor*/
         let valorGasto = gastobuscado.valor;
-        if(valorMinimo === undefined)
+        if(valorMinimo > valorGasto )
         {
-            if(valorMaximo === undefined)
-            {
-                valorOK = true;
-            }
-            else
-            {
-                if(valorMaximo === !isNaN)
-                {
-                    if(valorGasto <= valorMaximo)
-                    {
-                        valorOK = true;
-                    }
-                    else
-                    {
-                        valorOK = false;
-                    }
-                }
-                else
-                {
-                    valorOK = false;
-                }  
-            }
+            valorMinimoOK = false;
         }
-        else
+
+        if(valorMaximo < valorGasto )
         {
-            if(valorMinimo === !isNaN)
-            {
-                if(valorMaximo === undefined)
-                {
-                    if(valorGasto >= valorMinimo)
-                    {
-                        valorOK = true;
-                    }
-                    else
-                    {
-                        valorOK = false;
-                    }
-                }
-                else
-                {
-                    if(valorMaximo === !isNaN)
-                    {
-                        if(valorMinimo <= valorGasto <= valorMaximo)
-                        {
-                            valorOK = true;
-                        }
-                        else
-                        {
-                            valorOK = false;
-                        }
-                    }
-                    else
-                    {
-                        valorOK = false;
-                    }
-                }
-            }
-            else
-            {
-                valorOK = false;
-            }
+            valorMaximoOK = false;
         }
+
         /*Comprobar Fecha*/
         let fechaGasto = gastobuscado.fecha;
-        if(fechaDesde === undefined)
+        if(Date.parse(fechaDesde) > fechaGasto || Date.parse(fechaDesde) == isNaN)
         {
-            if(fechaHasta === undefined)
-            {
-                fechaOK = true;
-            }
-            else
-            {
-                    fechaHasta = Date.parse(fechaHasta);
-                    if(fechaGasto <= fechaHasta)
-                    {
-                        fechaOK = true;
-                    }
-                    else
-                    {
-                        fechaOK = false;
-                    }             
-            }
+            fechaDesdeOK = false;
         }
-        else
+
+        if(Date.parse(fechaHasta) < fechaGasto || Date.parse(fechaHasta) == isNaN)
         {
-                fechaDesde = Date.parse(fechaDesde);
-                if(fechaHasta === undefined)
-                {
-                    if(fechaGasto >= fechaDesde)
-                    {
-                        fechaOK = true;
-                    }
-                    else
-                    {
-                        fechaOK = false;
-                    }
-                }
-                else
-                {
-                        fechaHasta = Date.parse(fechaHasta);
-                        if(fechaDesde <= fechaGasto <= fechaHasta)
-                        {
-                            fechaOK = true;
-                        }
-                        else
-                        {
-                            fechaOK = false;
-                        }
-                }
+            fechaHastaOK = false;
         }
+
         /*Comprobar Etiquetas*/
+        let gastoEtiquetas = gastobuscado.etiquetas;
+        if(etiquetasTiene !== undefined)
+        {
+            let contiene = false;
+            for(let i = 0; i < etiquetasTiene.length;i++){    
+                for(let j =0; j < gastoEtiquetas.length; j++)
+                {
+                    if(gastoEtiquetas[j] === etiquetasTiene[i])
+                    {
+                        contiene = true;
+                    }
+                }  
+            }
+            if(contiene === false)
+            {
+                etiOK = false;             
+            }
+        }      
 
-
-        if(fechaOK === true && valorOK === true && desOK === true && etiOK === true)
+        if(fechaDesdeOK === true && fechaHastaOK === true && valorMinimoOK === true && valorMaximoOK === true && desOK === true && etiOK === true)
         {
             anyade = true;
         }
@@ -325,7 +249,7 @@ function filtrarGastos({fechaDesde, fechaHasta, valorMinimo, valorMaximo, descri
             anyade = false;
         }
 
-        return anyade;s
+        return anyade;
     });
     return buscarGastos;
 }
