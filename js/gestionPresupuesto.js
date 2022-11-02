@@ -146,7 +146,7 @@ function calcularTotalGastos() {
 function calcularBalance() {
     return presupuesto - calcularTotalGastos();
 }
-function filtrarGastos({fechaDesde, fechaHasta, valorMaximo, valorMinimo, descripcionContiene, ...etiquetasTiene}){
+function filtrarGastos({fechaDesde, fechaHasta, valorMaximo, valorMinimo, descripcionContiene, etiquetasTiene}){
     let filtrados = gastos.filter(function (gasto){
             let ok = true;
             if(fechaDesde && Date.parse(fechaDesde) > gasto.fecha){
@@ -166,15 +166,15 @@ function filtrarGastos({fechaDesde, fechaHasta, valorMaximo, valorMinimo, descri
             }
             if(etiquetasTiene){
                 let etiquitasIdenticas = false;
-                gasto.etiquetas.forEach(etiqueta1 => {
-                    etiquetasTiene.forEach(etiqueta2 => {
-                        if( etiqueta1.toLowerCase()==etiqueta2.toLowerCase())
+                etiquetasTiene.forEach(etiqueta1 => {
+                    gasto.etiquetas.forEach(etiqueta2 => {
+                        if( etiqueta1.toLowerCase()===etiqueta2.toLowerCase())
                         {
                             etiquitasIdenticas = true;
                         }
                     })
                 })
-                if(etiquitasIdenticas)
+                if(!etiquitasIdenticas && etiquetasTiene)
                 {
                     ok=false;
                 }
@@ -188,8 +188,22 @@ function filtrarGastos({fechaDesde, fechaHasta, valorMaximo, valorMinimo, descri
     }
    return filtrados;
 }
-function agruparGastos(){
+function agruparGastos(periodo = `mes`, etiquetas, fechaDesde, fechaHasta){
+    let obj = {
+        fechaDesde: fechaDesde,
+        fechaHasta: fechaHasta,
+        etiquetasTiene: etiquetas
+    }
+let filtro = filtrarGastos(obj)
 
+let reducido = filtro.reduce(function(acomulador, item){
+    if(typeof acomulador[item.obtenerPeriodoAgrupacion(periodo)]!= "number"){
+        acomulador[item.obtenerPeriodoAgrupacion(periodo)] = 0;
+    }
+    acomulador[item.obtenerPeriodoAgrupacion(periodo)] += item.valor;
+    return acomulador;
+},{})
+return reducido;
 }
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
 // Las funciones y objetos deben tener los nombres que se indican en el enunciado
