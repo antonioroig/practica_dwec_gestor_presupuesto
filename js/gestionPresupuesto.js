@@ -236,7 +236,7 @@ function filtrarGastos({fechaDesde,fechaHasta,valorMinimo,valorMaximo,descripcio
             {
                 for (let j = 0; j < gasto.etiquetas.length; j++)
                 {
-                    if (etiquetasTiene[i] === gasto.etiquetas[j])
+                    if (etiquetasTiene[i].toUpperCase() === gasto.etiquetas[j].toUpperCase())
                     {
                         label = true;
                     }
@@ -256,7 +256,8 @@ function filtrarGastos({fechaDesde,fechaHasta,valorMinimo,valorMaximo,descripcio
     return arryFiltrado;
 }
 function agruparGastos(periodo = "mes",etiquetas, fechaDesde,fechaHasta,){
-    
+    let comprobar = true;
+    if (fecha )
 }
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
