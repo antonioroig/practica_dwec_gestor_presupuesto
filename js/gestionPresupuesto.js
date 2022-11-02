@@ -265,7 +265,7 @@ function filtrarGastos({fechaDesde,
             {
                 for (let j = 0; j < etiquetasTiene.length; j++)
                 {
-                    if(gasto.etiquetas.length[i] === gasto.etiquetasTiene[j])
+                    if(gasto.etiquetas[i] === etiquetasTiene[j])
                     {
                         array = true;
                     }
@@ -284,9 +284,9 @@ function filtrarGastos({fechaDesde,
     return arrayfiltrado;
 }
 
-function agruparGastos()
+function agruparGastos(periodo="mes",etiquetas,fechaDesde,fechaHasta)
 {
-
+    let arrayfiltrado = filtrarGastos({fechaDesde: fechaDesde,fechaHasta: fechaHasta, etiquetasTiene: etiquetas});
 }
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
