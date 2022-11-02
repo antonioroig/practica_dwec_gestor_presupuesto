@@ -214,6 +214,7 @@ function filtrarGastos({fechaDesde,
     {
         
         let anyadir = true;
+        let array = false;
         
         if(descripcionContiene != undefined)
         {
@@ -258,8 +259,25 @@ function filtrarGastos({fechaDesde,
             }
        }
 
-       
-        
+       if(etiquetasTiene != undefined)
+       {
+            for (let i = 0; i < gasto.etiquetas.length; i++) 
+            {
+                for (let j = 0; j < etiquetasTiene.length; j++)
+                {
+                    if(gasto.etiquetas.length[i] === gasto.etiquetasTiene[j])
+                    {
+                        array = true;
+                    }
+                }
+            }  
+
+            if(array === false)
+            {
+                anyadir = false;
+            }
+       }
+
         return anyadir;
     });
     
