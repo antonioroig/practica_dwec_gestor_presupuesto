@@ -204,61 +204,72 @@ function CrearGasto(descripcion,valor,fecha,...etiqueta) {
         return presupuesto - calcularTotalGastos();
     }
 
-    function filtrarGastos({fechaDesde,fechaHasta,valorMinimo, valorMaximo,descripcionContiene,...etiquetasTiene})
-    {
-        let array = gastos;
+    function filtrarGastos(objeto) {
+        if (objeto != undefined || objeto != null) 
+        {
+            let arrayNuevo = gastos.filter(gasto => {
+                if (objeto.hasOwnProperty("fechaDesde")) 
+                {
+                    if (gasto.fecha < Date.parse(objeto.fechaDesde) && typeof objeto.fechaDesde !== "undefined")
+                    {
+                        return;
+                    } 
+                }
+                if (objeto.hasOwnProperty("fechaHasta") && typeof objeto.fechaHasta !== "undefined") 
+                {
+                    if (gasto.fecha > Date.parse(objeto.fechaHasta)) 
+                    {
+                        return;
+                    }
+                }
+                if (objeto.hasOwnProperty("valorMinimo") && typeof objeto.valorMinimo !== "undefined") 
+                {
+                    if (gasto.valor < objeto.valorMinimo) 
+                    {
+                        return;
+                    }
+                }
+                if (objeto.hasOwnProperty("valorMaximo") && typeof objeto.valorMaximo !== "undefined") 
+                {
+                    if (gasto.valor > objeto.valorMaximo)
+                    {
+                        return;
+                    }
+                }
+                if (objeto.hasOwnProperty("descripcionContiene") && typeof objeto.descripcionContiene !== "undefined") 
+                {
+                    if (!gasto.descripcion.includes(objeto.descripcionContiene))
+                    {
+                        return;
+                    }
+                        
+                }
+                if (objeto.hasOwnProperty("etiquetasTiene") && Array.isArray(objeto.etiquetasTiene) && objeto.etiquetasTiene.length !== 0) 
+                {
+                    let ok= false;
 
-        
-            if(fechaDesde)
-            {
-                array = gastos.filter(function(gasto) {
-                gasto.fecha >= Date.parse(fechaDesde);
+                    for (let descripcion of objeto.etiquetasTiene)
+                    {
+                        if (gasto.etiquetas.includes(descripcion)) 
+                        {
+                            ok = true; 
+                        }
+                        
+                    } 
+                          
+                    if (!ok) 
+                    {
+                        return;
+                    }
+                        
+                }
+                return gasto;
             });
-            }
-            
-            if(fechaHasta)
-            {
-                array = array.filter(function(gasto) { 
-                gasto.fecha <= Date.parse(fechaHasta);
-            });
-            }
-            
-            if(valorMinimo)
-            {
-                array = array.filter(function(gasto) {
-                gasto.valor >= valorMinimo;
-                });
-            }
-
-
-            if(valorMaximo)
-            {
-                array = array.filter(function(gasto) {
-                gasto.valor <= valorMaximo;
-                });
-            }
-            
-            if(descripcionContiene)
-            {
-                array = array.filter(function(gasto) {
-                gasto.descripcion.toUpperCase() === descripcionContiene.toUpperCase();  
-                });
-            }
-
-
-            if(etiquetasTiene)
-            {
-                array = array.filter(function(gasto) {
-                gasto.etiquetas.includes(etiquetasTiene); 
-            });
-            }
-
-
-        return array;
-
-        
-        
-    }
+                return arrayNuevo;
+        } 
+        else 
+            return gastos;
+    };
    
     function agruparGastos()
     {
