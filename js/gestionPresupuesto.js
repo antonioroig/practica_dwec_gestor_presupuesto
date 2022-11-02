@@ -199,12 +199,13 @@ function filtrarGastos({fechaDesde,
     let ret = gastos.filter(function(gasto)
     {
         let anyade = true;
+        let igual;
         /*Si tengo uno de los dos requisitos en valor o en fecha, se tiene que cumplir y el otro se 
         puede omitir. Si te dan los 2, se tienen que cumplir los 2*/
 
         if (fechaDesde)
         {
-            if (Date.parse(gasto.fecha) < Date.parse(fechaDesde))
+            if (gasto.fecha < Date.parse(fechaDesde))
             {
                 anyade = false;
             }
@@ -212,7 +213,7 @@ function filtrarGastos({fechaDesde,
 
         if (fechaHasta)
         {
-            if (Date.parse(gasto.fecha) > Date.parse(fechaHasta))
+            if (gasto.fecha > Date.parse(fechaHasta))
             {
                 anyade = false;
             }
@@ -220,7 +221,7 @@ function filtrarGastos({fechaDesde,
         
         if (valorMinimo)
         {
-            if (gasto.valor < valorMinimo)
+            if (gasto.valor <= valorMinimo)
             {
                 anyade = false;
             }
@@ -228,20 +229,36 @@ function filtrarGastos({fechaDesde,
         
         if (valorMaximo)
         {
-            if (gasto.valor > valorMaximo)
+            if (gasto.valor >= valorMaximo)
             {
                 anyade = false;
             }
         }
 
-        if (gasto.descripcion.includes(descripcionContiene) || anyade == false)
+        if (descripcionContiene)
         {
-            anyade = false;
+            if (!gasto.descripcion.includes(descripcionContiene))
+                anyade = false;
         }
 
-        if (etiquetasTiene === gasto.etiquetas || anyade == false)
+        if (etiquetasTiene)
         {
-            anyade = false;
+            for (let i = 0; i < gasto.length; i++)
+            {
+                anyade = false;
+                for (let j = 0; j < etiquetasTiene.length; j++)
+                {
+                    if (gasto.etiquetas[i] == etiquetasTiene[j] && anyade == false)
+                    {
+                        anyade = true;
+                        break;
+                    }
+                }
+                if (anyade == true)
+                {
+                    break;
+                }
+            }
         }
 
         return anyade;
