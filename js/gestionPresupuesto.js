@@ -214,82 +214,52 @@ function filtrarGastos({fechaDesde,
     {
         
         let anyadir = true;
-
-        if(fechaDesde != undefined)
-        {
-            fechaDesde = Date.parse(fechaDesde);
-        }
-
-        if(fechaHasta != undefined)
-        {
-            fechaHasta = Date.parse(fechaHasta);
-        }
         
         if(descripcionContiene != undefined)
         {
             gasto.descripcion.toUpperCase();
             descripcionContiene.toUpperCase();
 
-            if(gasto.descripcion.indexOf(descripcionContiene))
-            {
-                anyadir = true;
-                console.log(anyadir);
-            }
-            else
+            if(gasto.descripcion.indexOf(descripcionContiene) === -1)
             {
                 anyadir = false;
-                console.log(anyadir);
             }
         }
 
         if(fechaDesde != undefined)
         {
-            if(fechaDesde <= gasto.fecha)
-            {
-                anyadir = true;
-                console.log(anyadir + " - fDesdeOK");
-            }
-            else
+            if(isNaN(Date.parse(fechaDesde)) || Date.parse(fechaDesde) > gasto.fecha)
             {
                 anyadir = false;
-                console.log(anyadir + " - fDesdeNO");
             }
         }
        
-        if(fechaHasta != undefined)
-        {
-            if(gasto.fecha <= fechaHasta)
-            {
-                anyadir = true;
-                console.log(anyadir + " - fHastaOK");
-            }
-            else
+       if(fechaHasta != undefined)
+       {
+            if(isNaN(Date.parse(fechaHasta)) || Date.parse(fechaHasta) < gasto.fecha)
             {
                 anyadir = false;
-                console.log(anyadir + " - fHastaNO");
             }
-        }
+       }
         
-        if (fechaHasta != undefined && fechaDesde != undefined)
-        {
-            if(fechaDesde <= gasto.fecha && gasto.fecha <= fechaHasta)
-            {
-                anyadir = true;
-                console.log(anyadir + " - fDesdeyfHastaOK");
-            }
-            else
+       if(valorMinimo != undefined)
+       {
+            if(isNaN(valorMinimo) || valorMinimo > gasto.valor)
             {
                 anyadir = false;
-                console.log(anyadir + " - fDesdeyfHastaOK");
             }
-        }
-        console.log(gasto);
-        console.log(fechaDesde + " - 1",
-            fechaHasta + " - 2",
-            valorMinimo + " - 3",
-            valorMaximo + " - 4",
-            descripcionContiene + " - 5",
-            etiquetasTiene + " - 6");
+       }
+       
+       if(valorMaximo != undefined)
+       {
+            if(isNaN(valorMaximo) || valorMaximo < gasto.valor)
+            {
+                anyadir = false;
+            }
+       }
+
+       
+        
         return anyadir;
     });
     
