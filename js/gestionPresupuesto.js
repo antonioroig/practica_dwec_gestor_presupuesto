@@ -202,9 +202,11 @@ function filtrarGastos({fechaDesde,fechaHasta,valorMinimo,valorMaximo,descripcio
                 if(etiquetasTiene){
                     let comprobar = false;
                     for(let i = 0; i < etiquetasTiene.length; i++){
-                       if(gasto.etiquetas.includes(etiquetasTiene[i])){
-                        comprobar = true;
-                       }
+                        for(let j = 0; j < gasto.etiquetas.length;j++){
+                            if(etiquetasTiene[i] === gasto.etiquetas[j]){
+                                comprobar = true;
+                            }
+                        }
                     }
                     if(!comprobar){
                         anydir = false;
@@ -217,13 +219,17 @@ function filtrarGastos({fechaDesde,fechaHasta,valorMinimo,valorMaximo,descripcio
 }
 
 function agruparGastos(periodo = "mes",etiquetas,fechadesde,fechahasta = Date.now()){
-        let arry = {};
-        let array = filtrarGastos({fechaDesde : fechadesde,fechaHasta : fechahasta,etiquetasTiene : etiquetas}).reduce(function(acumulador,gasto){
 
+        let array = filtrarGastos({fechaDesde : fechadesde,fechaHasta : fechahasta,etiquetasTiene : etiquetas})
+        let res = array.reduce(function(acumulador,gasto){
+            let periodo2= gasto.obtenerPeriodoAgrupacion(periodo);
+            if(isNaN(acumulador[periodo2])){
+                acumulador[periodo2] = 0;
+            }
             acumulador[gasto.obtenerPeriodoAgrupacion(periodo)] += gasto.valor;
             return acumulador;
-        }, arry);
-        return array;
+        }, {});
+        return res;
 }
            
   
