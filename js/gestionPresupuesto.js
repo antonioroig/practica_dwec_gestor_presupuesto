@@ -150,6 +150,10 @@ function CrearGasto(descripcion,valor,fecha = Date.now(), ...etiquetas)
             if(dia < 10 && mes < 10)
             {
                 return anyo + '-0' + mes + '-0' + dia;
+            }
+            else
+            {
+                return anyo + '-' + mes + '-' + dia;
             }         
         }
         else
@@ -200,74 +204,82 @@ function calcularBalance()
 
 function filtrarGastos({fechaDesde, fechaHasta, valorMinimo, valorMaximo, descripcionContiene, etiquetasTiene})
 {
-    let ret = true;
-
+    
     let arrayFiltrado = gastos.filter(function(gasto){
+
+        let fechaDvalida = true;
+        let fechaHvalida = true;
+        let valorMinvalido = true;
+        let valorMaxvalido = true; 
+        let descripcionvalida = true;
+        let etiquetasvalida = true;
+
+        if(fechaDesde !== undefined)
+        {
+            if(Date.parse(fechaDesde) == isNaN || Date.parse(fechaDesde) > gasto.fecha)
+            {
+                fechaDvalida = false;
+            }
+        }
+        if(fechaHasta !== undefined)
+        {
+            if(Date.parse(fechaHasta) == isNaN || Date.parse(fechaHasta) < gasto.fecha)
+            {
+                fechaHvalida = false;
+            }   
+        }
+        if(valorMinimo != undefined)
+        {
+            if(valorMinimo > gasto.valor)
+            {
+                valorMinvalido = false;
+            }   
+        }
+        if(valorMaximo != undefined)
+        {
+            if(valorMaximo < gasto.valor)
+            {
+                valorMaxvalido = false;
+            }    
+        }
+
+        if(descripcionContiene)
+        {
+            let desc = gasto.descripcion.toUpperCase();
+            let contiene = descripcionContiene.toUpperCase();
+            if(!desc.includes(contiene))
+            {
+                descripcionvalida = false;
+            }
+        }
+
+        if(etiquetasTiene)
+        {
+            let xd = false;
+            for(let i = 0; i < etiquetasTiene.length; i++)
+            {
+                for(let j = 0; j < gasto.etiquetas.length; j++)
+                {
+                    if(etiquetasTiene[i] === gasto.etiquetas[j])
+                    {
+                        xd = true;
+                    }
+                }
+            }
+            if(xd === false)
+            {
+                etiquetasvalida = false;
+            }
+        }
         
-        if(descripcionContiene != undefined)
+        if(fechaDvalida && fechaHvalida && valorMinvalido && valorMaxvalido && descripcionvalida && etiquetasvalida)
         {
-            if(descripcionContiene === gasto.descripcion)
-            {
-                ret = true;
-            }
-            else
-            {
-                ret = false;
-            }
+            return true;
         }
-
-        if((!isNaN(Date.parse(fechaDesde)) && fechaDesde !== undefined)  || (!isNaN(Date.parse(fechaHasta)) && fechaHasta !== undefined))
+        else
         {
-            let fechaD = Date.parse(fechaDesde);
-            let fechaH = Date.parse(fechaHasta);
-
-            if(gasto.fecha >= fechaD)
-            {
-                ret = true;
-            }
-            else
-            {
-                ret = false;
-            }
-            if(gasto.fecha <= fechaH)
-            {
-                ret = true;
-            }
-            else
-            {
-                ret = false;
-            }
-            if(gasto.fecha >= fechaD && gasto.fecha <= fechaH)
-            {
-                ret = true;
-            }
-            else
-            {
-                ret = false;
-            }
+            return false;
         }
-        
-        if(typeof valorMinimo === 'number' && typeof valorMaximo === 'number')
-        {
-            if(gasto.valor >= valorMinimo)
-            {
-                ret = true;
-            }
-            else
-            {
-                ret = false;
-            }
-            if(gasto.valor <= valorMaximo)
-            {
-                ret = true;
-            }
-            else
-            {
-                ret = false;
-            }
-        }
-
-        return ret;
     });
 
     return arrayFiltrado;
