@@ -207,7 +207,8 @@ function calcularBalance(){
     return balance;
 }
 
-function filtrarGastos({fechaDesde, fechaHasta, valorMinimo, valorMaximo, descripcionContiene, etiquetasTiene}){
+function filtrarGastos({fechaDesde, fechaHasta, valorMinimo, valorMaximo, descripcionContiene, etiquetasTiene})
+{
    
    
     let gastosCorrectos = gastos.filter(function(gasto)
@@ -283,9 +284,34 @@ return gastosCorrectos;
  
 }
 
-function agruparGastos (){
 
+
+
+function agruparGastos(periodo = "mes" , etiquetas, fechaDesde, fechaHasta) 
+{
+    let gastoAfiltrar= {fechaHasta : fechaHasta, fechaDesde : fechaDesde,etiquetasTiene : etiquetas};
+
+    let gastosFiltrados = filtrarGastos(gastoAfiltrar);
+
+    let reducido = gastosFiltrados.reduce((acc, item) => 
+    {
+                let tiempoAcortado = item.obtenerPeriodoAgrupacion(periodo);
+
+                if (acc[tiempoAcortado] == null)
+                {
+                    acc[tiempoAcortado] = item.valor;
+                } else 
+                {
+                    acc[tiempoAcortado] += item.valor;
+                }
+
+                return acc;
+            
+    }, {});
+    
+    return reducido;
 }
+
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
 // Las funciones y objetos deben tener los nombres que se indican en el enunciado
@@ -298,9 +324,9 @@ export   {
     anyadirGasto, 
     borrarGasto, 
     calcularTotalGastos ,
-     calcularBalance,
-     filtrarGastos,
-     agruparGastos,
+    calcularBalance,
+    filtrarGastos,
+    agruparGastos
 
    
 }
