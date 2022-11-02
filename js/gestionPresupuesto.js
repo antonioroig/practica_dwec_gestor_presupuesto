@@ -285,7 +285,10 @@ function CrearGasto(descripcion,valor,fecha,...etiqueta) {
                     acc[perdioSacado] += item.valor;
                 }
             }
-            
+            else
+            {
+                acc[perdioSacado] = item.valor
+            }
             return acc
 
         }, {} )
