@@ -259,43 +259,81 @@ function calcularBalance(){
 
 
 
-function filtrarGastos({fecDesde, fechaHasta, valorMinimo, valorMaximo, descripcionContiene, etiquetasTiene}){
+function filtrarGastos({fechaDesde, fechaHasta, valorMinimo, valorMaximo, descripcionContiene, etiquetasTiene}){
 
 let arrayFiltrado = gastos.filter(function(gasto){
 
     let anyadir = true;
+    let cont = 0;
+   
+    if(fechaDesde)
+    {
+        if(gasto.fecha <  Date.parse(fechaDesde))
+        {
+        anyadir = false;
+        }
+    }
+
+    if(fechaHasta)
+    {
+    if(gasto.fecha > Date.parse(fechaHasta))
+        {
+        anyadir = false
+        }
+    }
+
+    if(valorMinimo)
+    {
+        if(gasto.valor < valorMinimo)
+        {
+            anyadir = false;
+        }
+    }
+
+    if(valorMaximo)
+    {
+        if(gasto.valor > valorMaximo)
+        {
+            anyadir = false;
+        }
+    }
+
     
+    if(descripcionContiene)
+    {
+        let des1 = gasto.descripcion.toLowerCase();
+        let des2 = descripcionContiene.toLowerCase();
+        
+        if(!des1.includes(des2))
+        {
+            anyadir = false;
+        }
+    }
    
 
-    if(isNaN(Date.parse(fecDesde)) || gasto.fecha <  Date.parse(fecDesde))
-    {
-       anyadir = false;
-    }
     
 
-    
-    if(isNaN(Date.parse(fechaHasta)) || gasto.fecha > Date.parse(fechaHasta) )
-    {
-       anyadir = false
-    }
-   
+    let etiq = false;
 
-    if(isNaN(Date.parse(valorMinimo)) || gasto.valor < valorMinimo)
+    if(etiquetasTiene)
     {
+    for(let i = 0; i < etiquetasTiene.length; i++)
+    {
+        for(let j = 0; j < gasto.etiquetas.length; j++)
+        {
+            if(etiquetasTiene[i].toLowerCase() === gasto.etiquetas[j].toLowerCase())
+            {
+                etiq = true;
+            }
+           
+        }
+    }
+    if(!etiq){
         anyadir = false;
     }
-
-    if(isNaN(Date.parse(valorMaximo)) || gasto.valor > valorMaximo)
-    {
-        anyadir = false;
     }
-
-
-   
-
     
-
-   
+    
         return anyadir;
 
 });
@@ -304,7 +342,14 @@ return arrayFiltrado;
 
 }
 
-function agruparGastos(){
+function agruparGastos(periodo, etiquetas, fechaDesde, fechaHasta){
+
+let toatal;
+
+        
+
+
+return toatal;
 
 }
 
