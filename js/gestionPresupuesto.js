@@ -271,7 +271,7 @@ function calcularTotalGastos()
 
 }
 
-function filtrarGastos(fechaDesde, fechaHasta, valorMinimo, valorMaximo, descripcionContiene, etiquetasTiene)
+function filtrarGastos({fechaDesde, fechaHasta, valorMinimo, valorMaximo, descripcionContiene, etiquetasTiene})
 {
 
     let arrayFilter = gastos.filter(function(gasto){
@@ -280,54 +280,87 @@ function filtrarGastos(fechaDesde, fechaHasta, valorMinimo, valorMaximo, descrip
 
         let comprobacion = false;
     
-            if(gasto.fecha && fechaDesde > Date.parse(fechaDesde))
-            {
-
-                anyadir = false;
-
-            }
-            if(gasto.fecha && fechaHasta > Date.parse(fechaHasta))
+            if(gasto.fecha < Date.parse(fechaDesde))
             {
 
                 anyadir = false;
 
             }
 
-            if(gasto.valor && valorMinimo < valorMinimo)
+            if(gasto.fecha > Date.parse(fechaHasta))
             {
 
                 anyadir = false;
 
             }
-
-            if(gasto.valor && valorMaximo > valorMaximo)
+        
+            if(gasto.valor < valorMinimo)
             {
 
                 anyadir = false;
 
             }
+        
+            if(gasto.valor > valorMaximo)
+            {
 
+                anyadir = false;
+
+            }
+        
             if(descripcionContiene)
             {
 
-                anyadir = false;
+                let desc = gasto.descripcion.toLowerCase();
+                let content = descripcionContiene.toLowerCase();
 
+                if(!desc.includes(content))
+                {
+
+                    anyadir = false;
+
+                }
+                
             }
 
             if(etiquetasTiene)
             {
                 
-                
+                for(let i = 0; i < etiquetasTiene.length; i++)
+                {
+
+                    for(let j = 0; j < gasto.etiquetas.length; j++)
+                    {
+
+                        if(etiquetasTiene[i] === gasto.etiquetas[j])
+                        {
+
+                            comprobacion = true;
+
+                        }            
+
+                    }   
+
+                }
+                if(comprobacion === false)
+                {
+
+                    anyadir = false;
+
+                }
 
             }
+
             return anyadir;
+
         }
         );
 
         return arrayFilter;
+
 }
 
-function agruparGastos(){
+function agruparGastos(periodos = 'mes', etiquetas, fechaDesde, fechaHasta){
 
 
 
