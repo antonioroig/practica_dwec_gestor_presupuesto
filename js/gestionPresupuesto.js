@@ -222,11 +222,12 @@ function agruparGastos(periodo = "mes",etiquetas,fechadesde,fechahasta = Date.no
 
         let array = filtrarGastos({fechaDesde : fechadesde,fechaHasta : fechahasta,etiquetasTiene : etiquetas})
         let res = array.reduce(function(acumulador,gasto){
-            let periodo2= gasto.obtenerPeriodoAgrupacion(periodo);
-            if(isNaN(acumulador[periodo2])){
+            let periodo2 = gasto.obtenerPeriodoAgrupacion(periodo);
+            
+            if(!acumulador.hasOwnProperty(periodo2)){
                 acumulador[periodo2] = 0;
             }
-            acumulador[gasto.obtenerPeriodoAgrupacion(periodo)] += gasto.valor;
+            acumulador[periodo2] += gasto.valor;
             return acumulador;
         }, {});
         return res;
