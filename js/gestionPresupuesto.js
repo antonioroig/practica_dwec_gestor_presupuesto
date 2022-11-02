@@ -271,12 +271,35 @@ function CrearGasto(descripcion,valor,fecha,...etiqueta) {
             return gastos;
     };  
 
-    function agruparGastos(periodo = 'mes',etiquetas,fechaDes,fechaHas)
+    function agruparGastos(periodo = "mes",etiquetas,fechad,fechaH)
     {
         
-        let array = filtrarGastos({fechaDesde: fechaDes, fechaHasta:fechaHas}).reduce(function(acc, item) {
-            
-          }, [{}]);
+        let arrayDeGastos = filtrarGastos({fechaDesde: fechad, fechaHasta:fechaH,etiquetasTiene:etiquetas});
+
+        let arrayAgrupados = arrayDeGastos.reduce(function(acc,item)
+        {
+            let per = item.obtenerPeriodoAgrupacion(periodo);
+
+            if(acc.hasOwnProperty(per))
+            {
+                if(!isNaN(acc[per]))
+                {
+                    acc[per] += item.valor;
+                }
+            }
+            else
+            {
+                acc[per] = item.valor;
+            }
+            return acc;
+
+        },{});
+
+
+        return arrayAgrupados;
+
+
+
     }
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
