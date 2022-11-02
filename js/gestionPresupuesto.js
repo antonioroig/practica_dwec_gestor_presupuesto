@@ -54,24 +54,37 @@ function calcularBalance(){
 }
 //
 function filtrarGastos({fechaDesde, fechaHasta, valorMinimo, valorMaximo, descripcionContiene, etiquetasTiene}){
-    if(!fechaDesde && !fechaHasta && !valorMinimo && !valorMaximo && !descripcionContiene && !etiquetasTiene){
-        return gastos;
-    }else{
-        let retArray = [];
-        if(!isNaN(Date.parse(fechaDesde)) && !isNaN(Date.parse(fechaHasta))){
-            console.log(`se metio`);
-            retArray = gastos.filter(gasto => gasto.fecha >= fechaDesde && gasto.fecha <= fechaHasta);
+    
+    let retArray = [];
+    gastos.filter(function(gasto){
+
+        if(!isNaN(Date.parse(fechaDesde)) && gasto.fecha >= fechaDesde){
+            return true;
         }
-        if(valorMinimo === `number` && valorMaximo === `number`){
-            retArray = gastos.filter(gasto => gasto.valor >= valorMinimo && gasto.valor <= valorMaximo);
+        if(!isNaN(Date.parse(fechaHasta)) && gasto.fecha <= fechaHasta){
+            return true;
         }
-        if(descripcionContiene === `string`){
-            retArray = gastos.filter(gasto => gasto.descripcion.toLowerCase() == descripcionContiene.toLowerCase());
+        if(valorMinimo === `number` && gasto.valor >= valorMinimo){
+            return true;
+        }
+        if(valorMaximo === `number` && gasto.valor <= valorMaximo){
+            return true;
+        }
+        if(descripcionContiene === `string` && gasto.descripcion.toLowerCase().includes(etiquetasTiene.toLowerCase())){
+            return true;
         }
         if(etiquetasTiene){
-            retArray = gastos.filter(gasto => gasto.etiquetas.includes(etiquetasTiene));
+            for(var i = 0; i < etiquetasTiene.length; i++){
+                if(gastos.etiquetas.includes(etiquetasTiene[i])){
+                    return true;
+                }else{
+                    return false;
+                }
+            }
         }
-    }
+
+    })
+
 }
 //
 function agruparGastos(){
