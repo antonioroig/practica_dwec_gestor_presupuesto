@@ -58,11 +58,18 @@ function filtrarGastos({fechaDesde, fechaHasta, valorMinimo, valorMaximo, descri
         return gastos;
     }else{
         let retArray = [];
-        if(isNaN(Date.parse(fechaDesde))){
-            retArray = gastos.filter(gasto => gasto.fecha >= fechaDesde);
+        if(!isNaN(Date.parse(fechaDesde)) && !isNaN(Date.parse(fechaHasta))){
+            console.log(`se metio`);
+            retArray = gastos.filter(gasto => gasto.fecha >= fechaDesde && gasto.fecha <= fechaHasta);
         }
-        if(isNaN(Date.parse(fechaHasta))){
-            retArray = gastos.filter(gasto => gasto.fecha >= fechaHasta);
+        if(valorMinimo === `number` && valorMaximo === `number`){
+            retArray = gastos.filter(gasto => gasto.valor >= valorMinimo && gasto.valor <= valorMaximo);
+        }
+        if(descripcionContiene === `string`){
+            retArray = gastos.filter(gasto => gasto.descripcion.toLowerCase() == descripcionContiene.toLowerCase());
+        }
+        if(etiquetasTiene){
+            retArray = gastos.filter(gasto => gasto.etiquetas.includes(etiquetasTiene));
         }
     }
 }
