@@ -264,55 +264,38 @@ function filtrarGastos({fecDesde, fechaHasta, valorMinimo, valorMaximo, descripc
 let arrayFiltrado = gastos.filter(function(gasto){
 
     let anyadir = true;
-    let cont = 0;
+    
    
 
-    if(isNaN(Date.parse(fecDesde)) || typeof fec !== "string")
+    if(isNaN(Date.parse(fecDesde)) || gasto.fecha <  Date.parse(fecDesde))
     {
        anyadir = false;
     }
     
 
     
-    if(isNaN(Date.parse(fechaHasta)) && typeof fec !== "string")
+    if(isNaN(Date.parse(fechaHasta)) || gasto.fecha > Date.parse(fechaHasta) )
     {
        anyadir = false
     }
    
 
-    if(gasto.valor < valorMinimo)
+    if(isNaN(Date.parse(valorMinimo)) || gasto.valor < valorMinimo)
     {
         anyadir = false;
     }
 
-    if(gasto.valor > valorMaximo)
+    if(isNaN(Date.parse(valorMaximo)) || gasto.valor > valorMaximo)
     {
         anyadir = false;
     }
 
+
+   
 
     
 
-    let etiq = false;
-
-    if(etiquetasTiene)
-    {
-    for(let i = 0; i < gasto.etiquetas.length; i++)
-    {
-        for(let j = 0; j < gasto.etiquetas.length; j++)
-        {
-            if(etiquetasTiene[i] === etiquetasTiene[j])
-            {
-                etiq = true;
-            }
-        }
-    }
-
-    if(!etiq)
-    {
-        anyadir = false;
-    }
-}
+   
         return anyadir;
 
 });
