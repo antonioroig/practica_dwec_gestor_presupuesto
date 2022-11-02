@@ -205,42 +205,49 @@ function filtrarGastos({fechaDesde,fechaHasta,valorMinimo,valorMaximo,descripcio
         let add = true;
         let label = false;
         
-        if (Date.parse(fechaDesde) >= gasto.fecha)
+        if (gasto.fecha < Date.parse(fechaDesde))
         {
              add = false;
         }
-        if (Date.parse(fechaHasta) <= gasto.fecha)
+        if (gasto.fecha > Date.parse(fechaHasta))
         {
              add = false;
         }
-        if ( valorMinimo > gasto.valor)
+        if (gasto.valor < valorMinimo)
         {
             add = false;
         }
-        if (valorMaximo < gasto.valor)
+        if (gasto.valor > valorMaximo)
         {
             add = false;
         }
         if (descripcionContiene)
         {
-            
-        }
-        if(etiquetasTiene){
-        for (let i = 0; i < etiquetasTiene.length; i++)
-        {
-            for (let j = 0; j < gasto.etiquetas.length; j++)
-            {
-                if (etiquetasTiene[i] === gasto.etiquetas[j])
+            let descripcion = gasto.descripcion.toUpperCase();
+            let contienedes = descripcionContiene.toUpperCase();
+                if (!descripcion.includes(contienedes))
                 {
-                    label = true;
+                    add = false;
                 }
-                
-            }
         }
-        if (label === false)
+        if(etiquetasTiene)
         {
-            add = false;
-        }
+            for (let i = 0; i < etiquetasTiene.length; i++)
+            {
+                for (let j = 0; j < gasto.etiquetas.length; j++)
+                {
+                    if (etiquetasTiene[i] === gasto.etiquetas[j])
+                    {
+                        label = true;
+                    }
+                    
+                }
+            }
+
+            if (label === false)
+            {
+                add = false;
+            }
         }
         return add;
     }
@@ -248,8 +255,8 @@ function filtrarGastos({fechaDesde,fechaHasta,valorMinimo,valorMaximo,descripcio
 
     return arryFiltrado;
 }
-function agruparGastos(){
-
+function agruparGastos(periodo = "mes",etiquetas, fechaDesde,fechaHasta,){
+    
 }
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
