@@ -199,7 +199,6 @@ function filtrarGastos({fechaDesde,
     let ret = gastos.filter(function(gasto)
     {
         let anyade = true;
-        let igual;
         /*Si tengo uno de los dos requisitos en valor o en fecha, se tiene que cumplir y el otro se 
         puede omitir. Si te dan los 2, se tienen que cumplir los 2*/
 
@@ -221,7 +220,7 @@ function filtrarGastos({fechaDesde,
         
         if (valorMinimo)
         {
-            if (gasto.valor <= valorMinimo)
+            if (gasto.valor < valorMinimo)
             {
                 anyade = false;
             }
@@ -229,7 +228,7 @@ function filtrarGastos({fechaDesde,
         
         if (valorMaximo)
         {
-            if (gasto.valor >= valorMaximo)
+            if (gasto.valor > valorMaximo)
             {
                 anyade = false;
             }
@@ -237,27 +236,29 @@ function filtrarGastos({fechaDesde,
 
         if (descripcionContiene)
         {
-            if (!gasto.descripcion.includes(descripcionContiene))
+            if (!(gasto.descripcion.toUpperCase()).includes(descripcionContiene.toUpperCase()))
+            {
                 anyade = false;
+            }
         }
 
         if (etiquetasTiene)
         {
-            for (let i = 0; i < gasto.length; i++)
+            let existe = false;
+
+            for (let i = 0; i < etiquetasTiene.length; i++)
             {
-                anyade = false;
-                for (let j = 0; j < etiquetasTiene.length; j++)
+                for (let j = 0; j < gasto.etiquetas.length; j++)
                 {
-                    if (gasto.etiquetas[i] == etiquetasTiene[j] && anyade == false)
+                    if (etiquetasTiene[i] === gasto.etiquetas[j])
                     {
-                        anyade = true;
-                        break;
+                        existe = true;
                     }
                 }
-                if (anyade == true)
-                {
-                    break;
-                }
+            }
+            if (existe === false)
+            {
+                anyade = false;
             }
         }
 
@@ -270,12 +271,17 @@ function filtrarGastos({fechaDesde,
 
 function agruparGastos(periodo, etiquetas, fechaDesde, fechaHasta)
 {   
-    /* aw, ite, = index, array */
-    let result = gastos.reduce(function(aw, item)
-    {
+    let subGastos = filtrarGastos(fechaDesde, fechaHasta); 
 
+    /* aw, ite, = index, array */
+    let result = gastos.reduce(function(aw ,subGastos)
+    {
+        let perAgrup = gastos.obtenerPeriodoAgrupacion(periodo);
+
+        return ;
     }, {});
 
+    return result;
 }
 
 function listarGastos(){
