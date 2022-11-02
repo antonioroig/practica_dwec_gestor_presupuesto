@@ -205,6 +205,20 @@ function filtrarGastos({fechaDesde,fechaHasta,valorMinimo,valorMaximo,descripcio
     return results;
 }
 function agruparGastos(periodo = 'mes', etiquetas, fechaDesde, fechaHasta){
+    let objeto = {
+        fechaDesde:fechaDesde,
+        fechaHasta:fechaHasta,
+        etiquetasTiene:etiquetas,
+    }
+    let filtro = filtrarGastos(objeto);
+    return filtro.reduce(function(acumulador, itemActual){
+        if(typeof acumulador[itemActual.obtenerPeriodoAgrupacion(periodo)]!="number"){
+            acumulador[itemActual.obtenerPeriodoAgrupacion(periodo)] = 0;
+        }
+        acumulador[itemActual.obtenerPeriodoAgrupacion(periodo)] += itemActual.valor;
+
+        return acumulador;
+    },{})
 }
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
 // Las funciones y objetos deben tener los nombres que se indican en el enunciado
