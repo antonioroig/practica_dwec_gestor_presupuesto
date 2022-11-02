@@ -175,9 +175,50 @@ function filtrarGastos({fechaDesde,fechaHasta,valorMinimo,valorMaximo,descripcio
         let valorCorrecto = true;
         let descripcionCorrecto = true;
         let etiquetasCorrecto = true;
-        fechaDesde = Date.parse(fechaDesde);
-        fechaHasta = Date.parse(fechaHasta);
-        if()
+        //Fecha//
+        if(Date.parse(fechaDesde) == isNaN || Date.parse(fechaDesde) > gasto.fecha)
+        {
+            return fechaCorrecta = false;
+        }
+        if(Date.parse(fechaHasta) == isNaN || Date.parse(fechaHasta) < gasto.fecha)
+        {
+            return fechaCorrecta = false;
+        }
+        //Valor//
+        if(valorMinimo > gasto.valor)
+        {
+            return valorCorrecto = false;
+        }
+        if(valorMaximo < gasto.valor)
+        {
+            return valorCorrecto = false;
+        }
+
+        if(descripcionContiene !== undefined && (gasto.descripcion.toUpperCase()).indexOf(descripcionContiene.toUpperCase()) == -1)
+        {
+           descripcionCorrecto = false;
+        }
+        if(etiquetasTiene !== undefined)
+        {
+            let esta = false;
+            for(let i = 0; i < etiquetasTiene.length; i++)
+            {
+                
+                for(let j = 0; j < gasto.etiquetas.length;j++)
+                {
+
+                    if(etiquetasTiene[i] === gasto.etiquetas[j])
+                    {
+                        esta = true;
+                    }
+
+                }  
+            }
+            if(esta === false)
+            {
+                etiquetasCorrecto = false;
+            }
+        }
         if(fechaCorrecta && valorCorrecto && descripcionCorrecto && etiquetasCorrecto)
         {
             return true;
@@ -188,10 +229,6 @@ function filtrarGastos({fechaDesde,fechaHasta,valorMinimo,valorMaximo,descripcio
         }
     });
     return gastosencontrados;
-}
-function etiquetasTieneEtiqueta(Array,ArrayAComparar)
-{
-    
 }
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
 // Las funciones y objetos deben tener los nombres que se indican en el enunciado
