@@ -178,41 +178,45 @@ function calcularBalance()
 }
 function filtrarGastos(  valor_max ,valor_min,descripcionContiene,fechaDesde,fechaHasta)
 {
-    let anyade;
-    fechaDesde=Date.parse(fechaDesde);
-    fechaHasta=Date.parse(fechaHasta);
+    
     let arrayFiltrado = new Array();
-    if( !isNaN(valor_max && valor_min) && typeof  descripcionContiene != 'undefined' && typeof fechaDesde != 'undefined' && typeof fechaHasta != 'undefined')
-    {
-        arrayFiltrado = gastos.filter(function(Gasto){
-        if (Gasto.valor <= valor_max && Gasto.valor >= valor_min)
-        {
-             anyade =true;
-        }
-        else{
-            anyade = false;
-        }
-        if(descripcionContiene === Gasto.descripcion)
-        {
-             anyade = true;
-        }
-        else{
-            anyade = false;
-        }
-        if((Gasto.fecha >= fechaDesde) && (Gasto.fecha <= fechaHasta))
+    
+    
+        arrayFiltrado = gastos.filter(function(gasto){
+            let anyade = true;
+            if( valor_max != undefined || valor_min != undefined)
             {
-                anyade = true;
-            }
-            else{
+                if (gasto.valor >= valor_max && gasto.valor <= valor_min)
+                {
                  anyade = false;
+                }
+            }
+            if(descripcionContiene != undefined)
+            {
+                if(descripcionContiene != gasto.descripcion)
+                {
+                    anyade = false;
+                }
             }
         
-        return anyade;
+            if(fechaDesde != undefined)
+            {
+                if(isNan(Date.parse(fechaDesde))  || Date.parse(fechaDesde) > gasto.fecha)
+                {
+                    anyade = false;   
+                }
+            }
+            if(fechaHasta != undefined)
+            {
+                if(isNan(Date.parse(fechaHasta))  || Date.parse(fechaHasta) < gasto.fecha)
+                {
+                    anyade = false;
+                }
+            }
+        
+            return anyade;
         })
-    }
-    else{
-        arrayFiltrado = gastos;
-    }
+    
     
     return arrayFiltrado;
   
