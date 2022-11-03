@@ -137,12 +137,28 @@ function CrearGasto(descripcion,valor ,fecha= Date.now(), ...etiquetas )
             let mesSumado=(fecha.getMonth()+1)
             if (typeof periodo ==="string") 
             {
-                if(periodo == "dia"){
-                    if(mesSumado < 10){
-                        return (fecha.getFullYear()+"-0"+mesSumado+"-0"+fecha.getDate());
+                if(periodo == "dia")
+                {
+                    if( fecha.getDate()< 10)
+                    {
+                        if(fecha.getMonth() <9)
+                        {
+                            return (fecha.getFullYear()+"-0"+mesSumado+"-0"+fecha.getDate());
+
+                        }else{
+                            return (fecha.getFullYear()+"-"+mesSumado+"-0"+fecha.getDate());
+                        }
+                      
                     }else{
-                        return (fecha.getFullYear()+"-"+mesSumado+"-"+fecha.getDate());
+
+                        if(fecha.getMonth() <9){
+                            return (fecha.getFullYear()+"-0"+mesSumado+"-"+fecha.getDate());
+                        }else{
+                            return (fecha.getFullYear()+"-"+mesSumado+"-"+fecha.getDate());
+                        }
+                        
                     }
+                 
                 }
                 if(periodo =="mes"){
                     if(mesSumado < 10){
