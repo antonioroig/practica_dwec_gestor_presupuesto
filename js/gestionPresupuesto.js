@@ -149,42 +149,26 @@ function CrearGasto(descripcion, valor, fecha = Date.now(), ...etiquetas) {
 
     this.obtenerPeriodoAgrupacion = function(parPeriodo)
     {
-        let mFecha = new Date (this.fecha);
-        let periodo = mFecha.getFullYear().toLocaleString();
-
-        if (parPeriodo === "anyo")
-        {
-           return periodo;
-        }
-        else if (parPeriodo === "mes")
-        {
-            periodo += "-";
-            
-            if (mFecha.getMonth() < 10)
-            {
-                periodo += "0";
+        let fecha1 = new Date (this.fecha);
+        let ret = fecha1.getFullYear().toLocaleString();
+        if (parPeriodo === "anyo"){
+            return ret;
+        } else if (parPeriodo === "mes") {
+            ret += '-';
+            if (fecha1.getMonth() + 1 < 10) {
+                ret += '0';
             }
-            return periodo += (mFecha.getMonth() + 1);
-        }
-        else if (parPeriodo === "dia")
-        {
-            periodo += "-";
-
-            if (mFecha.getMonth() < 10)
-            {
-                let month = "0" + (mFecha.getMonth() + 1);
-
-                if (mFecha.getDay() < 10)
-                {
-                    let day = "0" + (mFecha.getDate());
-
-                    return periodo += month + "-" + day;
-                }
-                return periodo += month + "-" + mFecha.getDate();
+            return ret += fecha1.getMonth() + 1;
+        } else if (parPeriodo === "dia") {
+            ret += '-';
+            if (fecha1.getMonth() + 1 < 10) {
+                ret += "0";
             }
-            else {
-                return periodo += (mFecha.getMonth() + 1) + "-" + mFecha.getDate();
+            ret += fecha1.getMonth() + 1 + '-';
+            if (fecha1.getDate() < 10) {
+                ret += '0';
             }
+            return ret += fecha1.getDate();
         }
     }
 }
@@ -269,34 +253,29 @@ function filtrarGastos({fechaDesde,
 }
 
 
-function agruparGastos(periodo, etiquetas, fechaDesde, fechaHasta)
+function agruparGastos(periodos = "mes", etiquetas, fechaDesde, fechaHasta)
 {   
-    let subGastos = filtrarGastos(fechaDesde, fechaHasta); 
+    let condiciones = {
+        
+        fechaDesde:fechaDesde,
+        fechaHasta:fechaHasta,
+        etiquetasTiene:etiquetas,
 
-    /* aw, ite, = index, array */
-    let result = gastos.reduce(function(aw ,subGastos)
+    }
+
+    let subGastos = filtrarGastos(condiciones);
+
+    return subGastos.reduce(function(acc, gasto)
     {
-        let perAgrup = gastos.obtenerPeriodoAgrupacion(periodo);
-
-        if (perAgrup == mes)
+        if (typeof acc[gasto.obtenerPeriodoAgrupacion(periodos)]!='number')
         {
-
+            acc[gasto.obtenerPeriodoAgrupacion(periodos)] = 0;
         }
 
-        if (perAgrup == dia)
-        {
+        acc[gasto.obtenerPeriodoAgrupacion(periodos)] += gasto.valor;
 
-        }
-
-        if (perAgrup == mes && etiquetas)
-        {
-            
-        }
-
-        return ret;
-    }, [{}]);
-
-    return result;
+        return acc;
+    },{});
 }
 
 function listarGastos(){
