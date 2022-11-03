@@ -255,8 +255,13 @@ function filtrarGastos({fechaDesde, fechaHasta, valorMinimo, valorMaximo, descri
 }
 
 
-function agruparGastos(){
-
+function agruparGastos(periodo,fechaDesde,fechaHasta,etiquetas){
+    let arrayFilter = filtrarGastos({fechaDesde: fechaDesde, fechaHasta: fechaHasta, etiquetasTiene: etiquetas});
+    let objetoFinal = arrayFilter.reduce(function(acu, gastofiltrado){
+        let fechaR = gastofiltrado.obtenerPeriodoAgrupacion(periodo);
+        
+    },{});
+    return objetoFinal;
 }
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
