@@ -287,6 +287,18 @@ function filtrarGastos({fechaDesde,
 function agruparGastos(periodo="mes",etiquetas,fechaDesde,fechaHasta)
 {
     let arrayfiltrado = filtrarGastos({fechaDesde: fechaDesde,fechaHasta: fechaHasta, etiquetasTiene: etiquetas});
+
+    return arrayfiltrado.reduce(function(acu,actual)
+    {
+        if(typeof acu[actual.obtenerPeriodoAgrupacion(periodo)] != 'number')
+        {
+            acu[actual.obtenerPeriodoAgrupacion(periodo)] = 0;
+        }
+
+        acu[actual.obtenerPeriodoAgrupacion(periodo)] += actual.valor;
+
+        return acu;
+    },{});
 }
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
