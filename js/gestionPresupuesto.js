@@ -241,8 +241,24 @@ etiquetasTiene}) {
     
 }
 
-function agruparGastos() {
+function agruparGastos(periodo = "mes", etiquetas, fechaDesde, fechaHasta) {
+    let afiltrar = {
+        fechaDesde:fechaDesde,
+        fechaHasta:fechaHasta,
+        etiquetasTiene:etiquetas,
+    }
 
+    let filtrado = filtrarGastos(afiltrar);
+
+    return filtrado.reduce(function(acc, actual) {
+        if (typeof acc[actual.obtenerPeriodoAgrupacion(periodo)] != 'number') {
+            acc[actual.obtenerPeriodoAgrupacion(periodo)] = 0;
+        }
+
+        acc[actual.obtenerPeriodoAgrupacion(periodo)] += actual.valor;
+
+        return acc;
+    },{});
 }
 
 
