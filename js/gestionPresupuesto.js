@@ -57,37 +57,66 @@ function filtrarGastos({fechaDesde, fechaHasta, valorMinimo, valorMaximo, descri
     
     let retArray = gastos;
     retArray = gastos.filter(function(gasto){
-
-        if(!isNaN(Date.parse(fechaDesde))){
-            return gasto.fecha >= fechaDesde;
+        let boolean = true;
+        let booleanEti = false;
+        if(fechaDesde){
+            if(gasto.fecha < Date.parse(fechaDesde)){
+                boolean = false;
+            }
         }
-        if(!isNaN(Date.parse(fechaHasta))){
-            return gasto.fecha <= fechaHasta;
+        if(fechaHasta){
+            if(gasto.fecha > Date.parse(fechaHasta)){
+                boolean = false;
+            }
         }
-        if(valorMinimo === `number`){
-            return gasto.valor >= valorMinimo;
+        if(valorMinimo){
+            if(gasto.valor < valorMinimo){
+                boolean = false;
+            }
         }
-        if(valorMaximo === `number`){
-            return gasto.valor <= valorMaximo;
+        if(valorMaximo){
+            if(gasto.valor > valorMaximo){
+                boolean = false;
+            }
         }
-        if(descripcionContiene === `string`){
-            return gasto.descripcion.toLowerCase().includes(descripcionContiene.toLowerCase());
+        if(descripcionContiene){
+            if(!gasto.descripcion.toLowerCase().includes(descripcionContiene.toLowerCase())){
+                boolean = false;
+            }
         }
         if(etiquetasTiene){
             for(var i = 0; i < etiquetasTiene.length; i++){
-                if(gastos.etiquetas.includes(etiquetasTiene[i])){
-                    return etiquetasTiene[i];
-                }else{
-                    return false;
+                if(gasto.etiquetas.includes(etiquetasTiene[i])){
+                    booleanEti = true;
                 }
             }
+            if(!booleanEti){
+                boolean = false
+            }
         }
-        return retArray;
+        return boolean;
     })
+    return retArray;
 
 }
 //
-function agruparGastos(){
+function agruparGastos(periodo = `mes`, etiqueta2, fechaDesde2, fechaHasta2){
+
+    let arrayInicial = filtrarGastos({fechaDesde : fechaDesde2, fechaHasta : fechaHasta2, etiquetasTiene : etiqueta2});
+
+    let arrayFinal = arrayInicial.reduce(function(acc,gasto){
+
+    let periodoObtenido = gasto.obtenerPeriodoAgrupacion(periodo);
+    
+    if(!isNaN(acc[periodoObtenido])){
+        acc[periodoObtenido] += gasto.valor;
+    }
+    else{
+        acc[periodoObtenido] = gasto.valor;
+    }
+    return acc;
+    },{});
+    return arrayFinal;
 
 }
 //      
@@ -157,8 +186,13 @@ function CrearGasto(descripcion,valor,fecha,...etiqueta) {
                 }else{
                     return `${date.getFullYear()}` + `-` + `${(date.getMonth() + 1)}` + `-` + `0`+`${(date.getDate())}`
                 }
+            }else{
+                if(date.getDate() > 9){
+                    return `${date.getFullYear()}` + `-` + `0`+`${(date.getMonth() + 1)}` + `-` +`${(date.getDate())}`
+                }else{
+                    return `${date.getFullYear()}` + `-` + `0`+`${(date.getMonth() + 1)}` + `-` + `0`+`${(date.getDate())}`
+                }
             }
-            return `${date.getFullYear()}` + `-` + `0`+`${(date.getMonth() + 1)}` + `-` + `0`+`${(date.getDate())}`
         }
         if(periodo === `mes`){
             if((date.getMonth()+1) > 9){
