@@ -220,6 +220,7 @@ function filtrarGastos({fechaDesde,fechaHasta,valorMinimo,valorMaximo,descripcio
 
 function agruparGastos(periodo = "mes",etiquetas,fechadesde,fechahasta = Date.now()){
 
+
         let array = filtrarGastos({fechaDesde : fechadesde,fechaHasta : fechahasta,etiquetasTiene : etiquetas})
         let res = array.reduce(function(acumulador,gasto){
             let periodo2 = gasto.obtenerPeriodoAgrupacion(periodo);
@@ -230,7 +231,9 @@ function agruparGastos(periodo = "mes",etiquetas,fechadesde,fechahasta = Date.no
             acumulador[periodo2] += gasto.valor;
             return acumulador;
         }, {});
+
         return res;
+
 }
            
   
