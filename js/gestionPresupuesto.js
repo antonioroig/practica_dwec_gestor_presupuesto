@@ -163,10 +163,6 @@ function calcularBalance()
 {
     return presupuesto - calcularTotalGastos();
 }
-function agruparGastos()
-{
-
-}
 function filtrarGastos({fechaDesde,fechaHasta,valorMinimo,valorMaximo,descripcionContiene, etiquetasTiene})
 {
     let gastosencontrados = gastos.filter(function(gasto)
@@ -193,11 +189,12 @@ function filtrarGastos({fechaDesde,fechaHasta,valorMinimo,valorMaximo,descripcio
         {
             return valorCorrecto = false;
         }
-
+        //Descripción//
         if(descripcionContiene !== undefined && (gasto.descripcion.toUpperCase()).indexOf(descripcionContiene.toUpperCase()) == -1)
         {
            descripcionCorrecto = false;
         }
+        //Etiquetas//
         if(etiquetasTiene !== undefined)
         {
             let esta = false;
@@ -229,6 +226,38 @@ function filtrarGastos({fechaDesde,fechaHasta,valorMinimo,valorMaximo,descripcio
         }
     });
     return gastosencontrados;
+}
+function agruparGastos(periodo,etiquetas,fechaDesde,fechaHasta)
+{
+    let ArrayFiltrado = filtrarGastos({etiquetasTiene: etiquetas, fechaDesde: fechaDesde,fechaHasta: fechaHasta});
+    let ObjetoFinal = ArrayFiltrado.reduce((acc,item) => 
+    {
+        let Fecha = item.obtenerPeriodoAgrupacion(periodo);
+        if(!acc.includes(Fecha))
+        {
+            acc += Fecha + ":" + item.valor + "\n";
+        }
+        else
+        {
+            
+            // let posicion = acc.indexOf(Fecha);
+            // if(periodo === "dia")//2022-12-02:
+            // {
+            //     posicion = posicion + 11;
+            // }
+            // if(periodo === "mes")//2022-12:
+            // {
+            //     posicion = posicion + 8//2022:
+            // }
+            // if(periodo === "anyo")
+            // {
+            //     posicion = posicion + 5;
+            // }
+
+        }
+
+    },{});
+    return ObjetoFinal;
 }
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
 // Las funciones y objetos deben tener los nombres que se indican en el enunciado
