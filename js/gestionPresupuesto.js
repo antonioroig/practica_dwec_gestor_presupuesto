@@ -55,34 +55,34 @@ function calcularBalance(){
 //
 function filtrarGastos({fechaDesde, fechaHasta, valorMinimo, valorMaximo, descripcionContiene, etiquetasTiene}){
     
-    let retArray = [];
-    gastos.filter(function(gasto){
+    let retArray = gastos;
+    retArray = gastos.filter(function(gasto){
 
-        if(!isNaN(Date.parse(fechaDesde)) && gasto.fecha >= fechaDesde){
-            return true;
+        if(!isNaN(Date.parse(fechaDesde))){
+            return gasto.fecha >= fechaDesde;
         }
-        if(!isNaN(Date.parse(fechaHasta)) && gasto.fecha <= fechaHasta){
-            return true;
+        if(!isNaN(Date.parse(fechaHasta))){
+            return gasto.fecha <= fechaHasta;
         }
-        if(valorMinimo === `number` && gasto.valor >= valorMinimo){
-            return true;
+        if(valorMinimo === `number`){
+            return gasto.valor >= valorMinimo;
         }
-        if(valorMaximo === `number` && gasto.valor <= valorMaximo){
-            return true;
+        if(valorMaximo === `number`){
+            return gasto.valor <= valorMaximo;
         }
-        if(descripcionContiene === `string` && gasto.descripcion.toLowerCase().includes(etiquetasTiene.toLowerCase())){
-            return true;
+        if(descripcionContiene === `string`){
+            return gasto.descripcion.toLowerCase().includes(descripcionContiene.toLowerCase());
         }
         if(etiquetasTiene){
             for(var i = 0; i < etiquetasTiene.length; i++){
                 if(gastos.etiquetas.includes(etiquetasTiene[i])){
-                    return true;
+                    return etiquetasTiene[i];
                 }else{
                     return false;
                 }
             }
         }
-
+        return retArray;
     })
 
 }
