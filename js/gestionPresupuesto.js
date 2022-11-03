@@ -343,13 +343,26 @@ return arrayFiltrado;
 }
 
 function agruparGastos(periodo, etiquetas, fechaDesde, fechaHasta){
+    
+let filtrado = filtrarGastos({fechaDesde: fechaDesde, fechaHasta: fechaHasta, etiquetas: etiquetas});
+let total = filtrado.reduce(function(acu, gasto){
 
-let toatal;
+   
+    if(gasto.obtenerPeriodoAgrupacion(periodo))
+    {
+        acu[""] += gasto;
+    }
+    
+    return acu;
+
+}, {});
+
+
 
         
 
 
-return toatal;
+return total;
 
 }
 
