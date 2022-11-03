@@ -188,21 +188,21 @@ function filtrarGastos({
     
       let arrayFiltrado = gastos.filter(function(gasto){
             let anyade = true;
-            if( valorMaximo != undefined )
+            if( typeof valorMaximo != "undefined" )
             {
                 if (gasto.valor > valorMaximo || isNaN(valorMaximo) )
                 {
                  anyade = false;
                 }
             }
-            if( valorMinimo != undefined )
+            if( typeof valorMinimo != "undefined" )
             {
                 if (gasto.valor < valorMinimo || isNaN(valorMinimo) )
                 {
                  anyade = false;
                 }
             }
-            if(descripcionContiene != undefined)
+            if( typeof descripcionContiene != "undefined")
             {
                 descripcionContiene.toUpperCase();
                 gasto.descripcion.toUpperCase();
@@ -211,14 +211,14 @@ function filtrarGastos({
                     anyade = false;
                 }
             }
-            if(etiquetasTiene != undefined)
+            if(typeof etiquetasTiene != "undefined")
             {
                 let tiene = false;
-                for(let i = 0; i <etiquetasTiene.length; i++)
+                for(let i = 0; i < etiquetasTiene.length; i++)
                 {
                     for( let j = 0; j < gasto.etiquetas.length; j++)
                     {
-                        if(etiquetasTiene[i] === gasto.estiquetas[j])
+                        if(etiquetasTiene[i] === gasto.etiquetas[j])
                         {
                             tiene= true;
                         }
@@ -253,9 +253,18 @@ function filtrarGastos({
   
 }
 
-function agruparGastos()
+function agruparGastos(periodo = 'mes',fechaDesde,fechaHasta,etiquetas)
 {
-
+    let agrupar = filtrarGastos({fechaDesde: fechaDesde,fechaHasta: fechaHasta,etiquetasTiene: etiquetas,});
+    return agrupar.reduce(function(acu,gasto){
+        if( typeof agrupar[acu[gasto.obtenerPeriodoAgrupacion(periodo)]] != "number");
+        {
+            agrupar[acu[gasto.obtenerPeriodoAgrupacion(periodo)]] = 0;
+        }
+        agrupar[acu[gasto.obtenerPeriodoAgrupacion(periodo)]] += gasto.valor;
+        return acu;
+    },{})
+    
 }
 
 
