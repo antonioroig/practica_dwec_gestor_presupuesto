@@ -162,9 +162,83 @@ function calcularBalance() {
     return presupuesto - calcularTotalGastos();
 }
 
-function filtrarGastos() {
-    //toLowerCase convierte en minusculas EJ: 'Interfaz'.toLowerCase()
+function filtrarGastos({fechaDesde,
+fechaHasta,
+valorMinimo,
+valorMaximo,
+descripcionContiene,
+etiquetasTiene}) {  
 
+    let arrayFiltrado = gastos.filter(function(ObjGasto) {
+
+        let anyadir = true;
+
+        if (fechaDesde) {         
+            if (Date.parse(fechaDesde)) {
+                let fechaPass = new Date (fechaDesde);
+                let fechaVal = new Date (ObjGasto.fecha);
+                if (fechaVal < fechaPass) {
+                    anyadir = false;
+                }
+            } else {
+                anyadir = false;
+            }                 
+        }
+        
+        if (fechaHasta) {
+            if (Date.parse(fechaHasta)) {
+                let fechaPass = new Date (fechaHasta);
+                let fechaVal = new Date (ObjGasto.fecha);
+                if (fechaVal > fechaPass) {
+                    anyadir = false;
+                }
+            } else {
+                anyadir = false;
+            }
+        }
+
+        if (valorMinimo) {
+            if (ObjGasto.valor < valorMinimo) {
+                anyadir = false
+            }
+        }
+
+        if (valorMaximo) {
+            if (ObjGasto.valor > valorMaximo) {
+                anyadir = false
+            }
+        }
+
+        if (descripcionContiene) {
+            let Objdes = ObjGasto.descripcion.toLowerCase();
+            let desCon = descripcionContiene.toLowerCase();
+            if (!Objdes.includes(desCon)) {
+                anyadir = false;
+            } 
+        }
+
+        if (etiquetasTiene) {
+            let val = 0;
+            for (let i = 0; i < ObjGasto.etiquetas.length; i++) {
+                let etiObj = ObjGasto.etiquetas[i].toLowerCase();
+                for (let j = 0; j < etiquetasTiene.length; j ++) {
+                    let etisVal = etiquetasTiene[j].toLowerCase();
+                    if (etisVal === etiObj) {
+                        val++;
+                    }
+                }
+            }
+            if (val == 0) {
+                anyadir = false;
+            }
+
+        }
+
+        return anyadir;
+    });
+
+    return arrayFiltrado;
+    
 }
 
 function agruparGastos() {
