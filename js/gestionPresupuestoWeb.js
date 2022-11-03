@@ -1,8 +1,15 @@
 
 
+// Función de dos parámetros que se encargará de escribir el valor (texto) en el elemento HTML con id idElemento
+//idElemento - Hará referencia al id del elemento HTML donde se insertará el resultado en formato texto.
+// valor - El valor a mostrar.
 
-function mostrarDatoEnId(){
-
+// 
+// https://es.javascript.info/searching-elements-dom - getElementById y innerHTML
+function mostrarDatoEnId(idElemento, valor){
+    let elemento = document.getElementById(idElemento).innerHTML;
+    valor = `<p>${elemento}</p>`;
+    return valor;
 }
 function mostrarGastoWeb(){
 
