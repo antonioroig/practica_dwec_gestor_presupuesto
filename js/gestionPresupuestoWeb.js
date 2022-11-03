@@ -2,7 +2,8 @@ function mostrarDatoEnId(idElemento, valor)
 {
     let elem = document.getElementById(idElemento);
     let p = document.createElement("p");
-    p.textContent = valor;
+    let pTexto = document.createTextNode(valor);
+    p.appendChild(pTexto);
     elem.appendChild(p);
 }
 function mostrarGastoWeb()
