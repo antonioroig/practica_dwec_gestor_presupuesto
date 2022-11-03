@@ -362,30 +362,28 @@ function filtrarGastos({fechaDesde, fechaHasta, valorMinimo, valorMaximo, descri
 
 function agruparGastos(periodos = 'mes', etiquetas, fechaDesde, fechaHasta){
 
-    let objeto = {
-
-        fechaHasta:fechaHasta,
+    let objetoFiltro = {
 
         fechaDesde:fechaDesde,
-
+        fechaHasta:fechaHasta,
         etiquetasTiene:etiquetas,
 
     }
 
-    let filtrar = filtrarGastos(objeto);
+    let filtro = filtrarGastos(objetoFiltro);
 
-    return filtrar.reduce(function(contador, current){
+    return filtro.reduce(function(acumulador, actual){
 
-        if(typeof contador[current.obtenerPeriodoAgrupacion(periodos)]!="number")
+        if(typeof acumulador[actual.obtenerPeriodoAgrupacion(periodos)]!='number')
         {
 
-            contador[current.obtenerPeriodoAgrupacion(periodos)] = 0;
+            acumulador[actual.obtenerPeriodoAgrupacion(periodos)] = 0;
 
         }
 
-        contador[current.obtenerPeriodoAgrupacion(periodos)] += current.valor;
-        
-        return contador;
+        acumulador[actual.obtenerPeriodoAgrupacion(periodos)] += actual.valor;
+
+        return acumulador;
 
     },{});
 
