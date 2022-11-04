@@ -148,18 +148,33 @@ function filtrarGastos({fechaDesde,fechaHasta,valorMinimo,valorMaximo,descripcio
 
         if(fechaDesde != "undefined"){
             // codigo
+            if(fechaDesde > gasto.fecha){
+                have = false;
+            }
         }
         if(fechaHasta != "undefined"){
             // codigo
+            if(fechaHasta < gasto.fecha){
+                have = false;
+            }
         }
         if(valorMinimo != "undefined"){
             // codigo
+            if(valorMinimo > gasto.valor){
+                have = false
+            }
         }
         if(valorMaximo != "undefined"){
             // codigo
+            if(valorMaximo < gasto.valor){
+                have = false
+            }
         }
         if(descripcionContiene != "undefined"){
             // codigo
+            if(descripcionContiene.toLowerCase() != gasto.descripcion.toLowerCase()){
+                have = false
+            }
         }
         if(etiquetasTiene != "undefined"){
             // codigo
@@ -168,6 +183,7 @@ function filtrarGastos({fechaDesde,fechaHasta,valorMinimo,valorMaximo,descripcio
         return have
     })
 
+    return arr
 }
 
 function agruparGastos(){
