@@ -141,49 +141,67 @@ function calcularBalance (){
 }
 
 function filtrarGastos({fechaDesde,fechaHasta,valorMinimo,valorMaximo,descripcionContiene,etiquetasTiene}){
-   
+    
     let arr = gastos.filter(function(gasto){
-
+        
         let have = true;
 
-        if(fechaDesde != "undefined"){
+        if(fechaDesde == "undefined"){
+            console.log(fechaDesde)
             // codigo
             if(fechaDesde > gasto.fecha){
                 have = false;
             }
         }
-        if(fechaHasta != "undefined"){
+        if(fechaHasta == "undefined"){
+            console.log(fechaHasta)
             // codigo
             if(fechaHasta < gasto.fecha){
                 have = false;
             }
         }
-        if(valorMinimo != "undefined"){
+        if(valorMinimo == "undefined"){
+            console.log(valorMinimo)
             // codigo
             if(valorMinimo > gasto.valor){
                 have = false
             }
         }
-        if(valorMaximo != "undefined"){
+        if(valorMaximo == "undefined"){
+            console.log(valorMaximo)
             // codigo
             if(valorMaximo < gasto.valor){
                 have = false
             }
         }
-        if(descripcionContiene != "undefined"){
+        console.log(descripcionContiene + " desc")
+        if(descripcionContiene == "undefined"){
+            console.log("me cago en js")
             // codigo
             if(descripcionContiene.toLowerCase() != gasto.descripcion.toLowerCase()){
                 have = false
             }
         }
-        if(etiquetasTiene != "undefined"){
-            // codigo
+        if(etiquetasTiene == "undefined"){
+            console.log(etiquetasTiene)
+            let aux = false;
+            for(etiqueta of etiquetasTiene){
+                if(gasto.etiquetas.includes(etiqueta)){
+                    aux = true
+                }
+            }
+            if (!aux){
+                have = false
+            }
         }
 
         return have
     })
-
-    return arr
+    if(arr.length === 0){
+        return gastos
+    }else{
+        return arr
+    }
 }
 
 function agruparGastos(){
