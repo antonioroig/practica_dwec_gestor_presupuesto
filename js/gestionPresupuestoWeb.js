@@ -1,42 +1,54 @@
-import * as scriptsGestion from './gestionPresupuesto';
+import * as scriptsGestion from "./gestionPresupuesto.js";
 
 function mostrarDatoEnId(valor, idElemento){
-
-let id = document.getElementById(idElemento);
-id.innerHTML += valor;
-
+if(idElemento !== undefined){
+    let id = document.getElementById(idElemento);
+    id.innerHTML +=" " + valor;    
+}
 }
 
 
-function mostrarGastoWeb(idElementolor, gasto){
+function mostrarGastoWeb(idElemento, gasto){
+
+    let id = document.getElementById(idElemento);
+
+
     const divGasto = document.createElement("div");
-    divGasto.id = "gasto";
+    divGasto.className = "gasto"
     //
     const divGastoDescripcion = document.createElement("div");
-    divGastoDescripcion.id = "gasto-descripcion";
+    divGastoDescripcion.className = "gasto-descripcion";
+    divGastoDescripcion.textContent(gasto.descripcion);
     divGasto.appendChild(divGastoDescripcion);
     //
     const divGastoFecha = document.createElement("div");
-    divGastoFecha.id = "gasto-fecha";
+    divGastoFecha.className = "gasto-fecha";
+    divGastoFecha.textContent(gasto.fecha);
     divGasto.appendChild(divGastoFecha);
     //
     const divGastoValor = document.createElement("div");
-    divGastoValor.id = "gasto-valor";
+    divGastoValor.className = "gasto-valor";
+    divGastoValor.textContent(gasto.valor);
     divGasto.appendChild(divGastoValor);
     //
     const divGastoEtiquetas = document.createElement("div");
-    divGastoEtiquetas.id = "gasto-etiquietas";
-    divGasto.appendChild(divGastoEtiquetas);
+    divGastoEtiquetas.className = "gasto-etiquietas";
 
     for(let i = 0; i < gasto.etiqueta.lenght; i++){
         const span = document.createElement("span");
         span.className = "gasto-etiquetas-etiqueta";
-        divGastoEtiquetas.appendChild(span);
         span.innerHTML = gasto.etiqueta[i].text;
+        divGastoEtiquetas.appendChild(span);
     }
+
+    divGasto.appendChild(divGastoEtiquetas);
+
+    id.appendChild(divGasto);
 
 
 }
+
+
 
 function mostrarGastosAgrupadosWeb(){
 
