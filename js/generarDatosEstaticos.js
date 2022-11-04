@@ -15,3 +15,5 @@ exGp.anyadirGasto(gast4);
 exGp.anyadirGasto(gast5);
 exGp.anyadirGasto(gast6);
 exGpweb.mostrarDatoEnId(exGp.calcularTotalGastos(),"gastos-totales");
+exGpweb.mostrarDatoEnId(exGp.calcularBalance(),"balance-total");
+
