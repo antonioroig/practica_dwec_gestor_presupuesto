@@ -128,6 +128,7 @@ function CrearGasto(descripcion,valor,fecha=Date.now(), ...etiquetas)
         let year = date.getFullYear();
         let month = date.getMonth() + 1;
         let day = date.getDate();
+        
 
         if(periodo === "dia")
         {
@@ -135,11 +136,18 @@ function CrearGasto(descripcion,valor,fecha=Date.now(), ...etiquetas)
             {
                 return `${year}-0${month}-0${day}`;
             }
-            else
-            {
-                return `${year}-${month}-${day}`;
-            }
-           
+            else if (month < 10)
+                {
+                    return `${year}-0${month}-${day}`;
+                }
+                else if (day < 10)
+                    {
+                        return `${year}-${month}-0${day}`;
+                    }
+                    else
+                    {
+                        return `${year}-${month}-${day}`;
+                    }
         }
 
         if(periodo === "mes")
@@ -161,7 +169,7 @@ function CrearGasto(descripcion,valor,fecha=Date.now(), ...etiquetas)
         }
     }
 }
-   
+
 function listarGastos()
 {
     return gastos;
@@ -290,12 +298,14 @@ function agruparGastos(periodo="mes",etiquetas,fechaDesde,fechaHasta)
 
     return arrayfiltrado.reduce(function(acu,actual)
     {
-        if(typeof acu[actual.obtenerPeriodoAgrupacion(periodo)] != 'number')
+        if(acu[actual.obtenerPeriodoAgrupacion(periodo)] == undefined)
         {
-            acu[actual.obtenerPeriodoAgrupacion(periodo)] = 0;
+            acu[actual.obtenerPeriodoAgrupacion(periodo)] = actual.valor;
         }
-
-        acu[actual.obtenerPeriodoAgrupacion(periodo)] += actual.valor;
+        else
+        {
+            acu[actual.obtenerPeriodoAgrupacion(periodo)] += actual.valor;
+        }
 
         return acu;
     },{});
