@@ -109,11 +109,10 @@ function CrearGasto(descripcion,valor,fecha = Date.now(), ...etiquetas ) {
     this.obtenerPeriodoAgrupacion = function(periodo)
     {
         let fechaAgrupacion = new Date (this.fecha)
-        let dia;
-        let mes;
         let anyo = fechaAgrupacion.getFullYear();
-
-        if(fechaAgrupacion.getDate() > 9)
+        let dia = 0;
+        let mes = 0;
+        if(fechaAgrupacion.getDate() >= 9)
         {
             dia = fechaAgrupacion.getDate();
         }
@@ -121,7 +120,7 @@ function CrearGasto(descripcion,valor,fecha = Date.now(), ...etiquetas ) {
         {
             dia = "0" + fechaAgrupacion.getDate();
         }
-        if(fechaAgrupacion.getMonth() > 9)
+        if(fechaAgrupacion.getMonth() >= 9)
         {
             mes = fechaAgrupacion.getMonth() + 1;
         }
@@ -255,11 +254,20 @@ function filtrarGastos({fechaDesde, fechaHasta, valorMinimo, valorMaximo, descri
 }
 
 
-function agruparGastos(periodo,fechaDesde,fechaHasta,etiquetas){
-    let arrayFilter = filtrarGastos({fechaDesde: fechaDesde, fechaHasta: fechaHasta, etiquetasTiene: etiquetas});
-    let objetoFinal = arrayFilter.reduce(function(acu, gastofiltrado){
+function agruparGastos(periodo="mes",etiquetas,fechaDesde,fechaHasta){
+    let arrayFilter = filtrarGastos({etiquetasTiene: etiquetas,fechaDesde: fechaDesde, fechaHasta: fechaHasta});
+    let objetoFinal = arrayFilter.reduce((acc, gastofiltrado) =>
+    {
         let fechaR = gastofiltrado.obtenerPeriodoAgrupacion(periodo);
-        
+        if(acc[fechaR] != undefined)
+        {
+            acc[fechaR] += gastofiltrado.valor;
+        }
+        else
+        {
+            acc[fechaR] = gastofiltrado.valor;
+        }
+        return acc;
     },{});
     return objetoFinal;
 }
