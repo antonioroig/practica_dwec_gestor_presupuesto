@@ -16,6 +16,14 @@ gestionPresupuesto.anyadirGasto(new gestionPresupuesto.CrearGasto("Seguro coche"
 gestionPresupuestoWeb.mostrarDatoEnId('gastos-totales', gestionPresupuesto.calcularTotalGastos()); // mostramos gastos totales
 gestionPresupuestoWeb.mostrarDatoEnId('balance-total', gestionPresupuesto.calcularBalance()); // mostramos balance total
 
+
+let gastos = gestionPresupuesto.listarGastos();
+
+for(let i = 0; i < gastos.length; i++){
+    gestionPresupuestoWeb.mostrarGastoWeb('listado-gastos-completo', gastos[i]);
+} 
+    //gestionPresupuestoWeb.mostrarGastoWeb('listado-gastos-completo', exp);
+
 /* 
 Mostrar el listado completo de gastos en div#listado-gastos-completo (funciones listarGastos y mostrarGastoWeb)
 Mostrar el listado de gastos realizados en septiembre de 2021 en div#listado-gastos-filtrado-1 (funciones filtrarGastos y mostrarGastoWeb)
