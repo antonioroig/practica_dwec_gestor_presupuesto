@@ -1,8 +1,11 @@
 import * as gestion from './gestionPresupuesto';
 
 function mostrarDatoEnId(valor,idElemento){
-    let id = document.getElementById(idElemento);
-    id.innerHTML += valor;
+    
+    if(idElemento !== undefined){
+        let id = document.getElementById(idElemento);
+        id.innerHTML += " " + valor;
+    }  
 }
 
 function mostrarGastoWeb(){}
