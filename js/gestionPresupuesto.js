@@ -274,10 +274,10 @@ function agruparGastos(periodo = "mes",etiquetas, fechaDesde,fechaHasta){
             }
 
         acu[fechas] += gasto.valor;
-        
+
         return acu;
         
-    },{});
+    },{}); 
     return objetofinal;
 }
 
