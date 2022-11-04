@@ -1,12 +1,12 @@
 import * as gestionpr from './gestionPresupuesto.js';
 "use strict";
 
-function mostrarDatoEnId(valor,idElemento){
+function mostrarDatoEnId(valor,idElemento)
+{
     if(idElemento!==undefined){
         let elem= document.getElementById(idElemento);
         elem.innerHTML+= "" + valor;
     }
-    
 }
 
 

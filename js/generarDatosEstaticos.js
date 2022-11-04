@@ -4,9 +4,7 @@ import * as gestionPresupuestoWeb from "./gestionPresupuestoWeb.js";
 
 gestionPresupuesto.actualizarPresupuesto(1500);
 
-let presu = gestionPresupuesto.mostrarPresupuesto();
-
-gestionPresupuestoWeb.mostrarDatoEnId(presu,'presupuesto');
+gestionPresupuestoWeb.mostrarDatoEnId(gestionPresupuesto.mostrarPresupuesto(),'presupuesto');
 
 let gasto1 = new gestionPresupuesto.CrearGasto('Comprar carne', 23.44,'2021-10-06','casa','comida');
 let gasto2 = new gestionPresupuesto.CrearGasto('Compra fruta y verdura', 14.25,'2021-09-06','supermercado','comida');
@@ -23,3 +21,4 @@ gestionPresupuesto.anyadirGasto(gasto5);
 gestionPresupuesto.anyadirGasto(gasto6);
 
 
+gestionPresupuestoWeb.mostrarDatoEnId(gestionPresupuesto.calcularTotalGastos(),'gastos-totales');
