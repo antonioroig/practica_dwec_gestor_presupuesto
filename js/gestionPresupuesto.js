@@ -141,7 +141,7 @@ function calcularBalance (){
 }
 
 function filtrarGastos(fechaDesde,fechaHasta,valorMinimo,valorMaximo,descripcionContiene,etiquetasTiene){
-    let arr = gastos.filter(gastos.)
+    let arr = gastos.filter()
 }
 
 function agruparGastos(){
