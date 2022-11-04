@@ -9,17 +9,17 @@ function mostrarDatoEnId(valor, idElemento)
     p.textContent = valor;
     elem.appendChild(p);
 }
-function mostrarGastoWeb()
+function mostrarGastoWeb(idElemento, gasto)
 {
+    let elem = document.getElementById(idElemento);
     
+
 }
 function mostrarGastosAgrupadosWeb()
 {
     
 }
-
-
-export   { 
+export   {  
     mostrarDatoEnId,
     mostrarGastoWeb,
     mostrarGastosAgrupadosWeb
