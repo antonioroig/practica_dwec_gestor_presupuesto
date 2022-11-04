@@ -164,8 +164,8 @@ function CrearGasto(descripcion, valor, fecha = Date.now() , ...etiquetas) {
 
        if(period === 'dia')
        {
-        tot += fec.getFullYear(this.fecha) + "-"; 
-        if(fec.getMonth(this.fecha) <10)
+        tot = fec.getFullYear(this.fecha) + "-"; 
+        if(fec.getMonth(this.fecha)+1 <10)
         {
             tot += ("0" + (fec.getMonth(this.fecha) + 1) + "-")
         }
@@ -342,27 +342,31 @@ return arrayFiltrado;
 
 }
 
-function agruparGastos(periodo, etiquetas, fechaDesde, fechaHasta){
+function agruparGastos(periodo = "mes", etiquetas, fechaDesde, fechaHasta){
     
-let filtrado = filtrarGastos({fechaDesde: fechaDesde, fechaHasta: fechaHasta, etiquetas: etiquetas});
-let total = filtrado.reduce(function(acu, gasto){
+let objeto = {
+    fechaDesde:fechaDesde, 
+    fechaHasta:fechaHasta, 
+    etiquetasTiene:etiquetas
+};
 
-   
-    if(gasto.obtenerPeriodoAgrupacion(periodo))
+let filtro = filtrarGastos(objeto);
+
+ let tot = filtro.reduce(function(acumulator, gasto){
+
+    if(!acumulator.hasOwnProperty(gasto.obtenerPeriodoAgrupacion(periodo)))
     {
-        acu[""] += gasto;
+        acumulator[gasto.obtenerPeriodoAgrupacion(periodo)] = gasto.valor;
     }
-    
-    return acu;
+    else
+    acumulator[gasto.obtenerPeriodoAgrupacion(periodo)] += gasto.valor;
+   
+    return acumulator;
 
 }, {});
+ 
+return tot;
 
-
-
-        
-
-
-return total;
 
 }
 
