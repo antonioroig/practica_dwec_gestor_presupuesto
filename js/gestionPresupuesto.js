@@ -126,39 +126,38 @@ function CrearGasto(descripcion,valor,fecha = Date.now(), ...etiquetas)
     {
         let yep = new Date(this.fecha);
         
-        let dia = yep.getDate();
-        let mes = yep.getMonth() + 1;
         let anyo = yep.getFullYear();
-
+        let mes = 0;
+        let temp1 = yep.getMonth()+1;
+        let dia = 0;
+        let temp2 = yep.getDate();
+        if(temp1 <= 9)
+        {
+            mes = '0' + temp1; 
+        }
+        else
+        {
+            mes = temp1;
+        }
+        if(temp2 <= 9)
+        {
+            dia = '0' + temp2;
+        }
+        else
+        {
+            dia = temp2;
+        }
         if(tipo === 'anyo')
         {
             return anyo;
         }
         if(tipo === 'mes')
         {
-            if(mes < 10)
-            {
-                return anyo + '-0' + mes;
-            }
-            else 
-            {
-                return anyo + '-' + mes;
-            }    
+            return anyo + '-' + mes;
         }
         if(tipo === 'dia')
         {
-            if(dia < 10 && mes < 10)
-            {
-                return anyo + '-0' + mes + '-0' + dia;
-            }
-            else
-            {
-                return anyo + '-' + mes + '-' + dia;
-            }         
-        }
-        else
-        {
-            return 'ERROR';
+            return anyo + '-' + mes + '-' + dia;
         }
     }
 }
@@ -285,15 +284,34 @@ function filtrarGastos({fechaDesde, fechaHasta, valorMinimo, valorMaximo, descri
     return arrayFiltrado;
 }
 
-function agruparGastos({periodo = 'mes', etiquetas, fechaD, fechaH})
+
+function agruparGastos(periodo = 'mes', etiquetas, fechaD, fechaH)
 {
 
     let arrFilt = filtrarGastos({fechaDesde: fechaD, fechaHasta: fechaH, etiquetasTiene: etiquetas});
 
-    let arrayAgrupado = arrFilt.reduce(function(acu, gasto){
+    // let arrayAgrupado = arrFilt.reduce(function(acu, gasto){
+    //     if(typeof arrFilt[acu[gasto.obtenerPeriodoAgrupacion(periodo)]] != 'number')
+    //     {
+    //         arrFilt[acu[gasto.obtenerPeriodoAgrupacion(periodo)]] = 0;
+    //     }
+    //     console.log(arrFilt[acu[gasto.obtenerPeriodoAgrupacion(periodo)]]);
+    //     arrFilt[acu[gasto.obtenerPeriodoAgrupacion(periodo)]] += gasto.valor;
+    //     return acu;
+    // },{});
+
+    let arrayAgrupado = arrFilt.reduce((acu,gasto)=>{
         let fecha = gasto.obtenerPeriodoAgrupacion(periodo);
-        acu[fecha] += gasto.valor;
-        return acu;
+        
+        if(acu[fecha] == undefined)
+        {
+            acu[fecha] = gasto.valor;
+        }
+        else
+        {
+            acu[fecha] += gasto.valor;
+        }
+        return acu
     },{});
 
     return arrayAgrupado 
