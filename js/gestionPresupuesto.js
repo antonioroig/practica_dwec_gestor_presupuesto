@@ -372,7 +372,7 @@ function agruparGastos(periodos = 'mes', etiquetas, fechaDesde, fechaHasta){
 
     let filtro = filtrarGastos(objetoFiltro);
 
-    return filtro.reduce(function(acumulador, actual){
+    let funcionAcumulador = filtro.reduce(function(acumulador, actual){
 
         if(isNaN(acumulador[actual.obtenerPeriodoAgrupacion(periodos)]))
         {
@@ -386,6 +386,7 @@ function agruparGastos(periodos = 'mes', etiquetas, fechaDesde, fechaHasta){
         return acumulador;
 
     },{});
+    return funcionAcumulador;
 
 }
 
