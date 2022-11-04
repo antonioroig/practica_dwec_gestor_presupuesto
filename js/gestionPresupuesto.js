@@ -374,7 +374,7 @@ function agruparGastos(periodos = 'mes', etiquetas, fechaDesde, fechaHasta){
 
     return filtro.reduce(function(acumulador, actual){
 
-        if(typeof acumulador[actual.obtenerPeriodoAgrupacion(periodos)]!='number')
+        if(isNaN(acumulador[actual.obtenerPeriodoAgrupacion(periodos)]))
         {
 
             acumulador[actual.obtenerPeriodoAgrupacion(periodos)] = 0;
