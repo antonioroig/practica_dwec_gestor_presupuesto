@@ -211,8 +211,9 @@ function filtrarGastos({fechaDesde,fechaHasta,valorMinimo,valorMaximo,descripcio
 
 function agruparGastos(periodo = "mes", etiquetas, fechaDesde, fechaHasta ){
 
-    
+    let get = (gastos.filtrarGastos({fechaDesde: fechaDesde,fechaHasta: fechaHasta, etiquetasTiene: etiquetas}))
 
+    
 
 }
 
