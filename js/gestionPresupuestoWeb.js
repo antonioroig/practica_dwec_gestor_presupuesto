@@ -1,8 +1,8 @@
+import * as gestion from './gestionPresupuesto';
 
-function mostrarDatoEnId(idElemento,valor){
+function mostrarDatoEnId(valor,idElemento){
     let id = document.getElementById(idElemento);
-
-    id.textContent = valor;
+    id.innerHTML += valor;
 }
 
 function mostrarGastoWeb(){}
