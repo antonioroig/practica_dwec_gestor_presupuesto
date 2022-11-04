@@ -5,17 +5,23 @@ mostrarDatoEnId
 mostrarGastoWeb
 mostrarGastosAgrupadosWeb
 */
-import * as gesP from  "./gestionPresupuesto";
+import * as gesP from  "./gestionPresupuesto.js";
+
+
 function mostrarDatoEnId(valor, idElemento)
 {
-    let elemento = gesP.getElementById(idElemento);
-    elemento.innerHTML += valor;
-    return elemento;
+    if (idElemento != undefined)
+    {
+        let elemento = document.getElementById(idElemento);
+        elemento.innerHTML += " " + valor;
+    }
 }
+
 function mostrarGastoWeb(idElemento, gasto)
 {
 
 }
+
 function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo)
 {
     
