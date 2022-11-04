@@ -5,10 +5,12 @@ mostrarDatoEnId
 mostrarGastoWeb
 mostrarGastosAgrupadosWeb
 */
-import{mostrarPresupuesto} from  "./gestionPresupuesto";
+import * as gesP from  "./gestionPresupuesto";
 function mostrarDatoEnId(valor, idElemento)
 {
-
+    let elemento = gesP.getElementById(idElemento);
+    elemento.innerHTML += valor;
+    return elemento;
 }
 function mostrarGastoWeb(idElemento, gasto)
 {
