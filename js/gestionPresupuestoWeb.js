@@ -16,8 +16,23 @@ function mostrarDatoEnId(valor, idElemento){
 }
 function mostrarGastoWeb(gasto, idElemento){
     let elemento = document.getElementById(idElemento);
-    let div = document.createElement('div');
-    div.
+    let div = document.createElement("div");
+    let div1 = document.createElement("div")
+    div.appendChild(div);
+    `<div class="gasto">
+    <div class="gasto-descripcion">${}</div>
+    <div class="gasto-fecha">FECHA DEL GASTO</div> 
+    <div class="gasto-valor">VALOR DEL GASTO</div> 
+    <div class="gasto-etiquetas">
+      <span class="gasto-etiquetas-etiqueta">
+        ETIQUETA 1
+      </span>
+      <span class="gasto-etiquetas-etiqueta">
+        ETIQUETA 2
+      </span>
+      <!-- Etcétera -->
+    </div> 
+  </div>`
     elemento.innerHTML 
 }
 function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo){
