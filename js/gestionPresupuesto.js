@@ -233,29 +233,15 @@ function agruparGastos(periodo,etiquetas,fechaDesde,fechaHasta)
     let ObjetoFinal = ArrayFiltrado.reduce((acc,item) => 
     {
         let Fecha = item.obtenerPeriodoAgrupacion(periodo);
-        if(!acc.includes(Fecha))
+        if(acc[Fecha] == undefined)
         {
-            acc += Fecha + ":" + item.valor + "\n";
+            acc[Fecha] = item.valor;
         }
         else
         {
-            
-            // let posicion = acc.indexOf(Fecha);
-            // if(periodo === "dia")//2022-12-02:
-            // {
-            //     posicion = posicion + 11;
-            // }
-            // if(periodo === "mes")//2022-12:
-            // {
-            //     posicion = posicion + 8//2022:
-            // }
-            // if(periodo === "anyo")
-            // {
-            //     posicion = posicion + 5;
-            // }
-
+            acc[Fecha] += item.valor;
         }
-
+        return acc;
     },{});
     return ObjetoFinal;
 }
