@@ -198,10 +198,8 @@ function filtrarGastos({fechaDesde,fechaHasta,valorMinimo,valorMaximo,descripcio
         return have
     })
     if(arr.length == 0){
-        console.log("gastos")
         return gastos
     }else{
-        console.log("arr")
         for (let i = 0; i< arr.length; i++){
             console.log(arr[i])
         }
@@ -211,10 +209,22 @@ function filtrarGastos({fechaDesde,fechaHasta,valorMinimo,valorMaximo,descripcio
 
 function agruparGastos(periodo = "mes", etiquetas, fechaDesde, fechaHasta ){
 
-    let get = (gastos.filtrarGastos({fechaDesde: fechaDesde,fechaHasta: fechaHasta, etiquetasTiene: etiquetas}))
+    let get = (filtrarGastos({fechaDesde: fechaDesde,fechaHasta: fechaHasta, etiquetasTiene: etiquetas}))
+    let objetovacio = {};
+    let arr = get.reduce(function(arr,gasto){
+        
+        let per = gasto.obtenerPeriodoAgrupacion(periodo);
+        
+        if(typeof arr[per] !== "number"){
+            arr[per] = 0
+        }
+        
+        arr[per] += gasto.valor
 
-    
+        return arr
+    },objetovacio)
 
+    return arr
 }
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
