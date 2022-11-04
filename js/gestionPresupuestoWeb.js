@@ -1,41 +1,40 @@
-function mostrarDatosEnId(valor, idElemento){
+function mostrarDatoEnId(valor, idElemento){
     let elemento = document.getElementById(idElemento);
-    elemento.innerHTML = "<p>" + valor + "</p>";
+    elemento.innerHTML += valor;
 }
-
 function mostrarGastoWeb(idElemento, {descripcion, valor, fecha, etiquetas}){
     let elemento = document.getElementById(idElemento);
     let divGasto = document.createElement('div');
         divGasto.className = "gasto";
-        elemento.append(divGasto);
+        elemento.appendChild(divGasto);
     let divGastoDescripcion = document.createElement('div');
         divGastoDescripcion.className = "gasto-descripcion";
-        divGastoDescripcion.innerHTML = descripcion;
-        divGasto.append(divGastoDescripcion);
+        divGastoDescripcion.innerHTML += descripcion;
+        divGasto.appendChild(divGastoDescripcion);
     let divGastoFecha = document.createElement('div');
         divGastoFecha.className = "gasto-fecha";
-        divGastoFecha.innerHTML = fecha;
-        divGasto.append(divGastoFecha);
+        divGastoFecha.innerHTML += fecha;
+        divGasto.appendChild(divGastoFecha);
     let divGastoValor = document.createElement('div');
         divGastoValor.className = "gasto-valor";
-        divGastoValor.innerHTML = valor;
-        divGasto.append(divGastoValor);
+        divGastoValor.innerHTML += valor;
+        divGasto.appendChild(divGastoValor);
     let divGastoEtiquetas = document.createElement('div');
         divGastoEtiquetas.className = "gasto-etiquetas";
-        /*divGastoEtiquetas.innerHTML =  etiquetas.forEach(etiqueta => {
+        divGastoEtiquetas.innerHTML +=  etiquetas.forEach(etiqueta => {
             let spanEtiqueta = document.createElement('span');
             spanEtiqueta.className = "gasto-etiquetas-etiqueta";
-            spanEtiqueta.innerHTML = etiqueta;
-            divGastoEtiquetas.append(spanEtiqueta);
-        });*/
-        divGasto.append(divGastoEtiquetas);
+            spanEtiqueta.innerHTML += etiqueta;
+            divGastoEtiquetas.appendChild(spanEtiqueta);
+        });
+        divGasto.appendChild(divGastoEtiquetas);
 }
 
-function mostrarGastosAgrupadosWeb(){
-    
+function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo){
+    let elemento = document.getElementById(idElemento);
 }
 export{
-    mostrarDatosEnId,
+    mostrarDatoEnId,
     mostrarGastoWeb,
     mostrarGastosAgrupadosWeb
 }
