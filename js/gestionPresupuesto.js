@@ -29,26 +29,24 @@ function mostrarPresupuesto() {
 }
 
 // revisar
-function CrearGasto(descripcion, valor, fecha=Date.now(), ...etiquetas) {
+function CrearGasto(descripcion, valor, fecha = Date.now(), ...etiquetas) {
     // TODO
     this.descripcion = descripcion;
     this.valor = valor;
-    this.etiquetas = new Array();
-
+    let id;
 
     if (etiquetas === undefined){
+        this.etiquetas = new Array();
+    }
+    else{
         this.etiquetas = [...etiquetas];
     }
 
-    if (fecha === undefined){
+    if (typeof fecha !== 'string' || (isNaN(Date.parse(fecha)))){
         this.fecha = Date.now(); 
     }
-
-    if (typeof fecha !== 'string' && fecha === isNaN(Date.parse(fecha))){
-        this.fecha = fecha;
-    }
     else {
-        this.fecha = Date.now();
+        this.fecha = Date.parse(fecha);
     }
 
     if (valor >= 0 && !isNaN(valor))
@@ -58,7 +56,11 @@ function CrearGasto(descripcion, valor, fecha=Date.now(), ...etiquetas) {
 
     else{
         this.valor = 0;
-    };
+    }
+
+    this.setId = function(id){
+        this.id = id;
+    }
 
     this.mostrarGasto = function(){
         return 'Gasto correspondiente a '+ this.descripcion + ' con valor ' + this.valor + ' €';
@@ -81,16 +83,199 @@ function CrearGasto(descripcion, valor, fecha=Date.now(), ...etiquetas) {
         }
     } 
 
-    this.anyadirEtiquetas = function(){
+    this.anyadirEtiquetas = function(...parEtiquetas){
 
+        for (let i = 0; i < parEtiquetas.length; i++){
+
+            let exArray = false; 
+
+            for (let j = 0; j < this.etiquetas.length; j++ ){
+
+                if (parEtiquetas[i] === this.etiquetas[j] ){
+
+                    exArray = true;
+                    break;
+                }
+
+            }
+            if (!exArray){
+
+                this.etiquetas.push(parEtiquetas[i]);
+            }
+        }
     }
 
     this.mostrarGastoCompleto = function(){
-        const event = new Date(Date.UTC(fecha));
+       let mFecha = new Date (this.fecha); 
 
-        let ret = 'Gasto correspondiente a ' + this.descripcion +' con valor ' + this.valor + '€. Fecha: ' + this.fecha  + 'Etiquetas:' + this.etiquetas;
+        let ret = 'Gasto correspondiente a '+ this.descripcion + ' con valor ' + this.valor + ' €.' + '\nFecha: ' + mFecha.toLocaleString() + '\nEtiquetas:\n';
+
+        for (let i = 0; i < this.etiquetas.length; i++){
+
+            ret += '- ' + this.etiquetas[i] + '\n';
+        }
+
         return ret;
     }
+
+    this.actualizarFecha = function(parAct){
+
+        // if (typeof parAct === 'string' && isNaN(Date.parse(fecha))){
+
+        //     this.fecha = Date.parse(parAct); 
+        // }
+
+        if (Date.parse(parAct))
+        {
+            this.fecha = Date.parse(parAct);
+        }
+    }
+
+    this.borrarEtiquetas = function(...parEtiquetas){
+
+        for (let i = 0; i < parEtiquetas.length; i++)
+        {
+
+            for (let j = 0; j < this.etiquetas.length; j++)
+            {
+                if (parEtiquetas[i] === this.etiquetas[j])
+                {
+                    this.etiquetas.splice(j,1);
+                    break;
+                }
+            }
+        }
+    }
+
+    this.obtenerPeriodoAgrupacion = function(parPeriodo)
+    {
+        let fecha1 = new Date (this.fecha);
+        let ret = String(fecha1.getFullYear());
+        if (parPeriodo === "anyo"){
+            return ret;
+        } else if (parPeriodo === "mes") {
+            ret += "-";
+            if (fecha1.getMonth() + 1 < 10) {
+                ret += "0";
+            }
+            return ret += fecha1.getMonth() + 1;
+        } else if (parPeriodo === "dia") {
+            ret += "-";
+            if (fecha1.getMonth() + 1 < 10) {
+                ret += "0";
+            }
+            ret += fecha1.getMonth() + 1 + "-";
+            if (fecha1.getDate() < 10) {
+                ret += "0";
+            }
+            return ret += fecha1.getDate();
+        }
+    }
+}
+
+function filtrarGastos({fechaDesde,
+    fechaHasta,
+    valorMinimo,
+    valorMaximo,
+    descripcionContiene,
+    etiquetasTiene})
+{
+    let ret = gastos.filter(function(gasto)
+    {
+        let anyade = true;
+        /*Si tengo uno de los dos requisitos en valor o en fecha, se tiene que cumplir y el otro se 
+        puede omitir. Si te dan los 2, se tienen que cumplir los 2*/
+
+        if (fechaDesde)
+        {
+            if (gasto.fecha < Date.parse(fechaDesde))
+            {
+                anyade = false;
+            }
+        }
+
+        if (fechaHasta)
+        {
+            if (gasto.fecha > Date.parse(fechaHasta))
+            {
+                anyade = false;
+            }
+        }
+        
+        if (valorMinimo)
+        {
+            if (gasto.valor < valorMinimo)
+            {
+                anyade = false;
+            }
+        }
+        
+        if (valorMaximo)
+        {
+            if (gasto.valor > valorMaximo)
+            {
+                anyade = false;
+            }
+        }
+
+        if (descripcionContiene)
+        {
+            if (!(gasto.descripcion.toUpperCase()).includes(descripcionContiene.toUpperCase()))
+            {
+                anyade = false;
+            }
+        }
+
+        if (etiquetasTiene)
+        {
+            let existe = false;
+
+            for (let i = 0; i < etiquetasTiene.length; i++)
+            {
+                for (let j = 0; j < gasto.etiquetas.length; j++)
+                {
+                    if (etiquetasTiene[i] === gasto.etiquetas[j])
+                    {
+                        existe = true;
+                    }
+                }
+            }
+            if (existe === false)
+            {
+                anyade = false;
+            }
+        }
+
+        return anyade;
+    });
+
+    return ret;
+}
+
+
+function agruparGastos(periodos = "mes", etiquetas, fechaDesde, fechaHasta)
+{   
+    let condiciones = {
+        
+        fechaDesde:fechaDesde,
+        fechaHasta:fechaHasta,
+        etiquetasTiene:etiquetas,
+
+    }
+
+    let subGastos = filtrarGastos(condiciones);
+
+    return subGastos.reduce(function(acc, gasto)
+    {
+        if (typeof acc[gasto.obtenerPeriodoAgrupacion(periodos)]!='number')
+        {
+            acc[gasto.obtenerPeriodoAgrupacion(periodos)] = 0;
+        }
+
+        acc[gasto.obtenerPeriodoAgrupacion(periodos)] += gasto.valor;
+
+        return acc;
+    },{});
 }
 
 function listarGastos(){
@@ -98,37 +283,42 @@ function listarGastos(){
     return gastos;
 }
 
-function anyadirGasto(...gasto1){
-    let gastos;
+function anyadirGasto(gasto){
 
-    gasto1[idGasto]; /* otra manera de añadir seria gasto1[id] */
+    gasto.id = idGasto;
+
     idGasto++;
-    gastos = gasto1.push();
-}
-
-/* 
-this.etiquetas = etiquetas;
-this. etiquetas = [...etiquetas];
-*/
-
-function borrarGasto(id){
-
-    gastos.splice(id,1);
+    
+    gastos.push(gasto);
 
 }
 
-function calcularTotalGastos(){
+function borrarGasto(parId)
+{
+    for ( let i = 0; i < gastos.length; i++)
+    {
+        if (gastos[i].id === parId)
+        {
+            gastos.splice(i, 1);
+        }
+    }
+}
 
-    let total = gastos.reduce((a, b) => a + b, 0);
+function calcularTotalGastos()
+{
+    let total = 0;
+    
+    for (let i = 0; i < gastos.length; i++)
+    {
+        total += gastos[i].valor;
+    }
 
     return total;
 }
 
-function calcularBalance(){
-    
-    let total = calcularTotalGastos();
-
-
+function calcularBalance()
+{
+    return presupuesto - calcularTotalGastos();
 }
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
@@ -142,5 +332,7 @@ export   {
     anyadirGasto,
     borrarGasto,
     calcularTotalGastos,
-    calcularBalance
+    calcularBalance,
+    filtrarGastos,
+    agruparGastos
 }
