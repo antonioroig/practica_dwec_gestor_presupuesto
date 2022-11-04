@@ -171,6 +171,31 @@ function CrearGasto(descripcion, valor, fecha = Date.now(), ...etiquetas) {
             return ret += fecha1.getDate();
         }
     }
+
+    // this.obtenerPeriodoAgrupacion = function(parPeriodo)
+    // {
+    //     let fecha1 = new Date (this.fecha);
+    //     let ret = String(fecha1.getFullYear());
+    //     if (parPeriodo === "anyo"){
+    //         return ret;
+    //     } else if (parPeriodo === "mes") {
+    //         ret += "-";
+    //         if (fecha1.getMonth() + 1 < 10) {
+    //             ret += "0";
+    //         }
+    //         return ret += fecha1.getMonth() + 1;
+    //     } else if (parPeriodo === "dia") {
+    //         ret += "-";
+    //         if (fecha1.getMonth() + 1 < 10) {
+    //             ret += "0";
+    //         }
+    //         ret += fecha1.getMonth() + 1 + "-";
+    //         if (fecha1.getDate() < 10) {
+    //             ret += "0";
+    //         }
+    //         return ret += fecha1.getDate();
+    //     }
+    // }
 }
 
 function filtrarGastos({fechaDesde,
