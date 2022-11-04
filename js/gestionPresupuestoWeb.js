@@ -1,8 +1,12 @@
+import * as gestionpr from './gestionPresupuesto.js';
+"use strict";
 
-
-let mostrarDatoEnId = function(valor,idElemento){
-    let elem = document.getElementById('idElemento');
-    elem.textContent= valor;
+function mostrarDatoEnId(valor,idElemento){
+    if(idElemento!==undefined){
+        let elem= document.getElementById(idElemento);
+        elem.innerHTML+= "" + valor;
+    }
+    
 }
 
 
