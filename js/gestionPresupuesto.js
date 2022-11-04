@@ -335,8 +335,4 @@ export   {
     calcularBalance,
     filtrarGastos,
     agruparGastos
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> 204952cde5d2f3b093a9e34e497cd1ea162c57cf
