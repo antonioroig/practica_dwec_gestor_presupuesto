@@ -257,19 +257,28 @@ function filtrarGastos({fechaDesde,fechaHasta,valorMinimo,valorMaximo,descripcio
 }
 function agruparGastos(periodo = "mes",etiquetas, fechaDesde,fechaHasta){
 
-    let filtrado = filtrarGastos({fechaDesde,fechaHasta,etiquetas})
+    let objetofiltro = {
+        fechaDesde:fechaDesde,
+        fechaHasta:fechaHasta,
+        etiquetasTiene:etiquetas,
+    }
+    let filtrado = filtrarGastos(objetofiltro);
 
     let objetofinal = filtrado.reduce(function(acu,gasto){
-        if (gasto.obtenerPeriodoAgrupacion(periodo))
-        {
-            acu
-        } 
-        else
-        {
 
-        } 
+        let fechas = gasto.obtenerPeriodoAgrupacion(periodo);
+
+            if (acu[fechas] === undefined)
+            {
+                acu[fechas] = 0;
+            }
+
+        acu[fechas] += gasto.valor;
+        
+        return acu;
         
     },{});
+    return objetofinal;
 }
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
