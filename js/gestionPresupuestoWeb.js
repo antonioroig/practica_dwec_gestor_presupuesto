@@ -1,17 +1,16 @@
-
+import * as ges from './gestionPresupuesto.js';
 
 function mostrarDatoEnId(valor,idElemento){
     let idDato = document.getElementById(idElemento);
-    idDato.textContent = valor.textContent;
-    cy.visit("/interaccionHTML.html");
-    cy.get(`section[id=]`);
+    valor = document.querySelectorAll('id=idElemento');
+    
 }
 
-function mostrarGastoWeb(){
+function mostrarGastoWeb(idElemento,gasto){
 
 }
 
-function mostrarGastosAgrupadosWeb(){
+function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo){
 
 }
 
