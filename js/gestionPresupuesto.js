@@ -209,7 +209,9 @@ function filtrarGastos({fechaDesde,fechaHasta,valorMinimo,valorMaximo,descripcio
     }
 }
 
-function agruparGastos(){
+function agruparGastos(periodo = "mes", etiquetas, fechaDesde, fechaHasta ){
+
+
 
 }
 
