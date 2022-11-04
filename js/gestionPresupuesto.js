@@ -101,7 +101,7 @@ function CrearGasto(descripcion1, valor1, fecha1 = Date.now(), ...etiqueta1) {
         }
         return texto;
     };
-
+    /*
     this.obtenerPeriodoAgrupacion = function(periodo) {
         let fecha1 = new Date (this.fecha);
         let fechaMostrar = fecha1.getFullYear().toLocaleString();
@@ -123,6 +123,35 @@ function CrearGasto(descripcion1, valor1, fecha1 = Date.now(), ...etiqueta1) {
                 fechaMostrar += '0';
             }
             return fechaMostrar += fecha1.getDate();
+        }
+    }
+    */
+    this.obtenerPeriodoAgrupacion = function(periodo){
+        let dia = new Date(this.fecha).getDate();
+        let mes = new Date(this.fecha).getMonth()+1;
+        let anyo = new Date(this.fecha).getFullYear();
+        if(dia <10){
+            dia = `0${dia}`
+        }
+        if(periodo === `dia`){
+            if(mes < 10){
+                return (`${anyo}-0${mes}-${dia}`);
+            }
+            else{
+                return (`${anyo}-${mes}-${dia}`);
+            }
+           
+        }
+        if(periodo === `mes`){
+            if(mes < 10){
+                return (`${anyo}-0${mes}`);
+            }
+            else{
+                return (`${anyo}-${mes}`);
+            }
+        }
+        if(periodo === `anyo`){
+            return (`${anyo}`);
         }
     }
 }
