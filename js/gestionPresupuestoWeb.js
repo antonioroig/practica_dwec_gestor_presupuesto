@@ -1,3 +1,4 @@
+import * as exGp from '/js/gestionPresupuestoWeb.js';
 function mostrarDatoEnId(idElemento, valor)
 {
     let elem = document.getElementById(idElemento);
