@@ -176,17 +176,17 @@ function filtrarGastos({fechaDesde,fechaHasta,valorMinimo,valorMaximo,descripcio
         }
         // console.log(descripcionContiene + " desc")
         if(descripcionContiene){
-            console.log("me cago en js")
+            console.log(descripcionContiene)
             // codigo
-            if(descripcionContiene.toLowerCase() != gasto.descripcion.toLowerCase()){
+            if(!gasto.descripcion.toLowerCase().includes(descripcionContiene.toLowerCase())){
                 have = false
             }
         }
         if(etiquetasTiene){
             console.log(etiquetasTiene)
             let aux = false;
-            for(etiqueta of etiquetasTiene){
-                if(gasto.etiquetas.includes(etiqueta)){
+            for(let i = 0; i < etiquetasTiene.length;i++){
+                if(gasto.etiquetas.includes(etiquetasTiene[i])){
                     aux = true
                 }
             }
