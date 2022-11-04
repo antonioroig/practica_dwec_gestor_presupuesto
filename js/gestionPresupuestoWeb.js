@@ -1,9 +1,8 @@
 import * as ges from './gestionPresupuesto.js';
 
 function mostrarDatoEnId(valor,idElemento){
-    let idDato = document.getElementById(idElemento);
-    valor = document.querySelectorAll('id=idElemento');
-    
+    let elemento = document.getElementById(idElemento);
+    elemento.innerHTML += valor;
 }
 
 function mostrarGastoWeb(idElemento,gasto){
