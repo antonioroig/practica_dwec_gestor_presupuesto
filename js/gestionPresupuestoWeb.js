@@ -1,7 +1,8 @@
-import * as exGp from '/js/gestionPresupuestoWeb.js';
-function mostrarDatoEnId(idElemento, valor)
+import * as exGp from './gestionPresupuesto.js';
+function mostrarDatoEnId(valor, idElemento)
 {
     let elem = document.getElementById(idElemento);
+    //elem.innerHTML += valor;
     let p = document.createElement("p");
     //let pTexto = document.createTextNode(valor);
     //p.appendChild(pTexto);
