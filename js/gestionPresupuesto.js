@@ -146,43 +146,43 @@ function filtrarGastos({fechaDesde,fechaHasta,valorMinimo,valorMaximo,descripcio
         
         let have = true;
 
-        if(fechaDesde == "undefined"){
+        if(fechaDesde){
             console.log(fechaDesde)
             // codigo
-            if(fechaDesde > gasto.fecha){
+            if(Date.parse(fechaDesde) > gasto.fecha){
                 have = false;
             }
         }
-        if(fechaHasta == "undefined"){
+        if(fechaHasta){
             console.log(fechaHasta)
             // codigo
-            if(fechaHasta < gasto.fecha){
+            if(Date.parse(fechaHasta) < gasto.fecha){
                 have = false;
             }
         }
-        if(valorMinimo == "undefined"){
+        if(valorMinimo){
             console.log(valorMinimo)
             // codigo
             if(valorMinimo > gasto.valor){
                 have = false
             }
         }
-        if(valorMaximo == "undefined"){
+        if(valorMaximo){
             console.log(valorMaximo)
             // codigo
             if(valorMaximo < gasto.valor){
                 have = false
             }
         }
-        console.log(descripcionContiene + " desc")
-        if(descripcionContiene == "undefined"){
+        // console.log(descripcionContiene + " desc")
+        if(descripcionContiene){
             console.log("me cago en js")
             // codigo
             if(descripcionContiene.toLowerCase() != gasto.descripcion.toLowerCase()){
                 have = false
             }
         }
-        if(etiquetasTiene == "undefined"){
+        if(etiquetasTiene){
             console.log(etiquetasTiene)
             let aux = false;
             for(etiqueta of etiquetasTiene){
@@ -197,9 +197,14 @@ function filtrarGastos({fechaDesde,fechaHasta,valorMinimo,valorMaximo,descripcio
 
         return have
     })
-    if(arr.length === 0){
+    if(arr.length == 0){
+        console.log("gastos")
         return gastos
     }else{
+        console.log("arr")
+        for (let i = 0; i< arr.length; i++){
+            console.log(arr[i])
+        }
         return arr
     }
 }
