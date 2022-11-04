@@ -114,19 +114,27 @@ function CrearGasto(descripcion,valor_actual,fecha = Date.now(), ...etiquetas)
        
         if(periodo === 'dia')
         {
-            if(mes > 10 && fecha.getDate() > 10 )
-            {
-                return fecha.getFullYear()+"-"+mes+"-"+fecha.getDate();
-            }
-            else
+            if(mes < 10 && fecha.getDate() < 10 )
             {
                 return fecha.getFullYear()+"-0"+mes+"-0"+fecha.getDate();
+            }
+            else if(fecha.getDate() < 10)
+            {
+                return fecha.getFullYear()+"-"+mes+"-0"+fecha.getDate();
+            }
+            else if( mes < 10)
+            {
+                return fecha.getFullYear()+"-0"+mes+"-"+fecha.getDate();
+            }
+            else if( mes >= 10 && fecha.getDate() >= 10)
+            {
+                return fecha.getFullYear()+"-"+mes+"-"+fecha.getDate();
             }
              
         }
         if(periodo === 'mes')
         {
-            if(mes > 10)
+            if(mes >= 10)
             {
                 return fecha.getFullYear()+'-'+mes;
             }
@@ -188,6 +196,7 @@ function filtrarGastos({
     
       let arrayFiltrado = gastos.filter(function(gasto){
             let anyade = true;
+            let tiene = false;
             if( typeof valorMaximo != "undefined" )
             {
                 if (gasto.valor > valorMaximo || isNaN(valorMaximo) )
@@ -213,14 +222,14 @@ function filtrarGastos({
             }
             if(typeof etiquetasTiene != "undefined")
             {
-                let tiene = false;
+                
                 for(let i = 0; i < etiquetasTiene.length; i++)
                 {
                     for( let j = 0; j < gasto.etiquetas.length; j++)
                     {
                         if(etiquetasTiene[i] === gasto.etiquetas[j])
                         {
-                            tiene= true;
+                            tiene = true;
                         }
                     }
                 }
@@ -253,20 +262,24 @@ function filtrarGastos({
   
 }
 
-function agruparGastos(periodo = 'mes',fechaDesde,fechaHasta,etiquetas)
+function agruparGastos(periodo='mes',etiquetas,fechaDesde,fechaHasta)
 {
-    let agrupar = filtrarGastos({fechaDesde: fechaDesde,fechaHasta: fechaHasta,etiquetasTiene: etiquetas,});
-    return agrupar.reduce(function(acu,gasto){
-        if( typeof agrupar[acu[gasto.obtenerPeriodoAgrupacion(periodo)]] != "number");
+    let agrupar = filtrarGastos({fechaDesde: fechaDesde,fechaHasta: fechaHasta,etiquetasTiene: etiquetas});
+    let arrayFilt = agrupar.reduce(function(acu,gasto){
+        
+        if(acu[gasto.obtenerPeriodoAgrupacion(periodo)] == undefined)
         {
-            agrupar[acu[gasto.obtenerPeriodoAgrupacion(periodo)]] = 0;
+            acu[gasto.obtenerPeriodoAgrupacion(periodo)] = gasto.valor;
         }
-        agrupar[acu[gasto.obtenerPeriodoAgrupacion(periodo)]] += gasto.valor;
+        else
+        {
+            acu[gasto.obtenerPeriodoAgrupacion(periodo)]+= gasto.valor;
+        }
         return acu;
     },{})
-    
+    return arrayFilt;
 }
-
+console.log(agruparGastos('anyo'));
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
 // Las funciones y objetos deben tener los nombres que se indican en el enunciado
