@@ -155,7 +155,7 @@ arrayFromMap
     );
 
 console.log(precios2); 
-//al convertir a obejto, las claves son cadenas y sólo queda un ítem 1
+//al convertir a objeto, las claves son cadenas y sólo queda un ítem 1
 
 //Un Set es una colección especial, son un conjunto de valores sin claves donde cada valor puede aparecer sólo una vez.
 //creación de un set -> new Set(iterable)
