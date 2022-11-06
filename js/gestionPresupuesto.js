@@ -126,39 +126,38 @@ function CrearGasto(descripcion,valor,fecha = Date.now(), ...etiquetas)
     {
         let yep = new Date(this.fecha);
         
-        let dia = yep.getDate();
-        let mes = yep.getMonth() + 1;
         let anyo = yep.getFullYear();
-
+        let mes = 0;
+        let temp1 = yep.getMonth()+1;
+        let dia = 0;
+        let temp2 = yep.getDate();
+        if(temp1 <= 9)
+        {
+            mes = '0' + temp1; 
+        }
+        else
+        {
+            mes = temp1;
+        }
+        if(temp2 <= 9)
+        {
+            dia = '0' + temp2;
+        }
+        else
+        {
+            dia = temp2;
+        }
         if(tipo === 'anyo')
         {
             return anyo;
         }
         if(tipo === 'mes')
         {
-            if(mes < 10)
-            {
-                return anyo + '-0' + mes;
-            }
-            else 
-            {
-                return anyo + '-' + mes;
-            }    
+            return anyo + '-' + mes;
         }
         if(tipo === 'dia')
         {
-            if(dia < 10 || (mes < 10 && dia < 10))
-            {
-                return anyo + '-0' + mes + '-0' + dia;
-            }
-            else
-            {
-                return anyo + '-' + mes + '-' + dia;
-            }
-        }
-        else
-        {
-            return 'ERROR';
+            return anyo + '-' + mes + '-' + dia;
         }
     }
 }
@@ -204,98 +203,118 @@ function calcularBalance()
 
 function filtrarGastos({fechaDesde, fechaHasta, valorMinimo, valorMaximo, descripcionContiene, etiquetasTiene})
 {
-    let ret = true;
-
+    
     let arrayFiltrado = gastos.filter(function(gasto){
-        
-        if(descripcionContiene != undefined)
+
+        let fechaDvalida = true;
+        let fechaHvalida = true;
+        let valorMinvalido = true;
+        let valorMaxvalido = true; 
+        let descripcionvalida = true;
+        let etiquetasvalida = true;
+
+        if(fechaDesde !== undefined)
         {
-            if(descripcionContiene === gasto.descripcion)
+            if(Date.parse(fechaDesde) == isNaN || Date.parse(fechaDesde) > gasto.fecha)
             {
-                ret = true;
+                fechaDvalida = false;
             }
-            else
+        }
+        if(fechaHasta !== undefined)
+        {
+            if(Date.parse(fechaHasta) == isNaN || Date.parse(fechaHasta) < gasto.fecha)
             {
-                ret = false;
+                fechaHvalida = false;
+            }   
+        }
+        if(valorMinimo != undefined)
+        {
+            if(valorMinimo > gasto.valor)
+            {
+                valorMinvalido = false;
+            }   
+        }
+        if(valorMaximo != undefined)
+        {
+            if(valorMaximo < gasto.valor)
+            {
+                valorMaxvalido = false;
+            }    
+        }
+
+        if(descripcionContiene)
+        {
+            let desc = gasto.descripcion.toUpperCase();
+            let contiene = descripcionContiene.toUpperCase();
+            if(!desc.includes(contiene))
+            {
+                descripcionvalida = false;
             }
         }
 
-        if((!isNaN(Date.parse(fechaDesde)) && fechaDesde !== undefined)  || (!isNaN(Date.parse(fechaHasta)) && fechaHasta !== undefined))
+        if(etiquetasTiene)
         {
-            let fechaD = Date.parse(fechaDesde);
-            let fechaH = Date.parse(fechaHasta);
-
-            if(gasto.fecha >= fechaD)
+            let xd = false;
+            for(let i = 0; i < etiquetasTiene.length; i++)
             {
-                ret = true;
-            }
-            else
-            {
-                ret = false;
-            }
-            if(gasto.fecha <= fechaH)
-            {
-                ret = true;
-            }
-            else
-            {
-                ret = false;
-            }
-            if(gasto.fecha >= fechaD && gasto.fecha <= fechaH)
-            {
-                ret = true;
-            }
-            else
-            {
-                ret = false;
-            }
-        }
-        
-        if(typeof valorMinimo === 'number' && typeof valorMaximo === 'number')
-        {
-            if(gasto.valor >= valorMinimo)
-            {
-                ret = true;
-            }
-            else
-            {
-                ret = false;
-            }
-            if(gasto.valor <= valorMaximo)
-            {
-                ret = true;
-            }
-            else
-            {
-                ret = false;
-            }
-        }
-
-        if(typeof etiquetasTiene === 'string' && etiquetasTiene !== undefined)
-        {
-            gasto.etiquetas.forEach(found => {
-                let pos = gasto.etiquetas.indexOf(found);
-                if(pos != -1)
+                for(let j = 0; j < gasto.etiquetas.length; j++)
                 {
-                    ret = true;
+                    if(etiquetasTiene[i] === gasto.etiquetas[j])
+                    {
+                        xd = true;
+                    }
                 }
-                else
-                {
-                    ret = false;
-                }
-            });
+            }
+            if(xd === false)
+            {
+                etiquetasvalida = false;
+            }
         }
-
-        return ret;
+        
+        if(fechaDvalida && fechaHvalida && valorMinvalido && valorMaxvalido && descripcionvalida && etiquetasvalida)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     });
 
     return arrayFiltrado;
 }
 
-function agruparGastos()
-{ 
-    let arrayAgrupado;
-    return arrayAgrupado;
+
+function agruparGastos(periodo = 'mes', etiquetas, fechaD, fechaH)
+{
+
+    let arrFilt = filtrarGastos({fechaDesde: fechaD, fechaHasta: fechaH, etiquetasTiene: etiquetas});
+
+    // let arrayAgrupado = arrFilt.reduce(function(acu, gasto){
+    //     if(typeof arrFilt[acu[gasto.obtenerPeriodoAgrupacion(periodo)]] != 'number')
+    //     {
+    //         arrFilt[acu[gasto.obtenerPeriodoAgrupacion(periodo)]] = 0;
+    //     }
+    //     console.log(arrFilt[acu[gasto.obtenerPeriodoAgrupacion(periodo)]]);
+    //     arrFilt[acu[gasto.obtenerPeriodoAgrupacion(periodo)]] += gasto.valor;
+    //     return acu;
+    // },{});
+
+    let arrayAgrupado = arrFilt.reduce((acu,gasto)=>{
+        let fecha = gasto.obtenerPeriodoAgrupacion(periodo);
+        
+        if(acu[fecha] == undefined)
+        {
+            acu[fecha] = gasto.valor;
+        }
+        else
+        {
+            acu[fecha] += gasto.valor;
+        }
+        return acu
+    },{});
+
+    return arrayAgrupado 
 }
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
