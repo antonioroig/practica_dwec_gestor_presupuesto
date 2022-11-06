@@ -12,39 +12,31 @@ function mostrarDatoEnId(valor,idElemento)
 
 let mostrarGastoWeb = function(idElemento,gasto){
 
-    let id = document.getElementById(idElemento);
-    const divContenedor = document.createElement("div"); 
+    
+
+    let elemento = document.getElementById(idElemento);
+
+
+
+    let divContenedor = document.createElement("div"); 
     divContenedor.className = "gasto"; 
 
+    elemento.append(divContenedor);
 
-    const divDes = document.createElement("div"); 
-    divDes.className = "gasto-descripcion"; 
-    divDes.textContent = gasto.descripcion ;
+    divContenedor.innerHTML += `<div class="gasto-descripcion">${gasto.descripcion}</div>
+                                <div class="gasto-fecha">${gasto.fecha}</div> 
+                                <div class="gasto-valor">${gasto.valor}</div>`
 
-    const divFecha = document.createElement("div"); 
-    divFecha.className = "gasto-fecha";
-    divFecha.textContent =gasto.fecha;
-
-
-    const divValor = document.createElement("div");
-    divValor.className = "gasto-valor";
-    divValor.textContent= gasto.valor;
-
-    const divEti = document.createElement("div"); 
-    divEti.className = "gasto-etiquetas";
-    divEti.textContent = gasto.etiquetas;
-
+    let divEtiquetas = document.createElement("div");
+    divEtiquetas.className = "gasto-etiquetas";
+    divContenedor.append(divEtiquetas);
+    
     for(let et of gasto.etiquetas)
     {
-        const s = document.createElement("span");
-        s.className = "gasto-etiquetas-etiqueta";
-        s.textContent = et;
-        divEti.createElement(s);
+        divEtiquetas.innerHTML += `<span class="gasto-etiquetas-etiqueta">${et}</span>`
     }
 
-    divContenedor.appendChild(divDes,divFecha,divValor,divEti);
-    id.appendChild(divContenedor);
-    return id;
+    return elemento;
 }
 
 let mostrarGastosAgrupadosWeb = function(){
