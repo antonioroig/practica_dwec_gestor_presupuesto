@@ -11,13 +11,7 @@ function mostrarDatoEnId(valor,idElemento)
 
 
 let mostrarGastoWeb = function(idElemento,gasto){
-
-    
-
     let elemento = document.getElementById(idElemento);
-
-
-
     let divContenedor = document.createElement("div"); 
     divContenedor.className = "gasto"; 
 
@@ -30,17 +24,35 @@ let mostrarGastoWeb = function(idElemento,gasto){
     let divEtiquetas = document.createElement("div");
     divEtiquetas.className = "gasto-etiquetas";
     divContenedor.append(divEtiquetas);
-    
     for(let et of gasto.etiquetas)
     {
         divEtiquetas.innerHTML += `<span class="gasto-etiquetas-etiqueta">${et}</span>`
     }
-
     return elemento;
 }
 
-let mostrarGastosAgrupadosWeb = function(){
+let mostrarGastosAgrupadosWeb = function(idElemento,agrup,periodo){
 
+    let id = document.getElementById(idElemento);
+
+    let divContenedor = document.createElement('div');
+    divContenedor.className= "agrupacion";
+    id.append(divContenedor);
+
+    divContenedor.innerHTML += `<h1>Gastos agrupados por ${periodo}</h1>`;
+
+    
+
+    for(let propiedad of Object.keys(agrup))
+    {
+        let divAgrupacion = document.createElement('div');
+        divContenedor.append(divAgrupacion);
+        divAgrupacion.className= "agrupacion-dato";
+        divAgrupacion.innerHTML += `
+                <span class="agrupacion-dato-clave">${propiedad}</span>
+                <span class="agrupacion-dato-valor">${propiedad.valueOf()}</span>`;
+    }
+    return id;
 }
 
 
