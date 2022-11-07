@@ -22,4 +22,14 @@ ges.anyadirGasto(gasto6);
 gesPW.mostrarDatoEnId(ges.calcularTotalGastos(),"gastos-totales");
 gesPW.mostrarDatoEnId(ges.calcularBalance(),"balance-total");
 
-ges.listarGastos();
+for(let gasto of ges.listarGastos()){
+    gesPW.mostrarGastoWeb("listado-gastos-completo", gasto);
+}
+
+for(let gasto of ges.filtrarGastos({fechaDesde: "2021-09-01" , fechaHasta: "2021-09-30"})){
+    gesPW.mostrarGastoWeb("listado-gastos-filtrado-1", gasto);
+}
+
+
+
+
