@@ -209,6 +209,8 @@ return reducido;
 // Las funciones y objetos deben tener los nombres que se indican en el enunciado
 // Si al obtener el código de una práctica se genera un conflicto, por favor incluye todo el código que aparece aquí debajo
 export {
+    
+    CrearGasto,
     mostrarPresupuesto,
     actualizarPresupuesto,
     listarGastos,
@@ -217,6 +219,5 @@ export {
     calcularTotalGastos,
     calcularBalance,
     filtrarGastos,
-    agruparGastos,
-    CrearGasto
+    agruparGastos
 }
