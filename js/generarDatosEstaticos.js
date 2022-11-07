@@ -17,7 +17,7 @@ import{
 } from './gestionPresupuesto.js';
 
 actualizarPresupuesto(1500);
-mostrarDatoEnId(mostrarPresupuesto(), presupuesto);
+mostrarDatoEnId(mostrarPresupuesto(), "presupuesto");
 
 
 let gasto1 = new CrearGasto("Compra carne", 23.44, "2021-10-06", "casa", "comida" );
@@ -37,6 +37,25 @@ anyadirGasto(gasto6);
 mostrarDatoEnId(calcularTotalGastos(), "gastos-totales");
 mostrarDatoEnId(calcularBalance(), "balance-total");
 
-mostrarGastoWeb("listado-gastos-completo", listarGastos());
-mostrarGastoWeb("listado-gastos-filtrado-1", filtrarGastos({fechaDesde:;fechaHasta:}))
-mostrarGastoWeb("listado-gastos-filtrado-2", filtrarGastos({valorMinimo:50}))
+let gastos = listarGastos();
+for(let i = 0; i < gastos.length;i++){
+    mostrarGastoWeb("listado-gastos-completo", gastos[i]);
+}
+gastos = filtrarGastos({fechaDesde:"2021-09-01",fechaHasta:"2021-09-31"});
+for(let i = 0; i < gastos.length;i++){
+    mostrarGastoWeb("listado-gastos-filtrado-1", gastos[i])
+}
+gastos = filtrarGastos({valorMinimo:50});
+for(let i = 0; i < gastos.length;i++){
+    mostrarGastoWeb("listado-gastos-filtrado-2", gastos[i])
+}
+gastos = filtrarGastos({valorMinimo:200});
+for(let i = 0; i < gastos.length;i++){
+    mostrarGastoWeb("listado-gastos-filtrado-3", gastos[i])
+}
+gastos = filtrarGastos({valorMaximo:50, etiquetasTiene:["comida","transporte"]});
+for(let i = 0; i < gastos.length;i++){
+    mostrarGastoWeb("listado-gastos-filtrado-4", gastos[i])
+}
+
+
