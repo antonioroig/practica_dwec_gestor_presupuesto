@@ -21,4 +21,8 @@ gesP.anyadirGasto(gasto5);
 gesP.anyadirGasto(gasto6);
 
 gesPW.mostrarDatoEnId(gesP.calcularTotalGastos(), 'gastos-totales');
-gesPW.mostrarDatoEnId( gesP.calcularBalance(),'balance-total');
+gesPW.mostrarDatoEnId(gesP.calcularBalance(),'balance-total');
+
+for(let gasto of gesP.listarGastos()){
+    gesPW.mostrarGastoWeb("listado-gastos-completo", gasto);
+}

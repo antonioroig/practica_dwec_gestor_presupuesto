@@ -44,14 +44,13 @@ function mostrarGastoWeb(idElemento, gasto)
         divGastoEtiquetas.className = "gasto-etiquetas";
         
         for(let i = 0; i < gasto.etiquetas.length; i++){
-            let divGastoEtiquetasEtiqueta = document.createElement('div');
+            let divGastoEtiquetasEtiqueta = document.createElement('span');
             divGastoEtiquetasEtiqueta.className = "gasto-etiquetas-etiqueta";
-            divGastoEtiquetasEtiqueta.innerHTML += gasto.etiquetas[i];
-            divGastoEtiquetasEtiqueta.innerHTML += "</span>";
+            divGastoEtiquetasEtiqueta.innerHTML = gasto.etiquetas[i];
             divGastoEtiquetas.append(divGastoEtiquetasEtiqueta);
         }
         divGasto.append(divGastoEtiquetas);
-        
+        elemento.append(divGasto);
         
 
     }
