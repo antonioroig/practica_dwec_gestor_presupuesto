@@ -26,3 +26,6 @@ gesPW.mostrarDatoEnId(gesP.calcularBalance(),'balance-total');
 for(let gasto of gesP.listarGastos()){
     gesPW.mostrarGastoWeb("listado-gastos-completo", gasto);
 }
+for(let gasto of gesP.filtrarGastos({fechaDesde: "2021-09-01", fechaHasta: "2021-09-30"})){
+    gesPW.mostrarGastoWeb("listado-gastos-filtrado-1", gasto);
+}
