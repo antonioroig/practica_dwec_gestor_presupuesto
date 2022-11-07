@@ -12,7 +12,19 @@ function mostrarDatoEnId(valor, idElemento)
 function mostrarGastoWeb(idElemento, gasto)
 {
     let elem = document.getElementById(idElemento);
-    
+    let padre = document.createElement("div");
+    padre.className  = "gasto";
+
+    let gastDes = document.createElement("div");
+    gastDes. className = "gasto-descripcion";
+    gastDes.textContent = gasto.descripcion;
+    padre.appendChild(gastDes);
+
+    let gastFech = document.createElement("div");
+    gastDes. className = "gasto-fecha";
+    gastDes.textContent = new Date(gasto.fecha).toLocaleDateString();
+    padre.appendChild(gastDes);
+
 
 }
 function mostrarGastosAgrupadosWeb()
