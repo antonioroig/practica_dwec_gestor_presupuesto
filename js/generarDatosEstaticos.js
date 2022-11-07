@@ -24,4 +24,24 @@ gestionWeb.mostrarDatoEnId(gestion.calcularTotalGastos(),"gastos-totales");
 
 gestionWeb.mostrarDatoEnId(gestion.calcularBalance(),"balance-total");
 
-gestion.listarGastos();
+
+for(let gasto of gestion.listarGastos()){
+    gestionWeb.mostrarGastoWeb("listado-gastos-completo",gasto);
+};
+
+for(let gasto of gestion.filtrarGastos({fechaDesde : "2021-09-01", fechaHasta : "2021-09-30"})){
+    gestionWeb.mostrarGastoWeb("listado-gastos-filtrado-1", gasto);
+};
+
+for(let gasto of gestion.filtrarGastos({valorMinimo : 50})){
+    gestionWeb.mostrarGastoWeb("listado-gastos-filtrado-2", gasto);
+};
+
+for(let gasto of gestion.filtrarGastos({valorMinimo : 200, etiquetasTiene : ["seguros"]})){
+    gestionWeb.mostrarGastoWeb("listado-gastos-filtrado-3", gasto);
+};
+
+
+for(let gasto of gestion.filtrarGastos({valorMaximo : 50, etiquetasTiene : ["comida","transporte"]})){
+    gestionWeb.mostrarGastoWeb("listado-gastos-filtrado-4", gasto);
+};
