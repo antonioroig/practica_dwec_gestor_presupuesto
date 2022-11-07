@@ -1,17 +1,7 @@
 function mostrarDatoEnId(valor, idElemento){
     let element = document.getElementById(idElemento);
     element.innerHTML += `<p>${valor}</p>`;
-    /*let parrafo = document.createElement("p");
-    parrafo.textContent = valor;
-    element.appendChild(parrafo);*/
-
-    //  let p = document.createElement('p');
-    // id.innerHTML += `<p>${valor}</p>`;
-
-    /*let div = document.createElement('div');
-    div.innerHTML = `<div id='${idElemento}'>${valor.toString()}</div>`;
-    document.body.append(div);*/
-    // document.write(`<div id='${idElemento}'>${valor}</div>`);
+    
 }
 function mostrarGastoWeb(gasto, idElemento){
     let elemento = document.getElementById(idElemento);
@@ -41,8 +31,7 @@ function mostrarGastoWeb(gasto, idElemento){
     }*/
       
     for(let i in gasto){
-
-      if(!Array.isArray(i) && typeof i !== 'function'){
+      if(!Array.isArray(i) && !i.includes('function')){
 
         let div = document.createElement('div');
         div.classList.add(`gasto-${i}`);
@@ -50,8 +39,6 @@ function mostrarGastoWeb(gasto, idElemento){
         elemento.appendChild(div);
 
         // elemento.innerHTML = `<div class="gasto-${key}">${value}</div>`;
-      }else if(typeof i !== 'function'){
-        break;
       }else{
 
         let etiquetas = document.createElement('div');

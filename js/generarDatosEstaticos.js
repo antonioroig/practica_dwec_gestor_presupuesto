@@ -25,7 +25,25 @@ let gastos = gestion.listarGastos()
 gastos.forEach((element)=> {
     gestionWeb.mostrarGastoWeb(element,"listado-gastos-completo");
 })
-gestionWeb.mostrarGastoWeb(gestion.filtrarGastos({fechaDesde:"2021-09-01"}),"listado-gastos-filtrado-1");
-gestionWeb.mostrarGastoWeb(gestion.filtrarGastos({valorMinimo: 50}),"listado-gastos-filtrado-2");
-gestionWeb.mostrarGastoWeb(gestion.filtrarGastos({valorMinimo:200}),"listado-gastos-filtrado-2");
-gestionWeb.mostrarGastoWeb(gestion.filtrarGastos({etiquetasTiene: ["comida", "transporte"]}),"listado-gastos-filtrado-4");
+let filtrado1 = gestion.filtrarGastos({fechaDesde:"2021-09-01"});
+filtrado1.forEach((element) => {
+    gestionWeb.mostrarGastoWeb(element,"listado-gastos-filtrado-1")
+})
+let filtrado2 = gestion.filtrarGastos({valorMinimo: 50});
+filtrado2.forEach((element) => {
+    gestionWeb.mostrarGastoWeb(element,"listado-gastos-filtrado-2")
+})
+let filtrado3 = gestion.filtrarGastos({valorMinimo:200});
+filtrado3.forEach((element) => {
+    gestionWeb.mostrarGastoWeb(element,"listado-gastos-filtrado-3")
+})
+let filtrado4 = gestion.filtrarGastos({etiquetasTiene: ["comida", "transporte"]});
+filtrado4.forEach((element) => {
+    gestionWeb.mostrarGastoWeb(element,"listado-gastos-filtrado-4")
+})
+// gestionWeb.mostrarGastoWeb(gestion.filtrarGastos({fechaDesde:"2021-09-01"}),"listado-gastos-filtrado-1");
+// gestionWeb.mostrarGastoWeb(gestion.filtrarGastos({valorMinimo: 50}),"listado-gastos-filtrado-2");
+// gestionWeb.mostrarGastoWeb(gestion.filtrarGastos({valorMinimo:200}),"listado-gastos-filtrado-2");
+// gestionWeb.mostrarGastoWeb(gestion.filtrarGastos({etiquetasTiene: ["comida", "transporte"]}),"listado-gastos-filtrado-4");
+
+
