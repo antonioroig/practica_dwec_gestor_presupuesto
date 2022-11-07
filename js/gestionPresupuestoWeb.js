@@ -32,6 +32,14 @@ function mostrarGastoWeb(idElemento, gasto) {
     divGastoEtiquetas.className = 'gasto-etiqueta';
     divGasto.appendChild(divGastoEtiquetas);
     
+    //Ahora necesitamos un bucle para recorrer los gastos
+    for(let i = 0; i < gasto.etiquetas.length; i++)
+    {
+        let spanEtiqueta = document.createElement('span');
+        spanEtiqueta.className = 'gasto-etiquetas-etiqueta';
+        spanEtiqueta.textContent =  `${gasto.etiquetas[i]}`;
+        divGastoEtiquetas.appendChild(spanEtiqueta);
+    }
 }
 function mostrarGastosAgrupados(idElemento, agrup, preiodo){
 
