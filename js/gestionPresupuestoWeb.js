@@ -7,45 +7,42 @@ if(idElemento !== undefined){
 }
 }
 
-
 function mostrarGastoWeb(idElemento, gasto){
 
     let id = document.getElementById(idElemento);
 
-
-    const divGasto = document.createElement("div");
+    let divGasto = document.createElement("div");
     divGasto.className = "gasto"
     //
-    const divGastoDescripcion = document.createElement("div");
+    let divGastoDescripcion = document.createElement("div");
     divGastoDescripcion.className = "gasto-descripcion";
-    divGastoDescripcion.textContent(gasto.descripcion);
-    divGasto.appendChild(divGastoDescripcion);
+    divGastoDescripcion.innerText += gasto.descripcion;
+    divGasto.append(divGastoDescripcion);
     //
-    const divGastoFecha = document.createElement("div");
+    let divGastoFecha = document.createElement("div");
     divGastoFecha.className = "gasto-fecha";
-    divGastoFecha.textContent(gasto.fecha);
-    divGasto.appendChild(divGastoFecha);
+    divGastoFecha.innerText += gasto.fecha;
+    divGasto.append(divGastoFecha);
     //
-    const divGastoValor = document.createElement("div");
+    let divGastoValor = document.createElement("div");
     divGastoValor.className = "gasto-valor";
-    divGastoValor.textContent(gasto.valor);
-    divGasto.appendChild(divGastoValor);
+    divGastoValor.innerHTML += gasto.valor;
+    divGasto.append(divGastoValor);
     //
-    const divGastoEtiquetas = document.createElement("div");
-    divGastoEtiquetas.className = "gasto-etiquietas";
+    let divGastoEtiquetas = document.createElement("div");
+    divGastoEtiquetas.className = "gasto-etiquetas";
 
-    for(let i = 0; i < gasto.etiqueta.lenght; i++){
-        const span = document.createElement("span");
+    for(let i = 0; i < gasto.etiquetas.length; i++){
+        let span = document.createElement("span");
         span.className = "gasto-etiquetas-etiqueta";
-        span.innerHTML = gasto.etiqueta[i].text;
-        divGastoEtiquetas.appendChild(span);
+        span.innerHTML = gasto.etiquetas[i];
+        divGastoEtiquetas.append(span);
     }
+    divGasto.append(divGastoEtiquetas);
+    //
+    id.append(divGasto);
 
-    divGasto.appendChild(divGastoEtiquetas);
-
-    id.appendChild(divGasto);
-
-
+    return id;
 }
 
 

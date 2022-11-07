@@ -27,3 +27,19 @@ scriptsGestionWeb.mostrarDatoEnId(scriptsGestion.calcularBalance(),"balance-tota
 
 
 //Prueba 2
+
+for(let gasto of scriptsGestion.listarGastos()){
+    scriptsGestionWeb.mostrarGastoWeb("listado-gastos-completo", gasto);
+};
+for(let gasto of scriptsGestion.filtrarGastos({fechaDesde : "2021-09-01", fechaHasta : "2021-09-30"})){
+    scriptsGestionWeb.mostrarGastoWeb("listado-gastos-filtrado-1", gasto);
+};
+for(let gasto of scriptsGestion.filtrarGastos({valorMinimo : 50})){
+    scriptsGestionWeb.mostrarGastoWeb("listado-gastos-filtrado-2", gasto);
+};
+for(let gasto of scriptsGestion.filtrarGastos({valorMinimo : 200, etiquetasTiene : ["seguros"]})){
+    scriptsGestionWeb.mostrarGastoWeb("listado-gastos-filtrado-3", gasto);
+};
+for(let gasto of scriptsGestion.filtrarGastos({valorMaximo : 50, etiquetasTiene : ["comida", "transporte"]})){
+    scriptsGestionWeb.mostrarGastoWeb("listado-gastos-filtrado-4", gasto);
+};
