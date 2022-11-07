@@ -38,5 +38,9 @@ for(let gasto of ges.filtrarGastos({valorMinimo: 200, etiquetasTiene:["seguros"]
     gesPW.mostrarGastoWeb("listado-gastos-filtrado-3", gasto);
 }
 
+for(let gasto of ges.filtrarGastos({valorMaximo: 50, etiquetasTiene:["comida", "transporte"]})){
+    gesPW.mostrarGastoWeb("listado-gastos-filtrado-4", gasto);
+}
+
 
 
