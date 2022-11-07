@@ -4,7 +4,7 @@ import * as gestionPresupuestoWeb from './gestionPresupuestoWeb.js';
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 gestionPresupuesto.actualizarPresupuesto(1500); // generamos el presupuesto
-gestionPresupuestoWeb.mostrarDatoEnId('presupuesto', gestionPresupuesto.mostrarPresupuesto()); // mostrar presupuesto 1500€
+gestionPresupuestoWeb.mostrarDatoEnId(gestionPresupuesto.mostrarPresupuesto(), 'presupuesto'); // mostrar presupuesto 1500€
 // Crear los siguientes gastos (función crearGasto): --> Añadir los gastos creados (función anyadirGasto):
 gestionPresupuesto.anyadirGasto(new gestionPresupuesto.CrearGasto("Compra carne", 23.44, "2021-10-06", "casa", "comida"));
 gestionPresupuesto.anyadirGasto(new gestionPresupuesto.CrearGasto("Compra fruta y verdura", 14.25, "2021-09-06", "supermercado", "comida"));
@@ -13,16 +13,15 @@ gestionPresupuesto.anyadirGasto(new gestionPresupuesto.CrearGasto("Gasolina", 60
 gestionPresupuesto.anyadirGasto(new gestionPresupuesto.CrearGasto("Seguro hogar", 206.45, "2021-09-26", "casa", "seguros"));
 gestionPresupuesto.anyadirGasto(new gestionPresupuesto.CrearGasto("Seguro coche", 195.78, "2021-10-06", "transporte", "seguros"));
 
-gestionPresupuestoWeb.mostrarDatoEnId('gastos-totales', gestionPresupuesto.calcularTotalGastos()); // mostramos gastos totales
-gestionPresupuestoWeb.mostrarDatoEnId('balance-total', gestionPresupuesto.calcularBalance()); // mostramos balance total
+gestionPresupuestoWeb.mostrarDatoEnId( gestionPresupuesto.calcularTotalGastos(), 'gastos-totales'); // mostramos gastos totales
+gestionPresupuestoWeb.mostrarDatoEnId( gestionPresupuesto.calcularBalance(), 'balance-total'); // mostramos balance total
 
+let gastosListados = gestionPresupuesto.listarGastos();
 
-let gastos = gestionPresupuesto.listarGastos();
-
-for(let i = 0; i < gastos.length; i++){
-    gestionPresupuestoWeb.mostrarGastoWeb('listado-gastos-completo', gastos[i]);
-} 
-    //gestionPresupuestoWeb.mostrarGastoWeb('listado-gastos-completo', exp);
+for(let i = 0; i < gastosListados.length; i++){
+    //console.log(gastosListados);
+    gestionPresupuestoWeb.mostrarGastoWeb('listado-gastos-completo', gastosListados[i]);
+}
 
 /* 
 Mostrar el listado completo de gastos en div#listado-gastos-completo (funciones listarGastos y mostrarGastoWeb)
