@@ -29,3 +29,6 @@ for(let gasto of gesP.listarGastos()){
 for(let gasto of gesP.filtrarGastos({fechaDesde: "2021-09-01", fechaHasta: "2021-09-30"})){
     gesPW.mostrarGastoWeb("listado-gastos-filtrado-1", gasto);
 }
+for(let gasto of gesP.filtrarGastos({valorMinimo: 50})){
+    gesPW.mostrarGastoWeb("listado-gastos-filtrado-2", gasto);
+}
