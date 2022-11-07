@@ -21,9 +21,28 @@ function mostrarGastoWeb(idElemento, gasto)
     padre.appendChild(gastDes);
 
     let gastFech = document.createElement("div");
-    gastDes. className = "gasto-fecha";
-    gastDes.textContent = new Date(gasto.fecha).toLocaleDateString();
-    padre.appendChild(gastDes);
+    gastFech. className = "gasto-fecha";
+    gastFech.textContent = new Date(gasto.fecha).toLocaleDateString();
+    padre.appendChild(gastFech);
+
+    let gastVal = document.createElement("div");
+    gastVal. className = "gasto-valor";
+    gastVal.textContent = gasto.valor;
+    padre.appendChild(gastVal);
+
+    let gastEtiq = document.createElement("div");
+    gastEtiq. className = "gasto-etiquetas";
+    for(let etiqueta of this.gasto.etiquetas) 
+    {
+        let span = document.createElement('span');
+        span.className = 'gasto-etiquetas-etiqueta';
+        span.textContent = etiqueta;
+        gastEtiq.appendChild(span);
+            
+    }
+
+    padre.appendChild(gastEtiq);
+
 
 
 }
