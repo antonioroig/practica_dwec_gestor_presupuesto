@@ -105,12 +105,12 @@ function CrearGasto(descripcion,valor,fecha = Date.now(), ...etiquetas)
         else
         {
             let temp = fechaPeriodo.getMonth() + 1
-           mes = "0" + temp.toString();
+            mes = "0" + temp.toString();
         }
         let dia = 0;
         if(fechaPeriodo.getDate() >= 9)
         {
-            dia = 
+            dia =
             fechaPeriodo.getDate();
         }
         else
@@ -227,7 +227,7 @@ function filtrarGastos({fechaDesde,fechaHasta,valorMinimo,valorMaximo,descripcio
     });
     return gastosencontrados;
 }
-function agruparGastos(periodo,etiquetas,fechaDesde,fechaHasta)
+function agruparGastos(periodo="mes",etiquetas,fechaDesde,fechaHasta)
 {
     let ArrayFiltrado = filtrarGastos({etiquetasTiene: etiquetas, fechaDesde: fechaDesde,fechaHasta: fechaHasta});
     let ObjetoFinal = ArrayFiltrado.reduce((acc,item) => 
