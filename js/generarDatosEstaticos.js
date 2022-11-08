@@ -23,3 +23,24 @@ gestionPresupuestoWeb.mostrarDatoEnId("balance-total",balanceTotal);
 
 let listadoGastos = gestionPresupuesto.listarGastos();
 gestionPresupuestoWeb.mostrarGastoWeb("listado-gastos-completo",listadoGastos);
+
+let gastosFiltrados = gestionPresupuesto.filtrarGastos({fechaDesde:"2021-09", fechaHasta:"2021-09"});
+gestionPresupuestoWeb.mostrarGastoWeb("listado-gastos-filtrados-1",gastosFiltrados);
+
+let gastosFiltrados2 = gestionPresupuesto.filtrarGastos({valorMinimo:50});
+gestionPresupuestoWeb.mostrarGastoWeb("listado-gastos-filtrados-2",gastosFiltrados2);
+
+let gastosFiltrados3 = gestionPresupuesto.filtrarGastos({etiquetasTiene: ["seguros"], valorMinimo:200});
+gestionPresupuestoWeb.mostrarGastoWeb("listado-gastos-filtrados-3",gastosFiltrados3);
+
+let gastosFiltrados4 = gestionPresupuesto.filtrarGastos({etiquetasTiene: ["comida", "transporte"], valorMaximo:50});
+gestionPresupuestoWeb.mostrarGastoWeb("listado-gastos-filtrados-4",gastosFiltrados4);
+
+let gastosAgrupados = gestionPresupuesto.agruparGastos("dia");
+gestionPresupuestoWeb.mostrarGastosAgrupadosWeb("agrupacion-dia",gastosAgrupados);
+
+let gastosAgrupados2 = gestionPresupuesto.agruparGastos("mes");
+gestionPresupuestoWeb.mostrarGastosAgrupadosWeb("agrupacion-mes",gastosAgrupados2);
+
+let gastosAgrupados3 = gestionPresupuesto.agruparGastos("anyo");
+gestionPresupuestoWeb.mostrarGastosAgrupadosWeb("agrupacion-anyo",gastosAgrupados3);
