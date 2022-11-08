@@ -1,14 +1,17 @@
-function mostrarDatoEnId()
-{
+import * as gestionPresupuesto from './gestionPresupuesto.js';
 
+function mostrarDatoEnId(valor, idElemento)
+{
+    let elem = document.getElementById(idElemento);
+    elem.innerHTML = valor;
 }
 
-function mostrarGastoWeb()
+function mostrarGastoWeb(idElemento, gasto)
 {
     
 }
 
-function mostrarGastosAgrupadosWeb()
+function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo)
 {
 
 }
