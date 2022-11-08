@@ -1,5 +1,5 @@
 import * as gestionPresupuesto from './gestionPresupuesto.js';
-function mostrarDatoEnId(idElemento, valor) {
+function mostrarDatoEnId(valor, idElemento) {
     let elemento = document.getElementById(idElemento);
     let parrafo = document.createElement("p");
     parrafo.textContent = valor;
@@ -37,7 +37,7 @@ function mostrarGastoWeb(idElemento, gasto) {
     {
         let spanEtiqueta = document.createElement('span');
         spanEtiqueta.className = 'gasto-etiquetas-etiqueta';
-        spanEtiqueta.textContent =  `${gasto.etiquetas[i]}`;
+        spanEtiqueta.textContent =  `${gasto.etiquetas[i]}\n`;
         divGastoEtiquetas.appendChild(spanEtiqueta);
     }
     elemento2.appendChild(divGasto);

@@ -1,7 +1,7 @@
 import * as gestionPresupuesto from './gestionPresupuesto.js';
 import * as gestionPresupuestoWeb from './gestionPresupuestoWeb.js';
 gestionPresupuesto.actualizarPresupuesto(1500); //Actualizar presupuesto a 1500 euros.
-gestionPresupuestoWeb.mostrarDatoEnId('presupuesto', gestionPresupuesto.mostrarPresupuesto());
+gestionPresupuestoWeb.mostrarDatoEnId(gestionPresupuesto.mostrarPresupuesto(),"presupuesto");
 // Llamo a la función mostrarDatoEnId, donde el id del div es presupuesto, y el valor es la función de gestionPresupuesto.
 
 //Creamos los gastos
