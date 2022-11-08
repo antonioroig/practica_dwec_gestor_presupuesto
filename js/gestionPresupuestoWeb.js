@@ -40,6 +40,7 @@ function mostrarGastoWeb(idElemento, gasto) {
         spanEtiqueta.textContent =  `${gasto.etiquetas[i]}`;
         divGastoEtiquetas.appendChild(spanEtiqueta);
     }
+    elemento2.appendChild(divGasto);
 }
 function mostrarGastosAgrupados(idElemento, agrup, preiodo){
 
