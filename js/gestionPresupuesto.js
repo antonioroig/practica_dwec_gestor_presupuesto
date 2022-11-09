@@ -163,7 +163,7 @@ function filtrarGastos({fechaDesde, fechaHasta, valorMinimo, valorMaximo,descrip
         }
         if(descripcionContiene){
             if(!item.descripcion.includes(descripcionContiene)) ok = false;
-       }
+        }
         if(etiquetasTiene){
             let inside = false;                   
             for (let i = 0; i < item.etiquetas.length; i++) 
@@ -195,6 +195,7 @@ function agruparGastos(periodo = `mes`, etiquetas, fechaDesde, fechaHasta){
             acc[fecha] = item.valor;
         }
         return acc;
+
     }, {});
    return res;
 };
