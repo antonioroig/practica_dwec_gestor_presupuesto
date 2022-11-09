@@ -43,8 +43,14 @@ for(let i = 0; i < gastosFiltrados.length; i++){
     gestionPresupuestoWeb.mostrarGastoWeb('listado-gastos-filtrado-4', gastosFiltrados[i]);
 }
 
-/* 
-Mostrar el total de gastos agrupados por día en div#agrupacion-dia (funciones agruparGastos y mostrarGastosAgrupadosWeb)
-Mostrar el total de gastos agrupados por mes en div#agrupacion-mes (funciones agruparGastos y mostrarGastosAgrupadosWeb)
-Mostrar el total de gastos agrupados por año en div#agrupacion-anyo (funciones agruparGastos y mostrarGastosAgrupadosWeb)
-*/
+let agrupDia = gestionPresupuesto.agruparGastos('dia');
+let agrupMes = gestionPresupuesto.agruparGastos('mes');
+let agrupAnyo = gestionPresupuesto.agruparGastos('anyo');
+
+// Mostrar el total de gastos agrupados por día en div#agrupacion-dia (funciones agruparGastos y mostrarGastosAgrupadosWeb)
+gestionPresupuestoWeb.mostrarGastosAgrupadosWeb('agrupacion-dia',agrupDia, 'día');
+// Mostrar el total de gastos agrupados por mes en div#agrupacion-mes (funciones agruparGastos y mostrarGastosAgrupadosWeb)
+gestionPresupuestoWeb.mostrarGastosAgrupadosWeb('agrupacion-mes',agrupMes, 'mes');
+// Mostrar el total de gastos agrupados por año en div#agrupacion-anyo (funciones agruparGastos y mostrarGastosAgrupadosWeb)
+gestionPresupuestoWeb.mostrarGastosAgrupadosWeb('agrupacion-anyo',agrupAnyo, 'año');
+

@@ -60,7 +60,43 @@ function mostrarGastoWeb(idElemento, gasto){
 
 }
 
-function mostrarGastosAgrupadosWeb(){
+function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo){
+
+    if(!idElemento != undefined){
+        let elemento = document.getElementById(idElemento);
+
+        // <div class="agrupacion">
+        let divAgrup = document.createElement('div');
+        divAgrup.className = 'agrupacion';
+        // - - - - - - - - - - - - - - 
+        
+        // <h1>Gastos agrupados por mes</h1>
+        let h1Agrup = document.createElement('h1');
+        h1Agrup.textContent = 'Gastos agrupados por mes';
+        divAgrup.append(h1Agrup);
+        
+        for(let i = 0; i < agrup.length; i++){
+
+            let divDato = document.createElement('div');
+            divAgrup.className = 'agrupacion-dato';
+
+            
+        }
+        /* 
+        <div class="agrupacion-dato">
+            <span class="agrupacion-dato-clave">2021-09</span>
+            <span class="agrupacion-dato-valor">5</span>
+         </div>
+
+        <div class="agrupacion-dato">
+            <span class="agrupacion-dato-clave">2021-10</span>
+            <span class="agrupacion-dato-valor">39</span>
+        </div>
+        */
+    }
+
+
+
     return null;
 }
 
