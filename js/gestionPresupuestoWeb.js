@@ -1,3 +1,4 @@
+import * as gestionPresupuesto from '.gestionPresupuesto';
 function mostrarDatoEnId(idElemento, valor)
 {
 
