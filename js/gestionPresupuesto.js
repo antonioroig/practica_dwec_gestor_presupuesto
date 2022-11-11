@@ -53,7 +53,7 @@ function CrearGasto(descripcion, valor, fecha = Date.now(), ...etiquetas) {
         }
         let res =  `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €.\nFecha: ${(fecAux.toLocaleString())}\nEtiquetas:\n`
         return res + aux;
-    },
+    },lñd
     this.actualizarDescripcion = function(descripcionActualizada){
         if(typeof descripcionActualizada === 'string'){
             this.descripcion = descripcionActualizada;
