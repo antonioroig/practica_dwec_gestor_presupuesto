@@ -9,33 +9,35 @@ function mostrarDatoEnId(idElemento,valor) {
 
 function mostrarGastoWeb(idElemento,gasto){
 
+    let idWeb = document.getElementById(idElemento);
+
     let divGasto = document.createElement('div');
-    div.innerHTML = '<div class="gasto">';
-    document.getElementById(idElemento).append(divGasto);
+    divGasto.innerHTML = '<div class="gasto">';
+    idWeb.append(divGasto);
 
     let divDescripcion = document.createElement('div');
-    div.innerHTML = '<div class="gasto-descripcion">';
+    divDescripcion.innerHTML = '<div class="gasto-descripcion">';
     divDescripcion.textContent = gasto.descripcion;
-    document.getElementByClass('gasto').append(divDescripcion);
+    divGasto.append(divDescripcion);
 
     let divFecha = document.createElement('div');
-    div.innerHTML = '<div class="gasto-fecha">';
+    divFecha.innerHTML = '<div class="gasto-fecha">';
     divFecha.textContent = gasto.fecha;
-    document.getElementByClass('gasto').append(divFecha);
+    divGasto.append(divFecha);
 
     let divValor = document.createElement('div');
-    div.innerHTML = '<div class="gasto-valor">';
+    divValor.innerHTML = '<div class="gasto-valor">';
     divValor.textContent = gasto.valor;
-    document.getElementByClass('gasto').append(divValor);
+    divGasto.append(divValor);
 
     let divEtiquetas = document.createElement('div');
-    div.innerHTML = '<div class="gasto-etiquetas">';
+    divEtiquetas.innerHTML = '<div class="gasto-etiquetas">';
     divEtiquetas.textContent = gasto.etiquetas;
-    document.getElementByClass('gasto').append(divEtiquetas);
+    divGasto.append(divEtiquetas);
 
     let spanEtiquetas = document.createElement('span');
-    div.innerHTML = '<span class="gasto-etiquetas-etiqueta">';
-    document.getElementByClass('gasto-etiquetas').append(spanEtiquetas);
+    spanEtiquetas.innerHTML = '<span class="gasto-etiquetas-etiqueta">';
+    divGasto.append(spanEtiquetas);
 
 };
 
@@ -50,7 +52,9 @@ function mostrarGastosAgrupadosWeb(idElemento,agrup,periodo){
     clase += `<div class="agrupacion-dato"> <div class="agrupacion-dato-etiqueta"> ${agrupacion} </div> 
     <div class="agrupacion-dato-valor"> ${agrup[agrupacion]} </div> 
     </div>`;
-   }
+
+   }clase += '</div>';
+   
    document.getElementById(idElemento).innerHTML = clase;
 
 };

@@ -27,9 +27,9 @@ let balanceTotal = gestionPresupuesto.calcularBalance();
 gestionPresupuestoWeb.mostrarDatoEnId("balance-total",balanceTotal);
 
 let listadoGastos = gestionPresupuesto.listarGastos();
-listadoGastos.forEach(element => {
+for(let element of listadoGastos){
     gestionPresupuestoWeb.mostrarGastoWeb("listado-gastos-completo",element);
-});
+}
 
 let gastosFiltrados = gestionPresupuesto.filtrarGastos({fechaDesde:"2021-09", fechaHasta:"2021-09"});
 gastosFiltrados.forEach(element =>{
