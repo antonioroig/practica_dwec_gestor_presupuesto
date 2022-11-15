@@ -1,6 +1,6 @@
 import * as gestionPresupuestoWeb from './gestionPresupuestoWeb.js';
 import * as gestionPresupuesto from './gestionPresupuesto.js';
-
+"use strict";
 gestionPresupuesto.actualizarPresupuesto(1500);
 
 let mostrar = gestionPresupuesto.mostrarPresupuesto();
@@ -13,7 +13,12 @@ let gasto4 = new gestionPresupuesto.CrearGasto("Gasolina", 60.42, "2021-10-08", 
 let gasto5 = new gestionPresupuesto.CrearGasto("Seguro hogar", 206.45, "2021-09-26", "casa", "seguros");
 let gasto6 = new gestionPresupuesto.CrearGasto("Seguro coche", 195.78, "2021-10-06", "transporte", "seguros");
 
-gestionpresupuesto.anyadirGasto(gasto1, gasto2, gasto3, gasto4, gasto5, gasto6);
+gestionpresupuesto.anyadirGasto(gasto1);
+gestionpresupuesto.anyadirGasto(gasto2);
+gestionpresupuesto.anyadirGasto(gasto3);
+gestionpresupuesto.anyadirGasto(gasto4);
+gestionpresupuesto.anyadirGasto(gasto5);
+gestionpresupuesto.anyadirGasto(gasto6);
 
 let gastosTotales = gestionPresupuesto.calcularTotalGastos();
 gestionPresupuestoWeb.mostrarDatoEnId("gastos-totales",gastosTotales);
@@ -25,16 +30,25 @@ let listadoGastos = gestionPresupuesto.listarGastos();
 gestionPresupuestoWeb.mostrarGastoWeb("listado-gastos-completo",listadoGastos);
 
 let gastosFiltrados = gestionPresupuesto.filtrarGastos({fechaDesde:"2021-09", fechaHasta:"2021-09"});
-gestionPresupuestoWeb.mostrarGastoWeb("listado-gastos-filtrados-1",gastosFiltrados);
+gastosFiltrados.forEach(element =>{
+    gestionPresupuestoWeb.mostrarGastoWeb("listado-gastos-filtrados1",element);
+})
 
 let gastosFiltrados2 = gestionPresupuesto.filtrarGastos({valorMinimo:50});
-gestionPresupuestoWeb.mostrarGastoWeb("listado-gastos-filtrados-2",gastosFiltrados2);
+gastosFiltrados2.forEach(element =>{
+    gestionPresupuestoWeb.mostrarGastoWeb("listado-gastos-filtrados2",element);
+})
 
 let gastosFiltrados3 = gestionPresupuesto.filtrarGastos({etiquetasTiene: ["seguros"], valorMinimo:200});
-gestionPresupuestoWeb.mostrarGastoWeb("listado-gastos-filtrados-3",gastosFiltrados3);
+gastosFiltrados3.forEach(element =>{
+    gestionPresupuestoWeb.mostrarGastoWeb("listado-gastos-filtrados3",element);
+})
 
 let gastosFiltrados4 = gestionPresupuesto.filtrarGastos({etiquetasTiene: ["comida", "transporte"], valorMaximo:50});
-gestionPresupuestoWeb.mostrarGastoWeb("listado-gastos-filtrados-4",gastosFiltrados4);
+gastosFiltrados4.forEach(element =>{
+    gestionPresupuestoWeb.mostrarGastoWeb("listado-gastos-filtrados4",element);
+})
+
 
 let gastosAgrupados = gestionPresupuesto.agruparGastos("dia");
 gestionPresupuestoWeb.mostrarGastosAgrupadosWeb("agrupacion-dia",gastosAgrupados);

@@ -3,7 +3,7 @@ import * as gestionPresupuesto from './gestionPresupuesto.js';
 
 function mostrarDatoEnId(valor,idElemento) {
    let id = document.getElementById(idElemento);
-    id.innerHTML = valor;
+    id.innerHTML += valor;
 }
 
 function mostrarGastoWeb(idElemento,gasto){
@@ -39,7 +39,10 @@ function mostrarGastoWeb(idElemento,gasto){
 };
 
 
-function mostrarGastosAgrupadosWeb(idElemento,agrup,periodo){};
+function mostrarGastosAgrupadosWeb(idElemento,agrup,periodo){
+    
+
+};
 
 
 export {
