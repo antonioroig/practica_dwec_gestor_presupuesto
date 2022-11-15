@@ -32,24 +32,24 @@ for(let element of listadoGastos){
 }
 
 let gastosFiltrados = gestionPresupuesto.filtrarGastos({fechaDesde:"2021-09", fechaHasta:"2021-09"});
-gastosFiltrados.forEach(element =>{
-    gestionPresupuestoWeb.mostrarGastoWeb("listado-gastos-filtrados1",element);
-})
+for(let element of gastosFiltrados){
+    gestionPresupuestoWeb.mostrarGastoWeb("listado-gastos-filtrados1",element);  
+}
 
 let gastosFiltrados2 = gestionPresupuesto.filtrarGastos({valorMinimo:50});
-gastosFiltrados2.forEach(element =>{
-    gestionPresupuestoWeb.mostrarGastoWeb("listado-gastos-filtrados2",element);
-})
+for(let element of gastosFiltrados2){
+    gestionPresupuestoWeb.mostrarGastoWeb("listado-gastos-filtrados2",element);  
+}
 
 let gastosFiltrados3 = gestionPresupuesto.filtrarGastos({etiquetasTiene: ["seguros"], valorMinimo:200});
-gastosFiltrados3.forEach(element =>{
-    gestionPresupuestoWeb.mostrarGastoWeb("listado-gastos-filtrados3",element);
-})
+for(let element of gastosFiltrados3){
+    gestionPresupuestoWeb.mostrarGastoWeb("listado-gastos-filtrados3",element);  
+}
 
 let gastosFiltrados4 = gestionPresupuesto.filtrarGastos({etiquetasTiene: ["comida", "transporte"], valorMaximo:50});
-gastosFiltrados4.forEach(element =>{
-    gestionPresupuestoWeb.mostrarGastoWeb("listado-gastos-filtrados4",element);
-})
+for(let element of gastosFiltrados4){
+    gestionPresupuestoWeb.mostrarGastoWeb("listado-gastos-filtrados4",element);  
+}
 
 
 let gastosAgrupados = gestionPresupuesto.agruparGastos("dia");
