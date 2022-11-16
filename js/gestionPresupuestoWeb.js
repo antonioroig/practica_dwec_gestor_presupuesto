@@ -54,7 +54,7 @@ function mostrarGastoWeb(gasto, idElemento){
     }
 }
 
-function mostrarGastosAgrupadosWeb( agrup, periodo, idElemento){
+function mostrarGastosAgrupadosWeb( ){
     
 }
 
