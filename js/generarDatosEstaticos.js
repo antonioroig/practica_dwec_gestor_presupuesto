@@ -32,3 +32,6 @@ let gasto5 = new CrearGasto("Seguro hogar", 206.45, "2021-09-26", "casa", "segur
 anyadirGasto(gasto5);
 let gasto6 = new CrearGasto("Seguro coche", 195.78, "2021-10-06", "transporte", "seguros");
 anyadirGasto(gasto6);
+
+mostrarDatoEnId(calcularTotalGastos(), "gastos-totales");
+mostrarDatoEnId(calcularBalance(), "balance-total");
