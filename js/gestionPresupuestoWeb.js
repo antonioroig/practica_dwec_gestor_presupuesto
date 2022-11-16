@@ -7,7 +7,7 @@ function mostrarDatoEnId(idElemento,valor) {
     id.innerHTML += valor;
 }
 
-//De momento no me copiéis esto, que se quienes me miran el repositorio y cogen mi código, warros
+//No me copiéis esto, que se quienes me miran el repositorio y cogen mi código, warros, bobolones, etc.
 
 function mostrarGastoWeb(idElemento,gasto){
 
