@@ -18,8 +18,39 @@ function mostrarDatoEnId(valor, idElemento){
     }
 }
 
-function mostrarGastoWeb(){
+function mostrarGastoWeb(gasto, idElemento){
+    if(idElemento != null){
+        let divGasto = document.createElement("div");
+        divGasto.className = "gasto";
 
+        let elemento = document.getElementById(idElemento);
+        elemento.appendChild(divGasto);
+
+        let divDescripcion = document.createElement("div");
+        divDescripcion.className = "gasto-descripcion";
+        divDescripcion.innerHTML += gasto.descripcion;
+        divGasto.appendChild(divDescripcion);
+        
+        let divFecha = document.createElement("div");
+        divFecha.className = "gasto-fecha";
+        divFecha.innerHTML += gasto.fecha;
+        divGasto.appendChild(divFecha);
+        
+        let divValor = document.createElement("div");
+        divValor.className = "gasto-valor";
+        divValor.innerHTML += gasto.valor;
+        divGasto.appendChild(divValor);
+
+        let divEtiquetas = document.createElement("div");
+        divEtiquetas.className = "gasto-etiquetas";
+        divGasto.appendChild(divEtiquetas);
+        etiquetas.forEach(etiqueta => {
+            let span = document.createElement("span");
+            span.className = "gasto-etiquetas-etiqueta";
+            span.innerHTML = etiqueta;
+            span.appendChild(divEtiquetas);
+        });
+    }
 }
 
 function mostrarGastosAgrupadosWeb(){
