@@ -66,7 +66,9 @@ function mostrarGastoWeb(gasto, idElemento){
     }
 }
 function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo){
-    
+    let elemento = document.getElementById(idElemento);
+  
+
 }
 
 
