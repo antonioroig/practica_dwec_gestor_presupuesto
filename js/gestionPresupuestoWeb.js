@@ -19,7 +19,7 @@ function mostrarDatoEnId(valor, idElemento){
 }
 
 function mostrarGastoWeb(gasto, idElemento){
-    if(idElemento != null){
+   if(idElemento != null){
         let divGasto = document.createElement("div");
         divGasto.className = "gasto";
 
@@ -44,12 +44,13 @@ function mostrarGastoWeb(gasto, idElemento){
         let divEtiquetas = document.createElement("div");
         divEtiquetas.className = "gasto-etiquetas";
         divGasto.appendChild(divEtiquetas);
-        etiquetas.forEach(etiqueta => {
+        gasto.etiquetas.forEach(etiqueta => {
             let span = document.createElement("span");
             span.className = "gasto-etiquetas-etiqueta";
             span.innerHTML = etiqueta;
-            span.appendChild(divEtiquetas);
+            divEtiquetas.appendChild(span);
         });
+        divGasto.appendChild(divEtiquetas);
     }
 }
 

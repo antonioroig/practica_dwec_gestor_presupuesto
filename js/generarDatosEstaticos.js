@@ -37,6 +37,22 @@ anyadirGasto(gasto6);
 mostrarDatoEnId(calcularTotalGastos(), "gastos-totales");
 mostrarDatoEnId(calcularBalance(), "balance-total");
 
-filtrarGastos().forEach(gasto => {
+listarGastos().forEach(gasto => {
     mostrarGastoWeb(gasto, "listado-gastos-completo");
+});
+
+filtrarGastos({fechaDesde:"2021-09-1", fechaHasta:"2021-09-30"}).forEach(gasto => {
+    mostrarGastoWeb(gasto, "listado-gastos-filtrado-1");
+});
+
+filtrarGastos({valorMinimo:50}).forEach(gasto => {
+    mostrarGastoWeb(gasto, "listado-gastos-filtrado-2");
+});
+
+filtrarGastos({valorMinimo:200, etiquetasTiene:["seguros"]}).forEach(gasto => {
+    mostrarGastoWeb(gasto, "listado-gastos-filtrado-3");
+});
+
+filtrarGastos({valorMaximo:50, etiquetasTiene:["comida", "transporte"]}).forEach(gasto => {
+    mostrarGastoWeb(gasto, "listado-gastos-filtrado-4");
 });
