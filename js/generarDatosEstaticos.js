@@ -49,7 +49,7 @@ gastos = filtrarGastos({valorMinimo:50});
 for(let i = 0; i < gastos.length;i++){
     mostrarGastoWeb("listado-gastos-filtrado-2", gastos[i])
 }
-gastos = filtrarGastos({valorMinimo:200});
+gastos = filtrarGastos({valorMinimo:200, etiquetasTiene:["seguros"]});
 for(let i = 0; i < gastos.length;i++){
     mostrarGastoWeb("listado-gastos-filtrado-3", gastos[i])
 }
