@@ -149,7 +149,7 @@ function calcularBalance(){
     return presupuesto - calcularTotalGastos();
 }
 function filtrarGastos({fechaDesde,fechaHasta,valorMinimo,valorMaximo,descripcionContiene,etiquetasTiene}){
-    let arrayFilter= gastos.filter(function(gasto){
+    let arrayFilter = gastos.filter(function(gasto){
             let aceptar = true;
             if(fechaDesde && gasto.fecha < Date.parse(fechaDesde)){
                 aceptar = false;

@@ -1,14 +1,27 @@
-import * as gestionPresupuesto from './gestionPresupuesto.js';
+import{
+    mostrarPresupuesto,
+    actualizarPresupuesto,
+    CrearGasto,
+    listarGastos,
+    anyadirGasto,
+    borrarGasto,
+    calcularTotalGastos,
+    calcularBalance,
+    filtrarGastos,
+    agruparGastos 
+} from './gestionPresupuesto.js';
 
 function mostrarDatoEnId(valor, idElemento){
     if(idElemento != null){
         let elemento = document.getElementById(idElemento);
-        elemento.innerHtml += valor;
+        elemento.innerHTML += valor;
     }
 }
+
 function mostrarGastoWeb(){
 
 }
+
 function mostrarGastosAgrupadosWeb(){
 
 }
