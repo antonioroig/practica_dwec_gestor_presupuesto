@@ -1,6 +1,9 @@
 import * as gestionPresupuestoWeb from './gestionPresupuestoWeb.js';
 import * as gestionPresupuesto from './gestionPresupuesto.js';
 "use strict";
+
+//Cuidado que os veo
+
 gestionPresupuesto.actualizarPresupuesto(1500);
 
 let mostrar = gestionPresupuesto.mostrarPresupuesto();
@@ -27,28 +30,28 @@ let balanceTotal = gestionPresupuesto.calcularBalance();
 gestionPresupuestoWeb.mostrarDatoEnId("balance-total",balanceTotal);
 
 let listadoGastos = gestionPresupuesto.listarGastos();
-for(let element of listadoGastos){
-    gestionPresupuestoWeb.mostrarGastoWeb("listado-gastos-completo",element);
+for(let elemento of listadoGastos){
+    gestionPresupuestoWeb.mostrarGastoWeb("listado-gastos-completo",elemento);
 }
 
 let gastosFiltrados = gestionPresupuesto.filtrarGastos({fechaDesde:"2021-09", fechaHasta:"2021-09"});
 for(let element of gastosFiltrados){
-    gestionPresupuestoWeb.mostrarGastoWeb("listado-gastos-filtrados1",element);  
+    gestionPresupuestoWeb.mostrarGastoWeb("listado-gastos-filtrados-1",element);  
 }
 
 let gastosFiltrados2 = gestionPresupuesto.filtrarGastos({valorMinimo:50});
 for(let element of gastosFiltrados2){
-    gestionPresupuestoWeb.mostrarGastoWeb("listado-gastos-filtrados2",element);  
+    gestionPresupuestoWeb.mostrarGastoWeb("listado-gastos-filtrados-2",element);  
 }
 
 let gastosFiltrados3 = gestionPresupuesto.filtrarGastos({etiquetasTiene: ["seguros"], valorMinimo:200});
 for(let element of gastosFiltrados3){
-    gestionPresupuestoWeb.mostrarGastoWeb("listado-gastos-filtrados3",element);  
+    gestionPresupuestoWeb.mostrarGastoWeb("listado-gastos-filtrados-3",element);  
 }
 
 let gastosFiltrados4 = gestionPresupuesto.filtrarGastos({etiquetasTiene: ["comida", "transporte"], valorMaximo:50});
 for(let element of gastosFiltrados4){
-    gestionPresupuestoWeb.mostrarGastoWeb("listado-gastos-filtrados4",element);  
+    gestionPresupuestoWeb.mostrarGastoWeb("listado-gastos-filtrados-4",element);  
 }
 
 
