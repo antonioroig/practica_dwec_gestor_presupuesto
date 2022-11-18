@@ -52,11 +52,11 @@ for (let gasto of gastoFiltrado4){
 }
 
 let gastosAgrupados = gestionPresupuesto.agruparGastos("dia");
-gestionPresupuestoWeb.mostrarGastosAgrupadosWeb("agrupacion-dia",gastosAgrupados);
+gestionPresupuestoWeb.mostrarGastosAgrupadosWeb("agrupacion-dia",gastosAgrupados,"día");
 
 let gastosAgrupados2 = gestionPresupuesto.agruparGastos("mes");
-gestionPresupuestoWeb.mostrarGastosAgrupadosWeb("agrupacion-mes",gastosAgrupados2);
+gestionPresupuestoWeb.mostrarGastosAgrupadosWeb("agrupacion-mes",gastosAgrupados2,"mes");
 
 let gastosAgrupados3 = gestionPresupuesto.agruparGastos("anyo");
-gestionPresupuestoWeb.mostrarGastosAgrupadosWeb("agrupacion-anyo",gastosAgrupados3);
+gestionPresupuestoWeb.mostrarGastosAgrupadosWeb("agrupacion-anyo",gastosAgrupados3,"año");
 
