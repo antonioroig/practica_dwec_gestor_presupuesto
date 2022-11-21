@@ -38,9 +38,16 @@ for(let gasto of ges.filtrarGastos({valorMinimo: 200, etiquetasTiene:["seguros"]
     gesPW.mostrarGastoWeb("listado-gastos-filtrado-3", gasto);
 }
 
+
 for(let gasto of ges.filtrarGastos({valorMaximo: 50, etiquetasTiene:["comida", "transporte"]})){
     gesPW.mostrarGastoWeb("listado-gastos-filtrado-4", gasto);
 }
 
+//Mostrar el total de gastos agrupados por día en div#agrupacion-dia (funciones agruparGastos y mostrarGastosAgrupadosWeb)
+gesPW.mostrarGastosAgrupadosWeb("agrupacion-dia",ges.agruparGastos("dia"),"día");
 
+//Mostrar el total de gastos agrupados por mes en div#agrupacion-mes (funciones agruparGastos y mostrarGastosAgrupadosWeb)
+gesPW.mostrarGastosAgrupadosWeb("agrupacion-mes",ges.agruparGastos("mes"),"mes");
 
+//Mostrar el total de gastos agrupados por año en div#agrupacion-anyo (funciones agruparGastos y mostrarGastosAgrupadosWeb)
+gesPW.mostrarGastosAgrupadosWeb("agrupacion-anyo",ges.agruparGastos("anyo"),"año");
