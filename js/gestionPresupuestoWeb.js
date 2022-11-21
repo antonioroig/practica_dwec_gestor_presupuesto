@@ -62,27 +62,46 @@ function mostrarGastoWeb(idElemento, gasto){
 
 function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo){
 
-    if(!idElemento != undefined){
-        let elemento = document.getElementById(idElemento);
-
-        // <div class="agrupacion">
-        let divAgrup = document.createElement('div');
-        divAgrup.className = 'agrupacion';
-        // - - - - - - - - - - - - - - 
         
-        // <h1>Gastos agrupados por mes</h1>
-        let h1Agrup = document.createElement('h1');
-        h1Agrup.textContent = 'Gastos agrupados por mes';
-        divAgrup.append(h1Agrup);
+    // id = elemento
+    let elemento = document.getElementById(idElemento);
+
+    // <div class="agrupacion">
+    let divAgrup = document.createElement('div');
+    divAgrup.className = 'agrupacion';
+    // - - - - - - - - - - - - - - 
+    // <h1>Gastos agrupados por mes</h1>
+    let h1Agrup = document.createElement('h1');
+    h1Agrup.textContent = `Gastos agrupados por ${periodo}`;
+    divAgrup.append(h1Agrup);
+    
+    //for(let i = 0; i < agrup.length; i++){
+    for(let prop of Object.keys(agrup)){
+
+        // <div class="agrupacion-dato">
+        let divDato = document.createElement('div');
+        divDato.className = 'agrupacion-dato';
+
+        //<span class="agrupacion-dato-clave">2021-09</span>
+        let spanDatoClave = document.createElement('span');
+        spanDatoClave.className = 'agrupacion-dato-clave';
+        spanDatoClave.textContent = `${prop} `;
         
-        for(let i = 0; i < agrup.length; i++){
+        // <span class="agrupacion-dato-valor">5</span>
+        let spanDatoValor = document.createElement('span');
+        spanDatoValor.className = 'agrupacion-dato-valor';
+        spanDatoValor.textContent = `${prop.valueOf()}`;
 
-            let divDato = document.createElement('div');
-            divAgrup.className = 'agrupacion-dato';
+        divDato.append(spanDatoClave);
+        divDato.append(spanDatoValor);
+        divAgrup.append(divDato);
+    }
 
-            
-        }
-        /* 
+    elemento.append(divAgrup);   
+
+    return elemento;   
+}
+ /* 
         <div class="agrupacion-dato">
             <span class="agrupacion-dato-clave">2021-09</span>
             <span class="agrupacion-dato-valor">5</span>
@@ -93,14 +112,6 @@ function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo){
             <span class="agrupacion-dato-valor">39</span>
         </div>
         */
-    }
-
-
-
-    return null;
-}
-
-
 
 // npx cypress open -- PARA HACER TEST GRÁFICO
 // npm run test --> pasa todos los tests
