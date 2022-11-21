@@ -2,8 +2,8 @@ import * as gp from './gestionPresupuesto';
 
 function mostrarDatoEnId(idElemento, valor) {
     if(idElemento != null){
-        let elemento = document.getElementById(idElemento);
-        elemento.innerHTML += valor;
+        let elementoHTML = document.getElementById(idElemento);
+        elementoHTML.innerHTML += valor;
     }
 }
   
