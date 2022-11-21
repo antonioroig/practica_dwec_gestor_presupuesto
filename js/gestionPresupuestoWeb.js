@@ -25,6 +25,7 @@ function mostrarGastoWeb(idElemento, gasto){
         let divGasto = document.createElement("div");
             divGasto.className = "gasto";
             elemento.appendChild(divGasto);
+
         if(gasto.descripcion){
             let divGastoDescripcion = document.createElement("div");
                 divGastoDescripcion.className = "gasto-descripcion";
@@ -43,15 +44,16 @@ function mostrarGastoWeb(idElemento, gasto){
                 divGastoValor.innerHTML += gasto.valor;
                 divGasto.appendChild(divGastoValor);
         }
-            let divGastoEtiquetas = document.createElement("div");
-                divGastoEtiquetas.className = "gasto-etiquetas";
-                for(let i = 0; i < gasto.etiquetas.lenght; i++ ){
-                    let spanEtiqueta = document.createElement("span");
-                    spanEtiqueta.className = "gasto-etiquetas-etiqueta";
-                    spanEtiqueta.innerHTML = gasto.etiquetas[i];
-                    divGastoEtiquetas.appendChild(spanEtiqueta);
-                }
-                divGasto.appendChild(divGastoEtiquetas);
+        let divGastoEtiquetas = document.createElement("div");
+            divGastoEtiquetas.className = "gasto-etiquetas";
+            
+            gasto.etiquetas.forEach(etiqueta => {
+                var spanEtiqueta = document.createElement('span');
+                spanEtiqueta.className="gasto-etiquetas-etiqueta";
+                spanEtiqueta.innerHTML = etiqueta;
+                divGastoEtiquetas.appendChild(spanEtiqueta);
+            });
+            divGasto.appendChild(divGastoEtiquetas);
     }
 }
 
@@ -71,20 +73,23 @@ function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo){
         if(agrup){
                 let keys = Object.keys(agrup);
                 let i = 0;
+
                 for(let property in agrup){
-                    let divAgrup = document.createElement("div");
-                        divAgrup.className = "agrupacion-dato";
-                    let spanAgrupClave = document.createElement("span");
-                        spanAgrupClave.className = "agrupacion-dato-clave";
-                        spanAgrupClave.innerHTML += keys[i];
-                        divAgrup.appendChild(spanAgrupClave);
-                    let spanAgrupValor = document.createElement("span");
-                        spanAgrupValor.className = "agrupacion-dato-valor";
-                        spanAgrupValor.innerHTML += agrup[property];
-                        divAgrup.appendChild(spanAgrupValor);
+                    var divAgrup =document.createElement('div');
+                    divAgrup.className="agrupacion-dato";
                     
-                    divAgrupacion.appendChild(divAgrup);
+                    var spanAgrupClave = document.createElement('span');
+                    spanAgrupClave.className="agrupacion-dato-clave";
+                    spanAgrupClave.innerHTML=keys[i];
                     i++;
+                    divAgrup.appendChild(spanAgrupClave);
+        
+                    var spanAgrupValor = document.createElement('span');
+                    spanAgrupValor.classList="agrupacion-dato-valor";
+                    spanAgrupValor.innerHTML=agrup[property];
+                    divAgrup.appendChild(spanAgrupValor);
+        
+                    divAgrupacion.appendChild(divAgrup);
                 }
         }
     }

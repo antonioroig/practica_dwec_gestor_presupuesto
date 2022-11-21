@@ -58,4 +58,9 @@ for(let i = 0; i < gastos.length;i++){
     mostrarGastoWeb("listado-gastos-filtrado-4", gastos[i])
 }
 
+mostrarGastosAgrupadosWeb(agruparGastos("dia"), "día", "agrupacion-dia");
+
+mostrarGastosAgrupadosWeb(agruparGastos("mes"), "mes", "agrupacion-mes");
+
+mostrarGastosAgrupadosWeb(agruparGastos("anyo"), "año", "agrupacion-anyo");
 
