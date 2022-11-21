@@ -22,3 +22,23 @@ gestionPreWeb.mostrarDatoEnId(gestionPre.calcularTotalGastos(),"gastos-totales")
 gestionPreWeb.mostrarDatoEnId(gestionPre.calcularBalance(),"balance-total");
 
 gestionPre.listarGastos();
+
+for (let gasto of gestionPre.listarGastos()) {
+    gestionPreWeb.mostrarGastoWeb('listado-gastos-completo', gasto);
+}
+
+for (let gasto of gestionPre.filtrarGastos({ fechaDesde: "2021-09-01", fechaHasta: "2021-09-30" })) {
+    gestionPreWeb.mostrarGastoWeb('listado-gastos-filtrado-1', gasto);
+}
+
+for (let gasto of gestionPre.filtrarGastos({ valorMinimo: 50 })) {
+    gestionPreWeb.mostrarGastoWeb('listado-gastos-filtrado-2', gasto);
+}
+
+for (let gasto of gestionPre.filtrarGastos({ valorMinimo: 200, etiquetasTiene: ["seguros"] })) {
+    gestionPreWeb.mostrarGastoWeb('listado-gastos-filtrado-3', gasto);
+}
+
+for (let gasto of gestionPre.filtrarGastos({ valorMaximo: 50, etiquetasTiene: ["comida", "transporte"] })) {
+    gestionPreWeb.mostrarGastoWeb('listado-gastos-filtrado-4', gasto);
+}

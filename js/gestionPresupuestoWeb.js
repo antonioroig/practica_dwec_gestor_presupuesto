@@ -4,7 +4,7 @@ function mostrarDatoEnId(valor,idElemento){
     if (idElemento != null)
     {
         let elem = document.getElementById(idElemento);
-        elem.innerHTML += valor;
+        elem.innerHTML += "" + valor;
     }
 }
 function mostrarGastoWeb(idElemento, gasto){
@@ -30,14 +30,13 @@ divContenedor.appendChild(divFecha);
     let divEt = document.createElement("div"); 
     divEt.className = "gasto-etiquetas";
     divEt.textContent = gasto.etiquetas;
-    for(let i= 0; i<gasto.etiquetas.lenght; i++)
-    {
+
+    gasto.etiquetas.forEach(etiqueta => {
         let spanEt = document.createElement("span");
         spanEt.className = "gasto-etiquetas-etiqueta";
-        spanEt.textContent = gasto.etiquetas[i];
-        divEt.createElement(spanEt);
-    }
-
+        spanEt.textContent = etiqueta
+        divEt.appendChild(spanEt);
+    });
     divContenedor.appendChild(divEt);
     
     id.appendChild(divContenedor);
@@ -45,7 +44,7 @@ divContenedor.appendChild(divFecha);
 }
 
 function mostrarGastosAgrupadosWeb(){
-
+    
 }
 export {
     mostrarDatoEnId,
