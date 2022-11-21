@@ -9,11 +9,14 @@ function mostrarGastoWeb(gasto, idElemento){
 
     let elemento = document.getElementById(idElemento);
 
+    let divGasto = document.createElement("div");
+    divGasto.classList.add(`gasto`);
+
     // div con descripcion
     let div = document.createElement('div');
     div.classList.add(`gasto-descripcion`);
     div.textContent = gasto.descripcion;;
-    elemento.append(div);
+    divGasto.append(div);
 
     // div gasto-fecha
     let fechaAux = new Date(gasto.fecha)
@@ -21,13 +24,13 @@ function mostrarGastoWeb(gasto, idElemento){
     div = document.createElement('div');
     div.classList.add(`gasto-fecha`);
     div.textContent = (fechaAux.toLocaleString());
-    elemento.append(div);
+    divGasto.append(div);
 
     // div gasto-valor
     div = document.createElement('div');
     div.classList.add(`gasto-valor`);
     div.textContent = gasto.valor;;
-    elemento.append(div);
+    divGasto.append(div);
 
     // div gasto-etiquetas
     div = document.createElement('div');
@@ -39,7 +42,8 @@ function mostrarGastoWeb(gasto, idElemento){
       span.textContent += j
       div.append(span)
     }
-    elemento.append(div);
+    divGasto.append(div);
+    elemento.append(divGasto);
 }
 function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo){
    
