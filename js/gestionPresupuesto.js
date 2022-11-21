@@ -181,7 +181,7 @@ function filtrarGastos({fechaDesde,fechaHasta,valorMinimo,valorMaximo,descripcio
                 if(!comprobar){
                     anyadir = false;
                 }
-            }
+            } 
             return anyadir;
             
         }

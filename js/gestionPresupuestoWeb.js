@@ -43,22 +43,21 @@ function mostrarGastoWeb(idElemento,gasto){
     id.append(divGasto);
     
     return id;
-
-
-
-
-
-
-    
-
-
-
-
-
     
 }
 
 function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo){
+    let id = document.getElementById(idElemento);
+
+    let divAgrupado = document.createElement("div");
+    divAgrupado.className = "agrupacion";
+
+    let divAgrupadoH1 = document.createElement("h1");
+    divAgrupadoH1.innerHTML += `Gastos agrupados por ${periodo}`;
+    divAgrupado.append(divAgrupadoH1);
+
+    let divAgrupDato = document.createElement("div");
+    divAgrupDato.className = "agrupacion-dato";
 
 }
 
