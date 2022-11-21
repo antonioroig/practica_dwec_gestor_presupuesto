@@ -99,7 +99,7 @@ function mostrarPresupuesto() {
     this.actualizarValor = function(valor){
         if(valor >= 0 && typeof(valor) === `number`)
         {
-        this.valor = valor;
+            this.valor = valor;
         }
     },
 
@@ -114,7 +114,6 @@ function mostrarPresupuesto() {
         }else{
             day = parseInt(f.getDate());
         }
-
         if(periodo === "dia"){
             if(mes < 10){
                     res = f.getFullYear() + `-0` + mes + `-` + day;
@@ -253,3 +252,4 @@ export   {
     filtrarGastos,
     agruparGastos
 }
+

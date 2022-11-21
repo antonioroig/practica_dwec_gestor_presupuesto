@@ -53,22 +53,29 @@ function mostrarGastoWeb(idElemento, gasto){
 function mostrarGastosAgrupadosWeb(idElemento,agrup,periodo){
     let id = document.getElementById(idElemento);
 
-    let divGasto = document.createElement("div");
-    divGasto.className = "agrupacion";
+    let divAgrupacion = document.createElement("div");
+    divAgrupacion.className = "agrupacion";
 
 
-    let divGastoDes = document.createElement("h1");
-    divGastoDes.innerHTML += `Gastos agrupados por ${periodo}`;
-    divGasto.append(divGastoDes);
+    let h1GastosAgrupados = document.createElement("h1");
+    h1GastosAgrupados.innerHTML += `Gastos agrupados por ${periodo}`;
+    divAgrupacion.append(h1GastosAgrupados);
 
-    for(let gasto of agrup){
-        let divagrupGastos = 
+    for(let key of Object.keys(agrup)){
+        let divAgrupacionDato = document.createElement("div");
+        divAgrupacionDato.className = "agrupacion-dato";
+        let span = document.createElement("span");
+        span.className = "agrupacion-dato-clave";
+        span.innerHTML = `${key}`;
+        let span2 = document.createElement("span");
+        span2.className = "agrupacion-dato-valor";
+        span2.innerHTML = `${key.valueOf()}`;
+        divAgrupacion.append(divAgrupacionDato);
+        divAgrupacionDato.append(span);
+        divAgrupacionDato.append(span2);
     }
-    let divGastoFecha = document.createElement("div");
-    divGastoFecha.className = "gasto-fecha";
-    divGastoFecha.innerHTML += gasto.fecha;
-    divGasto.append(divGastoFecha);
-    Object.entries(agroup);
+    id.append(divAgrupacion);
+    return id;
 };
 
 

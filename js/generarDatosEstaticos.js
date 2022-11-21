@@ -45,3 +45,7 @@ for(let gasto of gestion.filtrarGastos({valorMinimo : 200, etiquetasTiene : ["se
 for(let gasto of gestion.filtrarGastos({valorMaximo : 50, etiquetasTiene : ["comida","transporte"]})){
     gestionWeb.mostrarGastoWeb("listado-gastos-filtrado-4", gasto);
 };
+
+gestionWeb.mostrarGastosAgrupadosWeb( "agrupacion-dia",gestion.agruparGastos("dia"),"día");
+gestionWeb.mostrarGastosAgrupadosWeb("agrupacion-mes",gestion.agruparGastos("mes"),"mes");
+gestionWeb.mostrarGastosAgrupadosWeb("agrupacion-anyo",gestion.agruparGastos("anyo"),"año");
