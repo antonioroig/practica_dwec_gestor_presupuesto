@@ -41,3 +41,4 @@ for(let gasto of gesP.filtrarGastos({valorMaximo: 50, etiquetasTiene:["comida","
 
 gesPW.mostrarGastosAgrupadosWeb("agrupacion-dia", gesP.agruparGastos("dia"),"día");
 
+gesPW.mostrarGastosAgrupadosWeb("agrupacion-mes", gesP.agruparGastos("mes"),"mes");
