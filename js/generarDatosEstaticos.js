@@ -24,20 +24,23 @@ gastos.forEach(resultado =>{
 
 
 let gastosFil = exGp.filtrarGastos({fechaDesde:'2021-09-01', fechaHasta:'2021-09-30'});
-gastosFiltrados.forEach(resultado =>{
-    exGpweb.mostrarGastoWeb(resultado, "listado-gastos-filtrado-1",);
-});
-
+for (let gasto of  gastosFil)
+{
+    exGpweb.mostrarGastoWeb(gasto, "listado-gastos-filtrado-1");
+}
 gastosFil = exGp.filtrarGastos({valorMinimo:50});
-gastosFil.forEach(resultado =>{
-    exGpweb.mostrarGastoWeb("listado-gastos-filtrado-2", resultado);
-});
+for (let gasto of  gastosFil)
+{
+    exGpweb.mostrarGastoWeb(gasto, "listado-gastos-filtrado-2");
+}
 gastosFil = exGp.filtrarGastos({valorMinimo:200, etiquetasTiene: ['seguros']}); 
-gastosFil.forEach(element =>{
-    exGpweb.mostrarGastoWeb("listado-gastos-filtrado-3", element);
-});
-
+for (let gasto of  gastosFil)
+{
+    exGpweb.mostrarGastoWeb(gasto, "listado-gastos-filtrado-3");
+}
 gastosFil = exGp.filtrarGastos({valorMaximo: 50, etiquetasTiene: ['comida'] ['transporte']});
-gastosFil.forEach(element =>{
-    exGpweb.mostrarGastoWeb("listado-gastos-filtrado-4", element);
-});
+for (let gasto of  gastosFil)
+{
+    exGpweb.mostrarGastoWeb(gasto, "listado-gastos-filtrado-4");
+}
+

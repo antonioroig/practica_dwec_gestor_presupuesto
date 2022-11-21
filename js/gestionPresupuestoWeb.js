@@ -9,7 +9,7 @@ function mostrarDatoEnId(valor, idElemento)
     p.textContent = valor;
     elem.appendChild(p);
 }
-function mostrarGastoWeb(idElemento, gasto)
+function mostrarGastoWeb(gasto, idElemento)
 {
     let elem = document.getElementById(idElemento);
     let padre = document.createElement("div");
@@ -32,14 +32,22 @@ function mostrarGastoWeb(idElemento, gasto)
 
     let gastEtiq = document.createElement("div");
     gastEtiq. className = "gasto-etiquetas";
+    gasto.etiquetas.forEach(etiqueta => {
+        let etiq = document.createElement('span');
+        etiq.className = 'gasto-etiquetas-etiqueta';
+        etiq.textContent = etiqueta;
+        gastEtiq.appendChild(etiq);
+    });
+    /*
     for (let i = 0; i < gasto.etiquetas.length; i++)
     {
         let etiq = document.createElement('span');
         etiq.className = 'gasto-etiquetas-etiqueta';
         etiq.textContent = etiqueta;
         gastEtiq.appendChild(etiq);
-    }        
+    }  */      
     padre.appendChild(gastEtiq);
+    elem.appendChild(padre);
 }
 function mostrarGastosAgrupadosWeb()
 {
