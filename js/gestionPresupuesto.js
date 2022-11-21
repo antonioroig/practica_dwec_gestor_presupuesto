@@ -82,7 +82,7 @@ function CrearGasto(descripcion, valor, fecha = Date.now(), ...etiquetas) {
     this.actualizarFecha = function(stringFecha)
     {
 		let aux=Date.parse(stringFecha);
-		if (!isNaN(aux))
+		if (!isNaN(aux)) //(type of aux === 'number') //isNaN (not a number)
         {
 			this.fecha=aux;
         }

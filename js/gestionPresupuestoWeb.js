@@ -32,19 +32,14 @@ function mostrarGastoWeb(idElemento, gasto)
 
     let gastEtiq = document.createElement("div");
     gastEtiq. className = "gasto-etiquetas";
-    for(let etiqueta of this.gasto.etiquetas) 
+    for (let i = 0; i < gasto.etiquetas.length; i++)
     {
-        let span = document.createElement('span');
-        span.className = 'gasto-etiquetas-etiqueta';
-        span.textContent = etiqueta;
-        gastEtiq.appendChild(span);
-            
-    }
-
+        let etiq = document.createElement('span');
+        etiq.className = 'gasto-etiquetas-etiqueta';
+        etiq.textContent = etiqueta;
+        gastEtiq.appendChild(etiq);
+    }        
     padre.appendChild(gastEtiq);
-
-
-
 }
 function mostrarGastosAgrupadosWeb()
 {

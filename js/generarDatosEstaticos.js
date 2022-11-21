@@ -17,3 +17,27 @@ exGp.anyadirGasto(gast6);
 exGpweb.mostrarDatoEnId(exGp.calcularTotalGastos(),"gastos-totales");
 exGpweb.mostrarDatoEnId(exGp.calcularBalance(),"balance-total");
 
+let gastos = exGp.listarGastos();
+gastos.forEach(resultado =>{
+    exGpweb.mostrarGastoWeb(resultado,"listado-gastos-completo");
+});
+
+
+let gastosFil = exGp.filtrarGastos({fechaDesde:'2021-09-01', fechaHasta:'2021-09-30'});
+gastosFiltrados.forEach(resultado =>{
+    exGpweb.mostrarGastoWeb(resultado, "listado-gastos-filtrado-1",);
+});
+
+gastosFil = exGp.filtrarGastos({valorMinimo:50});
+gastosFil.forEach(resultado =>{
+    exGpweb.mostrarGastoWeb("listado-gastos-filtrado-2", resultado);
+});
+gastosFil = exGp.filtrarGastos({valorMinimo:200, etiquetasTiene: ['seguros']}); 
+gastosFil.forEach(element =>{
+    exGpweb.mostrarGastoWeb("listado-gastos-filtrado-3", element);
+});
+
+gastosFil = exGp.filtrarGastos({valorMaximo: 50, etiquetasTiene: ['comida'] ['transporte']});
+gastosFil.forEach(element =>{
+    exGpweb.mostrarGastoWeb("listado-gastos-filtrado-4", element);
+});
