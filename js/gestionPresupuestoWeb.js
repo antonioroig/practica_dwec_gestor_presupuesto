@@ -9,28 +9,37 @@ function mostrarGastoWeb(gasto, idElemento){
 
     let elemento = document.getElementById(idElemento);
 
-    for(let i in gasto){
-      if(!Array.isArray(i)){
+    // div con descripcion
+    let div = document.createElement('div');
+    div.classList.add(`gasto-descripcion`);
+    div.textContent = gasto.descripcion;;
+    elemento.append(div);
 
-        let div = document.createElement('div');
-        div.classList.add(`gasto-${i}`);
-        div.textContent = i;
+    // div gasto-fecha
+    let fechaAux = new Date(gasto.fecha)
 
-      }else{
+    div = document.createElement('div');
+    div.classList.add(`gasto-fecha`);
+    div.textContent = (fechaAux.toLocaleString());
+    elemento.append(div);
 
-        let etiquetas = document.createElement('div');
-        etiquetas.classList.add("gasto-etiquetas-etiqueta");
+    // div gasto-valor
+    div = document.createElement('div');
+    div.classList.add(`gasto-valor`);
+    div.textContent = gasto.valor;;
+    elemento.append(div);
 
-        for(let j of gasto[i]){
-          let span = document.createElement('span')
-          span.textContent += j
-          etiquetas.appendChild(span)
-        }
+    // div gasto-etiquetas
+    div = document.createElement('div');
+    div.classList.add(`gasto-etiquetas`);
 
-        elemento.appendChild(etiquetas);
-      }
+    for(let j of gasto.etiquetas){
+      let span = document.createElement('span')
+      span.classList.add("gasto-etiquetas-etiqueta")
+      span.textContent += j
+      div.append(span)
     }
-
+    elemento.append(div);
 }
 function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo){
    
