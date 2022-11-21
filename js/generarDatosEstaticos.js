@@ -51,3 +51,7 @@ gastosFiltrados = gestionPresupuesto.filtrarGastos({valorMaximo: 50, etiquetasTi
 gastosFiltrados.forEach(element =>{
     gestionPresupuestoWeb.mostrarGastoWeb("listado-gastos-filtrado-4", element);
 });
+
+gestionPresupuestoWeb.mostrarGastosAgrupadosWeb("agrupacion-dia", gestionPresupuesto.agruparGastos("dia"), "día");
+gestionPresupuestoWeb.mostrarGastosAgrupadosWeb("agrupacion-mes", gestionPresupuesto.agruparGastos("mes"), "mes");
+gestionPresupuestoWeb.mostrarGastosAgrupadosWeb("agrupacion-anyo", gestionPresupuesto.agruparGastos("anyo"), "año");

@@ -45,30 +45,33 @@ function mostrarGastoWeb(idElemento, gasto) {
 function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo){
     let elemento3 = document.getElementById(idElemento);
 
-    let divAgrupacion = document.createElemente('div');
+    let divAgrupacion = document.createElement('div');
     divAgrupacion.className = 'agrupacion';
     elemento3.append(divAgrupacion);
 
     let encabezado = document.createElement('h1');
-    encabezado.textContent = 'Gastos agrupados por PERIODO';
+    encabezado.textContent = `Gastos agrupados por ${periodo}`;
     divAgrupacion.append(encabezado);
 
-    for()
+    for( let [nombre, valor] of Object.entries( agrup ) ){
     {
-        let divAgrupacionDato = document.createElemente('div');
+        let divAgrupacionDato = document.createElement('div');
         divAgrupacionDato.className = 'agrupacion-dato';
         divAgrupacion.append(divAgrupacionDato);
 
         let spanClave = document.createElement('span');
         spanClave.className = 'agrupacion-dato-clave';
+        spanClave.textContent = nombre;
         divAgrupacionDato.append(spanClave);
 
         let spanValor = document.createElement('span');
         spanValor.className = 'agrupacion-dato-valor';
+        spanValor.textContent = valor;
         divAgrupacionDato.append(spanValor);
-
+    }
     }
 }
+
 export {
     mostrarDatoEnId,
     mostrarGastoWeb,
