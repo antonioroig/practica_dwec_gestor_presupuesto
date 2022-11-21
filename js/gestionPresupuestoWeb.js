@@ -29,6 +29,18 @@ function mostrarGastoWeb(idElemento, gasto) {
         valorHTML.className = "gasto-valor";
         valorHTML.innerHTML += gasto.valor;
         gastoHTML.appendChild(valorHTML);
+
+        let etiquetasHTML = document.createElement("div");
+        etiquetasHTML.className = "gasto-etiquetas";
+        gastoHTML.appendChild(etiquetasHTML);
+        gasto.etiquetas.forEach(etiqueta => {
+            let span = document.createElement("span");
+            span.className = "gasto-etiquetas-etiqueta";
+            span.innerHTML = etiqueta;
+            etiquetasHTML.appendChild(span);
+        });
+
+        gastoHTML.appendChild(etiquetasHTML);
     }
 }
 
