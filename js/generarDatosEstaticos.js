@@ -44,3 +44,6 @@ for (let gasto of  gastosFil)
     exGpweb.mostrarGastoWeb(gasto, "listado-gastos-filtrado-4");
 }
 
+exGpweb.mostrarGastosAgrupadosWeb("agrupacion-dia", exGp.agruparGastos("dia"), "día");
+exGpweb.mostrarGastosAgrupadosWeb("agrupacion-mes", exGp.agruparGastos("mes"), "mes");
+exGpweb.mostrarGastosAgrupadosWeb("agrupacion-anyo", exGp.agruparGastos("anyo"), "año");
