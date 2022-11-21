@@ -43,3 +43,8 @@ for(let gasto of scriptsGestion.filtrarGastos({valorMinimo : 200, etiquetasTiene
 for(let gasto of scriptsGestion.filtrarGastos({valorMaximo : 50, etiquetasTiene : ["comida", "transporte"]})){
     scriptsGestionWeb.mostrarGastoWeb("listado-gastos-filtrado-4", gasto);
 };
+
+
+scriptsGestionWeb.mostrarGastosAgrupadosWeb('agrupacion-dia', scriptsGestion.agruparGastos("dia"),"día");
+scriptsGestionWeb.mostrarGastosAgrupadosWeb('agrupacion-mes', scriptsGestion.agruparGastos("mes"),"mes");
+scriptsGestionWeb.mostrarGastosAgrupadosWeb('agrupacion-anyo', scriptsGestion.agruparGastos("anyo"),"año");
