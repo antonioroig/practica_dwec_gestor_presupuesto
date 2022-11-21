@@ -56,6 +56,8 @@ function mostrarGastoWeb(gasto, idElemento){
 
 function mostrarGastosAgrupadosWeb(agrup, periodo, idElemento){
     if(idElemento != null){
+        let elemento = document.getElementById(idElemento);
+
         let divAgrup = document.createElement("div");
         divAgrup.className = "agrupacion";
             
@@ -64,7 +66,8 @@ function mostrarGastosAgrupadosWeb(agrup, periodo, idElemento){
         divAgrup.appendChild(tituloH1);
     
         let contador = 0;
-        for(let agrupCurrent in Object.keys(agrup)){
+        let claves = Object.keys(agrup);
+        for(let agrupCurrent in agrup){
             let divAgrupDato = document.createElement('div');
             divAgrupDato.className = "agrupacion-dato";
                 
@@ -82,8 +85,6 @@ function mostrarGastosAgrupadosWeb(agrup, periodo, idElemento){
     
             divAgrup.appendChild(divAgrupDato);
         }
-    
-        let elemento = document.getElementById(idElemento);
         elemento.appendChild(divAgrup);
     }
 }
