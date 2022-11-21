@@ -29,7 +29,7 @@ function mostrarGastoWeb(idElemento, gasto) {
     divGasto.appendChild(divValor);
 
     let divGastoEtiquetas = document.createElement('div');
-    divGastoEtiquetas.className = 'gasto-etiqueta';
+    divGastoEtiquetas.className = 'gasto-etiquetas';
     divGasto.appendChild(divGastoEtiquetas);
     
     //Ahora necesitamos un bucle para recorrer los gastos
