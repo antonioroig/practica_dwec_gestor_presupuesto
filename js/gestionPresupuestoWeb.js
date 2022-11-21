@@ -46,7 +46,48 @@ function mostrarGastoWeb(gasto, idElemento){
     elemento.append(divGasto);
 }
 function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo){
-   
+
+  if(periodo === `dia`){
+
+    periodo = "día"
+
+  }else if(periodo === `anyo`){
+
+    periodo = "año"
+    
+  }
+   let element = document.getElementById(idElemento);
+
+    // Crear div "agrupación"
+    let divAgrup = document.createElement("div");
+    divAgrup.classList.add("agrupacion")
+
+    let titulo = document.createElement("h1");
+    titulo.textContent = `Gastos agrupados por ${periodo}`
+    divAgrup.append(titulo);
+    
+    // Recorremos el objeto para obterner sus claves
+    for(const[key, value] of Object.entries(agrup)){
+
+      let div = document.createElement("div");
+      div.classList.add(`agrupacion-dato`);
+
+      let spanClave = document.createElement("span");
+      spanClave.classList.add("agrupacion-dato-clave");
+      spanClave.textContent = key;
+
+      
+      let spanValor = document.createElement("span");
+      spanValor.classList.add("agrupacion-dato-valor");
+      spanClave.textContent = value;
+      
+      div.append(spanClave);
+      div.append(spanValor);
+
+      divAgrup.append(div);
+    }
+    element.append(divAgrup);
+
 }
 
 

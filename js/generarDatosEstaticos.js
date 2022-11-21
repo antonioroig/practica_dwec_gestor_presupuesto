@@ -20,8 +20,8 @@ gestionWeb.mostrarDatoEnId(gestion.calcularBalance(),"balance-total");
 // gestionWeb.mostrarGastoWeb(gestion.filtrarGastos({valorMinimo:200}),"listado-gastos-filtrado-2");
 // gestionWeb.mostrarGastoWeb(gestion.filtrarGastos({etiquetasTiene: ["comida", "transporte"]}),"listado-gastos-filtrado-4");
 
+// Mostrar gastos web
 let gastos = gestion.listarGastos();
-
 gastos.forEach((element)=> {
     gestionWeb.mostrarGastoWeb(element,"listado-gastos-completo");
 })
@@ -41,3 +41,10 @@ let filtrado4 = gestion.filtrarGastos({etiquetasTiene: ["comida", "transporte"],
 filtrado4.forEach((element) => {
     gestionWeb.mostrarGastoWeb(element,"listado-gastos-filtrado-4")
 })
+
+// Mostrar gasto web agrupado
+gestionWeb.mostrarGastosAgrupadosWeb("agrupacion-dia", gestion.agruparGastos("dia"), "dia");
+
+gestionWeb.mostrarGastosAgrupadosWeb("agrupacion-mes", gestion.agruparGastos("mes"), "mes");
+
+gestionWeb.mostrarGastosAgrupadosWeb("agrupacion-anyo", gestion.agruparGastos("anyo"), "anyo");
