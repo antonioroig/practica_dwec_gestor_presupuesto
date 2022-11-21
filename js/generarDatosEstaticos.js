@@ -41,3 +41,13 @@ gastosFiltrados = gestionPresupuesto.filtrarGastos({valorMinimo:50});
 gastosFiltrados.forEach(element =>{
     gestionPresupuestoWeb.mostrarGastoWeb("listado-gastos-filtrado-2", element);
 });
+
+gastosFiltrados = gestionPresupuesto.filtrarGastos({valorMinimo:200, etiquetasTiene: ['seguros']}); 
+gastosFiltrados.forEach(element =>{
+    gestionPresupuestoWeb.mostrarGastoWeb("listado-gastos-filtrado-3", element);
+});
+
+gastosFiltrados = gestionPresupuesto.filtrarGastos({valorMaximo: 50, etiquetasTiene: ['comida'] ['transporte']});
+gastosFiltrados.forEach(element =>{
+    gestionPresupuestoWeb.mostrarGastoWeb("listado-gastos-filtrado-4", element);
+});
