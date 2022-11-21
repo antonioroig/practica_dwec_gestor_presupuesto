@@ -82,6 +82,7 @@ function CrearGasto(descripcion,valor ,fecha= Date.now(), ...etiquetas )
             if(typeof this.fecha === 'string')
             {
                 fechaAuxiliar1 = Date.parse(this.fecha);
+                
             }else{
 
                 fechaAuxiliar1=this.fecha;
@@ -303,7 +304,7 @@ return gastosCorrectos;
 
 
 
-function agruparGastos(periodo = "mes" , etiquetas, fechaDesde, fechaHasta) 
+function agruparGastos(periodo = "mes" , etiquetas, fechaDesde, fechaHasta) //Pasamos funci
 {
     let gastoAfiltrar= {fechaHasta : fechaHasta, fechaDesde : fechaDesde,etiquetasTiene : etiquetas};
 
@@ -311,14 +312,14 @@ function agruparGastos(periodo = "mes" , etiquetas, fechaDesde, fechaHasta)
 
     let reducido = gastosFiltrados.reduce((acc, item) => 
     {
-                let tiempoAcortado = item.obtenerPeriodoAgrupacion(periodo);
+                let fechaObtenida = item.obtenerPeriodoAgrupacion(periodo);
 
-                if (acc[tiempoAcortado] == null)
+                if (acc[fechaObtenida] == null)
                 {
-                    acc[tiempoAcortado] = item.valor;
+                    acc[fechaObtenida] = item.valor;
                 } else 
                 {
-                    acc[tiempoAcortado] += item.valor;
+                    acc[fechaObtenida] += item.valor;
                 }
 
                 return acc;
