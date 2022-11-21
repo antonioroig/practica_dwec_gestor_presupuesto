@@ -1,9 +1,9 @@
 import * as gestionPresupuesto from './gestionPresupuesto.js';
 function mostrarDatoEnId(valor,idElemento) {
     let elemento = document.getElementById(idElemento);
-    //let parrafo = document.createElement("p");
-    elemento.innerHTML = valor;
-    //elemento.append(parrafo);
+    let parrafo = document.createElement("p");
+    parrafo.textContent = valor;
+    elemento.append(parrafo);
 }
 function mostrarGastoWeb(idElemento, gasto) {
     let elemento2 = document.getElementById(idElemento);
@@ -43,7 +43,8 @@ function mostrarGastoWeb(idElemento, gasto) {
     elemento2.appendChild(divGasto);
 }
 function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo){
-    
+    let elemento3 = document.getElementById(idElemento);
+
 }
 export {
     mostrarDatoEnId,
