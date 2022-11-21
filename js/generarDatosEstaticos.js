@@ -38,3 +38,6 @@ for(let gasto of gesP.filtrarGastos({valorMinimo: 200, etiquetasTiene:["seguros"
 for(let gasto of gesP.filtrarGastos({valorMaximo: 50, etiquetasTiene:["comida","transporte"]})){
     gesPW.mostrarGastoWeb("listado-gastos-filtrado-4", gasto);
 }
+
+gesPW.mostrarGastosAgrupadosWeb("agrupacion-dia", gesP.agruparGastos("dia"),"día");
+
