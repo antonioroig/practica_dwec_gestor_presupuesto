@@ -56,3 +56,7 @@ filtrarGastos({valorMinimo:200, etiquetasTiene:["seguros"]}).forEach(gasto => {
 filtrarGastos({valorMaximo:50, etiquetasTiene:["comida", "transporte"]}).forEach(gasto => {
     mostrarGastoWeb(gasto, "listado-gastos-filtrado-4");
 });
+
+mostrarGastosAgrupadosWeb(agruparGastos("dia"), "día", "agrupacion-dia");
+mostrarGastosAgrupadosWeb(agruparGastos("mes"), "mes", "agrupacion-mes");
+mostrarGastosAgrupadosWeb(agruparGastos("anyo"), "año", "agrupacion-anyo");
