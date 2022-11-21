@@ -43,8 +43,33 @@ divContenedor.appendChild(divFecha);
     return id;
 }
 
-function mostrarGastosAgrupadosWeb(){
-    
+function mostrarGastosAgrupadosWeb(agrup,periodo, idElemento ){
+if(idElemento != null)
+{
+    let id = document.getElementById(idElemento);
+    let divContenedor = document.createElement("div"); 
+    divContenedor.className = "agrupacion"; 
+    let h1 = document.createElement("h1")
+    h1.innerHTML += "Gastos agrupados por " + periodo;
+    divContenedor.appendChild(h1);
+    for( let property in agrup)
+    {
+        let divAgrupDato = document.createElement("div");
+        divAgrupDato.className = "agrupacion-dato";
+
+        let spanAgrupClave = document.createElement("span");
+        spanAgrupClave.className = "agrupacion-dato-clave";
+        spanAgrupClave.innerHTML = property;
+        divAgrupDato.appendChild(spanAgrupClave);
+        let spanAgrupValor = document.createElement("span");
+        spanAgrupValor.className = "agrupacion-dato-valor";
+        spanAgrupValor.innerHTML = agrup[property];
+        divAgrupDato.appendChild(spanAgrupValor);
+
+        divContenedor.appendChild(divAgrupDato);
+    }
+       id.appendChild(divContenedor);
+}
 }
 export {
     mostrarDatoEnId,
