@@ -212,7 +212,7 @@ function filtrarGastos({fechaDesde, fechaHasta, valorMinimo, valorMaximo, descri
                 etiquetasTiene.forEach(newEtiquetas => {
                     if(etiqueta.toLowerCase() === newEtiquetas.toLowerCase()){
                         checkEtiqueta = true;
-                    }
+                    } 
                 });
             });
         }
