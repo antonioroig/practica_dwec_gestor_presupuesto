@@ -57,41 +57,43 @@ function mostrarGastoWeb(idElemento, gasto){
     }
 }
 
-function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo){
+function mostrarGastosAgrupadosWeb(agrup, periodo, idElemento){
+    
     if(idElemento != null){
         let elemento = document.getElementById(idElemento);
-
+    
         let divAgrupacion = document.createElement("div");
             divAgrupacion.className = "agrupacion";
-            elemento.appendChild(divAgrupacion);
 
         if(periodo){
             let titPeriodo = document.createElement("h1");
                 titPeriodo.innerHTML += "Gastos agrupados por " + periodo;
                 divAgrupacion.appendChild(titPeriodo);
         }
+
         if(agrup){
                 let keys = Object.keys(agrup);
                 let i = 0;
 
                 for(let property in agrup){
-                    var divAgrup =document.createElement('div');
-                    divAgrup.className="agrupacion-dato";
+                    var divAgrup = document.createElement('div');
+                    divAgrup.className = "agrupacion-dato";
                     
                     var spanAgrupClave = document.createElement('span');
-                    spanAgrupClave.className="agrupacion-dato-clave";
-                    spanAgrupClave.innerHTML=keys[i];
+                    spanAgrupClave.className = "agrupacion-dato-clave";
+                    spanAgrupClave.innerHTML += keys[i];
                     i++;
                     divAgrup.appendChild(spanAgrupClave);
         
                     var spanAgrupValor = document.createElement('span');
-                    spanAgrupValor.classList="agrupacion-dato-valor";
-                    spanAgrupValor.innerHTML=agrup[property];
+                    spanAgrupValor.className = "agrupacion-dato-valor";
+                    spanAgrupValor.innerHTML += agrup[property];
                     divAgrup.appendChild(spanAgrupValor);
-        
+                    
                     divAgrupacion.appendChild(divAgrup);
                 }
         }
+        elemento.appendChild(divAgrupacion);
     }
 
 }
