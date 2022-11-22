@@ -4,9 +4,9 @@ function mostrarDatoEnId(idElemento, valor) {
         elementoHTML.innerHTML += valor;
     }
 }
-  
+
 function mostrarGastoWeb(idElemento, gasto) {
-     if(idElemento != null){
+    if(idElemento != null){
         let gastoHTML = document.createElement("div");
         gastoHTML.className = "gasto";
 
@@ -43,7 +43,7 @@ function mostrarGastoWeb(idElemento, gasto) {
 }
 
 function mostrarGastosAgrupadosWeb(agrup, periodo, idElemento){
-    if(idElemento != null){
+    if(idElemento != null) {
         let i = 0;
         let elemento = document.getElementById(idElemento);
 
@@ -55,27 +55,25 @@ function mostrarGastosAgrupadosWeb(agrup, periodo, idElemento){
         agrupHTML.appendChild(titleHTML);
     
         let keys = Object.keys(agrup);
-
-        agrup.forEach(agruped => {
+        for(let actualAgroup in agrup){
             let agrupInfoHTML = document.createElement('div');
             agrupInfoHTML.className = "agrupacion-dato";
                 
             let keysHTML = document.createElement('span');
             keysHTML.className = "agrupacion-dato-clave";
             keysHTML.innerHTML = keys[i];
-
             agrupInfoHTML.appendChild(keysHTML);
     
             let valueHTML = document.createElement('span');
             valueHTML.className = "agrupacion-dato-valor";
-            valueHTML.innerHTML = agrup[agruped];
+            valueHTML.innerHTML = agrup[actualAgroup];
             
             agrupInfoHTML.appendChild(valueHTML);
     
             agrupHTML.appendChild(agrupInfoHTML);
 
             i++;
-        });
+        }
 
         elemento.appendChild(agrupHTML);
     }
@@ -85,4 +83,4 @@ export {
     mostrarDatoEnId,
     mostrarGastoWeb,
     mostrarGastosAgrupadosWeb
-};
+}
