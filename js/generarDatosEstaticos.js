@@ -12,33 +12,33 @@ gestionPresu.anyadirGasto(new gestionPresu.CrearGasto("Seguro hogar", 206.45, "2
 gestionPresu.anyadirGasto(new gestionPresu.CrearGasto("Seguro coche", 195.78, "2021-10-06", "transporte", "seguros"));
 
 gestionPresuWeb.mostrarDatosEnId(gestionPresu.calcularTotalGastos());
-gestionPresuWeb.mostrarDatosEnId(gestionPresuWeb.calcularBalance());
-gestionPresuWeb.mostrarGastoWEB(gestionPresu.listarGastos());
+gestionPresuWeb.mostrarDatosEnId(gestionPresu.calcularBalance());
+gestionPresuWeb.mostrarGastoWeb(gestionPresu.listarGastos());
 
-let filtrado1 = gestionPresu.filtrarGastos({fechaDesde:2021-09});
+let filtrado1 = gestionPresu.filtrarGastos({fechaDesde:2021-09-01,fechaHasta:2021-09-30});
 filtrado1.forEach(element => {
-    gestionPresuWeb.mostrarGastoWEB("listado-gastos-filtrado-1",element);
+    gestionPresuWeb.mostrarGastoWeb(element,"listado-gastos-filtrado-1");
 });
 
 let filtrado2 = gestionPresu.filtrarGastos({valorMinimo:50});
 filtrado2.forEach(element => {
-    gestionPresuWeb.mostrarGastoWEB("listado-gastos-filtrado-2",element);
+    gestionPresuWeb.mostrarGastoWeb(element,"listado-gastos-filtrado-2");
 });
 
-let filtrado3 = gestionPresu.filtrarGastos({valorMinimo:200 , etiquetasTiene : ['seguros']});
+let filtrado3 = gestionPresu.filtrarGastos({valorMinimo:200 , etiquetasTiene : 'seguros'});
 filtrado3.forEach(element => {
-    gestionPresuWeb.mostrarGastoWEB(gestionPresu.filtrarGastos('listado-gastos-filtrado-3',element));
+    gestionPresuWeb.mostrarGastoWeb(gestionPresu.filtrarGastos(element,'listado-gastos-filtrado-3'));
 });
 
-let filtrado4 =gestionPresu.filtrarGastos({valorMinimo:50, etiquetasTiene : ['comida','transporte']});
+let filtrado4 =gestionPresu.filtrarGastos({valorMinimo:50, etiquetasTiene : 'comida,transporte'});
 filtrado4.forEach(element => {
     
-gestionPresuWeb.mostrarGastoWEB(gestionPresu.filtrarGastos("listado-gastos-filtrado-4",element));
+gestionPresuWeb.mostrarGastoWeb(gestionPresu.filtrarGastos(element,"listado-gastos-filtrado-4"));
 
 
 });
 
 
-gestionPresupuestoWeb.mostrarGastosAgrupadosWeb("agrupacion-dia", gestionPresupuesto.agruparGastos("dia"), "día");
-gestionPresupuestoWeb.mostrarGastosAgrupadosWeb("agrupacion-mes", gestionPresupuesto.agruparGastos("mes"), "mes");
-gestionPresupuestoWeb.mostrarGastosAgrupadosWeb("agrupacion-anyo", gestionPresupuesto.agruparGastos("anyo"), "año");
+gestionPresuWeb.mostrarGastosAgrupadosWeb("agrupacion-dia", gestionPresu.agruparGastos("dia"), "dia");
+gestionPresuWeb.mostrarGastosAgrupadosWeb("agrupacion-mes", gestionPresu.agruparGastos("mes"), "mes");
+gestionPresuWeb.mostrarGastosAgrupadosWeb("agrupacion-anyo", gestionPresu.agruparGastos("anyo"), "año");
