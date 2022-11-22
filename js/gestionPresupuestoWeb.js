@@ -1,5 +1,3 @@
-import * as gp from './gestionPresupuesto';
-
 function mostrarDatoEnId(idElemento, valor) {
     if(idElemento != null){
         let elementoHTML = document.getElementById(idElemento);
@@ -44,8 +42,43 @@ function mostrarGastoWeb(idElemento, gasto) {
     }
 }
 
-function mostrarGastosAgrupadosWeb(idElemento, agrup) {
+function mostrarGastosAgrupadosWeb(agrup, periodo, idElemento){
+    if(idElemento != null){
+        let i = 0;
+        let elemento = document.getElementById(idElemento);
 
+        let agrupHTML = document.createElement("div");
+        agrupHTML.className = "agrupacion";
+            
+        let titleHTML = document.createElement('h1');
+        titleHTML.innerHTML = "Gastos agrupados por " + periodo;
+        agrupHTML.appendChild(titleHTML);
+    
+        let keys = Object.keys(agrup);
+
+        agrup.forEach(agruped => {
+            let agrupInfoHTML = document.createElement('div');
+            agrupInfoHTML.className = "agrupacion-dato";
+                
+            let keysHTML = document.createElement('span');
+            keysHTML.className = "agrupacion-dato-clave";
+            keysHTML.innerHTML = keys[i];
+
+            agrupInfoHTML.appendChild(keysHTML);
+    
+            let valueHTML = document.createElement('span');
+            valueHTML.className = "agrupacion-dato-valor";
+            valueHTML.innerHTML = agrup[agruped];
+            
+            agrupInfoHTML.appendChild(valueHTML);
+    
+            agrupHTML.appendChild(agrupInfoHTML);
+
+            i++;
+        });
+
+        elemento.appendChild(agrupHTML);
+    }
 }
 
 export {
