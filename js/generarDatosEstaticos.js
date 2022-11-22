@@ -1,2 +1,2 @@
 import * as Gasto from "./gestionPresupuesto";
-import * as Gasto from "./gestionPresupuestoWeb.js";
+import * as GastoWeb from "./gestionPresupuestoWeb.js";
