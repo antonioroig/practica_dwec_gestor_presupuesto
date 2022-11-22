@@ -39,6 +39,6 @@ gestionPresuWeb.mostrarGastoWEB(gestionPresu.filtrarGastos("listado-gastos-filtr
 });
 
 
-gestionPresuWeb.mostrarGastosAgrupadosWeb(gestionPresu.agruparGastos("dia"));
-gestionPresuWeb.mostrarGastosAgrupadosWeb(gestionPresu.agruparGastos("mes"));
-gestionPresuWeb.mostrarGastosAgrupadosWeb(gestionPresu.agruparGastos("anyo"));
+gestionPresupuestoWeb.mostrarGastosAgrupadosWeb("agrupacion-dia", gestionPresupuesto.agruparGastos("dia"), "día");
+gestionPresupuestoWeb.mostrarGastosAgrupadosWeb("agrupacion-mes", gestionPresupuesto.agruparGastos("mes"), "mes");
+gestionPresupuestoWeb.mostrarGastosAgrupadosWeb("agrupacion-anyo", gestionPresupuesto.agruparGastos("anyo"), "año");

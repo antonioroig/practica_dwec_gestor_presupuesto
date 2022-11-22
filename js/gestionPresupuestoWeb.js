@@ -4,8 +4,7 @@ function mostrarDatosEnId(valor,idElemento)
 {
     let elemento =document.getElementById(idElemento);
     elemento.innerHTML += valor;
-
-    let texto ;
+    
     
 }
 
@@ -46,23 +45,23 @@ function mostrarGastoWEB(idElemento,gasto)
     let span = document.createElement('span');
     span.className = 'gasto-etiquetas-etiqueta';
     span.textContent = etiqueta;
+    etiquetasDiv.append(span);
     
   });
   
-  elemento.append(gastoDiv);
+  
   gastoDiv.append(presupuestoDiv);
   gastoDiv.append(gestorPresupuestoDiv);
   gastoDiv.append(descripcionDiv);
   gastoDiv.append(fechaDiv);
   gastoDiv.append(valorDiv);
-  etiquetasDiv.append(span);
   gastoDiv.append(etiquetasDiv);
-  
+  elemento.append(gastoDiv);
 }
 
 function mostrarGastosAgrupadosWeb(idElemento,agrup,periodo)
 {
-
+ 
 
 }
 
