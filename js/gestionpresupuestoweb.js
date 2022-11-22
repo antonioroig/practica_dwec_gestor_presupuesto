@@ -11,8 +11,9 @@ import{
     agruparGastos 
 } from './gestionPresupuesto.js';
 
-function mostrarDatoEnId(){
-   
+function mostrarDatoEnId(valor, idElemento){
+   let elemento = document.getElementById(idElemento);
+   elemento.innerHTML(valor)
 }
 
 function mostrarGastoWeb(){
