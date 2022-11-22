@@ -1,21 +1,42 @@
 import * as gestionPresupuesto from './gestionPresupuesto.js';
 "use strict";
 
-function mostrarDatoEnId(valor, idElemento){
+function mostrarDatoEnId(idElemento,valor){
     let idE = document.getElementById(idElemento);
     idE.innerHTML = valor;
 };
 
 function mostrarGastoWeb(idElemento, gasto){
-    let div = document.createElement('div');
-    div.innerHTML = '<div class="gasto">';
-    document.getElementById(idElemento).append(div);
+    let id = document.getElementById(idElemento);
 
-    let div2 = document.createElement('div');
-    div2.innerHTML = '<div class="gasto-descripcion">';
+    let divGastos = document.createElement('div');
+    divGastos.className = 'gasto';
+    id.append(divGastos);
 
-    let div3 = document.createElement('div');
-    div3.innerHTML = '<div class="gasto-fecha">';
+    let divDesc = document.createElement('div');
+    divDesc.className = 'gasto-descripcion';
+    divDesc.textContent = gasto.descripcion;
+    divGastos.append(divDesc);
+
+    let divDate = document.createElement('div');
+    divDate.className = 'gasto-fecha';
+    divDate.textContent = new Date(gasto.fecha).toLocaleDateString();
+    divGastos.append(divDate);
+
+    let divValue = document.createElement('div');
+    divValue.className = 'gasto-valor';
+    divValue.textContent = gasto.valor + "€";
+    divGastos.append(divValue);
+
+    let divEtiq = document.createElement('div');
+    divEtiq.className = 'gasto-etiquetas';
+    for(let etiqueta of gasto.etiquetas){
+        let spanEtiq = document.createElement('span');
+        spanEtiq.className = 'gasto-etiquetas-etiqueta';
+        spanEtiq.textContent = etiqueta;
+        divEtiq.append(spanEtiq);
+    }
+    divGastos.append(divEtiq);
 };
 
 function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo){
