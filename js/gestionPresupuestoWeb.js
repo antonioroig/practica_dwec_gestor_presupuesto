@@ -54,11 +54,16 @@ function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo){
     idAgrup.innerHTML = div;
 };
 
+function repintar(){
+
+}
+
 
 
 
 export{
     mostrarDatoEnId,
     mostrarGastoWeb,
-    mostrarGastosAgrupadosWeb
+    mostrarGastosAgrupadosWeb,
+    repintar
 };
