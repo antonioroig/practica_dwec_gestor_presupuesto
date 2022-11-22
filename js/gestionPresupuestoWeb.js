@@ -1,11 +1,11 @@
-function mostrarDatoEnId(idElemento, valor) {
+function mostrarDatoEnId(valor, idElemento) {
     if(idElemento != null){
         let elementoHTML = document.getElementById(idElemento);
         elementoHTML.innerHTML += valor;
     }
 }
 
-function mostrarGastoWeb(idElemento, gasto) {
+function mostrarGastoWeb(gasto, idElemento) {
     if(idElemento != null){
         let gastoHTML = document.createElement("div");
         gastoHTML.className = "gasto";
