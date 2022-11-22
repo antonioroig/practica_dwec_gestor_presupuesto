@@ -3,7 +3,7 @@ import * as gestionPresupuesto from './gestionPresupuesto.js';
 
 function mostrarDatoEnId(idElemento,valor){
     let idE = document.getElementById(idElemento);
-    idE.innerHTML = valor;
+    idE.innerHTML += valor;
 };
 
 function mostrarGastoWeb(idElemento,gasto){
@@ -45,12 +45,12 @@ function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo){
 
     let div = `<div class="agrupacion"> <h1>Gastos agrupados por ${periodo}</h1>`;
     for(let agrupacion in agrup){
-        div = `<div class="agrupacion-dato">
-            <span class="agrupacion-dato-clave">${agrupacion}</span>
-            <span class="agrupacion-dato-valor">${agrup[agrupacion]}</span>
+        div +=`<div class="agrupacion-dato">
+                <span class="agrupacion-dato-clave">${agrupacion}</span>
+                <span class="agrupacion-dato-valor">${agrup[agrupacion]}</span>
             </div>`;
     }
-    div = '</div>';
+    div += '</div>';
     idAgrup.innerHTML = div;
 };
 
