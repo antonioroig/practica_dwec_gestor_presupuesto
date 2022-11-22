@@ -27,16 +27,17 @@ filtrado2.forEach(element => {
 
 let filtrado3 = gestionPresu.filtrarGastos({valorMinimo:200 , etiquetasTiene : ['seguros']});
 filtrado3.forEach(element => {
-    gestionPresuWeb.mostrarGastoWEB(gestionPresu.filtrarGastos({'listado-gastos-filtrado-3',element}));
+    gestionPresuWeb.mostrarGastoWEB(gestionPresu.filtrarGastos('listado-gastos-filtrado-3',element));
 });
 
 let filtrado4 =gestionPresu.filtrarGastos({valorMinimo:50, etiquetasTiene : ['comida','transporte']});
 filtrado4.forEach(element => {
     
+gestionPresuWeb.mostrarGastoWEB(gestionPresu.filtrarGastos("listado-gastos-filtrado-4",element));
+
+
 });
 
-
-gestionPresuWeb.mostrarGastoWEB(gestionPresu.filtrarGastos({valorMinimo:50, etiquetasTiene : ['comida','transporte']}));
 
 gestionPresuWeb.mostrarGastosAgrupadosWeb(gestionPresu.agruparGastos("dia"));
 gestionPresuWeb.mostrarGastosAgrupadosWeb(gestionPresu.agruparGastos("mes"));
