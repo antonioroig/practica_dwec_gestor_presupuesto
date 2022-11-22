@@ -77,9 +77,15 @@ function repintar(){
 };
 
 function actualizarPresupuestoWeb(){
-    let presupuesto = prompt('Introduce el presuppuesto');
-
+    let presupuesto = prompt('Introduce el presupuesto');
+    presupuesto = parseInt(presupuesto);
+    gestionPresupuesto.actualizarPresupuesto(presupuesto);
+    repintar();
+    
 };
+
+let botonActualizar = document.getElementById('actualizarpresupuesto');
+botonActualizar.addEventListener('click',actualizarPresupuestoWeb);
 
 export {
     mostrarDatoEnId,
