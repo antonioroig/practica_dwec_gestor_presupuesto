@@ -1,23 +1,20 @@
-import * as Presupuesto from './gestionPresupuesto';
+import * as gestionPresupuesto from './gestionPresupuesto';
 function mostrarDatoEnId(idElemento,valor)
 {
-    idElemento.valor = valor;
-    return valor;
+    gestionPresupuesto.actualizarPresupuesto(valor);
+    let elemento = document.getElementById(idElemento);
+    elemento.innerHTML = gestionPresupuesto.mostrarPresupuesto();
+    return elemento;
 }
-function mostrarGastoWeb(idGasto)
+function mostrarGastoWeb(idElemento, gasto)
 {
-    let res = false;
-    Presupuesto.filtrarGastos().forEach(gasto => {
-        if(gasto.id === idGasto)
-        {
-            res = gasto;
-        }
-    });
-    return res;
+    let elemento = document.getElementById(idElemento);
+    let DIVgasto = document.createElement('div');
+    DIVgasto.className = 'gasto';
 }
 function mostrarGastosAgrupadosWeb()
 {
-
+    
 }
 export{
     mostrarDatoEnId,
