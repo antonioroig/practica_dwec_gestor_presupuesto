@@ -151,34 +151,34 @@ function filtrarGastos(objeto)
     if (objeto != undefined && objeto != null)
     {
         let arrayfiltrado = gastos.filter(gasto => {
-            if(objeto.hasOwnProperty("fechaDesde") && typeof objeto.fechaDesde !== "undefined")
+            if(objeto.hasOwnProperty("fechaDesde"))
             {
                 if (gasto.fecha < Date.parse(objeto.fechaDesde)) {
                     return;
                 }
             }
-            if (objeto.hasOwnProperty('fechaHasta') && typeof objeto.fechaHasta !== 'undefined')
+            if (objeto.hasOwnProperty('fechaHasta'))
             {
                 if (gasto.fecha > Date.parse(objeto.fechaHasta))
                 {
                     return;
                 }
             }
-            if (objeto.hasOwnProperty('valorMinimo') && typeof objeto.valorMinimo !== 'undefined')
+            if (objeto.hasOwnProperty('valorMinimo'))
             {
                 if (gasto.valor < objeto.valorMinimo)
                 {
                     return;
                 }            
             }
-            if (objeto.hasOwnProperty('valorMaximo') && typeof objeto.valorMaximo !== 'undefined')
+            if (objeto.hasOwnProperty('valorMaximo'))
             {
                 if (gasto.valor > objeto.valorMaximo)
                 {
                         return;
                 }
             }
-            if (objeto.hasOwnProperty('descripcionContiene') && typeof objeto.descripcionContiene !== 'undefined')
+            if (objeto.hasOwnProperty('descripcionContiene'))
             { 
                 if (!gasto.descripcion.includes(objeto.descripcionContiene))
                 { 
@@ -193,7 +193,7 @@ function filtrarGastos(objeto)
                             devuelve = true;
                         }
                     }
-                    if (devuelve = false) {
+                    if (!devuelve) {
                         return;
                     }
                 }
