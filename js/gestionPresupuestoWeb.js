@@ -39,7 +39,7 @@ function mostrarGastoWeb(idElemento,gasto){
         spanEtiqueta.textContent = etiqueta;
         divEtiquetas.append(spanEtiqueta);
     }
-    divGasto.append(divEtiquetas);
+    divGasto.append(divEtiquetas); 
      
 };
 
@@ -57,8 +57,34 @@ function mostrarGastosAgrupadosWeb(idElemento,agrup,periodo){
    idAgrupado.innerHTML = divAgrup;
 };
 
+function repintar(){
+    document.getElementById('presupuesto').innerHTML = '';
+    gestionPresupuesto.mostrarDatoEnId('presupuesto',gestionPresupuesto.mostrarPresupuesto())
+
+    document.getElementById('gastos-totales').innerHTML = '';
+    gestionPresupuesto.mostrarDatoEnId('gastos-totales',gestionPresupuesto.calcularBalance());
+    
+    document.getElementById('listado-gastos').innerHTML = '';
+    for(let listado of gestionPresupuesto.listarGastos()){
+        gestionPresupuesto.mostrarGastoWeb('listado-gastos',listado);
+    }
+
+    document.getElementById('listado-gastos-completo').innerHTML = '';
+    for(let completo of gestionPresupuesto.listarGastos()){
+        gestionPresupuesto.mostrarGastosWeb('listado-gastos-completo',completo);
+    }
+
+};
+
+function actualizarPresupuestoWeb(){
+    let presupuesto = prompt('Introduce el presuppuesto');
+
+};
+
 export {
     mostrarDatoEnId,
     mostrarGastoWeb,
-    mostrarGastosAgrupadosWeb
+    mostrarGastosAgrupadosWeb,
+    repintar,
+    actualizarPresupuestoWeb
 }
