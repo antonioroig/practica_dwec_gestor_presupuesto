@@ -21,3 +21,4 @@ Gasto.anyadirGasto(gasto6);
 
 GastoWeb.mostrarDatoEnId(Gasto.calcularTotalGastos(), 'gastos-totales');
 GastoWeb.mostrarDatoEnId(Gasto.calcularBalance(),'balance-total');
+

@@ -25,7 +25,7 @@ function mostrarGastoWeb(id, gasto)
 
         let divDescripcionPorGasto = document.createElement('div');
 
-        divDescripcionPorGasto.className = "gasto-descripción";
+        divDescripcionPorGasto.className = "gasto-descripcion";
         divDescripcionPorGasto.innerHTML += gasto.descripcion;
 
         gastoDiv.append(divDescripcionPorGasto);
@@ -67,10 +67,51 @@ function mostrarGastoWeb(id, gasto)
 
 }
 
-function mostrarGastosAgrupadosWeb(id, agrupar)
+function mostrarGastosAgrupadosWeb(idElement, agrupar, period)
 {
 
-        
+        if(idElement != undefined)
+        {
+
+            let id = document.getElementById(idElement);
+
+            let agrupacionDiv = document.createElement('div');
+
+            agrupacionDiv.className = "agrupación";
+
+            let h1Div = document.createElement('h1');
+
+            h1Div.innerHTML += `Gastos agrupados por ${periodo}`;
+
+            agrupacionDiv.append(h1Div);
+
+            for(let llave of Object.keys(agrupar))
+            {
+
+                let divDatoAgrupado = document.createElement('div');
+                divDatoAgrupado.className = "agrupacion-dato";
+
+                let spanDatoAgrupado = document.createElement('span');
+                spanDatoAgrupado.className = "agrupacion-dato-clave";
+
+                spanDatoAgrupado.innerHTML += `${llave}`;
+
+                let spanValorDatoAgrupado = document.createElement('span');
+                spanValorDatoAgrupado.className = "agrupacion-dato-valor";
+
+                spanValorDatoAgrupado.innerHTML += `${llave.valueOf()}`;
+
+                agrupacionDiv.append(divDatoAgrupado);
+                divDatoAgrupado.append(spanDatoAgrupado);
+                divDatoAgrupado.append(spanValorDatoAgrupado);
+
+            }
+
+            id.append(agrupacionDiv);
+
+            return id;
+
+        }
 
 }
 
