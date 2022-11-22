@@ -193,7 +193,7 @@ function filtrarGastos(objeto)
                             devuelve = true;
                         }
                     }
-                    if (!devuelve) {
+                    if (devuelve = false) {
                         return;
                     }
                 }
