@@ -41,9 +41,16 @@ function mostrarGastoWeb(idElemento, gasto){
     elementoGasto.appendChild(gastoValor)
 
     let gastoEtiquetas = document.createElement("div");
-    gastoFecha.classList = "gasto-etiquetas";
-    gastoFecha.textContent = gasto.descripcion;
-    elementoGasto.appendChild(gastoFecha)
+    gastoEtiquetas.classList = "gasto-etiquetas";
+    gasto.etiquetas.forEach(element => {
+        let gastoEtiqueta = document.createElement("span");
+        gastoEtiqueta.classList = "asto-etiquetas-etiqueta";
+        gastoEtiqueta.textContent = element;
+        gastoEtiquetas.appendChild(gastoEtiqueta)
+    });
+    elementoGasto.appendChild(gastoEtiquetas)
+
+    elemento.appendChild(elementoGasto)
 }
 
 function mostrarGastosAgrupadosWeb(){
