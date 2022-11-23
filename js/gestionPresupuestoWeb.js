@@ -101,7 +101,7 @@ function nuevoGastoWeb(){
     fecha = Date.parse(fecha);
     let etiquetas = prompt('Introduce las etiquetas como una lista separadas por comas');
     etiquetas = etiquetas.split(',');
-    gestionPresupuesto.anyadirGasto(gestionPresupuesto.crearGasto(descripcion,valor,fecha,...etiquetas));
+    gestionPresupuesto.anyadirGasto(gestionPresupuesto.CrearGasto(descripcion,valor,fecha,...etiquetas));
     repintar();
 
 }
@@ -117,7 +117,7 @@ function EditarHandle(){
     let etiquetas = prompt('Introduce las etiquetas como una lista separadas por comas');
     etiquetas = etiquetas.split(',');
     this.gasto.actualizarValor(valor);
-    this.gastoactualizarDescripcion(descripcion);
+    this.gasto.actualizarDescripcion(descripcion);
     this.gasto.actualizarFecha(fecha);
     this.gasto.anyadirEtiquetas(...etiquetas);
     repintar();
