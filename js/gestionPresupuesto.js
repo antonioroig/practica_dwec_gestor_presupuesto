@@ -175,7 +175,22 @@ function calcularBalance() {
 }
 
 function filtrarGastos({fechaDesde,fechaHasta,valorMin,valorMax,descripcionContiene,etiquetasTiene}){
+    let arrayFiltro = gastos.filter(function(gasto){
+        let add = true;
 
+        if (fechaDesde)
+            {
+                if(gasto.fecha < Date.parse(fechaDesde)){
+                    add = false;
+                }
+            }
+            if (fechaHasta)
+            {
+                if(gasto.fecha > Date.parse(fechaHasta)){
+                    add = false;
+                }
+            }
+            
 }
 
 function agruparGastos(periodo = "mes", etiquetas, fechaDesde, fechaHasta = Date.now()){
