@@ -59,19 +59,17 @@ function mostrarGastosAgrupadosWeb(idElemento,agrup,periodo){
 
 function repintar(){
     document.getElementById('presupuesto').innerHTML = '';
-    gestionPresupuesto.mostrarDatoEnId('presupuesto',gestionPresupuesto.mostrarPresupuesto())
+    mostrarDatoEnId('presupuesto',gestionPresupuesto.mostrarPresupuesto())
 
     document.getElementById('gastos-totales').innerHTML = '';
-    gestionPresupuesto.mostrarDatoEnId('gastos-totales',gestionPresupuesto.calcularBalance());
-    
-    document.getElementById('listado-gastos').innerHTML = '';
-    for(let listado of gestionPresupuesto.listarGastos()){
-        gestionPresupuesto.mostrarGastoWeb('listado-gastos',listado);
-    }
+    mostrarDatoEnId('gastos-totales',gestionPresupuesto.calcularTotalGastos());
 
+    document.getElementById('balance-total').innerHTML = '';
+    mostrarDatoEnId('balance-total',gestionPresupuesto.calcularBalance());
+    
     document.getElementById('listado-gastos-completo').innerHTML = '';
     for(let completo of gestionPresupuesto.listarGastos()){
-        gestionPresupuesto.mostrarGastosWeb('listado-gastos-completo',completo);
+        gestionPresupuesto.mostrarGastosWeb('listado-gastos',completo);
     }
 
 };
@@ -84,13 +82,55 @@ function actualizarPresupuestoWeb(){
     
 };
 
+function nuevoGastoWeb(){
+    let descripcion = prompt('Introduce la descripcion');
+    let valor = prompt('Introduce el valor');
+    valor = parseInt(valor);
+    let fecha = prompt('Introduce la fecha en formato yyyy/mm/dd');
+    fecha = Date.parse(fecha);
+    let etiquetas = prompt('Introduce las etiquetas como una lista separadas por comas');
+    etiquetas = etiquetas.split(',');
+    gestionPresupuesto.anyadirGasto(gestionPresupuesto.crearGasto(descripcion,valor,fecha,...etiquetas));
+    repintar();
+
+}
+
+function EditarHandle(){
+    let id = prompt('Introduce el id del gasto');
+    let descripcion = prompt('Introduce la descripcion');
+    let valor = prompt('Introduce el valor');
+    valor = parseInt(valor);
+    let fecha = prompt('Introduce la fecha en formato yyyy/mm/dd');
+    fecha = Date.parse(fecha);
+    let etiquetas = prompt('Introduce las etiquetas como una lista separadas por comas');
+    etiquetas = etiquetas.split(',');
+    repintar();
+};
+
+function BorrarHandle(id){
+    gestionPresupuesto.borrarGasto(id);
+    repintar();
+};
+
+function BorrarEtiquetasHandle(){
+   
+};
+
+
 let botonActualizar = document.getElementById('actualizarpresupuesto');
 botonActualizar.addEventListener('click',actualizarPresupuestoWeb);
+
+let botonNuevoGasto = document.getElementById('anyadirgasto');
+botonNuevoGasto.addEventListener('click',nuevoGastoWeb);
 
 export {
     mostrarDatoEnId,
     mostrarGastoWeb,
     mostrarGastosAgrupadosWeb,
     repintar,
-    actualizarPresupuestoWeb
+    actualizarPresupuestoWeb,
+    nuevoGastoWeb,
+    EditarHandle,
+    BorrarHandle,
+    BorrarEtiquetasHandle
 }
