@@ -41,7 +41,7 @@ function mostrarGastoWeb(idElemento,gasto){
     botonBorrar.className = 'gasto-borrar';
     botonBorrar.textContent = 'Borrar';
 
-    this.handleEvent = function (event) {
+   
     
     for(let etiqueta of gasto.etiquetas){
         let spanEtiqueta = document.createElement('span');
@@ -49,7 +49,7 @@ function mostrarGastoWeb(idElemento,gasto){
         spanEtiqueta.textContent = etiqueta;
         divEtiquetas.append(spanEtiqueta);
     }
-}
+
     divGasto.append(divEtiquetas); 
      
 };
