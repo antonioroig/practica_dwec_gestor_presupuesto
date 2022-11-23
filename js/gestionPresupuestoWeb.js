@@ -32,6 +32,7 @@ function mostrarGastoWeb(idElemento,gasto){
 
     let divEtiquetas = document.createElement('div');
     divEtiquetas.className = 'gasto-etiquetas';
+
     
     for(let etiqueta of gasto.etiquetas){
         let spanEtiqueta = document.createElement('span');
@@ -96,6 +97,7 @@ function nuevoGastoWeb(){
 }
 
 function EditarHandle(){
+    this.handleEvent = function (event) {
     let id = prompt('Introduce el id del gasto');
     let descripcion = prompt('Introduce la descripcion');
     let valor = prompt('Introduce el valor');
@@ -104,16 +106,28 @@ function EditarHandle(){
     fecha = Date.parse(fecha);
     let etiquetas = prompt('Introduce las etiquetas como una lista separadas por comas');
     etiquetas = etiquetas.split(',');
+    this.gasto.actualizarValor(valor);
+    this.gastoactualizarDescripcion(descripcion);
+    this.gasto.actualizarFecha(fecha);
+    this.gasto.anyadirEtiquetas(...etiquetas);
     repintar();
+    }
+
 };
 
 function BorrarHandle(id){
+    this.handleEvent = function (event) {
     gestionPresupuesto.borrarGasto(id);
     repintar();
+    }
 };
 
 function BorrarEtiquetasHandle(){
-   
+    this.handleEvent = function (event) {
+    this.gasto.borrarEtiquetas(this.etiquetas);
+    repintar();
+
+    } 
 };
 
 
