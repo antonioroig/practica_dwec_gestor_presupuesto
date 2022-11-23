@@ -22,8 +22,12 @@ gestionP.anyadirGasto(gasto_6);
 gestionPWeb.mostrarDatoEnId(gestionP.calcularTotalGastos(), "gastos-totales");
 gestionPWeb.mostrarDatoEnId(gestionP.calcularBalance(), "balance-total");
 
-for(let gasto of gestionP.listarGastos())
+for (let gasto of gestionP.listarGastos())
 {
     gestionPWeb.mostrarGastoWeb("listado-gastos-completo", gasto);
 }
 
+for(let gasto of gestionP.filtrarGastos({fechaDesde: "2021-09-01", fechaHasta: "2021-09-30"}))
+{
+    gestionPW.mostrarGastoWeb("listado-gastos-filtrado-1", gasto);
+}
