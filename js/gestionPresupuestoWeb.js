@@ -4,8 +4,8 @@ function mostrarDatoEnId(valor, idElemento)
 {
     if (idElemento != undefined)
     {
-        let elemento = document.getElementById(idElemento);
-        elemento.innerHTML += " " + valor;
+        let element = document.getElementById(idElemento);
+        element.innerHTML += " " + valor;
     }
 }
 
@@ -14,7 +14,7 @@ function mostrarGastoWeb(idElemento, gasto)
     if (idElemento != undefined)
     {
         
-        let elemento = document.getElementById(idElemento);
+        let element = document.getElementById(idElemento);
         let divGasto = document.createElement('div');
         divGasto.className = "gasto";
 
@@ -45,7 +45,7 @@ function mostrarGastoWeb(idElemento, gasto)
         }
 
         divGasto.append(divGastoEtiquetas);
-        elemento.append(divGasto);
+        element.append(divGasto);
     }
 }
 
@@ -79,7 +79,7 @@ function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo)
             divAgrupacionDato.append(spanAgrupacionDatoClave);
             divAgrupacionDato.append(spanAgrupacionDatoValor);
         }
-        
+
         id.append(divAgrupacion)
         return id;
     }
