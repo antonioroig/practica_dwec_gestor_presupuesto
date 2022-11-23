@@ -117,9 +117,27 @@ function CrearGasto(Descripcion, valor, Fecha = Date.now(), ...etiquetas) {
         }
     }
     this.obtenerPeriodoAgrupacion = function(periodo){
-        let año = getFullYear();
-        getMonth();
-        getDate();
+        var pfecha = new Date(this.fecha);
+                let res;
+                let dia = pfecha.getDate();
+                if(dia < 10){
+                    dia = `0${dia}`
+                }
+                let mes = pfecha.getMonth()+1;
+                if(mes < 10){
+                    mes = `0${mes}`
+                }
+                let anyo = pfecha.getFullYear();
+                if(periodo == "dia"){
+                    res = (`${anyo}` + "-" + `${mes}` + "-" + `${dia}`)
+                }
+                if(periodo == "mes"){
+                    res = (`${anyo}` + "-" + `${mes}`)
+                }
+                if(periodo == "anyo"){
+                    res = (`${anyo}`)
+                }
+                return res;
     }
 }
 function listarGastos() {
