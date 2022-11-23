@@ -55,8 +55,47 @@ function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo){
 };
 
 function repintar(){
+    //Mostrar presupuesto en div#presupuesto
+    document.getElementById("presupuesto").innerHTML = "";
+    mostrarDatoEnId("presupuesto", gestionPresupuesto.mostrarPresupuesto());
 
-}
+    //Mostrar gastos totales en div#gastos-totales
+    document.getElementById("gastos-totales".innerHTML) = "";
+    mostrarDatoEnId("gastos-totales", gestionPresupuesto.calcularTotalGastos());
+
+    //Mostrar el balance total en div#balance-total
+    document.getElementById("balance-total".innerHTML) = "";
+    mostrarDatoEnId("balance-total", gestionPresupuesto.calcularBalance());
+
+    //Borrar el contenido de div#listado-gastos-completo
+    document.getElementById("listado-gastos-completo").innerHTML = "";
+
+    //Mostrar el listado completo de gastos en div#listado-gastos-completo
+    document.getElementById("listado-gastos-completo").innerHTML = "";
+    mostrarGastoWeb("listado-gastos-completo", gestionPresupuesto.listarGastos());
+};
+
+function actualizarPresupuestoWeb(){
+    //Pedir al usuario que introduzca un presupuesto
+    let pres = prompt("Introduce un presupuesto");
+    //Convertir el valor a número
+    pres = parseInt(pres);
+    //Actualizar el presupuesto
+    gestionPresupuesto.actualizarPresupuesto(pres);
+    //Llamar a la función repintar
+    repintar();
+};
+
+//Botón actualizar presupuesto
+document.getElementById("actualizarpresupuesto").addEventListener("click",actualizarPresupuestoWeb);
+
+function nuevoGastoWeb(){
+
+};
+
+//Botón añadir gasto
+document.getElementById("anyadirgasto").addEventListener("click",gestionPresupuesto.anyadirGasto)
+
 
 
 
@@ -65,5 +104,7 @@ export{
     mostrarDatoEnId,
     mostrarGastoWeb,
     mostrarGastosAgrupadosWeb,
-    repintar
+    repintar,
+    actualizarPresupuestoWeb,
+    nuevoGastoWeb
 };
