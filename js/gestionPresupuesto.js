@@ -178,8 +178,28 @@ function filtrarGastos({fechaDesde,fechaHasta,valorMin,valorMax,descripcionConti
 
 }
 
-function agruparGastos(periodo,etiquetas,fechasDesde,fechaHasta){
+function agruparGastos(periodo = "mes", etiquetas, fechaDesde, fechaHasta = Date.now()){
+    let condiciones = {
+        
+        fechaDesde:fechaDesde,
+        fechaHasta:fechaHasta,
+        etiquetasTiene:etiquetas,
 
+    }
+
+    let subGastos = filtrarGastos(condiciones);
+
+    return subGastos.reduce(function(sum, gasto)
+    {
+        if (typeof sum[gasto.obtenerPeriodoAgrupacion(periodos)]!='number')
+        {
+            sum[gasto.obtenerPeriodoAgrupacion(periodos)] = 0;
+        }
+
+        sum[gasto.obtenerPeriodoAgrupacion(periodos)] += gasto.valor;
+
+        return sum;
+    },{});
 }
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
