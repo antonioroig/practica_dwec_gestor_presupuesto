@@ -21,3 +21,9 @@ gestionP.anyadirGasto(gasto_6);
 
 gestionPWeb.mostrarDatoEnId(gestionP.calcularTotalGastos(), "gastos-totales");
 gestionPWeb.mostrarDatoEnId(gestionP.calcularBalance(), "balance-total");
+
+for(let gasto of gestionP.listarGastos())
+{
+    gestionPWeb.mostrarGastoWeb("listado-gastos-completo", gasto);
+}
+

@@ -20,17 +20,17 @@ function mostrarGastoWeb(idElemento, gasto)
 
         let divGastoDescripcion = document.createElement('div');
         divGastoDescripcion.className = "gasto-descripcion";
-        divGastoDescripcion.innerHTML+=gasto.descricpion;
+        divGastoDescripcion.innerHTML += gasto.descricpion;
         divGasto.append(divGastoDescripcion);
 
         let divGastoFecha = document.createElement('div');
         divGastoFecha.className = "gasto-fecha";
-        divGastoFecha.innerHTML+=gasto.fecha;
+        divGastoFecha.innerHTML += gasto.fecha;
         divGasto.append(divGastoFecha);
 
         let divGastoValor = document.createElement('div');
         divGastoValor.className = "gasto-valor";
-        divGastoValor.innerHTML+=gasto.valor;
+        divGastoValor.innerHTML += gasto.valor;
         divGasto.append(divGastoValor);
 
         let divGastoEtiquetas = document.createElement('div');
@@ -45,6 +45,7 @@ function mostrarGastoWeb(idElemento, gasto)
         }
 
         divGasto.append(divGastoEtiquetas);
+        
         element.append(divGasto);
     }
 }
