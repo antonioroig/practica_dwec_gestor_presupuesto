@@ -190,7 +190,6 @@ function filtrarGastos({fechaDesde,fechaHasta,valorMin,valorMax,descripcionConti
                     add = false;
                 }
             }
-            
 }
 
 function agruparGastos(periodo = "mes", etiquetas, fechaDesde, fechaHasta = Date.now()){
