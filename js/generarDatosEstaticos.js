@@ -1,10 +1,11 @@
-import * as PresupuestoWeb from './gestionPresupuestoWeb';
-import * as Presupuesto from './gestionPresupuesto';
+import * as PresupuestoWeb from "./gestionPresupuestoWeb";
+import * as Presupuesto from "./gestionPresupuesto";
 
 Presupuesto.actualizarPresupuesto(1500);
 
-let DIVpresupuesto = PresupuestoWeb.mostrarDatoEnId('presupuesto', Presupuesto.mostrarPresupuesto());
-
+function mostrarPrespuestoHTML(){
+    PresupuestoWeb.mostrarDatoEnId('presupuesto', 1500);
+}
 let gasto1 = new Presupuesto.CrearGasto("Compra carne", 23.44, "2021-10-06", "casa", "comida");
 let gasto2 = new Presupuesto.CrearGasto("Compra fruta y verdura", 14.25, "2021-09-06", "supermercado", "comida");
 let gasto3 = new Presupuesto.CrearGasto("Bonobús", 18.60, "2020-05-26", "transporte");
@@ -38,3 +39,7 @@ let DIVagrupadosdia = PresupuestoWeb.mostrarGastosAgrupadosWeb('agrupacion-dia',
 let DIVagrupadosmes = PresupuestoWeb.mostrarGastosAgrupadosWeb('agrupacion-mes',Presupuesto.agruparGastos({periodo: "mes"}));
 
 let DIVagrupadosanyo = PresupuestoWeb.mostrarGastosAgrupadosWeb('agrupacion-anyo',Presupuesto.agruparGastos({periodo: "anyo"}));
+
+export{
+    mostrarPrespuestoHTML
+}

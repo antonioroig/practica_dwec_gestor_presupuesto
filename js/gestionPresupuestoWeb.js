@@ -1,10 +1,8 @@
-import * as gestionPresupuesto from './gestionPresupuesto';
+import * as gestionPresupuesto from "./gestionPresupuesto";
 function mostrarDatoEnId(idElemento,valor)
 {
     gestionPresupuesto.actualizarPresupuesto(valor);
-    let elemento = document.getElementById(idElemento);
-    elemento.innerHTML = gestionPresupuesto.mostrarPresupuesto();
-    return elemento;
+    document.getElementById(idElemento).innerHTML = gestionPresupuesto.mostrarPresupuesto();
 }
 function mostrarGastoWeb(idElemento, gasto)
 {
