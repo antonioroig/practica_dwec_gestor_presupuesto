@@ -1,26 +1,26 @@
-import * as gasto from "./gestionPresupuesto";
+import * as gesP from "./gestionPresupuesto.js";
 
-function mostrarDatoEnId(id, valor)
+function mostrarDatoEnId(valor, idElemento)
 {
 
-    if (id != undefined)
+    if (idElemento != undefined)
     {
-        let elemento = document.getElementById(id);
+        let elemento = document.getElementById(idElemento);
         elemento.innerHTML += " " + valor;
     }
 
 }
 
-function mostrarGastoWeb(id, gasto)
+function mostrarGastoWeb(idElemento, gasto)
 {
 
-    if(id = undefined)
+    if(idElemento != undefined)
     {
 
-        let documento = document.getElementById(id);
-        let gastoDiv = document.createElement('div');
+        let elemento = document.getElementById(idElemento);
+        let divGasto = document.createElement('div');
 
-        gastoDiv.className = "gasto";
+        divGasto.className = "gasto";
 
 
         let divDescripcionPorGasto = document.createElement('div');
@@ -28,7 +28,7 @@ function mostrarGastoWeb(id, gasto)
         divDescripcionPorGasto.className = "gasto-descripcion";
         divDescripcionPorGasto.innerHTML += gasto.descripcion;
 
-        gastoDiv.append(divDescripcionPorGasto);
+        divGasto.append(divDescripcionPorGasto);
 
 
         let divFechaPorGasto = document.createElement('div');
@@ -36,7 +36,7 @@ function mostrarGastoWeb(id, gasto)
         divFechaPorGasto.className = "gasto-fecha";
         divFechaPorGasto.innerHTML += gasto.fecha;
 
-        gastoDiv.append(divFechaPorGasto);
+        divGasto.append(divFechaPorGasto);
 
 
         let divValorPorGasto = document.createElement('div');
@@ -44,7 +44,7 @@ function mostrarGastoWeb(id, gasto)
         divValorPorGasto.className = "gasto-valor";
         divValorPorGasto.innerHTML += gasto.valor;
 
-        gastoDiv.append(divValorPorGasto);
+        divGasto.append(divValorPorGasto);
 
 
         let divEtiquetaPorGasto = document.createElement('div');
@@ -57,23 +57,23 @@ function mostrarGastoWeb(id, gasto)
             divEtiquetaNuevaGasto.className = "gasto-etiquetas-etiqueta";
             divEtiquetaNuevaGasto.innerHTML += gasto.etiquetas[i];
 
-            gastoDiv.append(divEtiquetaNuevaGasto);
+            divGasto.append(divEtiquetaNuevaGasto);
 
         }
-        gastoDiv.append(divEtiquetaPorGasto);
-        documento.append(gastoDiv)
+        divGasto.append(divEtiquetaPorGasto);
+        elemento.append(divGasto);
 
     }
 
 }
 
-function mostrarGastosAgrupadosWeb(idElement, agrupar, period)
+function mostrarGastosAgrupadosWeb(idElemento, agrupar, periodo)
 {
 
-        if(idElement != undefined)
+        if(idElemento != undefined)
         {
 
-            let id = document.getElementById(idElement);
+            let id = document.getElementById(idElemento);
 
             let agrupacionDiv = document.createElement('div');
 

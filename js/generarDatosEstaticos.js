@@ -1,61 +1,66 @@
-import * as Gasto from "./gestionPresupuesto.js";
-import * as GastoWeb from "./gestionPresupuestoWeb.js";
+import * as gesP from "./gestionPresupuesto.js";
+import * as gesPW from "./gestionPresupuestoWeb.js";
 
-Gasto.actualizarPresupuesto(1500);
+gesP.actualizarPresupuesto(1500);
 
-GastoWeb.mostrarDatoEnId(Gasto.mostrarPresupuesto(),'presupuesto');
+gesPW.mostrarDatoEnId(gesP.mostrarPresupuesto(),'presupuesto');
 
-let gasto1 = new Gasto.CrearGasto("Compra carne", 23.44, "2021-10-06", "casa", "comida");
-let gasto2 = new Gasto.CrearGasto("Compra fruta y verdura", 14.25, "2021-09-06", "supermercado", "comida");
-let gasto3 = new Gasto.CrearGasto("Bonobús", 18.60, "2020-05-26", "transporte");
-let gasto4 = new Gasto.CrearGasto("Gasolina", 60.42, "2021-10-08", "transporte", "gasolina");
-let gasto5 = new Gasto.CrearGasto("Seguro hogar", 206.45, "2021-09-26", "casa", "seguros");
-let gasto6 = new Gasto.CrearGasto("Seguro coche", 195.78, "2021-10-06", "transporte", "seguros");
+let gasto1 = new gesP.CrearGasto("Compra carne", 23.44, "2021-10-06", "casa", "comida");
+let gasto2 = new gesP.CrearGasto("Compra fruta y verdura", 14.25, "2021-09-06", "supermercado", "comida");
+let gasto3 = new gesP.CrearGasto("Bonobús", 18.60, "2020-05-26", "transporte");
+let gasto4 = new gesP.CrearGasto("Gasolina", 60.42, "2021-10-08", "transporte", "gasolina");
+let gasto5 = new gesP.CrearGasto("Seguro hogar", 206.45, "2021-09-26", "casa", "seguros");
+let gasto6 = new gesP.CrearGasto("Seguro coche", 195.78, "2021-10-06", "transporte", "seguros");
 
-Gasto.anyadirGasto(gasto1);
-Gasto.anyadirGasto(gasto2);
-Gasto.anyadirGasto(gasto3);
-Gasto.anyadirGasto(gasto4);
-Gasto.anyadirGasto(gasto5);
-Gasto.anyadirGasto(gasto6);
+gesP.anyadirGasto(gasto1);
+gesP.anyadirGasto(gasto2);
+gesP.anyadirGasto(gasto3);
+gesP.anyadirGasto(gasto4);
+gesP.anyadirGasto(gasto5);
+gesP.anyadirGasto(gasto6);
 
-GastoWeb.mostrarDatoEnId(Gasto.calcularTotalGastos(), 'gastos-totales');
-GastoWeb.mostrarDatoEnId(Gasto.calcularBalance(),'balance-total');
+gesPW.mostrarDatoEnId(gesP.calcularTotalGastos(), 'gastos-totales');
+gesPW.mostrarDatoEnId(gesP.calcularBalance(),'balance-total');
 
-for(let gasto of Gasto.listarGastos())
+for(let gasto of gesP.listarGastos())
 {
 
-    GastoWeb.mostrarGastoWeb("listado-gastos-completo", gasto);
+    gesPW.mostrarGastoWeb("listado-gastos-completo", gasto);
 
 }
 
-for(let gasto of Gasto.filtrarGastos({fechaDesde: "2021-09-01", fechaHasta: "2021-09-30"}))
+for(let gasto of gesP.filtrarGastos({fechaDesde: "2021-09-01", fechaHasta: "2021-09-30"}))
 {
 
-    GastoWeb.mostrarGastoWeb("listado-gastos-filtrado-1", gasto);
+    gesPW.mostrarGastoWeb("listado-gastos-filtrado-1", gasto);
 
 }
 
-for(let gasto of Gasto.filtrarGastos({valorMinimo: 50}))
+for(let gasto of gesP.filtrarGastos({valorMinimo: 50}))
 {
 
-    GastoWeb.mostrarGastoWeb("listado-gastos-filtrado-2", gasto);
+    gesPW.mostrarGastoWeb("listado-gastos-filtrado-2", gasto);
 
 }
 
-for(let gasto of Gasto.filtrarGastos({valorMinimo: 200, etiquetasTiene:["seguros"]}))
+for(let gasto of gesP.filtrarGastos({valorMinimo: 200, etiquetasTiene:["seguros"]}))
 {
 
-    GastoWeb.mostrarGastoWeb("listado-gastos-filtrado-3", gasto);
+    gesPW.mostrarGastoWeb("listado-gastos-filtrado-3", gasto);
 
 }
 
-for(let gasto of Gasto.filtrarGastos({valorMaximo: 50, etiquetasTiene:["comida", "transporte"]}))
+for(let gasto of gesP.filtrarGastos({valorMaximo: 50, etiquetasTiene:["comida", "transporte"]}))
 {
 
-    GastoWeb.mostrarGastoWeb("listado-gastos-filtrado-4", gasto);
+    gesPW.mostrarGastoWeb("listado-gastos-filtrado-4", gasto);
 
 }
 
-GastoWeb.mostrarGastosAgrupadosWeb("")
+gesPW.mostrarGastosAgrupadosWeb("agrupacion-dia", gesP.agruparGastos("dia"), "día");
+
+gesPW.mostrarGastosAgrupadosWeb("agrupacion-mes", gesP.agruparGastos("mes"), "mes");
+
+gesPW.mostrarGastosAgrupadosWeb("agrupacion-anyo", gesP.agruparGastos("anyo"), "año");
+
 
