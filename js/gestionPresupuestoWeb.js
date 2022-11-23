@@ -17,7 +17,7 @@ function mostrarDatoEnId(idElemento, valor)
 
 }
 
-function mostrarGastoWeb(idElemento, gasto)
+function mostrarGastoWeb(gasto, idElemento)
 {
     if(id)
     {
@@ -77,9 +77,19 @@ function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo)
         divTit.innerHTML = "titulos";
         divgrup.append(divTit);
 
-        
-
-
+        for(let k of Object.keys(agrup))
+        {
+            let divDatos = document.createElement('div');
+            divDatos.className = 'datos';
+            let datoClave = document.createElement('span');
+            datoClave.className = 'datos-calve';
+            datoClave.innerHTML += `${clave.valueOf()}`;
+            datoClave.append(datoClave);
+            let valor = document.createElement('span');
+            valor.className = 'valor';
+            valor.innerHTML = gasto.valor;
+            datoClave.append(valor);
+        }
 
 
     }
