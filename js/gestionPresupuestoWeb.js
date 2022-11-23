@@ -90,7 +90,14 @@ function actualizarPresupuestoWeb(){
 document.getElementById("actualizarpresupuesto").addEventListener("click",actualizarPresupuestoWeb);
 
 function nuevoGastoWeb(){
+    let descripcion = prompt("Introduce una descripción:");
+    let valor = parseInt(prompt("Introduce un valor:"));
+    let fecha = Date.parse(prompt("Introduce la fecha:"));
+    let etiquetas = prompt("Introduce las etiquetas:".split(','));
 
+    gestionPresupuesto.anyadirGasto(new gestionPresupuesto.CrearGasto(descripcion,valor,fecha,...etiquetas));
+
+    repintar();
 };
 
 //Botón añadir gasto
