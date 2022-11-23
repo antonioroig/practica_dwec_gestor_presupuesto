@@ -34,3 +34,7 @@ let DIVlistadogastosfiltrado3 = PresupuestoWeb.mostrarGastoWeb('listado-gastos-f
 let DIVlistadogastosfiltrado4 = PresupuestoWeb.mostrarGastoWeb('listado-gastos-filtrado-4', Presupuesto.filtrarGastos({valorMaximo: 50,etiquetasTiene: ["comida","transporte"]}));
 
 let DIVagrupadosdia = PresupuestoWeb.mostrarGastosAgrupadosWeb('agrupacion-dia',Presupuesto.agruparGastos({periodo: "dia"}));
+
+let DIVagrupadosmes = PresupuestoWeb.mostrarGastosAgrupadosWeb('agrupacion-mes',Presupuesto.agruparGastos({periodo: "mes"}));
+
+let DIVagrupadosanyo = PresupuestoWeb.mostrarGastosAgrupadosWeb('agrupacion-anyo',Presupuesto.agruparGastos({periodo: "anyo"}));
