@@ -48,6 +48,7 @@ function mostrarGastoWeb(idElemento, gasto)
 
 
         let divEtiquetaPorGasto = document.createElement('div');
+        divEtiquetaPorGasto.className = "gasto-etiquetas";
 
         for(let i = 0; i < gasto.etiquetas.length; i++)
         {
@@ -57,7 +58,7 @@ function mostrarGastoWeb(idElemento, gasto)
             divEtiquetaNuevaGasto.className = "gasto-etiquetas-etiqueta";
             divEtiquetaNuevaGasto.innerHTML += gasto.etiquetas[i];
 
-            divGasto.append(divEtiquetaNuevaGasto);
+            divEtiquetaPorGasto.append(divEtiquetaNuevaGasto);
 
         }
         divGasto.append(divEtiquetaPorGasto);
@@ -77,7 +78,7 @@ function mostrarGastosAgrupadosWeb(idElemento, agrupar, periodo)
 
             let agrupacionDiv = document.createElement('div');
 
-            agrupacionDiv.className = "agrupación";
+            agrupacionDiv.className = "agrupacionn";
 
             let h1Div = document.createElement('h1');
 
