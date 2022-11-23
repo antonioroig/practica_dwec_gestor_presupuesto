@@ -1,5 +1,5 @@
-import * as gestionPresupuesto from './gestionPresupuesto.js';
-import * as gestionPresupuestoWeb from './gestionPresupuestoWeb.js';
+import * as gestionP from './gestionPresupuesto.js';
+import * as gestionPWeb from './gestionPresupuestoWeb.js';
 
 gestionPresupuesto.actualizarPresupuesto(1500);
 
@@ -18,4 +18,8 @@ gestionPresupuesto.anyadirGasto(gasto_3);
 gestionPresupuesto.anyadirGasto(gasto_4);
 gestionPresupuesto.anyadirGasto(gasto_5);
 gestionPresupuesto.anyadirGasto(gasto_6);
+
+gestionPresupuestoWeb.mostrarDatoEnId(gestionPresupuesto.calcularTotalGastos(), "gastos-totales");
+gestionPresupuestoWeb.mostrarDatoEnId(gestionPresupuesto.calcularBalance(), "balance-total");
+
 
