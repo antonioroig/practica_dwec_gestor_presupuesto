@@ -21,7 +21,9 @@ gp.anyadirGasto(gasto6);
 
 gpw.mostrarDatoEnId(gp.calcularTotalGastos(), "gastos-totales");
 gpw.mostrarDatoEnId(gp.calcularBalance(), "balance-total");
-gpw.mostrarGastoWeb("listado-gastos-completo", gp.listarGastos());
+
+gp.listarGastos().forEach(g => gpw.mostrarGastoWeb("listado-gastos-completo", g));
+
 gpw.mostrarGastoWeb("listado-gastos-filtrado-1", gp.filtrarGastos(fechaDesde = "2021-09-1", fechaHasta = "2021-09-30"));
 gpw.mostrarGastoWeb("listado-gastos-filtrado-2", gp.filtrarGastos(valorMinimo = 50));
 gpw.mostrarGastoWeb("listado-gastos-filtrado-3", gp.filtrarGastos(valorMinimo = 200, etiquetasTiene = "seguros "));

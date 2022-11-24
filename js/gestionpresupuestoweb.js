@@ -1,8 +1,8 @@
 "use strict";
 
 function mostrarDatoEnId(valor, idElemento){
-   let elemento = document.getElementById(idElemento);
-   elemento.innerHTML(valor)
+    let elemento = document.getElementById(idElemento);
+    elemento.innerHTML+=valor;
 }
 
 function mostrarGastoWeb(idElemento, gasto){
