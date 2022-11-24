@@ -18,33 +18,33 @@ function mostrarGastoWeb(idElemento, gasto)
         let divGasto = document.createElement('div');
         divGasto.className = "gasto";
 
-        let divGastoDescripcion = document.createElement('div');
-        divGastoDescripcion.className = "gasto-descripcion";
-        divGastoDescripcion.innerHTML += gasto.descricpion;
-        divGasto.append(divGastoDescripcion);
+        let gastoDescripcion = document.createElement('div');
+        gastoDescripcion.className = "gasto-descripcion";
+        gastoDescripcion.innerHTML += gasto.descricpion;
+        divGasto.append(gastoDescripcion);
 
-        let divGastoFecha = document.createElement('div');
-        divGastoFecha.className = "gasto-fecha";
-        divGastoFecha.innerHTML += gasto.fecha;
-        divGasto.append(divGastoFecha);
+        let gastoFecha = document.createElement('div');
+        gastoFecha.className = "gasto-fecha";
+        gastoFecha.innerHTML += gasto.fecha;
+        divGasto.append(gastoFecha);
 
-        let divGastoValor = document.createElement('div');
-        divGastoValor.className = "gasto-valor";
-        divGastoValor.innerHTML += gasto.valor;
-        divGasto.append(divGastoValor);
+        let gastoValor = document.createElement('div');
+        gastoValor.className = "gasto-valor";
+        gastoValor.innerHTML += gasto.valor + '€';
+        divGasto.append(gastoValor);
 
-        let divGastoEtiquetas = document.createElement('div');
-        divGastoEtiquetas.className = "gasto-etiquetas";
+        let gastoEtiqueta = document.createElement('div');
+        gastoEtiqueta.className = "gasto-etiquetas";
         
         for(let i = 0; i < gasto.etiquetas.length; i++)
         {
-            let divGastoEtiquetasEtiqueta = document.createElement('span');
-            divGastoEtiquetasEtiqueta.className = "gasto-etiquetas-etiqueta";
-            divGastoEtiquetasEtiqueta.innerHTML = gasto.etiquetas[i];
-            divGastoEtiquetas.append(divGastoEtiquetasEtiqueta);
+            let gastoEtiquetas= document.createElement('span');
+            gastoEtiquetas.className = "gasto-etiquetas-etiqueta";
+            gastoEtiquetas.innerHTML = gasto.etiquetas[i];
+            gastoEtiqueta.append(gastoEtiquetas);
         }
 
-        divGasto.append(divGastoEtiquetas);
+        divGasto.append(gastoEtiqueta);
         
         element.append(divGasto);
     }
@@ -52,36 +52,38 @@ function mostrarGastoWeb(idElemento, gasto)
 
 function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo)
 {
-    if (idElemento != undefined)
+    if (idElemento !== undefined)
     {
         let id = document.getElementById(idElemento);
         
-        let divAgrupacion = document.createElement('div');
-        divAgrupacion.className = "agrupacion";
+        let divAgrup = document.createElement('div');
+        divAgrup.className = "agrupacion";
 
-        let divH1 = document.createElement('h1');
-        divH1.innerHTML += `Gastos agrupados por ${periodo}`;
-        divAgrupacion.append(divH1);
+        let titulo = document.createElement('h1');
+        titulo.innerHTML = "Gastos agrrupados por " + periodo;
+        divAgrup.append(titulo);
 
-        for(let key of Object.keys(agrup))
+        let key = Object.keys(agrup);
+
+        for(let agrupacion in agrup)
         {
-            let divAgrupacionDato = document.createElement('div');
-            divAgrupacionDato.className = "agrupacion-dato";
+            let divAgrupDato = document.createElement('div');
+            divAgrupDato.className = "agrupacion-dato";
 
-            let spanAgrupacionDatoClave = document.createElement('span');
-            spanAgrupacionDatoClave.className = "agrupacion-dato-clave";
-            spanAgrupacionDatoClave.innerHTML += `${key}`;
+            let spanAgrupDC = document.createElement('span');
+            spanAgrupDC.className = "agrupacion-dato-clave";
+            spanAgrupDC.innerHTML = key [i];
+            divAgrupDato.append(spanAgrupDC);
 
-            let spanAgrupacionDatoValor = document.createElement('span');
-            spanAgrupacionDatoValor.className = "agrupacion-dato-valor";
-            spanAgrupacionDatoValor.innerHTML += `${key.valueOf()}`;
+            let spanAgrupDV = document.createElement('span');
+            spanAgrupDV.className = "agrupacion-dato-valor";
+            spanAgrupDV.innerHTML = agrup [agrupacion];
 
-            divAgrupacion.append(divAgrupacionDato);
-            divAgrupacionDato.append(spanAgrupacionDatoClave);
-            divAgrupacionDato.append(spanAgrupacionDatoValor);
+            divAgrupDato.append(spanAgrupDV);
+            divAgrup.append(divAgrupDato);
         }
 
-        id.append(divAgrupacion)
+        id.append(divAgrup);
         return id;
     }
 }
