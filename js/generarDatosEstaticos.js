@@ -1,19 +1,3 @@
-import{
-    mostrarDatoEnId,
-    mostrarGastoWeb,
-    mostrarGastosAgrupadosWeb
-} from './gestionPresupuestoWeb.js';
-
-import{
-    mostrarPresupuesto,
-    actualizarPresupuesto,
-    CrearGasto,
-    listarGastos,
-    anyadirGasto,
-    borrarGasto,
-    calcularTotalGastos,
-    calcularBalance,
-    filtrarGastos,
-    agruparGastos 
-} from './gestionPresupuesto.js';
+import * as gpw from './gestionPresupuestoWeb.js';
+import * as gp from './gestionPresupuesto.js'
 
