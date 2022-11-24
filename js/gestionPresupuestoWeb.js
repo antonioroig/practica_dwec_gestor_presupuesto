@@ -27,7 +27,7 @@ function mostrarGastoWeb(idElemento,gasto){
 
     let divValor = document.createElement('div');
     divValor.className = 'gasto-valor';
-    divValor.textContent = gasto.valor + "€";
+    divValor.textContent = gasto.valor + "";
     divGasto.append(divValor);
 
     let divEtiquetas = document.createElement('div');
@@ -112,7 +112,7 @@ function actualizarPresupuestoWeb(){
 
 function nuevoGastoWeb(){
     let descripcion = prompt('Introduce la descripcion');
-    let valor = parseInt(prompt('Introduce el valor'));
+    let valor = parseFloat(prompt('Introduce el valor'));
     let fecha =  Date.parse(prompt('Introduce la fecha en formato yyyy/mm/dd'));
     let etiquetas = prompt('Introduce las etiquetas como una lista separadas por ,').split(',');
 
@@ -126,11 +126,12 @@ function nuevoGastoWeb(){
 function EditarHandle(){
   this.handleEvent = function (event) {
     let nuevaDescripcion = prompt('Introduce la nueva descripcion');
-    let nuevoValor =  parseInt(prompt('Introduce el nuevo valor'));;
+    let nuevoValor =  parseFloat(prompt('Introduce el nuevo valor'));;
     let nuevaFecha = Date.parse(prompt('Introduce la fecha en formato yyyy/mm/dd'));
-    let nuevasEtiquetas = prompt('Introduce las etiquetas como una lista separadas por ,').split(',');
+    let nuevasEtiquetas = prompt('Introduce las etiquetas como una lista separadas por ,');
+    nuevasEtiquetas = nuevasEtiquetas.split(',');
 
-    //No pasa el test esto
+  
     this.gasto.actualizarValor(nuevoValor);
     this.gasto.actualizarDescripcion(nuevaDescripcion);
     this.gasto.actualizarFecha(nuevaFecha);
@@ -141,12 +142,10 @@ function EditarHandle(){
 
 };
 
-//No pasa el test esto
 function BorrarHandle(){
   this.handleEvent = function (event) {
     let borrarGasto = this.gasto.id;
     gestionPresupuesto.borrarGasto(borrarGasto);
-    //this.gasto.borrarGasto(id)
 
     repintar();
     }
