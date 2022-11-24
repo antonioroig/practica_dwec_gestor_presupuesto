@@ -205,7 +205,7 @@ function filtrarGastos({fechaDesde,
     descripcionContiene,
     etiquetasTiene})
 {
-    return ret = gastos.filter(function(gasto)
+    let ret = gastos.filter(function(gasto)
     {
         let anyade = true;
         /*Si tengo uno de los dos requisitos en valor o en fecha, se tiene que cumplir y el otro se 
@@ -273,6 +273,7 @@ function filtrarGastos({fechaDesde,
 
         return anyade;
     });
+    return ret;
 }
 
 function agruparGastos(periodos = "mes", etiquetas, fechaDesde, fechaHasta)
