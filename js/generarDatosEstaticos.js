@@ -1,11 +1,11 @@
 
-import * as gesPres from './gestionPresupuesto';
-import * as gesWeb from './gestionPresupuestoWeb';
+import * as gesPres from './gestionPresupuesto.js';
+import * as gesWeb from './gestionPresupuestoWeb.js';
 
 
 
 gesPres.actualizarPresupuesto(1500);
-gesWeb.mostrarDatosEnId(gesPres.mostrarPresupuesto(), 'presupuesto');
+gesWeb.mostrarDatoEnId('presupuesto', gesPres.mostrarPresupuesto());
 
 let g1 = new gesPres.CrearGasto("Compra carne", 23.44, "2021-10-06", "casa", "comida");
 let g2 = new gesPres.CrearGasto("Compra fruta y verdura", 14.25, "2021-09-06", "supermercado", "comida");
@@ -20,7 +20,7 @@ gesPres.anyadirGasto(g3);
 gesPres.anyadirGasto(g4);
 gesPres.anyadirGasto(g5);
 gesPres.anyadirGasto(g6);
-
+/*
 let result = gesPres.calcularTotalGastos();
 gesWeb.mostrarDatoEnId('gastos-totales',result);
 
@@ -28,10 +28,10 @@ let result2 = gesPres.calcularBalance();
 gesWeb.mostrarDatoEnId('balance-total',result2);
 
 let gasCompleto = gesPres.listarGastos();
-gesWeb.mostrarGastoWeb('listado-gastos-completa', gasCompleto);
+gesWeb.mostrarGastoWeb('listado-gastos-completo', gasCompleto);
 
 let filtrado = gesPres.filtrarGastos({fechaDesde: "2021-09-01", fechaHasta:"2021-09-30"});
-gesWeb.mostrarGastoWeb('istado-gastos-filtrado-1', filtrado)
+gesWeb.mostrarGastoWeb('listado-gastos-filtrado-1', filtrado)
 
 let filtrado2 = gesPres.filtrarGastos({valorMinimo: 50});
 gesWeb.mostrarGastoWeb('listado-gastos-filtrado-2', filtrado2);
@@ -44,14 +44,16 @@ gesWeb.mostrarGastoWeb('listado-gastos-filtrado-3', filtrado3);
 let filtrado4 = gesPres.filtrarGastos({valorMaximo: 50, etiquetasTiene:["comida", "transporte"]});
 gesWeb.mostrarGastoWeb('listado-gastos-filtrado-4', filtrado4);
 
+*/
+
 let filtrado5 = gesPres.agruparGastos("dia");
-gesWeb.mostrarGastosAgrupadosWeb('agrupacion-dia', filtrado5);
+gesWeb.mostrarGastosAgrupadosWeb('agrupacion-dia', filtrado5, "día");
 
 let filtrado6 = gesPres.agruparGastos("mes");
-gesWeb.mostrarGastosAgrupadosWeb('agrupacion-mes', filtrado6);
+gesWeb.mostrarGastosAgrupadosWeb('agrupacion-mes', filtrado6, "mes");
 
 let filtrado7 = gesPres.agruparGastos("anyo");
-gesWeb.mostrarGastosAgrupadosWeb('agrupacion-anyo', filtrado7);
+gesWeb.mostrarGastosAgrupadosWeb('agrupacion-anyo', filtrado7, "año");
 
 
 
