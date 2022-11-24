@@ -47,7 +47,11 @@ function mostrarGastoWeb(idElemento, gasto){
 
 
 
-function mostrarGastosAgrupadosWeb(){
+function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo){
+
+let id = document.getElementById(idElemento);
+
+
 
 }
 
