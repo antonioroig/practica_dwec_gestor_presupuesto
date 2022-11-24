@@ -1,3 +1,4 @@
+import * as presupuesto from "/gestionPresupuesto";
 // Muestra en un div el valor que se le pasa por parámetro
 
 function mostrarDatoEnId(valor, idElemento){
@@ -90,12 +91,16 @@ function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo){
 
 }
 
+function repintar(){
+
+}
 
 export    {
 
   mostrarDatoEnId,
   mostrarGastoWeb,
-  mostrarGastosAgrupadosWeb
+  mostrarGastosAgrupadosWeb, 
+  repintar
 
 }
 
