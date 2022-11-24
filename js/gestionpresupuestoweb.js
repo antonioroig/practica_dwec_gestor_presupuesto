@@ -1,15 +1,4 @@
-import{
-    mostrarPresupuesto,
-    actualizarPresupuesto,
-    CrearGasto,
-    listarGastos,
-    anyadirGasto,
-    borrarGasto,
-    calcularTotalGastos,
-    calcularBalance,
-    filtrarGastos,
-    agruparGastos 
-} from './gestionPresupuesto.js';
+"use strict";
 
 function mostrarDatoEnId(valor, idElemento){
    let elemento = document.getElementById(idElemento);
@@ -58,36 +47,36 @@ function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo  ){
     
     let agrupD = document.createElement("div");
     gastoD.classList = "agrupacion";
-    elemento.appendChild(gastoD)
+    elemento.appendChild(agrupD)
     
-    let elementoGasto = document.getElementsByClassName("gasto")
+    let elementoAgrup = document.getElementsByClassName("agrupacion")
 
-    let gastoDesc = document.createElement("div");
-    gastoDesc.classList = "gasto-descripcion";
-    gastoDesc.textContent = gasto.descripcion;
-    elementoGasto.appendChild(gastoDesc)
+    let agrupH1 = document.createElement("h1");
+    agrupH1.textContent = `Gastos agrupados por ${periodo}`;
+    elementoAgrup.appendChild(agrupH1)
 
-    let gastoFecha = document.createElement("div");
-    gastoFecha.classList = "gasto-fecha";
-    gastoFecha.textContent = gasto.descripcion;
-    elementoGasto.appendChild(gastoFecha)
+    let propiedades = Object.keys(agrup)
+    let valores = Object.values(agrup)
 
-    let gastoValor = document.createElement("div");
-    gastoValor.classList = "gasto-valor";
-    gastoValor.textContent = gasto.descripcion;
-    elementoGasto.appendChild(gastoValor)
+    for (let i = 0; i < propiedades.length; i++){
 
-    let gastoEtiquetas = document.createElement("div");
-    gastoEtiquetas.classList = "gasto-etiquetas";
-    gasto.etiquetas.forEach(element => {
-        let gastoEtiqueta = document.createElement("span");
-        gastoEtiqueta.classList = "asto-etiquetas-etiqueta";
-        gastoEtiqueta.textContent = element;
-        gastoEtiquetas.appendChild(gastoEtiqueta)
-    });
-    elementoGasto.appendChild(gastoEtiquetas)
+        let gastoAgrupDato = document.createElement("div");
+        gastoAgrupDato.classList = "agrupacion-dato";
 
-    elemento.appendChild(elementoGasto)
+        let gastoAgrupDatoClave = document.createElement("span");
+        gastoAgrupDatoClave.classList = "agrupacion-dato-clave";
+        gastoAgrupDatoClave.textContent = propiedades[i];
+        gastoAgrupDato.appendChild(gastoAgrupDatoClave)
+
+        let gastoAgrupDatoValor = document.createElement("span");
+        gastoAgrupDatoValor.classList = "agrupacion-dato-valor";
+        gastoAgrupDatoValor.textContent = valores[i];
+        gastoAgrupDato.appendChild(gastoAgrupDatoValor)
+
+        elementoAgrup.appendChild(gastoAgrupDato)
+    }
+
+    elemento.appendChild(elementoAgrup)
 }
 
 export{
