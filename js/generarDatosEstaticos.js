@@ -20,6 +20,7 @@ gestionP.anyadirGasto(gasto_5);
 gestionP.anyadirGasto(gasto_6);
 
 gestionPWeb.mostrarDatoEnId(gestionP.calcularTotalGastos(), "gastos-totales");
+
 gestionPWeb.mostrarDatoEnId(gestionP.calcularBalance(), "balance-total");
 
 for (let gasto of gestionP.listarGastos())
@@ -27,7 +28,26 @@ for (let gasto of gestionP.listarGastos())
     gestionPWeb.mostrarGastoWeb("listado-gastos-completo", gasto);
 }
 
-for(let gasto of gestionP.filtrarGastos({fechaDesde: "2021-09-01", fechaHasta: "2021-09-30"}))
+for (let gasto of gestionP.filtrarGastos({fechaDesde: "2021-09-01", fechaHasta: "2021-09-30"}))
 {
-    gestionPW.mostrarGastoWeb("listado-gastos-filtrado-1", gasto);
+    gestionPWeb.mostrarGastoWeb("listado-gastos-filtrado-1", gasto);
 }
+
+for (let gasto of gestionP.filtrarGastos({valorMinimo: 50}))
+{
+    gestionPWeb.mostrarGastoWeb("listado-gastos-filtrado-2", gasto);
+}
+
+for (let gasto of gestionP.filtrarGastos({valorMinimo: 200, etiquetasTiene: "seguros"}))
+{
+    gestionPWeb.mostrarGastoWeb("listado-gastos-filtrado-3", gasto);
+}
+
+for (let gasto of gestionP.filtrarGastos({etiquetasTiene: "comida",etiquetasTiene: "transporte", valorMaximo: 50}))
+{
+    gestionPWeb.mostrarGastoWeb("listado-gastos-filtrado-4", gasto);
+}
+
+gestionPWeb.mostrarGastosAgrupadosWeb(gestionP.agruparGastos("dia"), "agrupacion-dia");
+gestionPWeb.mostrarGastosAgrupadosWeb(gestionP.agruparGastos("mes"), "agrupacion-mes");
+gestionPWeb.mostrarGastosAgrupadosWeb(gestionP.agruparGastos("anyo"), "agrupacion-anyo");
