@@ -101,7 +101,7 @@ function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo){
 
     return elemento;   
 }
- /* 
+        /* 
         <div class="agrupacion-dato">
             <span class="agrupacion-dato-clave">2021-09</span>
             <span class="agrupacion-dato-valor">5</span>
@@ -112,6 +112,37 @@ function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo){
             <span class="agrupacion-dato-valor">39</span>
         </div>
         */
+// --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+// ACTIVIDAD 5
+
+// Estamos desarrollando una aplicación JavaScript controlada por datos. Cada vez que se añade, 
+// modifica o borra un gasto, debemos mostrar el resultado en la página HTML. Recordemos que la aplicación debe mostrar:
+    
+    // - El presupuesto --> Mostrar el presupuesto en div#presupuesto (funciones mostrarPresupuesto y mostrarDatoEnId)
+    // - El total de gastos --> Mostrar los gastos totales en div#gastos-totales (funciones calcularTotalGastos y mostrarDatoEnId)
+    // - El balance actual --> Mostrar el balance total en div#balance-total (funciones calcularBalance y mostrarDatoEnId)
+    // Borrar el contenido de div#listado-gastos-completo, para que el paso siguiente no duplique la información. Puedes utilizar innerHTML para borrar el contenido de dicha capa.
+    // - El listado con los gastos y sus datos --> Mostrar el listado completo de gastos en div#listado-gastos-completo (funciones listarGastos y mostrarGastoWeb)
+    // - Otra información (agrupaciones de gastos, etc.)
+
+function repintar(){
+    // Borrar el contenido de div#listado-gastos-completo, para que el paso siguiente no duplique la información. Puedes utilizar innerHTML para borrar el contenido de dicha capa.
+    document.getElementById('listado-gastos-completo').innerHTML = '';
+    // El presupuesto --> Mostrar el presupuesto en div#presupuesto (funciones mostrarPresupuesto y mostrarDatoEnId)
+    mostrarDatoEnId('presupuesto', gestionPresupuesto.mostrarPresupuesto());
+    // - El total de gastos --> Mostrar los gastos totales en div#gastos-totales (funciones calcularTotalGastos y mostrarDatoEnId)
+    mostrarDatoEnId('gastos-totales', gestionPresupuesto.calcularTotalGastos());
+    // - El balance actual --> Mostrar el balance total en div#balance-total (funciones calcularBalance y mostrarDatoEnId)
+    mostrarDatoEnId('balance-total', gestionPresupuesto.calcularBalance());
+
+    // Mostrar el listado completo de gastos en div#listado-gastos-completo (funciones listarGastos y mostrarGastoWeb)
+    let gastosListados = gestionPresupuesto.listarGastos();
+    
+    for(let i = 0; i < gastosListados.length; i++){
+        gestionPresupuestoWeb.mostrarGastoWeb('listado-gastos-completo', gastosListados[i]);
+    }
+}
+
 
 // npx cypress open -- PARA HACER TEST GRÁFICO
 // npm run test --> pasa todos los tests
