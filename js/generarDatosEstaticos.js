@@ -4,7 +4,7 @@ import * as gesPresupuestoWeb from "./gestionPresupuestoWeb.js";
 
 gesPresupuesto.actualizarPresupuesto(1500);
 
-gesPresupuestoWeb.mostrarDatoEnId(gesPresupuesto.mostrarPresupuesto(),'presupuesto');
+gesPresupuestoWeb.mostrarDatoEnId(gesPresupuesto.mostrarPresupuesto(),"presupuesto");
 
 let gasto1 = new gesPresupuesto.CrearGasto("Compra carne", 23.44, "2021-10-06", "casa", "comida");
 let gasto2 = new gesPresupuesto.CrearGasto("Compra fruta y verdura", 14.25, "2021-09-06", "supermercado", "comida");
@@ -23,7 +23,7 @@ gesPresupuesto.anyadirGasto(gasto6);
 gesPresupuestoWeb.mostrarDatoEnId(gesPresupuesto.calcularTotalGastos(), 'gastos-totales');
 gesPresupuestoWeb.mostrarDatoEnId(gesPresupuesto.calcularBalance(),'balance-total');
 
-let listaGasto = gesPresupuesto.listarGastos;
+let listaGasto = gesPresupuesto.listarGastos();
 
 for(let i = 0; i < listaGasto.length; i++)
 {
@@ -32,7 +32,7 @@ for(let i = 0; i < listaGasto.length; i++)
 
 }
 
-listaGasto += gesPresupuesto.filtrarGastos({fechaDesde:"2021-09-01", fechaHasta:"2021-09-31"});
+listaGasto = gesPresupuesto.filtrarGastos({fechaDesde:"2021-09-01", fechaHasta:"2021-09-31"});
 
 for(let i = 0; i < listaGasto.length; i++)
 {
@@ -41,21 +41,30 @@ for(let i = 0; i < listaGasto.length; i++)
 
 }
 
-listaGasto += gesPresupuesto.filtrarGastos({valorMinimo:50});
+listaGasto = gesPresupuesto.filtrarGastos({valorMinimo:50});
 
 for(let i = 0; i < listaGasto.length; i++)
 {
 
-    gesPresupuestoWeb.mostrarGastoWeb("listado-gastos-filtrado2", listaGasto[i]);
+    gesPresupuestoWeb.mostrarGastoWeb(listaGasto[i], "listado-gastos-filtrado2");
 
 }
 
-listaGasto += gesPresupuesto.filtrarGastos({valorMinimo:200, etiquetasTiene:["seguros"]});
+listaGasto = gesPresupuesto.filtrarGastos({valorMinimo:200, etiquetasTiene:["seguros"]});
 
 for(let i = 0; i < listaGasto.length; i++)
 {
 
-    gesPresupuestoWeb.mostrarGastoWeb("listado-gastos-filtrado2", listaGasto[i]);
+    gesPresupuestoWeb.mostrarGastoWeb(listaGasto[i], "listado-gastos-filtrado3");
+
+}
+
+listaGasto = gesPresupuesto.filtrarGastos({valorMaximo:50, etiquetasTiene:["comida","transporte"]});
+
+for(let i = 0; i < listaGasto.length; i++)
+{
+
+    gesPresupuestoWeb.mostrarGastoWeb("listado-gastos-filtrado4", listaGasto[i]);
 
 }
 
