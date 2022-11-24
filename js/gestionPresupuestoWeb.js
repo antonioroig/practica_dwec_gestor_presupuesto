@@ -86,9 +86,17 @@ function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo)
         return id;
     }
 }
-
+function repintar()
+{
+    mostrarDatoEnId(gesP.mostrarPresupuesto(), "presupuesto");
+    mostrarDatoEnId(gesP.mostrarPresupuesto(), "gastos-totales");
+    mostrarDatoEnId(gesP.calcularBalance(), "balance-total");
+    mostrarDatoEnId("", "listado-gastos-completo");
+    mostrarGastoWeb(gesP.listarGastos(), "listado-gastos-completo");
+}
 export{
     mostrarDatoEnId,
     mostrarGastoWeb,
-    mostrarGastosAgrupadosWeb
+    mostrarGastosAgrupadosWeb,
+    repintar
 }
