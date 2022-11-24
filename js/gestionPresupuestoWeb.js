@@ -9,13 +9,12 @@
   }
   function mostrarGastoWeb (idElemento, gasto)
   {
-     if(idElemento)
-     {
         let ElementoID = document.getElementById(idElemento);
         
         let divGasto = document.createElement("div");
         divGasto.className = "gasto";
-        
+        ElementoID.append(divGasto);
+
         let divDes = document.createElement("div");
         divDes.className = "gasto-descripcion";
         divDes.innerHTML += gasto.descripcion;
@@ -23,31 +22,26 @@
 
         let divfecha = document.createElement("div");
         divfecha.className = "gasto-fecha";
-        divfecha.innerHTML += gasto.divfecha;
+        divfecha.innerHTML += gasto.fecha;
         divGasto.append(divfecha);
 
         let divValor = document.createElement("div");
         divValor.className = "gasto-valor";
-        divValor.innerHTML += gasto.valor;
+        divValor.innerHTML += gasto.valor + " ";
         divGasto.append(divValor);
 
         let divEtiquetas = document.createElement('div');
         divEtiquetas.className = 'gasto-etiquetas';
         
-        for (let i = 0; i < gasto.etiquetas.length; i++)
+        for (let etiquetas of gasto.etiquetas)
         {
           let divEtiqEtiq = document.createElement('span');
           divEtiqEtiq.className = 'gasto-etiquetas-etiqueta'
-          divEtiqEtiq.innerHTML = gasto.etiquetas[i];
+          divEtiqEtiq.innerHTML = etiquetas;
           
           divEtiquetas.append(divEtiqEtiq);
         }
         divGasto.append(divEtiquetas);
-        ElementoID.append(divGasto);
-
-        return ElementoID;
-
-     }
   }
   function mostrarGastosAgrupadosWeb (idElemento,agrup,periodo)
   {
