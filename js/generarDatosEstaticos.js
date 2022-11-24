@@ -41,7 +41,6 @@ for(let gasto of gestion.filtrarGastos({valorMinimo : 200, etiquetasTiene : ["se
     gestionWeb.mostrarGastoWeb("listado-gastos-filtrado-3", gasto);
 };
 
-
 for(let gasto of gestion.filtrarGastos({valorMaximo : 50, etiquetasTiene : ["comida","transporte"]})){
     gestionWeb.mostrarGastoWeb("listado-gastos-filtrado-4", gasto);
 };
