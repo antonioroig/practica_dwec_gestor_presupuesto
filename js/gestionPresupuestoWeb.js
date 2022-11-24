@@ -79,7 +79,28 @@ function mostrarGastosAgrupadosWeb(idElemento, agroup, periodo){
 }
 
 
+function repintar(){
 
+mostrarDatoEnId('',"presupuesto");
+mostrarDatoEnId('',"gastos-totales");
+mostrarDatoEnId('',"balance-total");
+mostrarDatoEnId('', "listado-gastos-completo");
+
+mostrarDatoEnId(scriptsGestion.mostrarPresupuesto(),"presupuesto");
+mostrarDatoEnId(scriptsGestion.calcularTotalGastos(),"gastos-totales");
+mostrarDatoEnId(scriptsGestion.calcularBalance(),"balance-total");
+for(let g of scriptsGestion.listarGastos()){
+    mostrarGastoWeb("listado-gastos-completo",g);
+}
+
+}
+
+function actualizarPresupuestoWeb (){
+    let presupuesto = prompt('indique el presupuesto');
+    scriptsGestion.actualizarPresupuesto(parseInt(presupuesto));
+}
+
+actualizarPresupuestoWeb.addEventListener('click', repintar);
 
 
 
