@@ -1,3 +1,5 @@
+'use strict';
+
 import * as gesPresupuesto from "./gestionPresupuesto.js";
 
 function mostrarDatoEnId(valor, idElemento)

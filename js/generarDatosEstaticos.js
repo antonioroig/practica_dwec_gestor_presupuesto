@@ -1,3 +1,4 @@
+'use strict';
 import * as gesPresupuesto from "./gestionPresupuesto.js";
 import * as gesPresupuestoWeb from "./gestionPresupuestoWeb.js";
 
@@ -22,6 +23,23 @@ gesPresupuesto.anyadirGasto(gasto6);
 gesPresupuestoWeb.mostrarDatoEnId(gesPresupuesto.calcularTotalGastos(), 'gastos-totales');
 gesPresupuestoWeb.mostrarDatoEnId(gesPresupuesto.calcularBalance(),'balance-total');
 
+let listaGasto = listarGastos();
+
+for(let i = 0; i < listaGasto.length; i++)
+{
+
+    gesPresupuestoWeb.mostrarGastoWeb("listado-gastos-completo", listaGasto[i]);
+
+}
+
+listaGasto = gesPresupuesto.filtrarGastos({fechaDesde:"2021-09-01", fechaHasta:"2021-09-31"});
+
+for(let i = 0; i < listaGasto.length; i++)
+{
+
+    gesPresupuestoWeb.mostrarGastoWeb("listado-gastos-completo", listaGasto[i]);
+
+}
 
 
 gesPresupuestoWeb.mostrarGastosAgrupadosWeb("agrupacion-dia", gesPresupuesto.agruparGastos("dia"), "día");
@@ -29,5 +47,3 @@ gesPresupuestoWeb.mostrarGastosAgrupadosWeb("agrupacion-dia", gesPresupuesto.agr
 gesPresupuestoWeb.mostrarGastosAgrupadosWeb("agrupacion-mes", gesPresupuesto.agruparGastos("mes"), "mes");
 
 gesPresupuestoWeb.mostrarGastosAgrupadosWeb("agrupacion-anyo", gesPresupuesto.agruparGastos("anyo"), "año");
-
-
