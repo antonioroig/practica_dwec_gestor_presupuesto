@@ -8,7 +8,7 @@ function mostrarDatoEnId(valor, idElemento){
 function mostrarGastoWeb(idElemento, gasto){
     let elemento = document.getElementById(idElemento);
     
-    let gastoD = document.createElement("div");
+    let gastoD = document.createElement("div"); 
     gastoD.classList = "gasto";
     
     //let elementoGasto = document.getElementsByClassName("gasto") elemento.appendChild(gastoD)
