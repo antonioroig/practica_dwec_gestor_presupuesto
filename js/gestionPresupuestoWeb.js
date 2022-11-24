@@ -126,8 +126,12 @@ function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo){
     // - Otra información (agrupaciones de gastos, etc.)
 
 function repintar(){
-    // Borrar el contenido de div#listado-gastos-completo, para que el paso siguiente no duplique la información. Puedes utilizar innerHTML para borrar el contenido de dicha capa.
-    document.getElementById('listado-gastos-completo').innerHTML = '';
+    
+    document.getElementById('presupuesto').innerHTML = '';
+    document.getElementById('gastos-totales').innerHTML = '';
+    document.getElementById('balance-total').innerHTML = '';
+
+
     // El presupuesto --> Mostrar el presupuesto en div#presupuesto (funciones mostrarPresupuesto y mostrarDatoEnId)
     mostrarDatoEnId('presupuesto', gestionPresupuesto.mostrarPresupuesto());
     // - El total de gastos --> Mostrar los gastos totales en div#gastos-totales (funciones calcularTotalGastos y mostrarDatoEnId)
@@ -135,14 +139,63 @@ function repintar(){
     // - El balance actual --> Mostrar el balance total en div#balance-total (funciones calcularBalance y mostrarDatoEnId)
     mostrarDatoEnId('balance-total', gestionPresupuesto.calcularBalance());
 
-    // Mostrar el listado completo de gastos en div#listado-gastos-completo (funciones listarGastos y mostrarGastoWeb)
+    // Borrar el contenido de div#listado-gastos-completo, para que el paso siguiente no duplique la información. Puedes utilizar innerHTML para borrar el contenido de dicha capa.
+    document.getElementById('listado-gastos-completo').innerHTML = '';
+    // - Mostrar el listado completo de gastos en div#listado-gastos-completo (funciones listarGastos y mostrarGastoWeb)
     let gastosListados = gestionPresupuesto.listarGastos();
-    
     for(let i = 0; i < gastosListados.length; i++){
         gestionPresupuestoWeb.mostrarGastoWeb('listado-gastos-completo', gastosListados[i]);
     }
+
+    // - Otra información (agrupaciones de gastos, etc.)
+
+    document.getElementById('listado-gastos-filtrado-1').innerHTML = '';
+
+    let gastosFiltrados = gestionPresupuesto.filtrarGastos({fechaDesde: '2021-09-01', fechaHasta: '2021-09-30'});
+    for(let i = 0; i < gastosFiltrados.length; i++){
+        gestionPresupuestoWeb.mostrarGastoWeb('listado-gastos-filtrado-1', gastosFiltrados[i]);
+    }
+
+    document.getElementById('listado-gastos-filtrado-2').innerHTML = '';
+    gastosFiltrados = gestionPresupuesto.filtrarGastos({valorMinimo: 50});
+    for(let i = 0; i < gastosFiltrados.length; i++){
+        gestionPresupuestoWeb.mostrarGastoWeb('listado-gastos-filtrado-2', gastosFiltrados[i]);
+    }
+
+    document.getElementById('listado-gastos-filtrado-3').innerHTML = '';
+    gastosFiltrados = gestionPresupuesto.filtrarGastos({valorMaximo: 200, etiquetasTiene: ['seguros']});
+    for(let i = 0; i < gastosFiltrados.length; i++){
+        gestionPresupuestoWeb.mostrarGastoWeb('listado-gastos-filtrado-3', gastosFiltrados[i]);
+    }
+
+    document.getElementById('listado-gastos-filtrado-4').innerHTML = '';
+    gastosFiltrados = gestionPresupuesto.filtrarGastos({valorMaximo: 50, etiquetasTiene: ['comida','transporte']})
+    for(let i = 0; i < gastosFiltrados.length; i++){
+        gestionPresupuestoWeb.mostrarGastoWeb('listado-gastos-filtrado-4', gastosFiltrados[i]);
+    }
+
+    let agrupDia = gestionPresupuesto.agruparGastos('dia');
+    let agrupMes = gestionPresupuesto.agruparGastos('mes');
+    let agrupAnyo = gestionPresupuesto.agruparGastos('anyo');
+
+    document.getElementById('agrupacion-dia').innerHTML='';
+    gestionPresupuestoWeb.mostrarGastosAgrupadosWeb('agrupacion-dia',agrupDia, 'día');
+
+    document.getElementById('agrupacion-mes').innerHTML='';
+    gestionPresupuestoWeb.mostrarGastosAgrupadosWeb('agrupacion-mes',agrupMes, 'mes');
+
+    document.getElementById('agrupacion-anyo').innerHTML='';
+    gestionPresupuestoWeb.mostrarGastosAgrupadosWeb('agrupacion-anyo',agrupAnyo, 'año');
+    
 }
 
+/*let element = document.getElementById("actualizarpresupuesto");
+element.addEventListener("click", actualizarPresupuestoWeb());*/
+
+actualizarpresupuesto.onclick = function actualizarPresupuestoWeb(){
+        gestionPresupuesto.actualizarPresupuesto(parseFloat(prompt('Introduce un nuevo presupuesto: ', 0)));
+        repintar();
+}
 
 // npx cypress open -- PARA HACER TEST GRÁFICO
 // npm run test --> pasa todos los tests
@@ -151,4 +204,12 @@ export   {
     mostrarDatoEnId,
     mostrarGastoWeb,
     mostrarGastosAgrupadosWeb,
+    //actualizarPresupuestoWeb,
  }
+
+
+ /*
+    https://www.w3schools.com/jsref/event_onclick.asp
+ 
+ 
+ */
