@@ -54,6 +54,7 @@ function mostrarGastoWeb(idElemento,gasto){
     botonEditar.textContent = 'Editar';
 
     let editar = new EditarHandle(gasto);
+    editar.gasto = gasto;
     botonEditar.addEventListener('click',editar);
     divGasto.append(botonEditar);
     
@@ -63,6 +64,7 @@ function mostrarGastoWeb(idElemento,gasto){
     botonBorrar.textContent = 'Borrar';
 
     let borrar = new BorrarHandle(gasto);
+    borrar.gasto = gasto;
     botonBorrar.addEventListener('click', borrar);
     divGasto.append(botonBorrar);
      
@@ -101,52 +103,51 @@ function repintar(){
 };
 
 function actualizarPresupuestoWeb(){
-    let presupuesto = prompt('Introduce el presupuesto');
-    presupuesto = parseInt(presupuesto);
+    let presupuesto = parseInt(prompt('Introduce el presupuesto'));
     gestionPresupuesto.actualizarPresupuesto(presupuesto);
+
     repintar();
     
 };
 
 function nuevoGastoWeb(){
     let descripcion = prompt('Introduce la descripcion');
-    let valor = prompt('Introduce el valor');
-    valor = parseInt(valor);
-    let fecha = prompt('Introduce la fecha en formato yyyy/mm/dd');
-    fecha = Date.parse(fecha);
-    let etiquetas = prompt('Introduce las etiquetas como una lista separadas por comas');
-    etiquetas = etiquetas.split(',');
+    let valor = parseInt(prompt('Introduce el valor'));
+    let fecha =  Date.parse(prompt('Introduce la fecha en formato yyyy/mm/dd'));
+    let etiquetas = prompt('Introduce las etiquetas como una lista separadas por ,').split(',');
+
     let nuevoGasto = new gestionPresupuesto.CrearGasto(descripcion,valor,fecha,...etiquetas);
     gestionPresupuesto.anyadirGasto(nuevoGasto);
+
     repintar();
 
 }
 
 function EditarHandle(){
   this.handleEvent = function (event) {
-    let descripcion = prompt('Introduce la nueva descripcion');
-    let valor = prompt('Introduce el nuevo valor');
-    valor = parseInt(valor);
-    let fecha = prompt('Introduce la fecha en formato yyyy/mm/dd');
-    fecha = Date.parse(fecha);
-    let etiquetas = prompt('Introduce las etiquetas como una lista separadas por comas');
-    etiquetas = etiquetas.split(',');
+    let nuevaDescripcion = prompt('Introduce la nueva descripcion');
+    let nuevoValor =  parseInt(prompt('Introduce el nuevo valor'));;
+    let nuevaFecha = Date.parse(prompt('Introduce la fecha en formato yyyy/mm/dd'));
+    let nuevasEtiquetas = prompt('Introduce las etiquetas como una lista separadas por ,').split(',');
+
     //No pasa el test esto
-    this.gasto.actualizarValor(valor);
-    this.gasto.actualizarDescripcion(descripcion);
-    this.gasto.actualizarFecha(fecha);
-    this.gasto.anyadirEtiquetas(...etiquetas);
+    this.gasto.actualizarValor(nuevoValor);
+    this.gasto.actualizarDescripcion(nuevaDescripcion);
+    this.gasto.actualizarFecha(nuevaFecha);
+    this.gasto.anyadirEtiquetas(...nuevasEtiquetas);
+
     repintar();
     }
 
 };
 
 //No pasa el test esto
-function BorrarHandle(id){
+function BorrarHandle(){
   this.handleEvent = function (event) {
-    //let borrarGasto = this.gasto.id;
-    //gestionPresupuesto.borrarGasto(borrarGasto);
-    this.gasto.borrarGasto(id)
+    let borrarGasto = this.gasto.id;
+    gestionPresupuesto.borrarGasto(borrarGasto);
+    //this.gasto.borrarGasto(id)
+
     repintar();
     }
 };
@@ -154,12 +155,12 @@ function BorrarHandle(id){
 function BorrarEtiquetasHandle(){
   this.handleEvent = function (event) {
     this.gasto.borrarEtiquetas(this.etiquetas);
-    repintar();
 
+    repintar();
     } 
 };
 
-
+//Botones
 let botonActualizar = document.getElementById('actualizarpresupuesto');
 botonActualizar.addEventListener('click',actualizarPresupuestoWeb);
 
