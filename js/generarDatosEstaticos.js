@@ -44,3 +44,4 @@ gesPW.mostrarGastosAgrupadosWeb("agrupacion-dia", gesP.agruparGastos("dia"),"dí
 gesPW.mostrarGastosAgrupadosWeb("agrupacion-mes", gesP.agruparGastos("mes"),"mes");
 
 gesPW.mostrarGastosAgrupadosWeb("agrupacion-anyo", gesP.agruparGastos("anyo"),"año");
+//
