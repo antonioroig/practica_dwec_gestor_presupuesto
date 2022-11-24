@@ -40,5 +40,17 @@ function mostrarGastoWeb(idElemento,gasto)
  }
  id.appendChild(etiquetas_gasto);
 };
-function mostrarGastosAgrupadosWeb(){};
+function mostrarGastosAgrupadosWeb(idElemento,agrup,periodo)
+{
+    let id = document.getElementById(idElemento);
+    let agrupacion = '<div class="agrupacion"> <h1> Gastos Agrupados por '+ periodo + ' <h1>';
+
+    for(let agrupado in agrup)
+    {
+        agrupacion += '<div class="agrupacion-dato"> <span class="agrupacion-dato-clave"> '+agrupado+' </span'+
+        '<span class="agrupacion-dato-valor"> '+agrup[agrupado]+' </span></div>';
+    }
+    agrupacion += '</div>';
+    id.innerHTML = agrupacion;
+};
 export{mostrarDatoEnId,mostrarGastoWeb,mostrarGastosAgrupadosWeb}
