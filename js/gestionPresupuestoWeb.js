@@ -72,24 +72,20 @@ function mostrarGastosAgrupadosWeb(agrup, periodo, idElemento){
         }
 
         if(agrup){
-                let keys = Object.keys(agrup);
-                let i = 0;
-
                 for(let property in agrup){
                     var divAgrup = document.createElement('div');
                     divAgrup.className = "agrupacion-dato";
                     
                     var spanAgrupClave = document.createElement('span');
                     spanAgrupClave.className = "agrupacion-dato-clave";
-                    spanAgrupClave.innerHTML += keys[i];
-                    i++;
+                    spanAgrupClave.innerHTML += property;
                     divAgrup.appendChild(spanAgrupClave);
         
                     var spanAgrupValor = document.createElement('span');
                     spanAgrupValor.className = "agrupacion-dato-valor";
                     spanAgrupValor.innerHTML += agrup[property];
                     divAgrup.appendChild(spanAgrupValor);
-                    
+
                     divAgrupacion.appendChild(divAgrup);
                 }
         }
