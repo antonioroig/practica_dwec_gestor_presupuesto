@@ -1,5 +1,4 @@
  'use strict';
-
 function mostrarDatoEnId(valor,idElemento)
 {
    let elemento = document.getElementById(idElemento);
@@ -9,6 +8,7 @@ function mostrarDatoEnId(valor,idElemento)
 
 function mostrarGastoWeb(gasto,idElemento)
 {
+
   let elemento =document.getElementById(idElemento);
 
   let gastoDiv = document.createElement('div');
@@ -18,6 +18,7 @@ function mostrarGastoWeb(gasto,idElemento)
 
   let presupuestoDiv = document.createElement('div');
   presupuestoDiv.className = 'presupuesto';
+  
   
 
   let gestorPresupuestoDiv = document.createElement('div');

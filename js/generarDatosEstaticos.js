@@ -3,8 +3,12 @@
 import * as gestionPresu from './gestionPresupuesto.js';
 import * as gestionPresuWeb from './gestionPresupuestoWeb.js';
 
-let pres = gestionPresu.actualizarPresupuesto(1500);
-gestionPresuWeb.mostrarDatoEnId(pres,"presupuesto");
+ let valorPresupuesto =gestionPresu.actualizarPresupuesto(1500);
+ 
+gestionPresuWeb.mostrarDatoEnId(valorPresupuesto,"presupuesto")
+gestionPresuWeb.mostrarDatoEnId()
+
+
 
 gestionPresu.anyadirGasto(new gestionPresu.CrearGasto("Compra carne", 23.44, "2021-10-06", "casa", "comida"));
 gestionPresu.anyadirGasto(new gestionPresu.CrearGasto("Compra fruta y verdura", 14.25, "2021-09-06", "supermercado", "comida"));
