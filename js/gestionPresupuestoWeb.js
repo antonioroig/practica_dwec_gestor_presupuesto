@@ -53,8 +53,11 @@ function mostrarGastoWeb(idElemento, gasto)
         divEtiquetas.appendChild(spanEtiqueta);
     }
 
+    divEtiquetas.appendChild(divEtiquetas);
 
+    elem.appendChild(divGasto);
 
+    return elem;
     
 }
 
