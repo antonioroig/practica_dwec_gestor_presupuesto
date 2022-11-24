@@ -1,4 +1,4 @@
-import * as gesP from "./gestionPresupuesto.js";
+import * as gesPresupuesto from "./gestionPresupuesto.js";
 
 function mostrarDatoEnId(valor, idElemento)
 {
@@ -78,7 +78,7 @@ function mostrarGastosAgrupadosWeb(idElemento, agrupar, periodo)
 
             let agrupacionDiv = document.createElement('div');
 
-            agrupacionDiv.className = "agrupacionn";
+            agrupacionDiv.className = "agrupacion";
 
             let h1Div = document.createElement('h1');
 
