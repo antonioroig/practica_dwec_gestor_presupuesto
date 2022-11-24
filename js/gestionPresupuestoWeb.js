@@ -78,6 +78,13 @@ function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo){
 
 }
 
+function repintar(){
+    mostrarDatoEnId(ges.mostrarPresupuesto(),"presupuesto");
+    mostrarDatoEnId(ges.calcularTotalGastos(),"gastos-totales");
+    mostrarDatoEnId(ges.calcularBalance(),"balance-total");
+    
+}
+
 
 //NO MODIFICAR.
 export   {
