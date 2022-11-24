@@ -6,13 +6,18 @@ function mostrarDatoEnId(valor,idElemento)
     valor = pres.mostrarPresupuesto(idElemento);
     idElemento.innerHTML = valor;
 };
-function mostrarGastoWeb(gasto)
+function mostrarGastoWeb(idElemento,gasto)
 {
-    pres.filtrarGastos(gasto);
-    let div = document.createElement('div');
-    div.className = "gasto";
-    div.innerHTML =( "<div class=gasto-descripcion>"+ gasto.descripcion +"</div><div class=gasto-fecha>"+ gasto.fecha
-    +"FECHA DEL GASTO</div> <div class=gasto-valor>"+ gasto.valor +"</div>")
+ let id = document.getElementById(idElemento);
+ let div = document.createElement('div');
+ div.classList ="gasto";
+ id.appendChild(div);
+ let idGasto = document.getElementsByClassName("gasto");
+
+ let desc_gasto = document.createElement('div');
+ desc_gasto.classList = "gasto-descripción";
+ desc_gasto.textContent = gasto.descripcion;
+ id.appendChild(desc_gasto);
 };
 function mostrarGastosAgrupadosWeb(){};
 export{mostrarDatoEnId,mostrarGastoWeb,mostrarGastosAgrupadosWeb}
