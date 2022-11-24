@@ -2,21 +2,60 @@ import * as gestionPresupuesto from './gestionPresupuesto.js';
 
 function mostrarDatoEnId(valor, idElemento)
 {
-    let elem = document.getElementById(idElemento);
-    elem.innerHTML = valor;
+    gestionPresupuesto.actualizarPresupuesto(valor);
+    document.getElementById(idElemento).innerHTML = gestionPresupuesto.mostrarPresupuesto();
 }
 
 function mostrarGastoWeb(idElemento, gasto)
 {
     let elem = document.getElementById(idElemento);
-    elem.innerHTML = 
-    `<div class ="gasto">
-        <div class="gasto-descripcion">${gasto.descripcion}</div>
-        <div class="gasto-fecha">${gasto.fecha}</div>
-        <div class="gasto-valor">${gasto.valor}</div>
-        <div class="gasto-etiquetas">
-            <span class="gasto-etiquetas-etiqueta">
-            </span>`
+
+    let divGasto = document.createElement('div');
+
+    divGasto.className = 'gasto';
+
+    let divDescripcion = document.createElement('div');
+
+    divDescripcion.className = 'gasto-descripcion';
+
+    divDescripcion.innerHTML = gasto.descripcion;
+
+    divGasto.appendChild(divDescripcion);
+
+    let divFecha = document.createElement('div');
+
+    divFecha.className = 'gasto-fecha';
+
+    divFecha.innerHTML = gasto.fecha;
+
+    divGasto.appendChild(divFecha);
+
+    let divValor = document.createElement('div');
+
+    divValor.className = 'gasto-valor';
+
+    divValor.innerHTML = gasto.valor;
+
+    divGasto.appendChild(divValor);
+
+    let divEtiquetas = document.createElement('div');
+
+    divEtiquetas.className = 'gasto-etiquetas';
+
+    for(let i = 0; i <= gasto.etiquetas.length; i++)
+    {
+        let spanEtiqueta = document.createElement('span');
+
+        spanEtiqueta.className = 'gasto-etiquetas-etiqueta';
+        
+        spanEtiqueta.innerHTML = gasto.etiquetas[i];
+
+        divEtiquetas.appendChild(spanEtiqueta);
+    }
+
+
+
+    
 }
 
 function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo)
