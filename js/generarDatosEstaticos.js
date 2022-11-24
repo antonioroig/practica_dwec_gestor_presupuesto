@@ -34,11 +34,11 @@ export let DEVfiltradogastos3 = gestionPresupuestoWeb.mostrarGastoWeb('listado-g
 
 export let DEVfiltradogastos4 = gestionPresupuestoWeb.mostrarGastoWeb('listado-gastos-filtrado-4',gestionPresupuesto.filtrarGastos({valorMaximo: 50,etiquetasTiene: ["comida", "transporte"]}));
 
-export let DEVagrupadogastosDIA = gestionPresupuestoWeb.mostrarGastosAgrupadosWeb('agrupacion-dia',gestionPresupuesto.agruparGastos({periodo: "dia"}),"día");
+export let DEVagrupadogastosDIA = gestionPresupuestoWeb.mostrarGastosAgrupadosWeb('agrupacion-dia',gestionPresupuesto.agruparGastos("dia"),"día");
 
-export let DEVagrupadogastosMES = gestionPresupuestoWeb.mostrarGastosAgrupadosWeb('agrupacion-mes',gestionPresupuesto.agruparGastos({periodo: "mes"}),"mes");
+export let DEVagrupadogastosMES = gestionPresupuestoWeb.mostrarGastosAgrupadosWeb('agrupacion-mes',gestionPresupuesto.agruparGastos("mes"),"mes");
 
-export let DEVagrupadogastosANYO = gestionPresupuestoWeb.mostrarGastosAgrupadosWeb('agrupacion-anyo',gestionPresupuesto.agruparGastos({periodo: "anyo"}), "año");
+export let DEVagrupadogastosANYO = gestionPresupuestoWeb.mostrarGastosAgrupadosWeb('agrupacion-anyo',gestionPresupuesto.agruparGastos("anyo"), "año");
 
 
 
