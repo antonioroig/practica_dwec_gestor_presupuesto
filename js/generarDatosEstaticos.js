@@ -43,7 +43,7 @@ for (let gasto of gestionP.filtrarGastos({valorMinimo: 200, etiquetasTiene: ["se
     gestionPWeb.mostrarGastoWeb("listado-gastos-filtrado-3", gasto);
 }
 
-for (let gasto of gestionP.filtrarGastos({etiquetasTiene: "comida",etiquetasTiene: "transporte", valorMaximo: 50}))
+for (let gasto of gestionP.filtrarGastos({etiquetasTiene: ["comida", "transporte"], valorMaximo: 50}))
 {
     gestionPWeb.mostrarGastoWeb("listado-gastos-filtrado-4", gasto);
 }
