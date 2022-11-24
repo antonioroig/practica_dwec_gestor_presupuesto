@@ -63,7 +63,7 @@ function mostrarGastosAgrupadosWeb(agrup, periodo, idElemento)
         divAgrup.className = "agrupacion";
 
         let titulo = document.createElement('h1');
-        titulo.innerHTML = "Gastos agrrupados por " + periodo;
+        titulo.innerHTML += "Gastos agrupados por " + periodo;
         divAgrup.append(titulo);
 
         let key = Object.keys(agrup);
