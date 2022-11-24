@@ -6,6 +6,7 @@ function mostrarDatoEnId(valor, idElemento){
 }
 
 function mostrarGastoWeb(idElemento, gasto){
+    
     let elemento = document.getElementById(idElemento);
     
     let gastoD = document.createElement("div"); 
