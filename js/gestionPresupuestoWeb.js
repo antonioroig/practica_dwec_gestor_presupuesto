@@ -142,6 +142,7 @@ function EditarHandle(){
 
 };
 
+//Funciones constructoras
 function BorrarHandle(){
   this.handleEvent = function (event) {
     let borrarGasto = this.gasto.id;
