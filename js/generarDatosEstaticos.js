@@ -1,8 +1,10 @@
+'use strict';
+
 import * as gestionPresupuestoWeb from './gestionPresupuestoWeb.js';
 import * as gestionPresupuesto from './gestionPresupuesto.js';
 
 gestionPresupuesto.actualizarPresupuesto(1500);
-gestionPresupuestoWeb.mostrarDatoEnId('presupuesto',gestionPresupuesto.mostrarPresupuesto());
+export let DEVpresupuesto = gestionPresupuestoWeb.mostrarDatoEnId('presupuesto',gestionPresupuesto.mostrarPresupuesto());
 
 let gas1 = new gestionPresupuesto.CrearGasto ("Compra carne", 23.44, "2021-10-06", "casa", "comida");
 let gas2 = new gestionPresupuesto.CrearGasto ("Compra fruta y verdura", 14.25, "2021-09-06", "supermercado", "comida");
@@ -18,27 +20,25 @@ gestionPresupuesto.anyadirGasto(gas4);
 gestionPresupuesto.anyadirGasto(gas5);
 gestionPresupuesto.anyadirGasto(gas6);
 
-let gastostotales = gestionPresupuesto.calcularTotalGastos();
-gestionPresupuestoWeb.mostrarDatoEnId('gastos-totales',gastostotales);
+export let Devgastostotales = gestionPresupuestoWeb.mostrarDatoEnId('gastos-totales',gestionPresupuesto.calcularTotalGastos());
 
-let balancetotal = gestionPresupuesto.calcularBalance();
-gestionPresupuestoWeb.mostrarDatoEnId('balance-total',balancetotal);
+export let Devbalancetotal = gestionPresupuestoWeb.mostrarDatoEnId('balance-total',gestionPresupuesto.calcularBalance());
 
-let listadegastos = gestionPresupuesto.listarGastos();
-gestionPresupuestoWeb.mostrarGastoWeb('listado-gastos-completo',listadegastos);
+export let DEVlistadegastos = gestionPresupuestoWeb.mostrarGastoWeb('listado-gastos-completo',gestionPresupuesto.listarGastos());
 
-let filtradogastos = gestionPresupuesto.filtrarGastos('09-2021');
-gestionPresupuestoWeb.mostrarGastoWeb('listado-gastos-filtrado-1',filtradogastos);
+export let DEVfiltradogastos = gestionPresupuestoWeb.mostrarGastoWeb('listado-gastos-filtrado-1',gestionPresupuesto.filtrarGastos({fechaDesde: "2021-09-01", fechaHasta: "2021-09-30"}));
 
-let filtradogastos2 = gestionPresupuesto.filtrarGastos({valorMinimo: 50});
-gestionPresupuestoWeb.mostrarGastoWeb('listado-gastos-filtrado-2',filtradogastos2);
+export let DEVfiltradogastos2 = gestionPresupuestoWeb.mostrarGastoWeb('listado-gastos-filtrado-2',gestionPresupuesto.filtrarGastos({valorMinimo: 50}));
 
-let filtradogastos3 = gestionPresupuesto.filtrarGastos({valorMinimo: 200, etiquetasTiene: ['comida']});
-gestionPresupuestoWeb.mostrarGastoWeb('listado-gastos-filtrado-3',filtradogastos3);
+export let DEVfiltradogastos3 = gestionPresupuestoWeb.mostrarGastoWeb('listado-gastos-filtrado-3', gestionPresupuesto.filtrarGastos({valorMinimo: 200, etiquetasTiene: ["seguros"]}));
 
-let filtradogastos4 = gestionPresupuesto.filtrarGastos({valorMaximo: 50,etiquetasTiene: ['comida', 'transporte']});
-gestionPresupuestoWeb.mostrarGastoWeb('listado-gastos-filtrado-2',filtradogastos4);
+export let DEVfiltradogastos4 = gestionPresupuestoWeb.mostrarGastoWeb('listado-gastos-filtrado-4',gestionPresupuesto.filtrarGastos({valorMaximo: 50,etiquetasTiene: ["comida", "transporte"]}));
 
+export let DEVagrupadogastosDIA = gestionPresupuestoWeb.mostrarGastosAgrupadosWeb('agrupacion-dia',gestionPresupuesto.agruparGastos({periodo: "dia"}),"día");
+
+export let DEVagrupadogastosMES = gestionPresupuestoWeb.mostrarGastosAgrupadosWeb('agrupacion-mes',gestionPresupuesto.agruparGastos({periodo: "mes"}),"mes");
+
+export let DEVagrupadogastosANYO = gestionPresupuestoWeb.mostrarGastosAgrupadosWeb('agrupacion-anyo',gestionPresupuesto.agruparGastos({periodo: "anyo"}), "año");
 
 
 
