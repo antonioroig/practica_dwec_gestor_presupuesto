@@ -23,7 +23,7 @@ gesPresupuesto.anyadirGasto(gasto6);
 gesPresupuestoWeb.mostrarDatoEnId(gesPresupuesto.calcularTotalGastos(), 'gastos-totales');
 gesPresupuestoWeb.mostrarDatoEnId(gesPresupuesto.calcularBalance(),'balance-total');
 
-let listaGasto = listarGastos();
+let listaGasto = gesPresupuesto.listarGastos;
 
 for(let i = 0; i < listaGasto.length; i++)
 {
@@ -32,15 +32,32 @@ for(let i = 0; i < listaGasto.length; i++)
 
 }
 
-listaGasto = gesPresupuesto.filtrarGastos({fechaDesde:"2021-09-01", fechaHasta:"2021-09-31"});
+listaGasto += gesPresupuesto.filtrarGastos({fechaDesde:"2021-09-01", fechaHasta:"2021-09-31"});
 
 for(let i = 0; i < listaGasto.length; i++)
 {
 
-    gesPresupuestoWeb.mostrarGastoWeb("listado-gastos-completo", listaGasto[i]);
+    gesPresupuestoWeb.mostrarGastoWeb("listado-gastos-filtrado1", listaGasto[i]);
 
 }
 
+listaGasto += gesPresupuesto.filtrarGastos({valorMinimo:50});
+
+for(let i = 0; i < listaGasto.length; i++)
+{
+
+    gesPresupuestoWeb.mostrarGastoWeb("listado-gastos-filtrado2", listaGasto[i]);
+
+}
+
+listaGasto += gesPresupuesto.filtrarGastos({valorMinimo:200, etiquetasTiene:["seguros"]});
+
+for(let i = 0; i < listaGasto.length; i++)
+{
+
+    gesPresupuestoWeb.mostrarGastoWeb("listado-gastos-filtrado2", listaGasto[i]);
+
+}
 
 gesPresupuestoWeb.mostrarGastosAgrupadosWeb("agrupacion-dia", gesPresupuesto.agruparGastos("dia"), "día");
 
