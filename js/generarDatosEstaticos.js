@@ -24,10 +24,22 @@ gpw.mostrarDatoEnId(gp.calcularBalance(), "balance-total");
 
 gp.listarGastos().forEach(g => gpw.mostrarGastoWeb("listado-gastos-completo", g));
 
-gpw.mostrarGastoWeb("listado-gastos-filtrado-1", gp.filtrarGastos(fechaDesde = "2021-09-1", fechaHasta = "2021-09-30"));
-gpw.mostrarGastoWeb("listado-gastos-filtrado-2", gp.filtrarGastos(valorMinimo = 50));
-gpw.mostrarGastoWeb("listado-gastos-filtrado-3", gp.filtrarGastos(valorMinimo = 200, etiquetasTiene = "seguros "));
-gpw.mostrarGastoWeb("listado-gastos-filtrado-4", gp.filtrarGastos(valorMaximo = 50, etiquetasTiene = "comida transporte"));
-gpw.mostrarGastosAgrupadosWeb("agrupacion-dia",gp.agruparGastos("dia"),"dia");
-gpw.mostrarGastosAgrupadosWeb("agrupacion-dia",gp.agruparGastos("mes"),"mes");
-gpw.mostrarGastosAgrupadosWeb("agrupacion-dia",gp.agruparGastos("anyo"),"anyo");
+gp.filtrarGastos({fechaDesde:"2021-09-1", fechaHasta:"2021-09-30"}).forEach(g=>{
+    gpw.mostrarGastoWeb("listado-gastos-filtrado-1" , g);
+});
+
+gp.filtrarGastos({valorMinimo:50}).forEach(g=>{
+    gpw.mostrarGastoWeb("listado-gastos-filtrado-2", g);
+});
+
+gp.filtrarGastos({valorMinimo:200, etiquetasTiene:["seguros"] }).forEach(g=>{
+    gpw.mostrarGastoWeb("listado-gastos-filtrado-3", g);
+});
+
+gp.filtrarGastos({valorMaximo:50, etiquetasTiene:["comida", "transporte"] }).forEach(g=>{
+    gpw.mostrarGastoWeb("listado-gastos-filtrado-4", g);
+});
+
+gpw.mostrarGastosAgrupadosWeb("agrupacion-dia",gp.agruparGastos("dia"),"día");
+gpw.mostrarGastosAgrupadosWeb("agrupacion-mes",gp.agruparGastos("mes"),"mes");
+gpw.mostrarGastosAgrupadosWeb("agrupacion-anyo",gp.agruparGastos("anyo"),"año");

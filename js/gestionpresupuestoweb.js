@@ -33,7 +33,7 @@ function mostrarGastoWeb(idElemento, gasto){
     gastoEtiquetas.classList = "gasto-etiquetas";
     gasto.etiquetas.forEach(element => {
         let gastoEtiqueta = document.createElement("span");
-        gastoEtiqueta.classList = "asto-etiquetas-etiqueta";
+        gastoEtiqueta.classList = "gasto-etiquetas-etiqueta";
         gastoEtiqueta.textContent = element;
         gastoEtiquetas.appendChild(gastoEtiqueta)
     });
