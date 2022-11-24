@@ -1,10 +1,10 @@
- 
+ 'use strict';
 
-function mostrarDatosEnId(valor,idElemento)
+function mostrarDatoEnId(valor,idElemento)
 {
-   let elemento =document.getElementById(idElemento);
-    elemento.innerHTML += `<p>${valor}</p>`;
-
+   let elemento = document.getElementById(idElemento);
+    elemento.innerHTML += valor;
+   
 }
 
 function mostrarGastoWeb(gasto,idElemento)
@@ -14,10 +14,11 @@ function mostrarGastoWeb(gasto,idElemento)
   let gastoDiv = document.createElement('div');
   gastoDiv.className += 'gasto';
 
-  let titulo = "<h2>Titulo</h2>";
+  let titulo = "<h2>Presupuesto</h2>";
 
   let presupuestoDiv = document.createElement('div');
   presupuestoDiv.className = 'presupuesto';
+  
 
   let gestorPresupuestoDiv = document.createElement('div');
   gestorPresupuestoDiv.className = 'presupuesto';
@@ -39,14 +40,22 @@ function mostrarGastoWeb(gasto,idElemento)
   let etiquetasDiv = document.createElement('div');
   etiquetasDiv.className = 'gasto-etiquetas'; 
 
-  gasto.etiquetas.forEach(etiqueta => {
+  /*gasto.etiquetas.forEach(etiqueta => {
 
     let span = document.createElement('span');
     span.className = 'gasto-etiquetas-etiqueta';
     span.textContent = etiqueta;
     etiquetasDiv.append(span);
 
-  });
+  });*/
+
+  for (let etiqueta of gasto.etiquetas) {
+
+    let span = document.createElement('span');
+    span.classList.add('gasto-etiquetas-etiqueta') 
+    span.textContent = etiqueta
+    etiquetasDiv.append(span)
+  }
   
   
   gastoDiv.append(presupuestoDiv);
@@ -60,11 +69,12 @@ function mostrarGastoWeb(gasto,idElemento)
 
 function mostrarGastosAgrupadosWeb(idElemento,agrup,periodo)
 {
+ 
   
 }
 
 export{
-    mostrarDatosEnId,
+    mostrarDatoEnId,
     mostrarGastoWeb,
     mostrarGastosAgrupadosWeb
 }

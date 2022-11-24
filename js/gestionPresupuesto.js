@@ -2,10 +2,11 @@
 // TODO: Variable global
 
 
-"use strict"
-let presupuesto = 0 ;
+"use strict";
+
+let presupuesto = 0;
  let gastos=[];
- let idGasto =0;
+ let idGasto = 0;
 
 function actualizarPresupuesto(dinero)
 {
@@ -183,7 +184,6 @@ function CrearGasto(descripcion,valor ,fecha= Date.now(), ...etiquetas )
 
 function listarGastos(){
     return gastos; 
-
 }
 
 

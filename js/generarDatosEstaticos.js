@@ -1,8 +1,10 @@
-import * as gestionPresu from '../js/gestionPresupuesto';
-import * as gestionPresuWeb from '../js/gestionPresupuestoWeb';
+'use strict';
 
-gestionPresu.actualizarPresupuesto(1500);
-gestionPresuWeb.mostrarDatosEnId(gestionPresu.mostrarPresupuesto());
+import * as gestionPresu from './gestionPresupuesto.js';
+import * as gestionPresuWeb from './gestionPresupuestoWeb.js';
+
+let pres = gestionPresu.actualizarPresupuesto(1500);
+gestionPresuWeb.mostrarDatoEnId(pres,"presupuesto");
 
 gestionPresu.anyadirGasto(new gestionPresu.CrearGasto("Compra carne", 23.44, "2021-10-06", "casa", "comida"));
 gestionPresu.anyadirGasto(new gestionPresu.CrearGasto("Compra fruta y verdura", 14.25, "2021-09-06", "supermercado", "comida"));
@@ -11,11 +13,15 @@ gestionPresu.anyadirGasto(new gestionPresu.CrearGasto("Gasolina", 60.42, "2021-1
 gestionPresu.anyadirGasto(new gestionPresu.CrearGasto("Seguro hogar", 206.45, "2021-09-26", "casa", "seguros"));
 gestionPresu.anyadirGasto(new gestionPresu.CrearGasto("Seguro coche", 195.78, "2021-10-06", "transporte", "seguros"));
 
-gestionPresuWeb.mostrarDatosEnId(gestionPresu.calcularTotalGastos());
-gestionPresuWeb.mostrarDatosEnId(gestionPresu.calcularBalance());
-gestionPresuWeb.mostrarGastoWeb(gestionPresu.listarGastos());
+gestionPresuWeb.mostrarDatoEnId(gestionPresu.calcularTotalGastos(),"presupuesto");
+gestionPresuWeb.mostrarDatoEnId(gestionPresu.calcularBalance(),"presupuesto");
 
-let filtrado1 = gestionPresu.filtrarGastos({fechaDesde:2021-09-01,fechaHasta:2021-09-30});
+let gastos=gestionPresu.listarGastos();
+gastos.forEach(gasto => {
+    gestionPresuWeb.mostrarGastoWeb(gasto,"gastos-totales");
+});
+
+let filtrado1 = gestionPresu.filtrarGastos({fechaDesde:"2021-09-01",fechaHasta:"2021-09-30"});
 filtrado1.forEach(element => {
     gestionPresuWeb.mostrarGastoWeb(element,"listado-gastos-filtrado-1");
 });
