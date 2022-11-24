@@ -2,7 +2,7 @@ import * as presupuesto from './gestionPresupuesto.js';
 import * as presupuestoWeb from './gestionPresupuestoWeb.js';
 
 presupuesto.actualizarPresupuesto(1500);
-presupuestoWeb.mostrarDatoEnId(presupuesto.mostrarPresupuesto(),'presupuesto');
+presupuestoWeb.mostrarDatoEnId('presupuesto',presupuesto.mostrarPresupuesto());
 
 let gasto1 = new presupuesto.CrearGasto("Compra carne", 23.44, "2021-10-06", "casa", "comida");
 let gasto2 = new presupuesto.CrearGasto("Compra fruta y verdura", 14.25, "2021-09-06", "supermercado", "comida");
@@ -17,7 +17,7 @@ presupuesto.anyadirGasto(gasto3);
 presupuesto.anyadirGasto(gasto4);
 presupuesto.anyadirGasto(gasto5);
 presupuesto.anyadirGasto(gasto6);
-
+/*
 let totalGasto = presupuesto.calcularTotalGastos();
 presupuestoWeb.mostrarDatoEnId('gastos-totales',totalGasto);
 
@@ -35,18 +35,15 @@ presupuestoWeb.mostrarGastoWeb('listado-gastos-filtrado-2',filtrado2);
 
 let filtrado3 = presupuesto.filtrarGastos({valorMinimo: 200,etiquetasTiene: ["seguros"]});
 presupuestoWeb.mostrarGastoWeb('listado-gastos-filtrado-3',filtrado3);
-
+*/
 let filtrado4 = presupuesto.filtrarGastos({valorMaximo:50, etiquetasTiene: ["comida","transporte"]});
 presupuestoWeb.mostrarGastoWeb('listado-gastos-filtrado-4',filtrado4);
 
 let agrupacionDia = presupuesto.agruparGastos("dia");
-presupuestoWeb.mostrarGastoWeb('agrupacion-dia',agrupacionDia);
+presupuestoWeb.mostrarGastosAgrupadosWeb("agrupacion-dia",agrupacionDia,"día");
 
 let agrupacionMes = presupuesto.agruparGastos("mes");
-presupuestoWeb.mostrarGastoWeb('agrupacion-mes',agrupacionMes);
+presupuestoWeb.mostrarGastosAgrupadosWeb("agrupacion-mes",agrupacionMes,"mes");
 
 let agrupacionAnyo = presupuesto.agruparGastos("anyo");
-presupuestoWeb.mostrarGastoWeb('agrupacion-anyo',agrupacionAnyo);
-
-
-
+presupuestoWeb.mostrarGastosAgrupadosWeb("agrupacion-anyo",agrupacionAnyo,"año");
