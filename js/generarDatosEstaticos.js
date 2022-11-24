@@ -38,7 +38,7 @@ for (let gasto of gestionP.filtrarGastos({valorMinimo: 50}))
     gestionPWeb.mostrarGastoWeb("listado-gastos-filtrado-2", gasto);
 }
 
-for (let gasto of gestionP.filtrarGastos({valorMinimo: 200, etiquetasTiene: "seguros"}))
+for (let gasto of gestionP.filtrarGastos({valorMinimo: 200, etiquetasTiene: ["seguros"]}))
 {
     gestionPWeb.mostrarGastoWeb("listado-gastos-filtrado-3", gasto);
 }
@@ -48,6 +48,6 @@ for (let gasto of gestionP.filtrarGastos({etiquetasTiene: "comida",etiquetasTien
     gestionPWeb.mostrarGastoWeb("listado-gastos-filtrado-4", gasto);
 }
 
-gestionPWeb.mostrarGastosAgrupadosWeb(gestionP.agruparGastos("dia"),"dia" ,"agrupacion-dia");
+gestionPWeb.mostrarGastosAgrupadosWeb(gestionP.agruparGastos("dia"),"día" ,"agrupacion-dia");
 gestionPWeb.mostrarGastosAgrupadosWeb(gestionP.agruparGastos("mes"),"mes" , "agrupacion-mes");
-gestionPWeb.mostrarGastosAgrupadosWeb(gestionP.agruparGastos("anyo"),"anyo" ,"agrupacion-anyo");
+gestionPWeb.mostrarGastosAgrupadosWeb(gestionP.agruparGastos("anyo"),"año" ,"agrupacion-anyo");

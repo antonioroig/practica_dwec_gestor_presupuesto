@@ -52,7 +52,7 @@ function mostrarGastoWeb(idElemento, gasto)
     }
 }
 
-function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo)
+function mostrarGastosAgrupadosWeb(agrup, periodo, idElemento)
 {
     if (idElemento != undefined && idElemento != null)
     {
