@@ -49,7 +49,7 @@ function mostrarGastosAgrupadosWeb(idElemento,agrup,periodo)
     agrupDIV.appendChild(agrupH1);
     for(let valor of Object.keys(agrup)){
         let datoDIV = document.createElement('div');
-        datoDIV.className = 'agrupación-dato';
+        datoDIV.className = 'agrupacion-dato';
         let datoClaveSPAN = document.createElement('span');
         datoClaveSPAN.className = 'agrupacion-dato-clave';
         datoClaveSPAN.innerHTML += `${valor}`;
