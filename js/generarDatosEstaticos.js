@@ -25,33 +25,22 @@ presupuestoWeb.mostrarDatoEnId("gastos-totales",totalGasto);
 
 let balance = presupuesto.calcularBalance()
 presupuestoWeb.mostrarDatoEnId("balance-total",balance);
+/*
+let listaGastos = presupuesto.listarGastos();
+presupuestoWeb.mostrarGastoWeb('listado-gastos-completo',listaGastos);
 
-    for (let gastos of presupuesto.listarGastos())
-    {
-        presupuestoWeb.mostrarGastoWeb('listado-gastos-completo',gastos);
-    }
+let filtrado1 = presupuesto.filtrarGastos({fechaDesde: '2021-09-01', fechaHasta: '2021-09-30'});
+presupuestoWeb.mostrarGastoWeb('listado-gastos-filtrado-1',filtrado1);
 
-    let filtrado1 = presupuesto.filtrarGastos({fechaDesde: '2021-09-01', fechaHasta: '2021-09-30'});
-    for (let gastos of filtrado1)
-    {
-        presupuestoWeb.mostrarGastoWeb('listado-gastos-filtrado-1',gastos);
-    }
-    let filtrado2 = presupuesto.filtrarGastos({valorMinimo: 50});
-    for (let gastos of filtrado2)
-    {
-        presupuestoWeb.mostrarGastoWeb('listado-gastos-filtrado-2',gastos);
-    }
-    let filtrado3 = presupuesto.filtrarGastos({valorMinimo: 200,etiquetasTiene: ["seguros"]});
-    for (let gastos of filtrado3)
-    {
-        presupuestoWeb.mostrarGastoWeb('listado-gastos-filtrado-3',gastos);
-    }
-    let filtrado4 = presupuesto.filtrarGastos({valorMaximo: 50, etiquetasTiene: ["comida","transporte"]});
-    for (let gastos of filtrado4)
-    {
-        presupuestoWeb.mostrarGastoWeb('listado-gastos-filtrado-4',gastos);
-    }
+let filtrado2 = presupuesto.filtrarGastos({valorMinimo: 50});
+presupuestoWeb.mostrarGastoWeb('listado-gastos-filtrado-2',filtrado2);
 
+let filtrado3 = presupuesto.filtrarGastos({valorMinimo: 200,etiquetasTiene: ["seguros"]});
+presupuestoWeb.mostrarGastoWeb('listado-gastos-filtrado-3',filtrado3);
+
+let filtrado4 = presupuesto.filtrarGastos({valorMaximo:50, etiquetasTiene: ["comida","transporte"]});
+presupuestoWeb.mostrarGastoWeb('listado-gastos-filtrado-4',filtrado4);
+*/
 let agrupacionDia = presupuesto.agruparGastos("dia");
 presupuestoWeb.mostrarGastosAgrupadosWeb("agrupacion-dia",agrupacionDia,"día");
 
