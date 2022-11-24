@@ -3,6 +3,7 @@ import * as presupuesto from './gestionPresupuesto.js';
 import * as presupuestoWeb from './gestionPresupuestoWeb.js';
 
 presupuesto.actualizarPresupuesto(1500);
+
 let mostrarpresupuesto = presupuesto.mostrarPresupuesto();
 presupuestoWeb.mostrarDatoEnId('presupuesto',mostrarpresupuesto);
 
@@ -25,22 +26,38 @@ presupuestoWeb.mostrarDatoEnId("gastos-totales",totalGasto);
 
 let balance = presupuesto.calcularBalance()
 presupuestoWeb.mostrarDatoEnId("balance-total",balance);
-/*
+
 let listaGastos = presupuesto.listarGastos();
-presupuestoWeb.mostrarGastoWeb('listado-gastos-completo',listaGastos);
+    for (let gastos of listaGastos)
+    {
+        presupuestoWeb.mostrarGastoWeb('listado-gastos-completo',gastos);
+    }
 
 let filtrado1 = presupuesto.filtrarGastos({fechaDesde: '2021-09-01', fechaHasta: '2021-09-30'});
-presupuestoWeb.mostrarGastoWeb('listado-gastos-filtrado-1',filtrado1);
+    for (let gastos of filtrado1)
+    {
+        presupuestoWeb.mostrarGastoWeb('listado-gastos-filtrado-1',gastos);
+    }
 
 let filtrado2 = presupuesto.filtrarGastos({valorMinimo: 50});
-presupuestoWeb.mostrarGastoWeb('listado-gastos-filtrado-2',filtrado2);
+    for (let gastos of filtrado2)
+    {
+        presupuestoWeb.mostrarGastoWeb('listado-gastos-filtrado-2',gastos);
+    }
 
 let filtrado3 = presupuesto.filtrarGastos({valorMinimo: 200,etiquetasTiene: ["seguros"]});
-presupuestoWeb.mostrarGastoWeb('listado-gastos-filtrado-3',filtrado3);
+    for (let gastos of filtrado3)
+    {
+        presupuestoWeb.mostrarGastoWeb('listado-gastos-filtrado-3',gastos);
+    }
+
 
 let filtrado4 = presupuesto.filtrarGastos({valorMaximo:50, etiquetasTiene: ["comida","transporte"]});
-presupuestoWeb.mostrarGastoWeb('listado-gastos-filtrado-4',filtrado4);
-*/
+    for (let gastos of filtrado4)
+    {
+        presupuestoWeb.mostrarGastoWeb('listado-gastos-filtrado-4',gastos);
+    }    
+
 let agrupacionDia = presupuesto.agruparGastos("dia");
 presupuestoWeb.mostrarGastosAgrupadosWeb("agrupacion-dia",agrupacionDia,"día");
 
