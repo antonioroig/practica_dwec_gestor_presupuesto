@@ -48,6 +48,6 @@ for (let gasto of gestionP.filtrarGastos({etiquetasTiene: "comida",etiquetasTien
     gestionPWeb.mostrarGastoWeb("listado-gastos-filtrado-4", gasto);
 }
 
-gestionPWeb.mostrarGastosAgrupadosWeb(gestionP.agruparGastos("dia"), "agrupacion-dia");
-gestionPWeb.mostrarGastosAgrupadosWeb(gestionP.agruparGastos("mes"), "agrupacion-mes");
-gestionPWeb.mostrarGastosAgrupadosWeb(gestionP.agruparGastos("anyo"), "agrupacion-anyo");
+gestionPWeb.mostrarGastosAgrupadosWeb(gestionP.agruparGastos("dia"),"dia" ,"agrupacion-dia");
+gestionPWeb.mostrarGastosAgrupadosWeb(gestionP.agruparGastos("mes"),"mes" , "agrupacion-mes");
+gestionPWeb.mostrarGastosAgrupadosWeb(gestionP.agruparGastos("anyo"),"anyo" ,"agrupacion-anyo");

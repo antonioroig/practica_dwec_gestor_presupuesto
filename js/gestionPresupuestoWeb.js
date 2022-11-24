@@ -11,7 +11,7 @@ function mostrarDatoEnId(valor, idElemento)
 
 function mostrarGastoWeb(idElemento, gasto)
 {
-    if (idElemento != undefined || idElemento != null)
+    if (idElemento != undefined && idElemento != null)
     {
         
         let element = document.getElementById(idElemento);
@@ -54,7 +54,7 @@ function mostrarGastoWeb(idElemento, gasto)
 
 function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo)
 {
-    if (idElemento != undefined || idElemento != null)
+    if (idElemento != undefined && idElemento != null)
     {
         let i = 0;
         let id = document.getElementById(idElemento);
@@ -89,8 +89,6 @@ function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo)
         }
 
         id.append(divAgrup);
-        
-        return id;
     }
 }
 
