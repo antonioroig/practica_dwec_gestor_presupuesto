@@ -2,8 +2,8 @@ import * as gestionPresupuesto from './gestionPresupuesto.js';
 
 function mostrarDatoEnId(valor, idElemento)
 {
-    gestionPresupuesto.actualizarPresupuesto(valor);
-    document.getElementById(idElemento).innerHTML = gestionPresupuesto.mostrarPresupuesto();
+    let elem = document.getElementById(idElemento);
+    elem.innerHTML += valor;
 }
 
 function mostrarGastoWeb(idElemento, gasto)
@@ -14,11 +14,13 @@ function mostrarGastoWeb(idElemento, gasto)
 
     divGasto.className = 'gasto';
 
+    elem.appendChild(divGasto);
+
     let divDescripcion = document.createElement('div');
 
     divDescripcion.className = 'gasto-descripcion';
 
-    divDescripcion.innerHTML = gasto.descripcion;
+    divDescripcion.textContent = gasto.descripcion;
 
     divGasto.appendChild(divDescripcion);
 
@@ -26,7 +28,7 @@ function mostrarGastoWeb(idElemento, gasto)
 
     divFecha.className = 'gasto-fecha';
 
-    divFecha.innerHTML = gasto.fecha;
+    divFecha.textContent = gasto.fecha;
 
     divGasto.appendChild(divFecha);
 
@@ -34,7 +36,7 @@ function mostrarGastoWeb(idElemento, gasto)
 
     divValor.className = 'gasto-valor';
 
-    divValor.innerHTML = gasto.valor;
+    divValor.textContent = gasto.valor;
 
     divGasto.appendChild(divValor);
 
@@ -48,17 +50,14 @@ function mostrarGastoWeb(idElemento, gasto)
 
         spanEtiqueta.className = 'gasto-etiquetas-etiqueta';
         
-        spanEtiqueta.innerHTML = gasto.etiquetas[i];
+        spanEtiqueta.textContent = gasto.etiquetas[i];
 
         divEtiquetas.appendChild(spanEtiqueta);
     }
 
     divEtiquetas.appendChild(divEtiquetas);
 
-    elem.appendChild(divGasto);
-
     return elem;
-    
 }
 
 function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo)
