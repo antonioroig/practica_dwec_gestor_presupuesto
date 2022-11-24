@@ -46,7 +46,7 @@ function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo  ){
     let elemento = document.getElementById(idElemento);
     
     let agrupD = document.createElement("div");
-    gastoD.classList = "agrupacion";
+    agrupD.classList = "agrupacion";
     elemento.appendChild(agrupD)
     
     let elementoAgrup = document.getElementsByClassName("agrupacion")
