@@ -193,7 +193,7 @@ function repintar(){
 element.addEventListener("click", actualizarPresupuestoWeb());*/
 
 actualizarpresupuesto.onclick = function actualizarPresupuestoWeb(){
-        gestionPresupuesto.actualizarPresupuesto(parseFloat(prompt('Introduce un nuevo presupuesto: ', 0)));
+        gestionPresupuesto.actualizarPresupuesto(parseFloat(prompt('Introduce un presupuesto: ', 0)));
         repintar();
 }
 
@@ -205,6 +205,7 @@ export   {
     mostrarGastoWeb,
     mostrarGastosAgrupadosWeb,
     //actualizarPresupuestoWeb,
+    //repintar,
  }
 
 
