@@ -14,12 +14,6 @@ gestion.anyadirGasto(new gestion.CrearGasto("Seguro coche", 195.78, "2021-10-06"
 gestionWeb.mostrarDatoEnId(gestion.calcularTotalGastos(),"gastos-totales");
 gestionWeb.mostrarDatoEnId(gestion.calcularBalance(),"balance-total");
 
-// Revisar
-// gestionWeb.mostrarGastoWeb(gestion.filtrarGastos({fechaDesde:"2021-09-01"}),"listado-gastos-filtrado-1");
-// gestionWeb.mostrarGastoWeb(gestion.filtrarGastos({valorMinimo: 50}),"listado-gastos-filtrado-2");
-// gestionWeb.mostrarGastoWeb(gestion.filtrarGastos({valorMinimo:200}),"listado-gastos-filtrado-2");
-// gestionWeb.mostrarGastoWeb(gestion.filtrarGastos({etiquetasTiene: ["comida", "transporte"]}),"listado-gastos-filtrado-4");
-
 // Mostrar gastos web
 let gastos = gestion.listarGastos();
 gastos.forEach((element)=> {

@@ -1,11 +1,13 @@
 import * as presupuesto from "/gestionPresupuesto";
-// Muestra en un div el valor que se le pasa por parámetro
 
+// Muestra en un div el valor que se le pasa por parámetro
 function mostrarDatoEnId(valor, idElemento){
     let element = document.getElementById(idElemento);
     element.innerHTML += `<p>${valor}</p>`;
     
 }
+
+// Desglosa el objeto gasto y los segmenta en div's
 function mostrarGastoWeb(gasto, idElemento){
 
     let elemento = document.getElementById(idElemento);
@@ -46,6 +48,8 @@ function mostrarGastoWeb(gasto, idElemento){
     divGasto.append(div);
     elemento.append(divGasto);
 }
+
+// Muestra los datos del elemento agrupado que se le pasa por parámetro
 function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo){
 
   if(periodo === `dia`){
@@ -92,9 +96,33 @@ function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo){
 }
 
 function repintar(){
+  /* Mostrar el presupuesto en div#presupuesto (funciones mostrarPresupuesto y mostrarDatoEnId)
+  Mostrar los gastos totales en div#gastos-totales (funciones calcularTotalGastos y mostrarDatoEnId)
+  Mostrar el balance total en div#balance-total (funciones calcularBalance y mostrarDatoEnId)
+  Borrar el contenido de div#listado-gastos-completo, para que el paso siguiente no duplique la información. Puedes utilizar innerHTML para borrar el contenido de dicha capa.
+  Mostrar el listado completo de gastos en div#listado-gastos-completo (funciones listarGastos y mostrarGastoWeb) */
 
 }
+function actualizarGastoWeb(){
+  let presupuesto = prompt("Por favor, introduzca el nuevo presupuesto",);
+  
+}
 
+function actualizarPresupuestoWeb(){
+
+}
+function nuevoGastoWwb(){
+
+}
+function editarHandle(){
+
+}
+function borrarHandle(){
+  
+}
+function BorrarEtiquetasHandle(){
+  
+}
 export    {
 
   mostrarDatoEnId,
