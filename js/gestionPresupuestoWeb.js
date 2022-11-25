@@ -77,7 +77,9 @@ function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo)
 }
 function repintar()
 {
-    
+    document.getElementById('presupuesto').innerHTML = exGp.mostrarPresupuesto;
+    document.getElementById('presupuesto').innerHTML += mostrarDatoEnId;
+
 }
 export   {  
     mostrarDatoEnId,
