@@ -72,8 +72,17 @@ function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo){
     }
 }
 
+// nueva práctica
+function repintar(){
+    document.getElementById("presupuesto").innerHTML="";
+    document.getElementById("gastos-totales").innerHTML="";
+    document.getElementById("balance-total").innerHTML="";
+}
+
+
 export {
     mostrarDatoEnId,
     mostrarGastoWeb,
-    mostrarGastosAgrupadosWeb
+    mostrarGastosAgrupadosWeb,
+    repintar
 }
