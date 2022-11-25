@@ -16,14 +16,13 @@ function mostrarDatoEnId(valor, idElemento)
 function mostrarGastoWeb(idElemento, gasto)
 {
 
-    if(idElemento != undefined)
-    {
-
-        let elemento = document.getElementById(idElemento);
         let divGasto = document.createElement('div');
+        let elemento = document.getElementById(idElemento);
 
         divGasto.className = "gasto";
 
+        elemento.append(divGasto);
+        
 
         let divDescripcionPorGasto = document.createElement('div');
 
@@ -64,11 +63,8 @@ function mostrarGastoWeb(idElemento, gasto)
 
         }
         divGasto.append(divEtiquetaPorGasto);
-        elemento.append(divGasto);
 
     }
-
-}
 
 function mostrarGastosAgrupadosWeb(idElemento, agrupar, periodo)
 {
