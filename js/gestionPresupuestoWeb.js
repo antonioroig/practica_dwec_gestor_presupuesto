@@ -88,18 +88,34 @@ function repintar(){
     mostrarDatoEnId(ges.calcularTotalGastos(),"gastos-totales");
     mostrarDatoEnId(ges.calcularBalance(),"balance-total");
     for(let gasto of ges.listarGastos()){
-        mostrarGastoWeb(gasto,"listado-gastos-completo-");
+        mostrarGastoWeb("listado-gastos-completo",gasto);
     }
 }
 
 function actualizarPresupuestoWeb(){
     let interaccion = prompt("Introduce un presupuesto");
-    let presupuesto = parseInt(interaccion);
+    let presupuesto = parseFloat(interaccion);
     ges.actualizarPresupuesto(presupuesto);
     repintar();
 }
-actualizarpresupuesto.addEventListener("click",actualizarPresupuestoWeb());
 
+
+function nuevoGastoWeb(){
+    let descripcion = prompt("Introduce una descripcion");
+    let valorStr = prompt("Introduce un valor");
+    let valorFloat = parseFloat(valorStr);
+    let fecha = prompt("Introduce una fecha");
+    let etiquetas = prompt("Introduce las etiquetas");
+    
+    let arrayEtiquetas = etiquetas.split(',');
+
+    let gasto = new ges.CrearGasto(descripcion,valorFloat,fecha,arrayEtiquetas);
+    ges.anyadirGasto(gasto);
+    repintar();
+}
+
+actualizarpresupuesto.addEventListener('click',actualizarPresupuestoWeb);
+anyadirgasto.addEventListener('click',nuevoGastoWeb);
 
 //NO MODIFICAR.
 export   {
@@ -107,5 +123,6 @@ export   {
     mostrarGastoWeb,
     mostrarGastosAgrupadosWeb,
     repintar,
-    actualizarPresupuestoWeb
+    actualizarPresupuestoWeb,
+    nuevoGastoWeb
 }
