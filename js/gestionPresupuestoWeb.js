@@ -101,13 +101,30 @@ function actualizarPresupuestoWeb(){
     gestion.actualizarPresupuesto(presupuesto);
     repintar();
 }
+
+function nuevoGastoWeb(){
+
+    let descripcion = prompt("Introduce la descripción");
+    let valor = prompt("Introduce el valor");
+    let fecha = prompt("Introduce la fecha");
+    let etiquetas = prompt("Introduce las etiquetas");
+    parseInt(valor);
+    let arr = etiquetas.split(', ');
+
+    let gasto = new gestion.CrearGasto(descripcion,valor,fecha,arr);
+    gestion.anyadirGasto(gasto);
+    repintar();
+};
+
 actualizarpresupuesto.addEventListener("click", actualizarPresupuestoWeb());
 
+anyadirgasto.addEventListener("click", nuevoGastoWeb());
 
 export	{
     mostrarDatoEnId,
     mostrarGastoWeb,
     mostrarGastosAgrupadosWeb,
     repintar,
-    actualizarPresupuestoWeb
+    actualizarPresupuestoWeb,
+    nuevoGastoWeb
 }
