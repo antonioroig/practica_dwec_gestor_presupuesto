@@ -21,3 +21,4 @@ gestionPresupuesto.anyadirGasto(gasto3);
 gestionPresupuesto.anyadirGasto(gasto4);
 gestionPresupuesto.anyadirGasto(gasto5);
 gestionPresupuesto.anyadirGasto(gasto6);
+
