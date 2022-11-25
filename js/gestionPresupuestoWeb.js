@@ -29,6 +29,9 @@ function mostrarGastoWeb(idElemento,gasto){
     divValor.textContent = gasto.valor + "€";
     divGasto.append(divValor);
 
+    let divEtiquetas = document.createElement('div');
+    divEtiquetas.className = 'etiquetasGasto';
+
     for(let etiq of gasto.etiquetas){
         let etiqueta = document.createElement('span');
         etiqueta.className = 'etiqueta-gastoEtiquetas';
@@ -37,6 +40,18 @@ function mostrarGastoWeb(idElemento,gasto){
     }
 }
 
+function mostrarGastosAgrupadosWeb(idElemento,agrup,periodo){
+    let idAll = document.getElementById(idElemento);
+    idAll.innerHTML = '';
+    let divAgrupado = '<div class="agrupado"> <h1>Gastos agrupados por '+periodo+'</h1>';
+
+    for(let conjunto in conj){
+        divAgrupado += '<div class="agrupado-dato"><span class="agrupado-dato-key">'+conjunto+'</span><span class="agrupado-dato-value">'+conj[conjunto]+'</span></div>';
+    }
+
+    divAgrupado += '</div>';
+    idAll.innerHTML = divAgrupado;
+}
 
 export{
     mostrarDatoEnId,
