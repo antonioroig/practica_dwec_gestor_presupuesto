@@ -80,6 +80,11 @@ function repintar()
     document.getElementById('presupuesto').innerHTML = exGp.mostrarPresupuesto;
     document.getElementById('presupuesto').innerHTML += mostrarDatoEnId;
 
+    document.getElementById('gastos-totales').innerHTML = exGp.calcularTotalGastos;
+    document.getElementById('gastos-totales').innerHTML += mostrarDatoEnId;
+
+    
+
 }
 export   {  
     mostrarDatoEnId,
