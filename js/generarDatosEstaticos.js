@@ -37,3 +37,19 @@ for(let gasto of gastos_septiembre)
 {
     web.mostrarGastoWeb('listado-gastos-filtrado-1',gasto);
 }
+
+let gasto_filtrado2 = presupuesto.filtrarGastos({valorMinimo: 50})
+for(let gasto of gasto_filtrado2)
+{
+    web.mostrarGastoWeb('listado-gastos-filtrado-2',gasto);
+}
+let gasto_filtrado3 = presupuesto.filtrarGastos({valorMinimo: 200, etiquetasTiene: ['seguros']})
+for(let gasto of gasto_filtrado3)
+{
+    web.mostrarGastoWeb('listado-gastos-filtrado-3',gasto);
+}
+let gasto_filtrado4 = presupuesto.filtrarGastos({valorMaximo: 50, etiquetasTiene: ['comida','transporte']})
+for(let gasto of gasto_filtrado4)
+{
+    web.mostrarGastoWeb('listado-gastos-filtrado-4',gasto);
+}
