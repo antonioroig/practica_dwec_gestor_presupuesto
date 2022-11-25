@@ -35,10 +35,9 @@ function mostrarGastoWeb(idElemento,gasto){
     for(let etiq of gasto.etiquetas){
         let spanEtiqueta  = document.createElement('span');
         spanEtiqueta .className = 'gasto-etiquetas-etiqueta';
-        spanEtiqueta .textContent = " " + etiq;
+        spanEtiqueta .textContent = etiq;
         divEtiquetas.append(spanEtiqueta);
     }
-    divGasto.append(divEtiquetas);
 }
 
 function mostrarGastosAgrupadosWeb(idElemento,agrup,periodo){
@@ -47,7 +46,7 @@ function mostrarGastosAgrupadosWeb(idElemento,agrup,periodo){
     let divAgrupado = `<div class="agrupacion"><h1>Gastos agrupados por ${periodo}</h1>`;
 
     for(let agrupacion in agrup){
-        divAgrupado += `<div class="agrupacion-dato"><span class="agrupacion-dato-clave"> ${agrupacion}:</span><span class="agrupacion-dato-valor"> ${agrup[agrupacion]}€</span></div>`;
+        divAgrupado += `<div class="agrupacion-dato"><span class="agrupacion-dato-clave">${agrupacion}</span><span class="agrupacion-dato-valor">${agrup[agrupacion]}</span></div>`;
     }
 
     divAgrupado += '</div>';
