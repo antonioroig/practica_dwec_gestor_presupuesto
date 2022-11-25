@@ -60,13 +60,10 @@ for(let gasto of filtro3)
 }
 
 let agrupGastos = gestionPresupuesto.agruparGastos('dia');
-mostrarEnWeb.mostrarGastosAgrupadosWeb('agrupacion-dia', agrupGastos);
 mostrarEnWeb.mostrarGastosAgrupadosWeb('agrupacion-dia', agrupGastos, 'día');
 
 let agrupGastos1 = gestionPresupuesto.agruparGastos('mes');
-mostrarEnWeb.mostrarGastosAgrupadosWeb('agrupacion-mes', agrupGastos1);
 mostrarEnWeb.mostrarGastosAgrupadosWeb('agrupacion-mes', agrupGastos1, 'mes');
 
 let agrupGastos2 = gestionPresupuesto.agruparGastos('anyo');
-mostrarEnWeb.mostrarGastosAgrupadosWeb('agrupacion-anyo', agrupGastos2);
-mostrarEnWeb.mostrarGastosAgrupadosWeb('agrupacion-anyo', agrupGastos2, 'anyo');
+mostrarEnWeb.mostrarGastosAgrupadosWeb('agrupacion-anyo', agrupGastos2, 'año');

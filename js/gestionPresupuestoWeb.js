@@ -46,13 +46,13 @@ function mostrarGastoWeb(idElemento, gasto)
 
     divEtiquetas.className = 'gasto-etiquetas';
 
-    for(let i = 0; i <= gasto.etiquetas.length; i++)
+    for(let etiqueta of gasto.etiquetas)
     {
         let spanEtiqueta = document.createElement('span');
 
         spanEtiqueta.className = 'gasto-etiquetas-etiqueta';
         
-        spanEtiqueta.textContent = gasto.etiquetas[i];
+        spanEtiqueta.textContent = " " + etiqueta;
 
         divEtiquetas.appendChild(spanEtiqueta);
     }
@@ -70,7 +70,7 @@ function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo)
 
     let titulo = document.createElement('h1');
 
-    titulo.textContent = 'Gastos agrupados por ' + periodo;
+    titulo.textContent = `Gastos agrupados por ${periodo}`;
 
     divAgrupacion.appendChild(titulo);
 
@@ -82,18 +82,16 @@ function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo)
 
         let spanClave = document.createElement('span');
         spanClave.className = 'agrupacion-dato-clave';
-        spanClave.textContent = 'Gastos agrupados por ' + propiedad;
+        spanClave.textContent += `${propiedad}`;
         divDato.appendChild(spanClave);
 
         let spanValor = document.createElement('span');
         spanValor.className = 'agrupacion-dato-valor';
-        spanValor.textContent = `${propiedad.valueOf()}`;
+        spanValor.textContent += ` ${propiedad.valueOf()}`;
         divDato.appendChild(spanValor);
     }
 
     elem.appendChild(divAgrupacion);
-
-    return elem;
 }
 
 export {
