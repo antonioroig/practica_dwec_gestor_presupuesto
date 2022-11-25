@@ -94,25 +94,41 @@ function repintar()
     document.getElementById("listado-gastos-completo").innerHTML = "";
 
     mostrarDatoEnId(gesP.mostrarPresupuesto(), "presupuesto");
-    mostrarDatoEnId(gesP.mostrarPresupuesto(), "gastos-totales");
+    mostrarDatoEnId(gesP.calcularTotalGastos(), "gastos-totales");
     mostrarDatoEnId(gesP.calcularBalance(), "balance-total");
     for(let gasto of gesP.listarGastos()){
-        mostrarGastoWeb(gasto,"listar-gastos-completo")
+        mostrarGastoWeb("listado-gastos-completo",gasto)
     }
 
 }
 function actualizarPresupuestoWeb()
 {
     let pregunta = prompt("introduce un presupuesto");
-    let preguntaINT = parseInt(pregunta);
-    gesP.actualizarPresupuesto(preguntaINT);
+    let preguntaFloat = parseFloat(pregunta);
+    gesP.actualizarPresupuesto(preguntaFloat);
     repintar();
 }
-actualizarpresupuesto.addEventListener("click", actualizarPresupuestoWeb());
+
+function nuevoGastoWeb()
+{
+    let descripcion = prompt("introduce una descripcion");
+    let valorSTR = prompt("introduce un valor para el gasto");
+    let valor = parseFloat(valorSTR);
+    let fecha = prompt("introduce una fecha en yyyy-mm-dd para el gasto");
+    let etiquetas = prompt("introduce unas etiquetas para el gasto en fomato etiq1,etiq2,etiq3");
+    let etiquetasArray = etiquetas.split(',');
+
+    let gastoCreado = new gesP.CrearGasto(descripcion,valor,fecha,etiquetasArray);
+    gesP.anyadirGasto(gastoCreado);
+    repintar();
+}
+actualizarpresupuesto.addEventListener("click",actualizarPresupuestoWeb);
+anyadirgasto.addEventListener("click",nuevoGastoWeb);
 export{
     mostrarDatoEnId,
     mostrarGastoWeb,
     mostrarGastosAgrupadosWeb,
     repintar,
     actualizarPresupuestoWeb,
+    nuevoGastoWeb
 }
