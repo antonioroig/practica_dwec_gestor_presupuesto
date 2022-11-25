@@ -21,7 +21,7 @@ function mostrarGastoWeb(idElemento,gasto)
 
  let fecha_gasto = document.createElement('div');
  fecha_gasto.className = "gasto-fecha";
- fecha_gasto.textContent = gasto.fecha;
+ fecha_gasto.textContent = new Date(gasto.fecha).toLocaleDateString();
  id.appendChild(fecha_gasto);
 
  let valor_gasto = document.createElement('div');
