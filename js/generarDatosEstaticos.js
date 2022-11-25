@@ -22,5 +22,41 @@ gestionPresupuesto.anyadirGasto(gasto4);
 gestionPresupuesto.anyadirGasto(gasto5);
 gestionPresupuesto.anyadirGasto(gasto6);
 
+let totalGasto = gestionPresupuesto.calcularTotalGastos();
+gestionPresupuestoWeb.mostrarDatoEnId("gastos-totales",totalGasto);
+
+let balance = gestionPresupuesto.calcularBalance()
+gestionPresupuestoWeb.mostrarDatoEnId("balance-total",balance);
+
+let listaGastos = gestionPresupuesto.listarGastos();
+for (let gastos of listaGastos)
+{
+    gestionPresupuestoWeb.mostrarGastoWeb('listado-gastos-completo',gastos);
+}
+
+let filtrado1 = gestionPresupuesto.filtrarGastos({fechaDesde: '2021-09-01', fechaHasta: '2021-09-30'});
+for (let gastos of filtrado1)
+{
+    gestionPresupuestoWeb.mostrarGastoWeb('listado-gastos-filtrado-1',gastos);
+}
+
+let filtrado2 = gestionPresupuesto.filtrarGastos({valorMinimo: 50});
+for (let gastos of filtrado2)
+{
+    gestionPresupuestoWeb.mostrarGastoWeb('listado-gastos-filtrado-2',gastos);
+}
+
+let filtrado3 = gestionPresupuesto.filtrarGastos({valorMinimo: 200, etiquetasTiene: ["seguros"]});
+for (let gastos of filtrado3)
+{
+    gestionPresupuestoWeb.mostrarGastoWeb('listado-gastos-filtrado-3',gastos);
+}
+
+let filtrado4 = gestionPresupuesto.filtrarGastos({valorMaximo:50, etiquetasTiene: ["comida","transporte"]});
+for (let gastos of filtrado4)
+{
+    gestionPresupuestoWeb.mostrarGastoWeb('listado-gastos-filtrado-4',gastos);
+}
+
 let agrupGastos = gestionPresupuesto.agruparGastos('dia');
 gestionPresupuestoWeb.mostrarGastosAgrupadosWeb('agrupacion-dia', agrupGastos, 'día');
