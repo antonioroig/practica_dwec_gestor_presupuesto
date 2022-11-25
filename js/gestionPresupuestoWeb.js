@@ -75,6 +75,10 @@ function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo)
     }
     elem.appendChild(padre);
 }
+function repintar()
+{
+    
+}
 export   {  
     mostrarDatoEnId,
     mostrarGastoWeb,
