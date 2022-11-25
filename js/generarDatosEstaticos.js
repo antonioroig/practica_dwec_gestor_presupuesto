@@ -53,3 +53,10 @@ for(let gasto of gasto_filtrado4)
 {
     web.mostrarGastoWeb('listado-gastos-filtrado-4',gasto);
 }
+
+let gastos_agrupados = presupuesto.agruparGastos('dia');
+web.mostrarGastosAgrupadosWeb('agrupacion-dia',gastos_agrupados,'día');
+let gastos_agrupados2 = presupuesto.agruparGastos('mes');
+web.mostrarGastosAgrupadosWeb('agrupacion-mes',gastos_agrupados2,'mes');
+let gastos_agrupados3 = presupuesto.agruparGastos('anyo');
+web.mostrarGastosAgrupadosWeb('agrupacion-anyo',gastos_agrupados3,'año');
