@@ -1,5 +1,7 @@
 import * as gestionPresupuesto from './gestionPresupuesto.js';
 
+'use strict';
+
 function mostrarDatoEnId(valor, idElemento)
 {
     let elem = document.getElementById(idElemento);
@@ -56,8 +58,6 @@ function mostrarGastoWeb(idElemento, gasto)
     }
 
     divEtiquetas.appendChild(divEtiquetas);
-
-    return elem;
 }
 
 function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo)
@@ -70,34 +70,26 @@ function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo)
 
     let titulo = document.createElement('h1');
 
-    titulo.textContent = 'Gastos agrupados por' + periodo;
+    titulo.textContent = 'Gastos agrupados por ' + periodo;
 
     divAgrupacion.appendChild(titulo);
 
-    Object.getOwnPropertyNames(agrup).forEach(function(fecha)
+    for(let propiedad of Object.keys(agrup))
     {
         let divDato = document.createElement('div');
-
         divDato.className = 'agrupacion-dato';
-
         divAgrupacion.appendChild(divDato);
 
         let spanClave = document.createElement('span');
-
         spanClave.className = 'agrupacion-dato-clave';
-
-        spanClave.textContent = fecha;
-
+        spanClave.textContent = 'Gastos agrupados por ' + propiedad;
         divDato.appendChild(spanClave);
 
         let spanValor = document.createElement('span');
-
         spanValor.className = 'agrupacion-dato-valor';
-
-        spanValor.textContent = agrup[fecha];
-
+        spanValor.textContent = `${propiedad.valueOf()}`;
         divDato.appendChild(spanValor);
-    });
+    }
 
     elem.appendChild(divAgrupacion);
 
