@@ -14,8 +14,6 @@ function mostrarGastoWeb(gasto,idElemento)
   let gastoDiv = document.createElement('div');
   gastoDiv.className += 'gasto';
 
-  let titulo = "<h2>Presupuesto</h2>";
-
   let presupuestoDiv = document.createElement('div');
   presupuestoDiv.className = 'presupuesto';
   
@@ -23,7 +21,7 @@ function mostrarGastoWeb(gasto,idElemento)
 
   let gestorPresupuestoDiv = document.createElement('div');
   gestorPresupuestoDiv.className = 'presupuesto';
-  gestorPresupuestoDiv.textContent = titulo;
+  
 
   
   let descripcionDiv  = document.createElement('div');
@@ -50,11 +48,11 @@ function mostrarGastoWeb(gasto,idElemento)
 
   });*/
 
-  for (let etiqueta of gasto.etiquetas) {
+  for(let etiqueta of gasto.etiquetas){
 
     let span = document.createElement('span');
     span.classList.add('gasto-etiquetas-etiqueta') 
-    span.textContent = etiqueta
+    span.textContent += etiqueta
     etiquetasDiv.append(span)
   }
   
@@ -70,7 +68,27 @@ function mostrarGastoWeb(gasto,idElemento)
 
 function mostrarGastosAgrupadosWeb(idElemento,agrup,periodo)
 {
+  let parrafo = document.getElementById(idElemento);
  
+  let agrupados;
+
+  for( let [nombre, valor] of Object.entries( agrup ) )
+  {
+
+  agrupados += ` <div class="agrupacion-dato">
+                    <span class="agrupacion-dato-clave">${nombre}</span>
+                    <span class="agrupacion-dato-valor">${valor}</span>
+                  </div>
+
+                `;
+  }
+
+  parrafo.innerHTML = `<div class="agrupacion">
+                       <h1>Gastos agrupados por ${periodo}</h1>
+                            ${agrupados}
+                        </div>
+                        `;
+
   
 }
 
