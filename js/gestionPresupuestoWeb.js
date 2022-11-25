@@ -25,7 +25,7 @@ function mostrarGastoWeb(idElemento,gasto){
 
     let divValue = document.createElement('div');
     divValue.className = 'gasto-valor';
-    divValue.textContent = gasto.valor + "€";
+    divValue.textContent = gasto.valor + "";
     divGastos.append(divValue);
 
     let divEtiq = document.createElement('div');
@@ -38,15 +38,15 @@ function mostrarGastoWeb(idElemento,gasto){
 
         let etiquetaBorradas = new BorrarEtiquetasHandle(gasto);
         etiquetaBorradas.gasto = gasto;
-        etiquetaBorradas.etiqueta = etiqueta;
+        etiquetaBorradas.etiquetas = etiqueta;
         span.addEventListener("click", etiquetaBorradas)
     }
     divGastos.append(divEtiq);
 
     //Modificación de la función
     let editarBut = document.createElement('button');
-    editarBut.className = 'gasto-editar';
     editarBut.type = 'button';
+    editarBut.className = 'gasto-editar';
     editarBut.textContent = 'Editar';
     
     let editarNuevo = new EditarHandle(gasto);
@@ -90,11 +90,11 @@ function repintar(){
     mostrarDatoEnId("presupuesto", gestionPresupuesto.mostrarPresupuesto());
 
     //Mostrar gastos totales en div#gastos-totales
-    document.getElementById("gastos-totales".innerHTML) = "";
+    document.getElementById("gastos-totales").innerHTML = "";
     mostrarDatoEnId("gastos-totales", gestionPresupuesto.calcularTotalGastos());
 
     //Mostrar el balance total en div#balance-total
-    document.getElementById("balance-total".innerHTML) = "";
+    document.getElementById("balance-total").innerHTML = "";
     mostrarDatoEnId("balance-total", gestionPresupuesto.calcularBalance());
 
     //Borrar el contenido de div#listado-gastos-completo
@@ -102,7 +102,10 @@ function repintar(){
 
     //Mostrar el listado completo de gastos en div#listado-gastos-completo
     document.getElementById("listado-gastos-completo").innerHTML = "";
-    mostrarGastoWeb("listado-gastos-completo", gestionPresupuesto.listarGastos());
+    for(let element of gestionPresupuesto.listarGastos()){
+        mostrarGastoWeb("listado-gastos-completo", element);
+    }
+    
 };
 
 function actualizarPresupuestoWeb(){
@@ -123,7 +126,7 @@ function nuevoGastoWeb(){
     let descripcion = prompt("Introduce una descripción:");
     let valor = parseFloat(prompt("Introduce un valor:"));
     let fecha = Date.parse(prompt("Introduce la fecha:"));
-    let etiquetas = prompt("Introduce las etiquetas:".split(','));
+    let etiquetas = prompt("Introduce las etiquetas:").split(',');
 
     gestionPresupuesto.anyadirGasto(new gestionPresupuesto.CrearGasto(descripcion,valor,fecha,...etiquetas));
 
@@ -131,38 +134,35 @@ function nuevoGastoWeb(){
 };
 
 //Botón añadir gasto
-document.getElementById("anyadirgasto").addEventListener("click",gestionPresupuesto.anyadirGasto)
+document.getElementById("anyadirgasto").addEventListener("click",nuevoGastoWeb)
 
 function EditarHandle(){
     this.handleEvent = function(){
-        let valor = parseFloat(prompt("Introduce un valor:"));
         let descripcion = prompt("Introduce una descripción:");
+        let valor = parseFloat(prompt("Introduce un valor:"));
         let fecha = Date.parse(prompt("Introduce la fecha:"));
-        let etiquetas = prompt("Introduce las etiquetas:".split(','));
-        
-        this.gasto = gestionPresupuesto.actualizarValor(valor);
-        this.gasto = gestionPresupuesto.actualizarDescripcion(descripcion);
-        this.gasto = gestionPresupuesto.actualizarFecha(fecha);
-        this.gasto = gestionPresupuesto.anyadirEtiquetas(...etiquetas);
-
+        let etiquetas = prompt(("Introduce las etiquetas:").split(','));
+        this.gasto.actualizarValor(valor);
+        this.gasto.actualizarDescripcion(descripcion);
+        this.gasto.actualizarFecha(fecha);
+        this.gasto.anyadirEtiquetas(...etiquetas);
         repintar();
     }
 };
 
 function BorrarHandle(){
     this.handleEvent = function(){
-        this.gasto = gestionPresupuesto.borrarGasto(id);
-
+        let borrarHandle = this.gasto.id;
+        gestionPresupuesto.borrarGasto(borrarHandle);
         repintar();
     }
 };
 
 function BorrarEtiquetasHandle(){
     this.handleEvent = function(){
-        this.gasto = gestionPresupuesto.borrarEtiquetas(this.etiqueta);
-
+        this.gasto.borrarEtiquetas(this.etiquetas);
         repintar();
-    }
+    };
 };
 
 
