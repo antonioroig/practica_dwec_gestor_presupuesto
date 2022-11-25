@@ -2,7 +2,7 @@ import * as gestionPresupuesto from './gestionPresupuesto.js';
 
 'use strict';
 
-function mostrarDatoEnId(valor, idElemento)
+function mostrarDatoEnId(idElemento, valor)
 {
     let elem = document.getElementById(idElemento);
     elem.innerHTML += valor;
@@ -57,7 +57,7 @@ function mostrarGastoWeb(idElemento, gasto)
         divEtiquetas.appendChild(spanEtiqueta);
     }
 
-    divEtiquetas.appendChild(divEtiquetas);
+    divGasto.appendChild(divEtiquetas);
 }
 
 function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo)
@@ -66,7 +66,7 @@ function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo)
 
     let divAgrupacion = document.createElement('div');
 
-    divAgrucpacion.className = 'agrupacion';
+    divAgrupacion.className = 'agrupacion';
 
     let titulo = document.createElement('h1');
 
