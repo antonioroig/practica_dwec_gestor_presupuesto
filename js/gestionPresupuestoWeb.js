@@ -114,6 +114,20 @@ function mostrarGastosAgrupadosWeb(idElemento, agrupar, periodo)
 
 }
 
+function repintar()
+{
+
+    document.getElementById('presupuesto');
+    mostrarDatoEnId('presupuesto', gesPresupuesto.mostrarPresupuesto);
+
+    document.getElementById('gastos-totales');
+    mostrarDatoEnId('gastos-totales', gesPresupuesto.calcularTotalGastos);
+
+    document.getElementById('balance-total');
+    mostrarDatoEnId('balance-total', gesPresupuesto.calcularBalance);
+
+}
+
 export{
 
     mostrarDatoEnId,
