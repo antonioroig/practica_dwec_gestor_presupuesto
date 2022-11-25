@@ -22,3 +22,5 @@ gestionPresupuesto.anyadirGasto(gasto4);
 gestionPresupuesto.anyadirGasto(gasto5);
 gestionPresupuesto.anyadirGasto(gasto6);
 
+let agrupGastos = gestionPresupuesto.agruparGastos('dia');
+gestionPresupuestoWeb.mostrarGastosAgrupadosWeb('agrupacion-dia', agrupGastos, 'día');
