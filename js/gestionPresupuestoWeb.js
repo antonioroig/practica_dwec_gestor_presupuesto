@@ -112,14 +112,14 @@ function EditarHandle(){
         let des = prompt("descripción");
         let valor = parseInt(prompt("valor"));
         let fecha = prompt("fecha");
-        let etiq = prompt("etiquetas");
+        let etiqe = prompt("etiquetas");
     
 
         this.gasto.actualizarDescripcion(des)
         this.gasto.actualizarFecha(fecha);
         this.gasto.actualizarValor(valor);
         let etiquetas = new Array();
-            etiquetas = etiq.split(",");
+            etiquetas = etiqe.split(",");
             etiquetas.forEach(e => {
                 this.gasto.anyadirEtiquetas(e);
             });
