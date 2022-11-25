@@ -3,15 +3,15 @@ import * as web from './gestionPresupuestoWeb.js';
 "use strict";
 presupuesto.actualizarPresupuesto(1500);
 
-let valor = presupuesto.mostrarPresupuesto();
-web.mostrarDatoEnId(valor,'presupuesto');
+ 
+web.mostrarDatoEnId(presupuesto.mostrarPresupuesto(),"presupuesto");
 
-let gasto1=presupuesto.CrearGasto("Compra carne", 23.44, "2021-10-06", "casa", "comida");
-let gasto2=presupuesto.CrearGasto("Compra fruta y verdura", 14.25, "2021-09-06", "supermercado", "comida");
-let gasto3=presupuesto.CrearGasto("Bonobús", 18.60, "2020-05-26", "transporte");
-let gasto4=presupuesto.CrearGasto("Gasolina", 60.42, "2021-10-08", "transporte", "gasolina");
-let gasto5=presupuesto.CrearGasto("Seguro hogar", 206.45, "2021-09-26", "casa", "seguros");
-let gasto6=presupuesto.CrearGasto("Seguro coche", 195.78, "2021-10-06", "transporte", "seguros");
+let gasto1= new presupuesto.CrearGasto("Compra carne", 23.44, "2021-10-06", "casa", "comida");
+let gasto2= new presupuesto.CrearGasto("Compra fruta y verdura", 14.25, "2021-09-06", "supermercado", "comida");
+let gasto3= new presupuesto.CrearGasto("Bonobús", 18.60, "2020-05-26", "transporte");
+let gasto4= new presupuesto.CrearGasto("Gasolina", 60.42, "2021-10-08", "transporte", "gasolina");
+let gasto5= new presupuesto.CrearGasto("Seguro hogar", 206.45, "2021-09-26", "casa", "seguros");
+let gasto6= new presupuesto.CrearGasto("Seguro coche", 195.78, "2021-10-06", "transporte", "seguros");
 
 presupuesto.anyadirGasto(gasto1);
 presupuesto.anyadirGasto(gasto2);
@@ -20,43 +20,43 @@ presupuesto.anyadirGasto(gasto4);
 presupuesto.anyadirGasto(gasto5);
 presupuesto.anyadirGasto(gasto6);
 
-let gastos_totales = presupuesto.calcularTotalGastos();
-web.mostrarDatoEnId(gastos_totales,'gastos-totales');
 
-let balance_total = presupuesto.calcularBalance();
-web.mostrarDatoEnId(balance_total,'balance-total');
+web.mostrarDatoEnId(presupuesto.calcularTotalGastos(),"gastos-totales");
+
+
+web.mostrarDatoEnId(presupuesto.calcularBalance(),"balance-total");
 
 let listado_gastos = presupuesto.listarGastos();
 for(let gasto of listado_gastos)
 {
-    web.mostrarGastoWeb('listado-gastos-completo',gasto);
+    web.mostrarGastoWeb("listado-gastos-completo",gasto);
 }
 
 let gastos_septiembre = presupuesto.filtrarGastos({fechaHasta:"2021-09-30",fechaDesde:"2021-09-01"});
 for(let gasto of gastos_septiembre)
 {
-    web.mostrarGastoWeb('listado-gastos-filtrado-1',gasto);
+    web.mostrarGastoWeb("listado-gastos-filtrado-1",gasto);
 }
 
 let gasto_filtrado2 = presupuesto.filtrarGastos({valorMinimo: 50})
 for(let gasto of gasto_filtrado2)
 {
-    web.mostrarGastoWeb('listado-gastos-filtrado-2',gasto);
+    web.mostrarGastoWeb("listado-gastos-filtrado-2",gasto);
 }
-let gasto_filtrado3 = presupuesto.filtrarGastos({valorMinimo: 200, etiquetasTiene: ['seguros']})
+let gasto_filtrado3 = presupuesto.filtrarGastos({valorMinimo: 200, etiquetasTiene: ["seguros"]})
 for(let gasto of gasto_filtrado3)
 {
-    web.mostrarGastoWeb('listado-gastos-filtrado-3',gasto);
+    web.mostrarGastoWeb("listado-gastos-filtrado-3",gasto);
 }
-let gasto_filtrado4 = presupuesto.filtrarGastos({valorMaximo: 50, etiquetasTiene: ['comida','transporte']})
+let gasto_filtrado4 = presupuesto.filtrarGastos({valorMaximo: 50, etiquetasTiene: ["comida","transporte"]})
 for(let gasto of gasto_filtrado4)
 {
-    web.mostrarGastoWeb('listado-gastos-filtrado-4',gasto);
+    web.mostrarGastoWeb("listado-gastos-filtrado-4",gasto);
 }
 
-let gastos_agrupados = presupuesto.agruparGastos('dia');
-web.mostrarGastosAgrupadosWeb('agrupacion-dia',gastos_agrupados,'día');
-let gastos_agrupados2 = presupuesto.agruparGastos('mes');
-web.mostrarGastosAgrupadosWeb('agrupacion-mes',gastos_agrupados2,'mes');
-let gastos_agrupados3 = presupuesto.agruparGastos('anyo');
-web.mostrarGastosAgrupadosWeb('agrupacion-anyo',gastos_agrupados3,'año');
+
+web.mostrarGastosAgrupadosWeb("agrupacion-dia",presupuesto.agruparGastos('dia'),'día');
+
+web.mostrarGastosAgrupadosWeb("agrupacion-mes",presupuesto.agruparGastos('mes'),'mes');
+
+web.mostrarGastosAgrupadosWeb("agrupacion-anyo",presupuesto.agruparGastos('anyo'),'año');
