@@ -112,21 +112,49 @@ function actualizarPresupuestoWeb(){
 }
 
 let btnPresupuesto = document.getElementById("actualizarpresupuesto");
-btnPresupuesto.addEventListener("click",actualizarPresupuestoWeb()) 
+btnPresupuesto.addEventListener("click", actualizarPresupuestoWeb()) 
 
 function nuevoGastoWeb(){
     let descripcion = prompt("Introduzca una descripcion", "");
     let valor = Number(prompt("Introduzca un valor", 100));
-    let fecha = prompt("Introduzca una fecha", "2000-01-21");
-    let etiquetas = prompt("Introduzca las etiquetas");
+    let fecha = new Date(prompt("Introduzca una fecha", "2000-01-21"));
+    let etiquetas = prompt("Introduzca las etiquetas","");
+    let arrEtiquetas = [];
+    if(etiquetas){
+        arrEtiquetas = etiquetas.split(',');
+    }
 
-    anyadirGasto(new CrearGasto(descripcion, valor, fecha, ...etiquetas.split(",")))
+    anyadirGasto(new CrearGasto(descripcion, valor, fecha, ...arrEtiquetas))
     repintar();
 }
 
 let btnAnyadirGasto = document.getElementById("anyadirgasto");
 btnAnyadirGasto.addEventListener("click", nuevoGastoWeb()) 
 
+function EditarHandle(gasto){
+    this.gasto = gasto;
+    this.handleEvent = function(){
+        let descripcion = prompt("Introduzca una descripcion", "");
+        if(descripcion){
+            gasto.actualizarDescripcion(descripcion);
+        }
+        let valor = Number(prompt("Introduzca un valor", 100));
+        if(valor){
+            gasto.actualizarValor(valor);
+        }
+        let fecha = new Date(prompt("Introduzca una fecha", "2000-01-21"));
+        if(fecha){
+            gasto.actualizarFecha(fecha);
+        }
+        let etiquetas = prompt("Introduzca las etiquetas","");
+        let arrEtiquetas = [];
+        if(etiquetas){
+            arrEtiquetas = etiquetas.split(',');
+            gasto.anyadirEtiquetas(arrEtiquetas);
+        }
+        repintar();
+    }
+}
 export{
     mostrarDatoEnId,
     mostrarGastoWeb,
