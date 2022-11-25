@@ -37,7 +37,7 @@ function mostrarGastoWeb(idElemento, gasto){
     divGastoEtiqueta.className = "gasto-etiquetas";
 
 
-    for(let i = 0; i < gasto.etiquetas.length;i++){
+    for(let i = 0; i < gasto.etiquetas.length; i++){
         let span = document.createElement("span");
         span.className = "gasto-etiquetas-etiqueta";
         span.innerHTML = gasto.etiquetas[i];
@@ -90,25 +90,23 @@ function repintar(){
     mostrarDatoEnId(gestion.calcularTotalGastos(),"gastos-totales");
     mostrarDatoEnId(gestion.calcularBalance(),"balance-total");
     for(let gasto of gestion.listarGastos()){
-        mostrarGastoWeb(gasto,"listado-gastos-completo");
+        mostrarGastoWeb("listado-gastos-completo", gasto);
     }
 };
 
 function actualizarPresupuestoWeb(){
 
     let presupuesto = prompt("Introduce un presupuesto");
-    parseInt(presupuesto);
-    gestion.actualizarPresupuesto(presupuesto);
+    gestion.actualizarPresupuesto(parseFloat(presupuesto));
     repintar();
 }
 
 function nuevoGastoWeb(){
 
     let descripcion = prompt("Introduce la descripción");
-    let valor = prompt("Introduce el valor");
+    let valor = parseFloat(prompt("Introduce el valor"));
     let fecha = prompt("Introduce la fecha");
     let etiquetas = prompt("Introduce las etiquetas");
-    parseInt(valor);
     let arr = etiquetas.split(', ');
 
     let gasto = new gestion.CrearGasto(descripcion,valor,fecha,arr);
@@ -116,9 +114,13 @@ function nuevoGastoWeb(){
     repintar();
 };
 
-actualizarpresupuesto.addEventListener("click", actualizarPresupuestoWeb());
+function EditarHandle(){
+    
+}
 
-anyadirgasto.addEventListener("click", nuevoGastoWeb());
+actualizarpresupuesto.addEventListener("click", actualizarPresupuestoWeb);
+
+anyadirgasto.addEventListener("click", nuevoGastoWeb);
 
 export	{
     mostrarDatoEnId,
