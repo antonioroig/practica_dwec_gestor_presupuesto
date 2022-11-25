@@ -117,6 +117,12 @@ function nuevoGastoWeb(){
 actualizarpresupuesto.addEventListener('click',actualizarPresupuestoWeb);
 anyadirgasto.addEventListener('click',nuevoGastoWeb);
 
+function EditarHandle(){
+
+}
+
+
+
 //NO MODIFICAR.
 export   {
     mostrarDatoEnId,
@@ -124,5 +130,6 @@ export   {
     mostrarGastosAgrupadosWeb,
     repintar,
     actualizarPresupuestoWeb,
-    nuevoGastoWeb
+    nuevoGastoWeb,
+    EditarHandle
 }
