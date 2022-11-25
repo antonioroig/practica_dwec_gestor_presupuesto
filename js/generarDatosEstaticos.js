@@ -50,3 +50,6 @@ for (let gasto of gestionPresupuesto.filtrarGastos({ valorMaximo: 50, etiquetasT
 gestionPresupuestoWeb.mostrarGastosAgrupadosWeb('agrupacion-dia',gestionPresupuesto.agruparGastos("dia"),"día");
 gestionPresupuestoWeb.mostrarGastosAgrupadosWeb('agrupacion-mes',gestionPresupuesto.agruparGastos("mes"),"mes");
 gestionPresupuestoWeb.mostrarGastosAgrupadosWeb('agrupacion-anyo',gestionPresupuesto.agruparGastos("anyo"),"año");
+
+
+
