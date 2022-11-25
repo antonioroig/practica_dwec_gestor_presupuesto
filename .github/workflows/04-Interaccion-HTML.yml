@@ -16,7 +16,7 @@ jobs:
 
     steps:
       # Paso 1: clonar el repositorio
-      - uses: actions/checkout@v2
+      #- uses: actions/checkout@v2
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v2
         # Paso 2: utilizar la versión de Node correspondiente
