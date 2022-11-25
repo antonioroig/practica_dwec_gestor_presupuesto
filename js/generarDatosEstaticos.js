@@ -60,3 +60,9 @@ for (let gastos of filtrado4)
 
 let agrupGastos = gestionPresupuesto.agruparGastos('dia');
 gestionPresupuestoWeb.mostrarGastosAgrupadosWeb('agrupacion-dia', agrupGastos, 'día');
+
+let agrupacionMes = gestionPresupuesto.agruparGastos("mes");
+gestionPresupuestoWeb.mostrarGastosAgrupadosWeb("agrupacion-mes",agrupacionMes,"mes");
+
+let agrupacionAnyo = gestionPresupuesto.agruparGastos("anyo");
+gestionPresupuestoWeb.mostrarGastosAgrupadosWeb("agrupacion-anyo",agrupacionAnyo,"año");
