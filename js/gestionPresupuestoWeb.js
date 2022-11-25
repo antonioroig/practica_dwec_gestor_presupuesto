@@ -24,38 +24,43 @@ function mostrarGastoWeb(idElemento, gasto)
         let ele = document.getElementById(idElemento);
         let divGas = document.createElement('div');
         divGas.className = "gasto";
+        ele.append(divGas);
 
         let divDes = document.createElement('div');
-        divDes.className = "descripcion";
+        divDes.className = "gasto-descripcion";
         divDes.innerHTML += gasto.descripcion;
         divGas.append(divDes);
 
         let divFec = document.createElement('div');
-        divFec.className = "fecha";
+        divFec.className = "gasto-fecha";
         divFec.innerHTML += gasto.fecha;
         divGas.append(divFec);
 
         let divVal = document.createElement('div');
-        divVal.className = "valor";
+        divVal.className = "gasto-valor";
         divVal.innerHTML += gasto.valor;
         divGas.append(divVal);
 
         let divEtiq = document.createElement('div');
-        divEtiq.className = "etiqueta";
+        divEtiq.className = "gasto-etiquetas";
         
         
-
         for(let i = 0; i < gasto.etiquetas.length; i++)
         {
-            let divEtiquetas = document.createElement('span');
-            divEtiquetas.className = "etiquetas";
-            divEtiquetas.innerHTML += gasto.etiquetas;
-            divGas.append(divEtiquetas);
+            let spanEtiquetas = document.createElement('span');
+            spanEtiquetas.className = "gasto-etiquetas-etiqueta";
+            let val = gasto.etiquetas[i];
+            spanEtiquetas.innerHTML += " " + val + "\n";
+            divEtiq.append(spanEtiquetas);
+            
         }
+
+
+        
 
         divGas.append(divEtiq);
         
-        ele.append(divGas);
+       
 
 
 
@@ -71,7 +76,7 @@ function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo)
     {
         let ele = document.getElementById(idElemento);
         let divGrup = document.createElement('div');
-        divGrup.className = "grupos";
+        divGrup.className = "agrupacion";
         let tit = document.createElement('h1');
         tit.innerHTML = `Gastos agrupados por ${periodo}`;
         divGrup.append(tit);
@@ -80,15 +85,16 @@ function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo)
         {
      
              let divDat = document.createElement('div');
-             divDat.className = "datos";
+             divDat.className = "agrupacion-dato";
      
              let datosClav = document.createElement('span');
-             datosClav.className = 'datosClaves';
+             datosClav.className = 'agrupacion-dato-clave';
              datosClav.innerHTML += `${value}`;
              divDat.append(datosClav);
      
              let valor = document.createElement('span');
-             valor.className = 'valor';
+             valor.className = 'agrupacion-dato-valor';
+             valor.innerHTML +=  `${value.valueOf()}`;
              divDat.append(valor);
      
              divGrup.append(divDat);

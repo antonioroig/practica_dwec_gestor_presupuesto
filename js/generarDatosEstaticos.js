@@ -20,32 +20,50 @@ gesPres.anyadirGasto(g3);
 gesPres.anyadirGasto(g4);
 gesPres.anyadirGasto(g5);
 gesPres.anyadirGasto(g6);
-/*
+
+
+//Mostrar los datos dependiendo de la ID
 let result = gesPres.calcularTotalGastos();
 gesWeb.mostrarDatoEnId('gastos-totales',result);
 
 let result2 = gesPres.calcularBalance();
 gesWeb.mostrarDatoEnId('balance-total',result2);
 
-let gasCompleto = gesPres.listarGastos();
-gesWeb.mostrarGastoWeb('listado-gastos-completo', gasCompleto);
 
-let filtrado = gesPres.filtrarGastos({fechaDesde: "2021-09-01", fechaHasta:"2021-09-30"});
-gesWeb.mostrarGastoWeb('listado-gastos-filtrado-1', filtrado)
-
-let filtrado2 = gesPres.filtrarGastos({valorMinimo: 50});
-gesWeb.mostrarGastoWeb('listado-gastos-filtrado-2', filtrado2);
+//Mostrar los gastos Web
 
 
 
-let filtrado3 = gesPres.filtrarGastos({valorMinimo: 200, etiquetasTiene:["seguros"]});
-gesWeb.mostrarGastoWeb('listado-gastos-filtrado-3', filtrado3);
+for(let recorrido of gesPres.listarGastos())
+{
+ gesWeb.mostrarGastoWeb('listado-gastos-completo', recorrido);
+}
 
-let filtrado4 = gesPres.filtrarGastos({valorMaximo: 50, etiquetasTiene:["comida", "transporte"]});
-gesWeb.mostrarGastoWeb('listado-gastos-filtrado-4', filtrado4);
+let filter = gesPres.filtrarGastos({fechaDesde: "2021-09-01", fechaHasta:"2021-09-30"});
+for(let recorrido of filter)
+{
+gesWeb.mostrarGastoWeb('listado-gastos-filtrado-1', recorrido)
+}
 
-*/
+let filter2 = gesPres.filtrarGastos({valorMinimo: 50});
+for(let recorrido of filter2)
+{
+ gesWeb.mostrarGastoWeb('listado-gastos-filtrado-2', recorrido);
+}
 
+let filter3 = gesPres.filtrarGastos({valorMinimo: 200, etiquetasTiene: ["seguros"]});
+for(let recorrido of filter3)
+{
+gesWeb.mostrarGastoWeb('listado-gastos-filtrado-3', recorrido);
+}
+
+let filter4 = gesPres.filtrarGastos({valorMaximo: 50, etiquetasTiene:["comida", "transporte"]});
+for(let recorrido of filter4)
+{
+gesWeb.mostrarGastoWeb('listado-gastos-filtrado-4', recorrido);
+}
+
+//Agrupación por fechas
 let filtrado5 = gesPres.agruparGastos("dia");
 gesWeb.mostrarGastosAgrupadosWeb('agrupacion-dia', filtrado5, "día");
 
