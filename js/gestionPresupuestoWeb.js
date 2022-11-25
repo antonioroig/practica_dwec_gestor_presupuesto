@@ -81,26 +81,42 @@ function mostrarGastosAgrupadosWeb(idElemento, agroup, periodo){
 
 function repintar(){
 
-mostrarDatoEnId('',"presupuesto");
-mostrarDatoEnId('',"gastos-totales");
-mostrarDatoEnId('',"balance-total");
-mostrarDatoEnId('', "listado-gastos-completo");
+document.getElementById("presupuesto").innerHTML = "";
+document.getElementById("gastos-totales").innerHTML = "";
+document.getElementById("balance-total").innerHTML = "";
+document.getElementById("listado-gastos-completo").innerHTML = "";
 
 mostrarDatoEnId(scriptsGestion.mostrarPresupuesto(),"presupuesto");
 mostrarDatoEnId(scriptsGestion.calcularTotalGastos(),"gastos-totales");
 mostrarDatoEnId(scriptsGestion.calcularBalance(),"balance-total");
-for(let g of scriptsGestion.listarGastos()){
-    mostrarGastoWeb("listado-gastos-completo",g);
-}
 
+    for(let g of scriptsGestion.listarGastos()){
+        mostrarGastoWeb("listado-gastos-completo",g);
+    }
 }
 
 function actualizarPresupuestoWeb (){
     let presupuesto = prompt('indique el presupuesto');
-    scriptsGestion.actualizarPresupuesto(parseInt(presupuesto));
+    scriptsGestion.actualizarPresupuesto(parseFloat(presupuesto));
+    repintar();
 }
 
-actualizarPresupuestoWeb.addEventListener('click', repintar);
+
+function nuevoGastoWeb (){
+    let descripcion = prompt('introduce la descripcion');
+    let valor = parseFloat(prompt('introduce el valor'));
+    let fecha = prompt('introduce la fecha');
+    let etiqueta = prompt('introduce la/s etiquetas');
+    let etiquetas = etiqueta.split(', ');
+
+    let gastoNuevo = new scriptsGestion.CrearGasto(descripcion, valor, fecha, etiquetas);
+    scriptsGestion.anyadirGasto(gastoNuevo);
+
+    repintar();
+}
+
+actualizarpresupuesto.addEventListener("click", actualizarPresupuestoWeb);
+anyadirgasto.addEventListener("click", nuevoGastoWeb);
 
 
 
@@ -109,5 +125,7 @@ actualizarPresupuestoWeb.addEventListener('click', repintar);
 export{
 mostrarDatoEnId,
 mostrarGastoWeb,
-mostrarGastosAgrupadosWeb
+mostrarGastosAgrupadosWeb,
+repintar,
+actualizarPresupuestoWeb,
 }
