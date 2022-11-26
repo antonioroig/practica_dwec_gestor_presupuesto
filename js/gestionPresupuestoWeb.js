@@ -102,7 +102,7 @@ function repintarWeb(){
 function actualizarPresupuestoWeb(){
     let presupuesto = prompt("Introduce un presupuesto");
     if(presupuesto != null){
-        let presupuesto = parseFloat(presupuesto);
+        presupuesto = parseFloat(presupuesto);
         actualizarPresupuesto(presupuesto);
         repintarWeb();
     }
@@ -114,7 +114,7 @@ function actualizarPresupuestoWeb(){
 function actualizarpresupuesto(){
     let presupuesto = prompt("Introduce un presupuesto");
     if(presupuesto != null){
-        let presupuesto = parseFloat(presupuesto);
+        presupuesto = parseFloat(presupuesto);
         actualizarPresupuesto(presupuesto);
         repintarWeb();
     }
@@ -123,9 +123,43 @@ function actualizarpresupuesto(){
     }
 }
 
-function nuevoGastoWeb(){
+let botonActualizarPresupuesto = document.getElementById('actualizarpresupuesto');
+botonActualizarPresupuesto.addEventListener("click", actualizarPresupuestoWeb);
+botonActualizarPresupuesto.addEventListener("click", actualizarpresupuesto);
 
+function nuevoGastoWeb(){
+    let descripcionGasto = prompt("Introduzca una descripción");
+    if(descripcionGasto != null){
+        let valor = prompt("Introduzca un valor");
+        if(valor != null){
+            let fecha = prompt("Introduzca una fecha");
+            if(fecha != null){
+                let etiquetas = prompt("Introduzca las etiquetas");
+                if(etiquetas != null){
+                    let arrayEtiquetas = etiquetas.split(",");
+                    let gastoNuevo = CrearGasto(descripcionGasto, valor, fecha, arrayEtiquetas);
+                    anyadirGasto(gastoNuevo);
+                    repintarWeb();
+                }
+                else{
+                    alert(`ERROR ETIQUETAS`);
+                }
+            }
+            else{
+                alert(`ERROR FECHA ${fecha}`);
+            }
+        }
+        else{
+            alert(`ERROR VALOR ${valor}`);
+        }
+    }
+    else{
+        alert(`ERROR DESCRIPCION ${descripcionGasto}`);
+    }
 }
+
+let botonAnyadirGasto = document.getElementById('anyadirgasto');
+botonAnyadirGasto.addEventListener("click", nuevoGastoWeb);
 
 function anyadirgasto(){
 
@@ -148,4 +182,6 @@ export{
     mostrarGastoWeb,
     mostrarGastosAgrupadosWeb,
     repintarWeb,
+    actualizarPresupuestoWeb,
+    actualizarpresupuesto
 }
