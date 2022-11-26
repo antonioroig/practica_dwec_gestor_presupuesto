@@ -89,8 +89,63 @@ function mostrarGastosAgrupadosWeb(agrup, periodo, idElemento){
     }
 }
 
+function repintarWeb(){
+    mostrarDatoEnId(mostrarPresupuesto(), "presupuesto");
+    mostrarDatoEnId(calcularTotalGastos(), "gastos-totales");
+    mostrarDatoEnId(calcularBalance(), "balance-total");
+    mostrarDatoEnId("", "listado-gastos-completo");
+    listarGastos().forEach(gasto => {
+        mostrarGastoWeb(gasto, "listado-gastos-completo");
+    });
+}
+
+function actualizarPresupuestoWeb(){
+    let presupuesto = prompt("Introduce un presupuesto");
+    if(presupuesto != null){
+        let presupuesto = parseFloat(presupuesto);
+        actualizarPresupuesto(presupuesto);
+        repintarWeb();
+    }
+    else{
+        alert(`No es númerico`);
+    }
+}
+
+function actualizarpresupuesto(){
+    let presupuesto = prompt("Introduce un presupuesto");
+    if(presupuesto != null){
+        let presupuesto = parseFloat(presupuesto);
+        actualizarPresupuesto(presupuesto);
+        repintarWeb();
+    }
+    else{
+        alert(`No es númerico`);
+    }
+}
+
+function nuevoGastoWeb(){
+
+}
+
+function anyadirgasto(){
+
+}
+
+function EditarHandle(){
+
+}
+
+function BorrarHandle(){
+
+}
+
+function BorrarEtiquetasHandle(){
+
+}
+
 export{
     mostrarDatoEnId,
     mostrarGastoWeb,
-    mostrarGastosAgrupadosWeb
+    mostrarGastosAgrupadosWeb,
+    repintarWeb,
 }
