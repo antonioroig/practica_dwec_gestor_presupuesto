@@ -131,7 +131,6 @@ function repintar(){
     document.getElementById('gastos-totales').innerHTML = '';
     document.getElementById('balance-total').innerHTML = '';
 
-
     // El presupuesto --> Mostrar el presupuesto en div#presupuesto (funciones mostrarPresupuesto y mostrarDatoEnId)
     mostrarDatoEnId('presupuesto', gestionPresupuesto.mostrarPresupuesto());
     // - El total de gastos --> Mostrar los gastos totales en div#gastos-totales (funciones calcularTotalGastos y mostrarDatoEnId)
@@ -139,7 +138,7 @@ function repintar(){
     // - El balance actual --> Mostrar el balance total en div#balance-total (funciones calcularBalance y mostrarDatoEnId)
     mostrarDatoEnId('balance-total', gestionPresupuesto.calcularBalance());
 
-    // Borrar el contenido de div#listado-gastos-completo, para que el paso siguiente no duplique la información. Puedes utilizar innerHTML para borrar el contenido de dicha capa.
+     // Borrar el contenido de div#listado-gastos-completo, para que el paso siguiente no duplique la información. Puedes utilizar innerHTML para borrar el contenido de dicha capa.
     document.getElementById('listado-gastos-completo').innerHTML = '';
     // - Mostrar el listado completo de gastos en div#listado-gastos-completo (funciones listarGastos y mostrarGastoWeb)
     let gastosListados = gestionPresupuesto.listarGastos();
@@ -157,18 +156,21 @@ function repintar(){
     }
 
     document.getElementById('listado-gastos-filtrado-2').innerHTML = '';
+
     gastosFiltrados = gestionPresupuesto.filtrarGastos({valorMinimo: 50});
     for(let i = 0; i < gastosFiltrados.length; i++){
         gestionPresupuestoWeb.mostrarGastoWeb('listado-gastos-filtrado-2', gastosFiltrados[i]);
     }
 
     document.getElementById('listado-gastos-filtrado-3').innerHTML = '';
+
     gastosFiltrados = gestionPresupuesto.filtrarGastos({valorMaximo: 200, etiquetasTiene: ['seguros']});
     for(let i = 0; i < gastosFiltrados.length; i++){
         gestionPresupuestoWeb.mostrarGastoWeb('listado-gastos-filtrado-3', gastosFiltrados[i]);
     }
 
     document.getElementById('listado-gastos-filtrado-4').innerHTML = '';
+
     gastosFiltrados = gestionPresupuesto.filtrarGastos({valorMaximo: 50, etiquetasTiene: ['comida','transporte']})
     for(let i = 0; i < gastosFiltrados.length; i++){
         gestionPresupuestoWeb.mostrarGastoWeb('listado-gastos-filtrado-4', gastosFiltrados[i]);
@@ -186,16 +188,39 @@ function repintar(){
 
     document.getElementById('agrupacion-anyo').innerHTML='';
     gestionPresupuestoWeb.mostrarGastosAgrupadosWeb('agrupacion-anyo',agrupAnyo, 'año');
-    
 }
 
 /*let element = document.getElementById("actualizarpresupuesto");
 element.addEventListener("click", actualizarPresupuestoWeb());*/
 
-actualizarpresupuesto.onclick = function actualizarPresupuestoWeb(){
-        gestionPresupuesto.actualizarPresupuesto(parseFloat(prompt('Introduce un presupuesto: ', 0)));
+function actualizarPresupuestoWeb(){
+        gestionPresupuesto.actualizarPresupuesto(parseFloat(prompt('Introduce un presupuesto: ')));
         repintar();
 }
+
+function nuevoGastoWeb()
+{
+    let desc = prompt('Introduce la descripción: ');
+    let valor = parseFloat(prompt('Introduce el valor: '));
+    let fecha = prompt('Introduce una fecha (aaaa-mm-dd): ');
+    let etiquetasTiene = prompt('Introduce las etiquetas: ');
+    let etiquetas = etiquetasTiene.split(',');
+    let gasto = new gestionPresupuesto.CrearGasto(desc, valor, fecha);
+
+    for(let i = 0; i < etiquetas.length; i++){
+        gasto.anyadirEtiquetas(etiquetas[i]);
+    }
+
+    gestionPresupuesto.anyadirGasto(gasto);
+
+    repintar();
+}
+
+let actualizarpresupuesto = document.getElementById('actualizarpresupuesto');
+actualizarpresupuesto.onclick = actualizarPresupuestoWeb();
+
+let anyadirgasto = document.getElementById('anyadirgasto');
+anyadirgasto.onclick = nuevoGastoWeb();
 
 // npx cypress open -- PARA HACER TEST GRÁFICO
 // npm run test --> pasa todos los tests
@@ -204,13 +229,12 @@ export   {
     mostrarDatoEnId,
     mostrarGastoWeb,
     mostrarGastosAgrupadosWeb,
-    //actualizarPresupuestoWeb,
-    //repintar,
- }
+    repintar,
+    actualizarPresupuestoWeb,
+    nuevoGastoWeb,
+}
 
 
- /*
+/*
     https://www.w3schools.com/jsref/event_onclick.asp
- 
- 
  */
