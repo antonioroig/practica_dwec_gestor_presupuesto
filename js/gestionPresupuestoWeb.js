@@ -48,11 +48,41 @@ function mostrarGastoWeb(idElemento, gasto){
             let spanEtiqueta = document.createElement('span');
             spanEtiqueta.className = 'gasto-etiquetas-etiqueta';
             spanEtiqueta.textContent = contenidoEtiqueta + ' ';
+            
+            // HANDLE BORRAR ETIQUETA - - - - - - - - - - - - - - - - - - -
+            let borrarEtiquetas = new BorrarEtiquetasHandle();
+            borrarEtiquetas.gasto = gasto;
+            borrarEtiquetas.etiqueta = gasto.etiquetas[i];
+            spanEtiqueta.addEventListener('click', borrarEtiquetas);
             divEtiquetas.append(spanEtiqueta);   
         }
         divGasto.append(divEtiquetas);
         // - - - - - - - - - - - - - -
 
+        if (idElemento == 'listado-gastos-completo')
+        {   
+            // HANDLE - editar gasto  - - - - - - - - - - - - - - - - - - -
+            let btnEditar = document.createElement('button');
+            btnEditar.className = 'gasto-editar';
+            btnEditar.type = 'button';
+            btnEditar.textContent = 'Editar';
+    
+            let editarHandle = new EditarHandle();
+            editarHandle.gasto = gasto;
+            btnEditar.addEventListener('click', editarHandle); // addEventListener nos permite utilizar un objeto como manejador de eventos.
+            divGasto.append(btnEditar);
+            // HANDLE - borrar gasto - - - - - - - - - - - - - - - - - - - -
+            let btnBorrar = document.createElement('button');
+            btnBorrar.className = 'gasto-borrar';
+            btnBorrar.type = 'button';
+            btnBorrar.textContent = 'Borrar';
+
+            let borrarHandle = new BorrarHandle();
+            borrarHandle.gasto = gasto;
+            btnBorrar.addEventListener('click', borrarHandle); // addEventListener nos permite utilizar un objeto como manejador de eventos.
+            divGasto.append(btnBorrar);
+        }
+        
         elemento.append(divGasto);
     
     }
@@ -116,7 +146,6 @@ function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo){
 
 // Estamos desarrollando una aplicación JavaScript controlada por datos. Cada vez que se añade, 
 // modifica o borra un gasto, debemos mostrar el resultado en la página HTML. Recordemos que la aplicación debe mostrar:
-    
     // - El presupuesto --> Mostrar el presupuesto en div#presupuesto (funciones mostrarPresupuesto y mostrarDatoEnId)
     // - El total de gastos --> Mostrar los gastos totales en div#gastos-totales (funciones calcularTotalGastos y mostrarDatoEnId)
     // - El balance actual --> Mostrar el balance total en div#balance-total (funciones calcularBalance y mostrarDatoEnId)
@@ -163,13 +192,54 @@ function nuevoGastoWeb()
     repintar();
 }
 
+
+
+// Handle Functions
+function EditarHandle()
+{
+    this.handleEvent = function()
+    {
+        let etiquetas = new Array();
+        let desc = prompt('Introduce la descripción: ');
+        let valor = parseFloat(prompt('Introduce el valor: '));
+        let fecha = prompt('Introduce fecha (aaaa-mm-dd): ');
+        let etiquetasTiene = prompt('Introduce las etiquetas: ');
+        
+        etiquetas = etiquetasTiene.split(',');
+        
+        this.gasto.actualizarDescripcion(desc);
+        this.gasto.actualizarValor(valor);
+        this.gasto.actualizarFecha(fecha);
+
+        this.gasto.etiquetas = etiquetas;
+        repintar();
+    };
+}
+
+function BorrarHandle()
+{    
+    this.handleEvent = function()
+    {
+        gestionPresupuesto.borrarGasto(this.gasto.id);
+        repintar();
+    };
+}
+
+function BorrarEtiquetasHandle()
+{
+    this.handleEvent = function()
+    {
+        this.gasto.borrarEtiquetas(this.etiqueta);
+        repintar();
+    };
+}
+
 // BUTTONES
 let btnActualizarPresupuesto = document.getElementById('actualizarpresupuesto');
 btnActualizarPresupuesto.onclick = actualizarPresupuestoWeb;
 
 let btnAnyadirGasto = document.getElementById('anyadirgasto');
 btnAnyadirGasto.onclick = nuevoGastoWeb;
-
 // npx cypress open -- PARA HACER TEST GRÁFICO
 // npm run test --> pasa todos los tests
 // EXPORT
@@ -182,8 +252,10 @@ export   {
     actualizarPresupuestoWeb,
     nuevoGastoWeb,
 
+    EditarHandle,
+    BorrarHandle,
+    BorrarEtiquetasHandle,
 }
-
 
 /*
     https://www.w3schools.com/jsref/event_onclick.asp
