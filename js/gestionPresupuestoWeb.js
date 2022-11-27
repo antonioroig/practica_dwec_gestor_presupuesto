@@ -130,25 +130,22 @@ function repintar(){
     document.getElementById('gastos-totales').innerHTML = '';
     document.getElementById('balance-total').innerHTML = '';
 
-    mostrarDatoEnId('presupuesto', gestionPresupuesto.mostrarPresupuesto());
-    mostrarDatoEnId('gastos-totales', gestionPresupuesto.calcularTotalGastos());
-    mostrarDatoEnId('balance-total', gestionPresupuesto.calcularBalance());
+    mostrarDatoEnId(gestionPresupuesto.mostrarPresupuesto(), 'presupuesto');
+    mostrarDatoEnId(gestionPresupuesto.calcularTotalGastos(), 'gastos-totales');
+    mostrarDatoEnId(gestionPresupuesto.calcularBalance(), 'balance-total');
 
     document.getElementById('listado-gastos-completo').innerHTML = '';
 
     let gastosListados = gestionPresupuesto.listarGastos();
     for(let i = 0; i < gastosListados.length; i++){
-        gestionPresupuestoWeb.mostrarGastoWeb('listado-gastos-completo', gastosListados[i]);
+        mostrarGastoWeb('listado-gastos-completo', gastosListados[i]);
     }
 }
 
-/*let element = document.getElementById("actualizarpresupuesto");
-element.addEventListener("click", actualizarPresupuestoWeb());*/
-
 // actualizarPresupuestoWeb
 function actualizarPresupuestoWeb(){
-        let presupuestoNuevo = parseFloat(prompt('Introduce un presupuesto: '));
-        gestionPresupuesto.actualizarPresupuesto(presupuestoNuevo);
+        let presupuestoNuevo = prompt('Introduce un presupuesto: ');
+        gestionPresupuesto.actualizarPresupuesto(parseFloat(presupuestoNuevo));
         repintar();
 }
 // nuevoGastoWeb
@@ -158,12 +155,9 @@ function nuevoGastoWeb()
     let valor = parseFloat(prompt('Introduce el valor: '));
     let fecha = prompt('Introduce fecha (aaaa-mm-dd): ');
     let etiquetasTiene = prompt('Introduce las etiquetas: ');
-    let etiquetas = etiquetasTiene.split(',');
-    let gasto = new gestionPresupuesto.CrearGasto(desc, valor, fecha);
+    let etiquetas = etiquetasTiene.split(', ');
 
-    for(let i = 0; i < etiquetas.length; i++){
-        gasto.anyadirEtiquetas(etiquetas[i]);
-    }
+    let gasto = new gestionPresupuesto.CrearGasto(desc, valor, fecha, etiquetas);
 
     gestionPresupuesto.anyadirGasto(gasto);
     repintar();
