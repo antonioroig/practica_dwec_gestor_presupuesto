@@ -148,9 +148,8 @@ let nuevoGastoWeb = function() {
 let btnAnyadirGasto = document.getElementById("anyadirgasto");
 btnAnyadirGasto.onclick = nuevoGastoWeb
 
-function EditarHandle(gasto){/*
-    this.gasto = gasto;
-    this.handleEvent = function(){
+function EditarHandle(){/*
+    this.handleEvent = function(event){
         let descripcion = prompt("Introduzca una descripcion", this.gasto.descripcion);
         if(descripcion){
             this.gasto.actualizarDescripcion(descripcion);
