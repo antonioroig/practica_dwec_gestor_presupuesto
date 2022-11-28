@@ -125,6 +125,24 @@ function nuevoGastoWeb ()
     exGp.anyadirGasto(nuevoGasto);
     repintar();
 }
+function EditarHandle()
+{
+    this.handleEvent = function (event)
+    {
+        let descripcion = prompt("Introduzca la descripcion: ");
+        let valor = prompt("introduzca el valor: ");
+        valor = parseFloat(valor);
+        let fecha = prompt("Introduzca la fecha: ");
+        let etiqueta = prompt("Introduzca las etiquetas separadas por comas ,: ")
+        let etiquetas= etiqueta.split(',');
+        
+        this.gasto.actualizarDescripcion(descripcion);
+        this.gasto.actualizarValor(valor);
+        this.gasto.actualizarFecha(fecha);
+        this.gasto.anyadirEtiquetas(...etiquetas);
+        repintar();
+    }
+}
 export   {  
     mostrarDatoEnId,
     mostrarGastoWeb,
