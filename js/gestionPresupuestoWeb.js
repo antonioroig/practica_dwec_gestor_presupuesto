@@ -52,6 +52,18 @@ function mostrarGastoWeb(idElemento, gasto)
         divGasto.append(divGastoEtiquetas);
         elemento.append(divGasto);
         
+        
+            let bEditar = document.createElement("button");
+            bEditar.className = "gasto-editar";
+            bEditar.type = "button";
+            bEditar.innerHTML = "Editar";
+
+            let BtnEditarHandle = new EditarHandle();
+            BtnEditarHandle.gasto = gasto;
+            bEditar.addEventListener("click", BtnEditarHandle);
+            divGasto.append(bEditar);
+       
+
 
     }
 }
@@ -122,6 +134,47 @@ function nuevoGastoWeb()
     gesP.anyadirGasto(gastoCreado);
     repintar();
 }
+function EditarHandle()
+{
+    
+        this.handleEvent= function() {
+            let descripcion = prompt("introduce una descripcion");
+            let valorSTR = prompt("introduce un valor para el gasto");
+            let valor = parseFloat(valorSTR);
+            let fecha = prompt("introduce una fecha en yyyy-mm-dd para el gasto");
+            let etiquetas = prompt("introduce unas etiquetas para el gasto en fomato etiq1,etiq2,etiq3");
+            let etiquetasArray = etiquetas.split(',');
+
+            this.gasto.actualizarValor(valor);
+            this.gasto.actualizarDescripcion(descripcion);
+            this.gasto.actualizarFecha(fecha);
+            this.gasto.anyadirEtiquetas(etiquetas);
+
+            repintar();
+        }
+}
+function BorrarHandle()
+{
+    
+        this.handleEvent= function() {
+            let id = prompt("Introduce el id del gasto");
+
+            this.gasto.borrarGasto(id);
+
+            repintar();
+        }
+}
+function BorrarEtiquetasHandle()
+{
+    
+        this.handleEvent= function() {
+            let etiquetas = prompt("Introduce las etiquetas");
+
+            this.gasto.borrarEtiquetas(etiquetas);
+
+            repintar();
+        }
+}
 actualizarpresupuesto.addEventListener("click",actualizarPresupuestoWeb);
 anyadirgasto.addEventListener("click",nuevoGastoWeb);
 export{
@@ -130,5 +183,8 @@ export{
     mostrarGastosAgrupadosWeb,
     repintar,
     actualizarPresupuestoWeb,
-    nuevoGastoWeb
+    nuevoGastoWeb,
+    EditarHandle,
+    BorrarHandle,
+    BorrarEtiquetasHandle
 }
