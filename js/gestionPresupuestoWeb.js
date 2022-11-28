@@ -1,6 +1,12 @@
 import * as gestionpr from './gestionPresupuesto.js';
 "use strict";
 
+
+
+
+
+
+
 function mostrarDatoEnId(valor,idsento)
 {
     if(idsento!==undefined){
@@ -24,10 +30,38 @@ let mostrarGastoWeb = function(idsento,gasto){
     let divEtiquetas = document.createElement("div");
     divEtiquetas.className = "gasto-etiquetas";
     divContenedor.append(divEtiquetas);
-    for(let et of gasto.etiquetas)
+    for(var et of gasto.etiquetas)
     {
         divEtiquetas.innerHTML += `<span class="gasto-etiquetas-etiqueta">${et}</span>`
     }
+
+    let botonEditar = document.createElement("button");
+    botonEditar.className = "gasto-editar";
+    botonEditar.type = "button";
+    botonEditar.textContent = 'Editar';
+
+    let handlerEditar = new EditarHandle();
+    handlerEditar.gasto = gasto;
+    botonEditar.addEventListener('click', handlerEditar);
+    divContenedor.append(botonEditar);
+
+
+    let botonBorrar = document.createElement("button");
+    botonBorrar.className = "gasto-borrar";
+    botonBorrar.type = "button";
+    botonBorrar.textContent = 'Borrar';
+
+    let handlerBorrar = new BorrarHandle();
+    handlerBorrar.gasto = gasto;
+    botonBorrar.addEventListener('click', handlerBorrar);
+    divContenedor.append(botonBorrar);
+
+
+    let borrarEtiquetasHandler = new BorrarEtiquetasHandle();
+    borrarEtiquetasHandler.gasto = gasto;
+    borrarEtiquetasHandler.etiqueta = et;
+    divEtiquetas.addEventListener('click', borrarEtiquetasHandler);
+
     return sento;
 }
 
@@ -87,7 +121,7 @@ let actualizarPresupuestoWeb  = function()
 let nuevoGastoWeb = function()  
 {
     let des = prompt("descripción");
-    let valor = parseInt(prompt("valor"));
+    let valor = parseFloat(prompt("valor"));
     let fecha = prompt("fecha");
     let eti = prompt("etiquetas");
 
@@ -98,19 +132,12 @@ let nuevoGastoWeb = function()
     repintar();
 
 }
-let s = document.getElementById('actualizarpresupuesto')
-
-s.onclick = actualizarPresupuestoWeb;
-
-let e = document.getElementById('anyadirgasto');
-
-e.onclick = nuevoGastoWeb;
 
 
 function EditarHandle(){
-    this.handleEvent()= function(){
+    this.handleEvent = function(){
         let des = prompt("descripción");
-        let valor = parseInt(prompt("valor"));
+        let valor = parseFloat(prompt("valor"));
         let fecha = prompt("fecha");
         let etiqe = prompt("etiquetas");
     
@@ -120,12 +147,39 @@ function EditarHandle(){
         this.gasto.actualizarValor(valor);
         let etiquetas = new Array();
             etiquetas = etiqe.split(",");
-            etiquetas.forEach(e => {
-                this.gasto.anyadirEtiquetas(e);
-            });
+            this.gasto.etiquetas = etiquetas;
         repintar();
     }
   };
+
+  function BorrarHandle(){
+    this.handleEvent = function(){
+        gestionpr.borrarGasto(this.gasto.id)
+        repintar();
+    }
+  };
+
+
+  function BorrarEtiquetasHandle(){
+    this.handleEvent = function(){
+        this.gasto.borrarEtiquetas(this.etiqueta);
+        repintar();
+    }
+  };
+
+
+
+  let s = document.getElementById('actualizarpresupuesto')
+
+  s.onclick = actualizarPresupuestoWeb;
+  
+  let e = document.getElementById('anyadirgasto');
+  
+  e.onclick = nuevoGastoWeb;
+
+
+
+
 
 export   {
     mostrarDatoEnId,
