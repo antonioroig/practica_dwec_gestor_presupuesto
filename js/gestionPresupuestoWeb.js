@@ -7,12 +7,18 @@ function repintar(){
 
     mostrarDatoEnId(gestionPresupuesto.calcularBalance(), "balance-total");
 
-    mostrarDatoEnId("", "listado-gastos-completo");
+    mostrarDatoEnId(" ", "listado-gastos-completo");
 
-    gestionPresupuesto.listarGastos.forEach(gasto =>{
+    gestionPresupuesto.listarGastos().forEach(gasto =>{
         mostrarGastoWeb(gasto, "listado-gastos-completo");
     });
 }
+
+
+var botonActualizarPresupuesto = document.getElementById("actualizarpresupuesto");
+botonActualizarPresupuesto.addEventListener("click", actualizarPresupuestoWeb());
+
+
 
 function mostrarDatoEnId(valor, idElemento){
     if(idElemento!=null){
@@ -92,9 +98,12 @@ function mostrarGastosAgrupadosWeb( agrup, periodo, idElemento){
     }
 }
 
+
+
+
+
 export{
     mostrarDatoEnId,
     mostrarGastoWeb,
-    mostrarGastosAgrupadosWeb,
-    repintar
+    mostrarGastosAgrupadosWeb
 }
