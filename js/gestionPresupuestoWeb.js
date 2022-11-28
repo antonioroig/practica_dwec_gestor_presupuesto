@@ -24,7 +24,9 @@ function nuevoGastoWeb(){
     let descripcion = prompt("Introduzca la descripcion");
     let valor = parseFloat(prompt("Introduzca el valor"));
     let fecha = prompt("Introduzca la fecha");
-    let etiquetas = prompt();
+    let etiquetas = prompt("Introduzca las etiquetas").split(",");
+
+    gp.CrearGasto(descripcion, valor, fecha, ...etiquetas);
 }
 
 let btnAnyadirGasto = document.getElementById();
