@@ -1,4 +1,14 @@
+import { mostrarPresupuesto } from "./gestionPresupuesto";
 import * as presupuesto from "/gestionPresupuesto";
+
+// Añadir eventos a los botones
+document.getElementById('actualizarpresupuesto').addEventListener("click", actualizarPresupuestoWeb);
+document.getElementById('anyadirgasto ').addEventListener("click",nuevoGastoWeb);
+
+// Revisar
+// document.addEventListener("click",actualizarPresupuestoWeb);
+// document.addEventListener("click",nuevoGastoWeb);
+
 
 // Muestra en un div el valor que se le pasa por parámetro
 function mostrarDatoEnId(valor, idElemento){
@@ -101,17 +111,28 @@ function repintar(){
   Mostrar el balance total en div#balance-total (funciones calcularBalance y mostrarDatoEnId)
   Borrar el contenido de div#listado-gastos-completo, para que el paso siguiente no duplique la información. Puedes utilizar innerHTML para borrar el contenido de dicha capa.
   Mostrar el listado completo de gastos en div#listado-gastos-completo (funciones listarGastos y mostrarGastoWeb) */
-
-}
-function actualizarGastoWeb(){
-  let presupuesto = prompt("Por favor, introduzca el nuevo presupuesto",);
   
 }
-
 function actualizarPresupuestoWeb(){
 
+  let presupuesto = prompt("Por favor, introduzca el nuevo presupuesto",);
+  let valor = parseInt(presupuesto);
+  presupuesto.actualizzarPresupuesto(valor);
+  repintar(); // Revisar
+
 }
-function nuevoGastoWwb(){
+function nuevoGastoWeb(){
+
+  alert("Introduzca los datos del nuevo Gasto")
+  let descripcion = prompt("Descripción");
+  let valor = prompt("Valor");
+  valor = parseInt(valor);
+  let fecha = prompt("Fecha");
+  let etiquetas = prompt("Por favor, introduzca las etiquetas separadas por comas =)");
+  let array = etiquetas.split(',');
+  let gasto = presupuesto.CrearGasto(descripcion,valor,fecha,array);
+  presupuesto.anyadirGasto(gasto);
+  repintar(); // Revisar
 
 }
 function editarHandle(){
@@ -120,7 +141,7 @@ function editarHandle(){
 function borrarHandle(){
   
 }
-function BorrarEtiquetasHandle(){
+function borrarEtiquetasHandle(){
   
 }
 export    {
@@ -128,7 +149,12 @@ export    {
   mostrarDatoEnId,
   mostrarGastoWeb,
   mostrarGastosAgrupadosWeb, 
-  repintar
+  repintar,
+  actualizarPresupuestoWeb,
+  nuevoGastoWeb,
+  editarHandle,
+  borrarHandle,
+  borrarEtiquetasHandle
 
 }
 
