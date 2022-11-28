@@ -156,12 +156,21 @@ function EditarHandle(){
         repintar();
     }   
 }
+
 function BorrarHandle(){
     this.handleEvent = function(){
     ges.borrarGasto(this.gasto.id);
     repintar();
 }  
 }
+
+function BorrarEtiquetasHandle(){
+    this.handleEvent = function(){
+        this.gasto.borrarEtiquetas(this.etiquetas);
+        repintar();
+    }
+}
+
 
 
 
