@@ -1,5 +1,47 @@
 import * as gp from './gestionPresupuesto.js';
 
+function repintar(){
+    mostrarDatoEnId(gp.mostrarPresupuesto(), "presupuesto");
+    mostrarDatoEnId(gp.calcularTotalGastos(), "gastos-totales");
+    mostrarDatoEnId(gp.calcularBalance(), "balance-total");
+    mostrarDatoEnId(gp.element.innerHTML, "listado-gastos-completo");
+
+    gp.listarGastos().forEach(gasto => {
+        mostrarGastoWeb(gasto, "listado-gastos-completo");
+    });
+}
+
+function actualizarPresupuestoWeb(){
+    let presupuesto = parseFloat(prompt("Introduzca presupuesto"));
+    gp.actualizarPresupuesto(presupuesto);
+    repintar();
+}
+
+let btnActualizarPresupuesto = document.getElementById();
+btnActualizarPresupuesto.onclick = actualizarPresupuestoWeb();
+
+function nuevoGastoWeb(){
+    let descripcion = prompt("Introduzca la descripcion");
+    let valor = parseFloat(prompt("Introduzca el valor"));
+    let fecha = prompt("Introduzca la fecha");
+    let etiquetas = prompt();
+}
+
+let btnAnyadirGasto = document.getElementById();
+btnAnyadirGasto.onclick = nuevoGastoWeb();
+
+function editarHandle(){
+
+}
+
+function borrarHandle(){
+
+}
+
+function borrarEtiquetasHandle(){
+
+}
+
 function mostrarDatoEnId(valor, idElemento) {
     if(idElemento != null){
         let elementoHTML = document.getElementById(idElemento);
@@ -84,5 +126,11 @@ function mostrarGastosAgrupadosWeb(agrup, periodo, idElemento){
 export {
     mostrarDatoEnId,
     mostrarGastoWeb,
-    mostrarGastosAgrupadosWeb
+    mostrarGastosAgrupadosWeb,
+    repintar,
+    actualizarPresupuestoWeb,
+    nuevoGastoWeb,
+    editarHandle,
+    borrarHandle,
+    borrarEtiquetasHandle
 }
