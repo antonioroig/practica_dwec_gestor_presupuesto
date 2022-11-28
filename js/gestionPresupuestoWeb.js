@@ -82,7 +82,7 @@ function mostrarGastosAgrupadosWeb( agrup, periodo, idElemento){
     }
 }
 
-function actualizarPresupuestoWeb(){
+let actualizarPresupuestoWeb = function(){
     let presupuesto = prompt("Introduce un presupuesto", 1000);
     if(presupuesto != null){
         presupuesto = parseFloat(presupuesto);
@@ -108,12 +108,12 @@ function repintar(){
 
 
 var botonActualizarPresupuesto = document.getElementById("actualizarpresupuesto");
-botonActualizarPresupuesto.addEventListener("click", actualizarPresupuestoWeb());
+botonActualizarPresupuesto.onclick=actualizarPresupuestoWeb;
 
-function nuevoGastoWeb(){
+let nuevoGastoWeb = function(){
     let nuevaDescripcion = prompt("Escribe la descripcion del nuevo gasto: ", "Descripcion");
     let nuevoValor = parseFloat(prompt("Escribe el valor del nuevo gasto: ", 100));
-    var nuevaFecha = Date.parse(prompt("Escribe la fecha del nuevo gasto: ", "2022-09-22"));
+    var nuevaFecha = prompt("Escribe la fecha del nuevo gasto: ", "2022-09-22");
     var nuevasEtiquetas = prompt("Escribe las etiquetas del nuevo gasto separadas por comas: ", "etiqueta1, etiqueta2, etiqueta3");
     /*
     var etiquetasArray= new Array();
@@ -127,15 +127,15 @@ function nuevoGastoWeb(){
     }*/
     var etiquetasArray = nuevasEtiquetas.split(",");
     
-    //var nuevoGasto = new gestionPresupuesto.CrearGasto(nuevaDescripcion, nuevoValor, nuevaFecha, etiquetasArray);
+    var nuevoGasto = new gestionPresupuesto.CrearGasto(nuevaDescripcion, nuevoValor, nuevaFecha, etiquetasArray);
 
-    //gestionPresupuesto.anyadirGasto(nuevoGasto);
+    gestionPresupuesto.anyadirGasto(nuevoGasto);
     repintar();
 }
 
 
 var botonNuevoGasto = document.getElementById("anyadirgasto");
-botonNuevoGasto.addEventListener("click", nuevoGastoWeb());
+botonNuevoGasto.onclick=nuevoGastoWeb;
 
 export{
     mostrarDatoEnId,
