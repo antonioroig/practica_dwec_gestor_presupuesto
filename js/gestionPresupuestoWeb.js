@@ -101,10 +101,22 @@ function actualizarPresupuestoWeb(){
     repintar();
 }
 
+function nuevoGastoWeb(){
+    let descripcion = prompt("Introduce la descripción del gasto");
+    let valor = parseFloat(prompt("Introduce el valor del gasto")); //Utilizamos el parseFloat para leer los decimales y que no se pierdan por el integer.
+    let fecha = prompt("Introduce la fecha del gasto en formato yyyy-mm-dd");
+    let etiqueta = prompt("Introduce las etiquetas del gasto separadas por ,");
+    let etiquetas= etiqueta.split(','); //Eliminamos las ",".
+    let nuevoGasto = new gestionPresupuesto.CrearGasto(descripcion, valor, fecha, ...etiquetas);
+    gestionPresupuesto.anyadirGasto(nuevoGasto);
+    repintar();
+}
+
 export {
     mostrarDatoEnId,
     mostrarGastoWeb,
     mostrarGastosAgrupadosWeb,
     repintar,
-    actualizarPresupuestoWeb
+    actualizarPresupuestoWeb,
+    nuevoGastoWeb
 }
