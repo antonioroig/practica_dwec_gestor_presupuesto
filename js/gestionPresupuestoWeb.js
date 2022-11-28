@@ -86,12 +86,18 @@ function repintar()
 
     document.getElementById('balance-total').innerHTML = exGp.calcularTotalGastos;
     document.getElementById('balance-total').innerHTML += mostrarDatoEnId;*/
-    
+    document.getElementById('presupuesto').innerHTML = "";
     mostrarDatoEnId(exGp.mostrarPresupuesto, 'presupuesto');
+
+    document.getElementById('gastos-totales').innerHTML = "";
     mostrarDatoEnId(exGp.calcularTotalGastos, 'gastos-totales');
+
+    document.getElementById('balance-total').innerHTML = "";
     mostrarDatoEnId(exGp.calcularBalance, 'balance-total');
+
     document.getElementById('listado-gastos-completo').innerHTML ="";
 
+    document.getElementById('listado-gastos-completo').innerHTML = "";
     exGp.listarGastos().forEach(gasto => {
         mostrarGastoWeb("listado-gastos-completo", gasto);
     });
