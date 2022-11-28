@@ -1,6 +1,7 @@
 import * as exGp from './gestionPresupuesto.js';
 
 document.getElementById("actualizarpresupuesto").addEventListener("click", actualizarPresupuestoWeb);
+document.getElementById("anyadirgasto").addEventListener("click", nuevoGastoWeb);
 function mostrarDatoEnId(valor, idElemento)
 {
     let elem = document.getElementById(idElemento);
