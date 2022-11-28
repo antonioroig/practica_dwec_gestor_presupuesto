@@ -54,21 +54,15 @@ function mostrarGastoWeb(idElemento, gasto){
         botonEditar.addEventListener("click", handleEditar);
         divGasto.append(botonEditar);
 
-
         let botonBorrar = document.createElement("button");
         botonBorrar.className = "gasto-borrar";
         botonBorrar.type = "button";
-        botonBorrar.innerHTML = "Editar";
+        botonBorrar.innerHTML = "Borrar";
 
         let handleBorrar = new BorrarHandle();
         handleBorrar.gasto = gasto;
         botonBorrar.addEventListener("click", handleBorrar);
         divGasto.append(botonBorrar);
-
-
-
-        
-    
 
     divGasto.append(divGastoEtiqueta);
     id.append(divGasto);
@@ -162,6 +156,10 @@ function BorrarHandle(){
         gestion.borrarGasto(this.gasto.id);
         repintar();
     }
+}
+
+function BorrarEtiquetasHandle(){
+
 }
 
 actualizarpresupuesto.addEventListener("click", actualizarPresupuestoWeb);
