@@ -1,4 +1,7 @@
 import * as gestionPresupuesto from './gestionPresupuesto.js';
+
+document.getElementById("actualizarPresupuesto").addEventListener("click", actualizarPresupuestoWeb);
+
 function mostrarDatoEnId(valor,idElemento) {
     let elemento = document.getElementById(idElemento);
     let parrafo = document.createElement("p");
@@ -90,10 +93,18 @@ function repintar(){
     gestionPresupuesto.listarGastos().forEach(gastos => {
         mostrarGastoWeb("listado-gastos-completo", gastos);
     });
+}
+
+function actualizarPresupuestoWeb(){
+    let presupuesto = prompt("Introduzca un presupuesto nuevo.");
+    gestionPresupuesto.actualizarPresupuesto(presupuesto);
+    repintar();
+}
 
 export {
     mostrarDatoEnId,
     mostrarGastoWeb,
     mostrarGastosAgrupadosWeb,
-    repintar
+    repintar,
+    actualizarPresupuestoWeb
 }
