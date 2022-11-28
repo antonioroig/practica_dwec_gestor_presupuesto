@@ -137,11 +137,16 @@ let nuevoGastoWeb = function(){
 var botonNuevoGasto = document.getElementById("anyadirgasto");
 botonNuevoGasto.onclick=nuevoGastoWeb;
 
+let EditarHandle = function(){
+
+}
+
 export{
     mostrarDatoEnId,
     mostrarGastoWeb,
     mostrarGastosAgrupadosWeb,
     repintar,
     actualizarPresupuestoWeb,
-    nuevoGastoWeb
+    nuevoGastoWeb,
+    EditarHandle
 }
