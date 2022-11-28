@@ -1,3 +1,4 @@
+'use strict'
 import * as gestionPre from  "./gestionPresupuesto.js";
 
 function mostrarDatoEnId(valor,idElemento){
@@ -36,10 +37,12 @@ divContenedor.appendChild(divFecha);
         spanEt.className = "gasto-etiquetas-etiqueta";
         spanEt.textContent = etiqueta
         divEt.appendChild(spanEt);
+
     });
     divContenedor.appendChild(divEt);
     
     id.appendChild(divContenedor);
+
     return id;
 }
 
@@ -70,9 +73,27 @@ if(idElemento != null)
     }
        id.appendChild(divContenedor);
 }
+function repintar(){
+    mostrarDatoEnId(gestionPre.mostrarPresupuesto(),'presupuesto');
+    mostrarDatoEnId(gestionPre.calcularTotalGastos(), 'gastos-totales');
+    mostrarDatoEnId(gestionPre.calcularBalance(), 'balance-total');
+    let elem = document.getElementById('listado-gastos-completo');
+    elem.innerHTML = "" ;
+    gestionPre.listarGastos().forEach(gasto => {
+        mostrarGastoWeb('listado-gastos-completo', gasto)
+    });
 }
+function actualizarPresupuestoWeb()
+ let respuesta = prompt('Introduce un presupuesto:');
+ parseInt(respuesta);
+ gestionPre.actualizarPresupuesto(respuesta);
+ repintar()
+}
+let botonActualizarPresupuesto = document.getElementById('actualizarpresupuesto');
+botonActualizarPresupuesto.addEventListener('click', function () { actualizarPresupuestoWeb() });
 export {
     mostrarDatoEnId,
     mostrarGastoWeb,
-    mostrarGastosAgrupadosWeb
+    mostrarGastosAgrupadosWeb,
+   
 }
