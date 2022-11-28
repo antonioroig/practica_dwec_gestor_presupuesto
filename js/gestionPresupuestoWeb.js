@@ -51,29 +51,35 @@ function mostrarGastoWeb(idElemento, gasto){
                 var spanEtiqueta = document.createElement('span');
                 spanEtiqueta.className="gasto-etiquetas-etiqueta";
                 spanEtiqueta.innerHTML = etiqueta;
+
+                let gastoBorrarEtiqueta = new BorrarEtiquetasHandle();
+                gastoBorrarEtiqueta.gasto = gasto;
+                gastoBorrarEtiqueta.etiqueta = etiqueta;
+                spanEtiqueta.addEventListener('click', gastoBorrarEtiqueta);
+                
                 divGastoEtiquetas.appendChild(spanEtiqueta);
             });
             divGasto.appendChild(divGastoEtiquetas);
-/*
+
         let btnEditar = document.createElement('button');
             btnEditar.type = 'button';
             btnEditar.className = 'gasto-editar';
             btnEditar.textContent = 'Editar';
             
-        let gastoEditar = new EditarHandle(gasto);
+        let gastoEditar = new EditarHandle();
             gastoEditar.gasto = gasto;
             btnEditar.addEventListener('click', gastoEditar);
             divGasto.appendChild(btnEditar);
 
         let btnBorrar = document.createElement('button');
             btnBorrar.type = 'button';
-            btnBorrar.className = 'gasto-borrar';
+            btnBorrar.className = 'gasto-borrar'
             btnBorrar.textContent = 'Borrrar';
 
-        let gastoBorrar = new BorrarHandle(gasto);
+        let gastoBorrar = new BorrarHandle();
             gastoBorrar.gasto = gasto;
             btnBorrar.addEventListener('click', gastoBorrar);
-            divGasto.appendChild(btnBorrar);*/
+            divGasto.appendChild(btnBorrar);
     }
 }
 
@@ -148,36 +154,36 @@ let nuevoGastoWeb = function() {
 let btnAnyadirGasto = document.getElementById("anyadirgasto");
 btnAnyadirGasto.onclick = nuevoGastoWeb
 
-function EditarHandle(){/*
-    this.handleEvent = function(event){
+function EditarHandle(){
+    this.handleEvent = function(){
         let descripcion = prompt("Introduzca una descripcion", this.gasto.descripcion);
-        if(descripcion){
-            this.gasto.actualizarDescripcion(descripcion);
-        }
+        this.gasto.actualizarDescripcion(descripcion);
+
         let valor = Number(prompt("Introduzca un valor", this.gasto.valor));
-        if(valor){
-            this.gasto.actualizarValor(valor);
-        }
+        this.gasto.actualizarValor(valor);
+
         let fecha = new Date(prompt("Introduzca una fecha", this.gasto.fecha));
-        if(fecha){
-            this.gasto.actualizarFecha(fecha);
-        }
-        let etiquetas = prompt("Introduzca las etiquetas", this.gasto.etiquetas);
-        let arrEtiquetas = [];
-        if(etiquetas){
-            arrEtiquetas = etiquetas.split(',');
-            this.gasto.anyadirEtiquetas(arrEtiquetas);
-        }
+        this.gasto.actualizarFecha(fecha);
+
+        let etiquetas = prompt("Introduzca las etiquetas", this.gasto.etiquetas).split(',');
+        this.gasto.etiquetas = etiquetas
+
         repintar();
-    }*/
+    }
 }
 
-function BorrarHandle(gasto){
-    /*this.gasto = gasto;
+function BorrarHandle(){ 
     this.handleEvent = function(){
-
+        borrarGasto(this.gasto.id)
+        repintar();
     }
-    repintar();*/
+}
+
+function BorrarEtiquetasHandle(){ 
+    this.handleEvent = function(){
+        this.gasto.borrarEtiquetas(this.etiqueta)
+        repintar();
+    }
 }
 export{
     mostrarDatoEnId,
