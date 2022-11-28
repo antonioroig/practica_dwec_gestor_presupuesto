@@ -1,7 +1,7 @@
 import * as gestionPresupuesto from './gestionPresupuesto.js';
 
 document.getElementById("actualizarPresupuesto").addEventListener("click", actualizarPresupuestoWeb);
-
+documento.getElementById("anyadirGasto").addEventListener("click", nuevoGastoWeb);
 function mostrarDatoEnId(valor,idElemento) {
     let elemento = document.getElementById(idElemento);
     let parrafo = document.createElement("p");
