@@ -58,9 +58,7 @@ function mostrarGastoWeb(idElemento, gasto){
         }
         divGasto.append(divEtiquetas);
         // - - - - - - - - - - - - - -
-
-        if (idElemento == 'listado-gastos-completo')
-        {   
+        
             // HANDLE - editar gasto  - - - - - - - - - - - - - - - - - - -
             let btnEditar = document.createElement('button');
             btnEditar.className = 'gasto-editar';
@@ -81,17 +79,13 @@ function mostrarGastoWeb(idElemento, gasto){
             borrarHandle.gasto = gasto;
             btnBorrar.addEventListener('click', borrarHandle); // addEventListener nos permite utilizar un objeto como manejador de eventos.
             divGasto.append(btnBorrar);
-        }
         
-        elemento.append(divGasto);
-    
+        elemento.append(divGasto); 
     }
-
 }
 
 function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo){
 
-        
     // id = elemento
     let elemento = document.getElementById(idElemento);
 
@@ -191,8 +185,6 @@ function nuevoGastoWeb()
     gestionPresupuesto.anyadirGasto(gasto);
     repintar();
 }
-
-
 
 // Handle Functions
 function EditarHandle()
