@@ -75,8 +75,13 @@ function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo){
 // nueva práctica
 function repintar(){
     document.getElementById("presupuesto").innerHTML="";
+    mostrarDatoEnId("presupuesto", gestionPresupuesto.mostrarPresupuesto());
+
     document.getElementById("gastos-totales").innerHTML="";
+    mostrarDatoEnId("gastos-totales", gestionPresupuesto.calcularTotalGastos());
+
     document.getElementById("balance-total").innerHTML="";
+    mostrarDatoEnId("balance-total", gestionPresupuesto.calcularBalance());
 }
 
 
