@@ -1,4 +1,6 @@
 import * as exGp from './gestionPresupuesto.js';
+
+document.getElementById("actualizarpresupuesto").addEventListener("click", actualizarPresupuestoWeb);
 function mostrarDatoEnId(valor, idElemento)
 {
     let elem = document.getElementById(idElemento);
@@ -101,9 +103,26 @@ function repintar()
     exGp.listarGastos().forEach(gasto => {
         mostrarGastoWeb("listado-gastos-completo", gasto);
     });
+}
 
-
-
+function actualizarPresupuestoWeb()
+{
+    let presupuesto = prompt("Introduzca un presupuesto: ");
+    presupuesto = parseFloat(presupuesto);
+    exGp.actualizarPresupuesto(presupuesto);
+    repintar();
+}
+function nuevoGastoWeb ()
+{
+    let descripcion = prompt("Introduzca la descripcion: ");
+    let valor = prompt("introduzca el valor: ");
+    valor = parseFloat(valor);
+    let fecha = prompt("Introduzca la fecha: ");
+    let etiqueta = prompt("Introduzca las etiquetas separadas por comas ,: ")
+    let etiquetas= etiqueta.split(',');
+    let nuevoGasto = new exGp.CrearGasto(descripcion,v1,fecha,...etiquetas);
+    exGp.anyadirGasto(nuevoGasto);
+    repintar();
 }
 export   {  
     mostrarDatoEnId,
