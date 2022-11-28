@@ -48,7 +48,15 @@ function mostrarGastoWeb(idElemento, gasto){
     BotonEdit.addEventListener("click", hand);
     divGasto.append(BotonEdit);
     ///////////////////////////////
-    divGasto.append(divGastoEtiquetas);
+    let Botonborrar = document.createElement("button");
+    Botonborrar.className = "gasto-borrar";
+    Botonborrar.type = "button";
+    Botonborrar.innerHTML = "Borrar";
+    ///////////////////////////////
+    let hand2 = new BorrarHandle();
+    hand2.gasto = gasto;
+    Botonborrar.addEventListener("click", hand2);
+    divGasto.append(Botonborrar);
     id.append(divGasto);
 
     return id;
@@ -144,7 +152,12 @@ function EditarHandle(){
         repintar();
     }
 }
-
+function BorrarHandle(){
+    this.handleEvent = function(){
+        scriptsGestion.borrarGasto(this.gasto.id);
+        repintar();
+    }
+}
 
 
 export{
