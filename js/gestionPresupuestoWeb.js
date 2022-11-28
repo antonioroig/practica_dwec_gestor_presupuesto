@@ -53,16 +53,26 @@ function mostrarGastoWeb(idElemento, gasto)
         elemento.append(divGasto);
         
         
-            let bEditar = document.createElement("button");
-            bEditar.className = "gasto-editar";
-            bEditar.type = "button";
-            bEditar.innerHTML = "Editar";
+        let bEditar = document.createElement("button");
+        bEditar.className = "gasto-editar";
+        bEditar.type = "button";
+        bEditar.innerHTML = "Editar";
 
-            let BtnEditarHandle = new EditarHandle();
-            BtnEditarHandle.gasto = gasto;
-            bEditar.addEventListener("click", BtnEditarHandle);
-            divGasto.append(bEditar);
-       
+        let BtnEditarHandle = new EditarHandle();
+        BtnEditarHandle.gasto = gasto;
+        bEditar.addEventListener("click", BtnEditarHandle);
+        divGasto.append(bEditar);
+        
+        let bBorrar = document.createElement("button");
+        bBorrar.className = "gasto-borrar";
+        bBorrar.type = "button";
+        bBorrar.innerHTML = "Borrar";
+
+        let BtnBorrarHandle = new BorrarHandle();
+        BtnBorrarHandle.gasto = gasto;
+        bBorrar.addEventListener("click", BtnBorrarHandle);
+        divGasto.append(bBorrar);
+        
 
 
     }
@@ -157,10 +167,7 @@ function BorrarHandle()
 {
     
         this.handleEvent= function() {
-            let id = prompt("Introduce el id del gasto");
-
-            this.gasto.borrarGasto(id);
-
+            gesP.borrarGasto(this.gasto.id);
             repintar();
         }
 }
@@ -168,7 +175,6 @@ function BorrarEtiquetasHandle()
 {
     
         this.handleEvent= function() {
-            let etiquetas = prompt("Introduce las etiquetas");
 
             this.gasto.borrarEtiquetas(etiquetas);
 
