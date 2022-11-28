@@ -40,6 +40,19 @@ function mostrarGastoWeb(idElemento,gasto){
         divEtiquetas.append(spanE);
     }
     divGasto.append(divEtiquetas);
+    if(idElemento === "listado-gastos-completo"){
+        let divEditar = document.createElement("button");
+        divEditar.className = "gasto-editar";
+        divEditar.type = "button";
+        divEditar.innerHTML = "Editar";
+
+        let editarHandlebtn = new EditarHandle();
+        editarHandlebtn.gasto = gasto;
+        divEditar.addEventListener("click",editarHandlebtn);
+        divGasto.append(divEditar);
+
+    }
+    
     id.append(divGasto);
     
     return id;
@@ -118,7 +131,22 @@ actualizarpresupuesto.addEventListener('click',actualizarPresupuestoWeb);
 anyadirgasto.addEventListener('click',nuevoGastoWeb);
 
 function EditarHandle(){
+        this.handleEvent = function(){
+        let descripcion = prompt("Introduce una descripcion");
+        let valorStr = prompt("Introduce un valor");
+        let valorFloat = parseFloat(valorStr);
+        let fecha = prompt("Introduce una fecha");
+        let etiquetas = prompt("Introduce las etiquetas");
+    
+        let arrayEtiquetas = etiquetas.split(',');
 
+        this.gasto.actualizarDescripcion(descripcion);
+        this.gasto.actualizarFecha(fecha);
+        this.gasto.etiquetas = arrayEtiquetas;
+        this.gasto.actualizarValor(valorFloat);
+
+        repintar();
+    }  
 }
 
 
