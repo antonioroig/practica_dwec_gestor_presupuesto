@@ -40,7 +40,7 @@ describe("Eventos", () => {
         cy.get("#anyadirgasto").click();
 
         // Se deben actualizar los gastos totales
-        cy.get("#gastos-totales").should(($p) => {
+       cy.get("#gastos-totales").should(($p) => {
             expect($p, "Se debe mostrar la cantidad correspondiente a los gastos totales mediante la función 'calcularTotalGastos'").to.contain('563');
         });
         // Se debe actualizar el balance
