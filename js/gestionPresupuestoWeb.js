@@ -40,18 +40,26 @@ function mostrarGastoWeb(idElemento,gasto){
         divEtiquetas.append(spanE);
     }
     divGasto.append(divEtiquetas);
-    if(idElemento === "listado-gastos-completo"){
-        let divEditar = document.createElement("button");
-        divEditar.className = "gasto-editar";
-        divEditar.type = "button";
-        divEditar.innerHTML = "Editar";
+        
+    let btnEditar = document.createElement("button");
+    btnEditar.className = "gasto-editar";
+    btnEditar.type = "button";
+    btnEditar.innerHTML = "Editar";
 
-        let editarHandlebtn = new EditarHandle();
-        editarHandlebtn.gasto = gasto;
-        divEditar.addEventListener("click",editarHandlebtn);
-        divGasto.append(divEditar);
+    let editarHandlebtn = new EditarHandle();
+    editarHandlebtn.gasto = gasto;
+    btnEditar.addEventListener("click",editarHandlebtn);
+    divGasto.append(btnEditar);
 
-    }
+    let btnBorrar = document.createElement("button");
+    btnBorrar.className = "gasto-borrar";
+    btnBorrar.type = "button";
+    btnBorrar.innerHTML = "Borrar";
+
+    let borrarHandlebtn = new BorrarHandle();
+    borrarHandlebtn.gasto = gasto;
+    btnBorrar.addEventListener("click",borrarHandlebtn);
+    divGasto.append(btnBorrar);
     
     id.append(divGasto);
     
@@ -146,7 +154,13 @@ function EditarHandle(){
         this.gasto.actualizarValor(valorFloat);
 
         repintar();
-    }  
+    }   
+}
+function BorrarHandle(){
+    this.handleEvent = function(){
+    ges.borrarGasto(this.gasto.id);
+    repintar();
+}  
 }
 
 
@@ -159,5 +173,6 @@ export   {
     repintar,
     actualizarPresupuestoWeb,
     nuevoGastoWeb,
-    EditarHandle
+    EditarHandle,
+    BorrarHandle,
 }
