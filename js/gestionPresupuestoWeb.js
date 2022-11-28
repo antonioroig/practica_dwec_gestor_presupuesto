@@ -112,6 +112,12 @@ function repintar(){
   Borrar el contenido de div#listado-gastos-completo, para que el paso siguiente no duplique la información. Puedes utilizar innerHTML para borrar el contenido de dicha capa.
   Mostrar el listado completo de gastos en div#listado-gastos-completo (funciones listarGastos y mostrarGastoWeb) */
   
+  let element = document-getElementById("presupuesto");
+  presupuesto.mostrarPresupuesto()
+  mostrarDatoEnId("presupuesto")
+
+
+
 }
 function actualizarPresupuestoWeb(){
 
