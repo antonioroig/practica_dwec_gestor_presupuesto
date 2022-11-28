@@ -74,6 +74,7 @@ function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo){
 
 // nueva práctica
 function repintar(){
+
     //Limpia el contenido del div presupuesto, y lo muestra vacío.
     document.getElementById("presupuesto").innerHTML="";
     mostrarDatoEnId("presupuesto", gestionPresupuesto.mostrarPresupuesto());
@@ -84,33 +85,11 @@ function repintar(){
     document.getElementById("balance-total").innerHTML="";
     mostrarDatoEnId("balance-total", gestionPresupuesto.calcularBalance());
 
-    //Limpiamos toda la estructura HTML para volver a mostrarla actualizada.
+    //Limpiamos toda la estructura HTML para volver a mostrarla vacía.
     document.getElementById("listado-gastos-completo").innerHTML = "";
     gestionPresupuesto.listarGastos().forEach(gastos => {
         mostrarGastoWeb("listado-gastos-completo", gastos);
     });
-
-    document.getElementById("listado-gastos-filtrado-1").innerHTML="";
-    gestionPresupuesto.filtrarGastos({fechaDesde: "2021-09-01", fechaHasta: "2021-09-30"}).forEach(gastoFiltrado => {
-        mostrarGastoWeb("listado-gastos-filtrado-1",gastoFiltrado);
-    });
-
-    document.getElementById("listado-gastos-filtrado-2").innerHTML = "";
-    gestionPresupuesto.filtrarGastos({valorMinimo: 50}).forEach(gastoFiltrado => {
-        mostrarGastoWeb("listado-gastos-filtrado-2", gastoFiltrado);
-    });
-
-    document.getElementById("listado-gastos-filtrado-3").innerHTML = "";
-    gestionPresupuesto.filtrarGastos({valorMinimo: 200, etiquetasTiene: ["seguros"]}).forEach(gastoFiltrado => {
-        mostrarGastoWeb("listado-gastos-filtrado-3", gastoFiltrado);
-    });
-
-    document.getElementById("listado-gastos-filtrado-4").innerHTML = "";
-    gestionPresupuesto.filtrarGastos({valorMaximo: 50, etiquetasTiene: ["comida" , "transporte"]}).forEach(gastoFiltrado => {
-        mostrarGastoWeb("listado-gastos-filtrado-4", gastoFiltrado);
-    });
-}
-
 
 export {
     mostrarDatoEnId,
