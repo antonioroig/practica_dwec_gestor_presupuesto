@@ -112,10 +112,10 @@ botonActualizarPresupuesto.addEventListener("click", actualizarPresupuestoWeb())
 
 function nuevoGastoWeb(){
     let nuevaDescripcion = prompt("Escribe la descripcion del nuevo gasto: ", "Descripcion");
-    let nuevoValor = Number(prompt("Escribe el valor del nuevo gasto: ", 100));
+    let nuevoValor = parseFloat(prompt("Escribe el valor del nuevo gasto: ", 100));
     var nuevaFecha = Date.parse(prompt("Escribe la fecha del nuevo gasto: ", "2022-09-22"));
     var nuevasEtiquetas = prompt("Escribe las etiquetas del nuevo gasto separadas por comas: ", "etiqueta1, etiqueta2, etiqueta3");
-    
+    /*
     var etiquetasArray= new Array();
     var i=0;
     for(let letra in nuevasEtiquetas){
@@ -124,7 +124,8 @@ function nuevoGastoWeb(){
         }else{
             i++;
         }
-    }
+    }*/
+    var etiquetasArray = nuevasEtiquetas.split(",");
     
     //var nuevoGasto = new gestionPresupuesto.CrearGasto(nuevaDescripcion, nuevoValor, nuevaFecha, etiquetasArray);
 
