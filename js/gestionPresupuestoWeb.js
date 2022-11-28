@@ -112,6 +112,10 @@ function nuevoGastoWeb(){
     repintar();
 }
 
+function EditarHandle(){
+    
+}
+
 export {
     mostrarDatoEnId,
     mostrarGastoWeb,
