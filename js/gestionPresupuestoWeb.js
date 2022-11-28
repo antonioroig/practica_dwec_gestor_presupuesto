@@ -27,7 +27,7 @@ function mostrarGastoWeb(idElemento, gasto)
 
     let divValor = document.createElement('div');
     divValor.className = 'gasto-valor';
-    divValor.textContent = gasto.valor + "€";
+    divValor.textContent = gasto.valor + "";
     divGasto.append(divValor);
 
     let divEtiquetas = document.createElement('div');
@@ -112,7 +112,7 @@ function actualizarPresupuestoWeb() {
 
 function nuevoGastoWeb() {
     let nuevaDescripcion = prompt('Introduce la descripcion de la nueva etiqueta');
-    let nuevoValor = parseInt(prompt('Introduce el valor del nuevo gasto'));
+    let nuevoValor = parseFloat(prompt('Introduce el valor del nuevo gasto'));
     let nuevaFecha = Date.parse(prompt('Introduce la fecha del nuevo gasto'));
     let nuevasEtiquetas = prompt('Introduce las etiquetas separadas por una ,').split(',')
     gestionPresupuesto.anyadirGasto(new gestionPresupuesto.CrearGasto(nuevaDescripcion, nuevoValor, nuevaFecha, ...nuevasEtiquetas))
@@ -122,7 +122,7 @@ function nuevoGastoWeb() {
 function EditarHandle() {
     this.handleEvent = function (event) {
         let nuevaDescripcion = prompt('Introduce la descripcion de la nueva etiqueta');
-        let nuevoValor = parseInt(prompt('Introduce el valor del nuevo gasto'));
+        let nuevoValor = parseFloat(prompt('Introduce el valor del nuevo gasto'));
         let nuevaFecha = Date.parse(prompt('Introduce la fecha del nuevo gasto'));
         let nuevasEtiquetas = prompt('Introduce las etiquetas separadas por una ,').split(',');
     
