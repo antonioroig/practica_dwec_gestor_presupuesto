@@ -35,11 +35,25 @@ let btnAnyadirGasto = document.getElementById('anyadirgasto');
 btnAnyadirGasto.onclick = nuevoGastoWeb();
 
 let editarHandle = function(){
+    this.handleEvent = () => {
+        let descripcion = prompt("Introduzca la descripcion");
+        let valor = parseFloat(prompt("Introduzca el valor"));
+        let fecha = prompt("Introduzca la fecha");
+        let etiquetas = prompt("Introduzca las etiquetas").split(",");
 
+        this.gasto.actualizarDescripcion(descripcion);
+        this.gasto.actualizarValor(valor);
+        this.gasto.actualizarFecha(fecha);
+        this.gasto.anyadirEtiquetas(etiquetas);
+        repintar();
+    }
 }
 
 let borrarHandle = function(){
-
+    this.handleEvent = () => {
+        gp.borrarGasto(this.gasto.id);
+        repintar();
+    }
 }
 
 let borrarEtiquetasHandle = function(){
