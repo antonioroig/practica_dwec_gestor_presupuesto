@@ -103,6 +103,29 @@ function mostrarGastoWeb(gasto, idElemento) {
             etiquetasHTML.appendChild(span);
         });
 
+        let bntEditar = document.createElement('button');
+        bntEditar.type = 'button';
+        bntEditar.textContent = 'Editar';
+        bntEditar.className = 'gasto-editar';
+
+        let objEditar = new editarHandle();
+        objEditar.gasto = gasto;
+
+        bntEditar.addEventListener('click', objEditar);
+        gastoHTML.appendChild(bntEditar);
+
+        let btnBorrar = document.createElement('button');
+        btnBorrar.type = 'button';
+        btnBorrar.textContent = 'Borrar';
+        btnBorrar.className = 'gasto-borrar';
+
+        let objBorrar = new borrarHandle();
+        objBorrar.gasto = gasto;
+
+        btnBorrar.addEventListener('click', objBorrar);
+        gastoHTML.appendChild(btnBorrar);
+
+
         gastoHTML.appendChild(etiquetasHTML);
     }
 }
