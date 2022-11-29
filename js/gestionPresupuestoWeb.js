@@ -94,8 +94,30 @@ function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo)
     elem.appendChild(divAgrupacion);
 }
 
+function repintar(){
+
+    document.getElementById('presupuesto').textContent = '';
+    gestionPresupuesto.mostrarDatoEnId('presupuesto',gestionPresupuesto.mostrarPresupuesto());
+
+    document.getElementById('gastos-totales').textContent = '';
+    gestionPresupuesto.mostrarDatoEnId('gastos-totales',gestionPresupuesto.calcularBalance());
+
+    document.getElementById('listado-gastos').textContent = '';
+    for(let lista of gestionPresupuesto.listarGastos())
+    {
+        gestionPresupuesto.mostrarGastoWeb('listado-gastos', lista);
+    }
+
+    document.getElementById('listado-gastos-completo').textContent = '';
+    for(let listaCompleta of gestionPresupuesto.listarGastos())
+    {
+        gestionPresupuesto.mostrarGastoWeb('listado-gastos-completo', listaCompleta);
+    }
+};
+
 export {
     mostrarDatoEnId,
     mostrarGastoWeb,
-    mostrarGastosAgrupadosWeb
+    mostrarGastosAgrupadosWeb,
+    repintar
 }
