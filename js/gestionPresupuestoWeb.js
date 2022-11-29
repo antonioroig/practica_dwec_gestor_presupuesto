@@ -58,7 +58,8 @@ let borrarHandle = function(){
 
 let borrarEtiquetasHandle = function(){
     this.handleEvent = function(){
-        
+        this.gasto.borrarEtiquetas(this.etiqueta);
+        repintar();
     }
 }
 
