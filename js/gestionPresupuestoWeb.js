@@ -94,7 +94,8 @@ function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo)
     elem.appendChild(divAgrupacion);
 }
 
-function repintar(){
+function repintar()
+{
 
     document.getElementById('presupuesto').textContent = '';
     gestionPresupuesto.mostrarDatoEnId('presupuesto',gestionPresupuesto.mostrarPresupuesto());
@@ -115,9 +116,21 @@ function repintar(){
     }
 };
 
+function actualizarPresupuestoWeb()
+{
+    let presupuesto = parseInt(prompt('Introduce un presupuesto:'));
+    gestionPresupuesto.actualizarPresupuesto(presupuesto);
+
+    repintar();
+};
+
+let botonActualizar = document.getElementById('actualizarpresupuesto');
+botonActualizar.addEventListener('click', actualizarPresupuestoWeb);
+
 export {
     mostrarDatoEnId,
     mostrarGastoWeb,
     mostrarGastosAgrupadosWeb,
-    repintar
+    repintar,
+    actualizarPresupuestoWeb
 }
