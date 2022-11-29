@@ -1,9 +1,10 @@
 import { mostrarPresupuesto } from "./gestionPresupuesto";
-import * as presupuesto from "/gestionPresupuesto";
+import * as gestionPresupuesto from "./gestionPresupuesto.js";
 
 // Añadir eventos a los botones
-document.getElementById('actualizarpresupuesto').addEventListener("click", actualizarPresupuestoWeb);
-document.getElementById('anyadirgasto ').addEventListener("click",nuevoGastoWeb);
+document.getElementById("actualizarpresupuesto").addEventListener("click", actualizarPresupuestoWeb);
+document.getElementById("anyadirgasto").addEventListener("click", nuevoGastoWeb);
+document.getElementById("anyadirgasto-formulario").addEventListener("click", nuevoGastoWebFormulario);
 
 // Revisar
 // document.addEventListener("click",actualizarPresupuestoWeb);
@@ -106,42 +107,56 @@ function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo){
 }
 
 function repintar(){
-  /* Mostrar el presupuesto en div#presupuesto (funciones mostrarPresupuesto y mostrarDatoEnId)
-  Mostrar los gastos totales en div#gastos-totales (funciones calcularTotalGastos y mostrarDatoEnId)
-  Mostrar el balance total en div#balance-total (funciones calcularBalance y mostrarDatoEnId)
-  Borrar el contenido de div#listado-gastos-completo, para que el paso siguiente no duplique la información. Puedes utilizar innerHTML para borrar el contenido de dicha capa.
-  Mostrar el listado completo de gastos en div#listado-gastos-completo (funciones listarGastos y mostrarGastoWeb) */
   
-  let element = document-getElementById("presupuesto");
-  presupuesto.mostrarPresupuesto()
-  mostrarDatoEnId("presupuesto")
-
-
+  document.getElementById("presupuesto").innerHTML="";
+  document.getElementById("gastos-totales").innerHTML="";
+  document.getElementById("balance-total").innerHTML="";
+ 
+  mostrarDatoEnId("presupuesto", gestionPresupuesto.mostrarPresupuesto());
+  mostrarDatoEnId("gastos-totales", gestionPresupuesto.calcularTotalGastos());
+  mostrarDatoEnId("balance-total", gestionPresupuesto.calcularBalance());
 
 }
 function actualizarPresupuestoWeb(){
 
-  let presupuesto = prompt("Por favor, introduzca el nuevo presupuesto",);
-  let valor = parseInt(presupuesto);
-  presupuesto.actualizzarPresupuesto(valor);
-  repintar(); // Revisar
+  let presupuesto = parseFloat(prompt("Por favor, introduzca el nuevo presupuesto: "));
+  gestionPresupuesto.actualizarPresupuesto(presupuesto);
+  repintar();
 
 }
 function nuevoGastoWeb(){
 
   alert("Introduzca los datos del nuevo Gasto")
   let descripcion = prompt("Descripción");
-  let valor = prompt("Valor");
-  valor = parseInt(valor);
+  let valor = parseFloat(prompt("Valor"));
   let fecha = prompt("Fecha");
   let etiquetas = prompt("Por favor, introduzca las etiquetas separadas por comas =)");
   let array = etiquetas.split(',');
-  let gasto = presupuesto.CrearGasto(descripcion,valor,fecha,array);
-  presupuesto.anyadirGasto(gasto);
-  repintar(); // Revisar
+  let gasto = new gestionPresupuesto.CrearGasto(descripcion,valor,fecha, ...array);
+  gestionPresupuesto.anyadirGasto(gasto);
+  repintar(); 
 
 }
+
+  // Crear boton
+  /*document.addEventListener('DOMContentLoaded', function(){
+
+    let btnEditar = document.createElement('input');
+    btnEditar.type = 'button';
+    btnEditar.value = "Editar";
+     btnEditar.onclick = editarHandle();
+
+    var container = document.getElementById('container');
+    container.appendChild(btnEditar);
+
+  }, false);*/
+
+// Funciones constructoras 
 function editarHandle(){
+
+  
+
+
 
 }
 function borrarHandle(){
