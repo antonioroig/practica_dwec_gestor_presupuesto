@@ -51,7 +51,7 @@ function mostrarGastoWeb(idElemento, gasto)
 
             let BtnEtiqBorrarHandle = new BorrarEtiquetasHandle();
             BtnEtiqBorrarHandle.gasto = gasto;
-            BtnEtiqBorrarHandle.divGastoEtiquetasEtiqueta = gasto.etiquetas[i];
+            BtnEtiqBorrarHandle.petiquetas = gasto.etiquetas[i];
             divGastoEtiquetasEtiqueta.addEventListener("click", BtnEtiqBorrarHandle);
             divGastoEtiquetasEtiqueta.textContent = gasto.etiquetas[i] + " ";
 
