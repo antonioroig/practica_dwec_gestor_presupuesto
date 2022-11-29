@@ -17,7 +17,7 @@ function actualizarPresupuestoWeb(){
     repintar();
 }
 
-let btnActualizarPresupuesto = document.getElementById();
+let btnActualizarPresupuesto = document.getElementById('actualizarpresupuesto');
 btnActualizarPresupuesto.onclick = actualizarPresupuestoWeb();
 
 function nuevoGastoWeb(){
@@ -26,21 +26,23 @@ function nuevoGastoWeb(){
     let fecha = prompt("Introduzca la fecha");
     let etiquetas = prompt("Introduzca las etiquetas").split(",");
 
-    gp.CrearGasto(descripcion, valor, fecha, ...etiquetas);
+    let ng = gp.CrearGasto(descripcion, valor, fecha, etiquetas);
+    gp.anyadirGasto(ng);
+    repintar();
 }
 
-let btnAnyadirGasto = document.getElementById();
+let btnAnyadirGasto = document.getElementById('anyadirgasto');
 btnAnyadirGasto.onclick = nuevoGastoWeb();
 
-function editarHandle(){
+let editarHandle = function(){
 
 }
 
-function borrarHandle(){
+let borrarHandle = function(){
 
 }
 
-function borrarEtiquetasHandle(){
+let borrarEtiquetasHandle = function(){
 
 }
 
@@ -131,8 +133,5 @@ export {
     mostrarGastosAgrupadosWeb,
     repintar,
     actualizarPresupuestoWeb,
-    nuevoGastoWeb,
-    editarHandle,
-    borrarHandle,
-    borrarEtiquetasHandle
+    nuevoGastoWeb
 }
