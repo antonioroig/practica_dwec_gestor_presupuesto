@@ -128,11 +128,21 @@ function EditarHandle(){
     }
 }
 
+function BorrarHandle(){
+    this.handleEvent = function()
+    {
+        gestionPresupuesto.borrarGasto(this.gasto.id); // Pasamos el id del gasto a borrar.
+        repintar();
+    };
+}
+
 export {
     mostrarDatoEnId,
     mostrarGastoWeb,
     mostrarGastosAgrupadosWeb,
     repintar,
     actualizarPresupuestoWeb,
-    nuevoGastoWeb
+    nuevoGastoWeb,
+    EditarHandle,
+    BorrarHandle
 }
