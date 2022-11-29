@@ -1,6 +1,7 @@
 import * as gestionPresupuesto from './gestionPresupuesto.js';
 import * as mostrarEnWeb from './gestionPresupuestoWeb.js';
 
+'use strict';
 
 gestionPresupuesto.actualizarPresupuesto(1500);
 
