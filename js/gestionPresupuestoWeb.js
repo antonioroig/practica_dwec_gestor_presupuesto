@@ -71,7 +71,7 @@ function mostrarGastoWeb(idElemento, gasto){
     ///////////////////////////////
     divGastoEtiquetas.addEventListener("click", hand3);
     divGasto.append(divGastoEtiquetas);
-
+    //
 
 
 
