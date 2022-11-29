@@ -36,13 +36,17 @@ function mostrarGastoWeb(idElemento, gasto){
     let divGastoEtiqueta = document.createElement("div");
     divGastoEtiqueta.className = "gasto-etiquetas";
 
+    let handleBorrarEtiqueta = new BorrarEtiquetasHandle();
+    handleBorrarEtiqueta.gasto = gasto;
 
     for(let i = 0; i < gasto.etiquetas.length; i++){
+        handleBorrarEtiqueta.etiqueta = gasto.etiquetas[i];
         let span = document.createElement("span");
         span.className = "gasto-etiquetas-etiqueta";
         span.innerHTML = gasto.etiquetas[i];
         divGastoEtiqueta.append(span);
     }
+        
 
         let botonEditar = document.createElement("button");
         botonEditar.className = "gasto-editar";
@@ -53,6 +57,7 @@ function mostrarGastoWeb(idElemento, gasto){
         handleEditar.gasto = gasto;
         botonEditar.addEventListener("click", handleEditar);
         divGasto.append(botonEditar);
+        
 
         let botonBorrar = document.createElement("button");
         botonBorrar.className = "gasto-borrar";
@@ -63,6 +68,12 @@ function mostrarGastoWeb(idElemento, gasto){
         handleBorrar.gasto = gasto;
         botonBorrar.addEventListener("click", handleBorrar);
         divGasto.append(botonBorrar);
+
+        divGastoEtiqueta.addEventListener("click", handleBorrarEtiqueta);
+
+
+        
+
 
     divGasto.append(divGastoEtiqueta);
     id.append(divGasto);
@@ -159,7 +170,10 @@ function BorrarHandle(){
 }
 
 function BorrarEtiquetasHandle(){
-
+    this.handleEvent = function(){
+        this.gasto.borrarEtiquetas(this.etiqueta);
+        repintar();
+    }
 }
 
 actualizarpresupuesto.addEventListener("click", actualizarPresupuestoWeb);
