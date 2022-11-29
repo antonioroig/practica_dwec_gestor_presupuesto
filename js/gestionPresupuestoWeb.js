@@ -4,7 +4,6 @@ import * as gestionPresupuesto from "./gestionPresupuesto.js";
 // Añadir eventos a los botones
 document.getElementById("actualizarpresupuesto").addEventListener("click", actualizarPresupuestoWeb);
 document.getElementById("anyadirgasto").addEventListener("click", nuevoGastoWeb);
-document.getElementById("anyadirgasto-formulario").addEventListener("click", nuevoGastoWebFormulario);
 
 // Revisar
 // document.addEventListener("click",actualizarPresupuestoWeb);
@@ -126,7 +125,6 @@ function actualizarPresupuestoWeb(){
 }
 function nuevoGastoWeb(){
 
-  alert("Introduzca los datos del nuevo Gasto")
   let descripcion = prompt("Descripción");
   let valor = parseFloat(prompt("Valor"));
   let fecha = prompt("Fecha");
@@ -138,31 +136,31 @@ function nuevoGastoWeb(){
 
 }
 
-  // Crear boton
-  /*document.addEventListener('DOMContentLoaded', function(){
-
-    let btnEditar = document.createElement('input');
-    btnEditar.type = 'button';
-    btnEditar.value = "Editar";
-     btnEditar.onclick = editarHandle();
-
-    var container = document.getElementById('container');
-    container.appendChild(btnEditar);
-
-  }, false);*/
-
 // Funciones constructoras 
-function editarHandle(){
+function EditarHandle(){
 
-  
+    this.handleEvent = function(element){
 
+      let descripcion = prompt("Descripción");
+      let valor = parseFloat(prompt("Valor"));
+      let fecha = prompt("Fecha");
+      let etiquetas = prompt("Por favor, introduzca las etiquetas separadas por comas =)");
+      let array = etiquetas.split(',');
+      let gasto = new gestionPresupuesto.CrearGasto(descripcion,valor,fecha, ...array);
+      gestionPresupuesto.anyadirGasto(gasto);
 
+      this.gasto.actualizarValor(valor);
+      this.gasto.actualizarDescripcion(descripcion);
+      this.gasto.actualizarFecha(fecha);
+      this.gasto.anyadirEtiquetas(...etiquetas);
 
+      repintar(); 
+    }
 }
-function borrarHandle(){
+function BorrarHandle(){
   
 }
-function borrarEtiquetasHandle(){
+function BorrarEtiquetasHandle(){
   
 }
 export    {
@@ -173,9 +171,9 @@ export    {
   repintar,
   actualizarPresupuestoWeb,
   nuevoGastoWeb,
-  editarHandle,
-  borrarHandle,
-  borrarEtiquetasHandle
+  EditarHandle,
+  BorrarHandle,
+  BorrarEtiquetasHandle
 
 }
 
