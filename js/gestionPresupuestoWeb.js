@@ -161,11 +161,24 @@ function EditarHandle()
     }
 }
 
+function BorrarHandle()
+{
+    this.handleEvent = function (evento)
+    {
+        let gastoElim = this.gasto.id;
+        gestionPresupuesto.borrarGasto(gastoElim);
+
+        repintar();
+    }
+}
+
 export {
     mostrarDatoEnId,
     mostrarGastoWeb,
     mostrarGastosAgrupadosWeb,
     repintar,
     actualizarPresupuestoWeb,
-    nuevoGastoWeb
+    nuevoGastoWeb, 
+    EditarHandle,
+    BorrarHandle
 }
