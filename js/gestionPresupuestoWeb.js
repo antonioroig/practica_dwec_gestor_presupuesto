@@ -131,7 +131,7 @@ function nuevoGastoWeb()
 {
     let descripcion = prompt('Introduce una descripción:');
     let valor = parseFloat(prompt('Introduce un valor:'));
-    let fecha = Date.parse(prompt('Introduce una fecha: '));
+    let fecha = Date.parse(prompt('Introduce una fecha:'));
     let etiquetas = prompt('Introduce etiquetas:');
 
     let gastoNuevo = new gestionPresupuesto.CrearGasto(descripcion,valor,fecha,...etiquetas);
@@ -142,6 +142,24 @@ function nuevoGastoWeb()
 
 let botonNuevoGasto = document.getElementById('anyadirgasto');
 botonNuevoGasto.addEventListener('click', nuevoGastoWeb);
+
+function EditarHandle()
+{
+    this.handleEvent = function (evento)
+    {
+        let nuevaDescripcion = prompt('Introduce una nueva descripción:');
+        let nuevoValor = prompt('Introduce un nuevo valor:');
+        let nuevaFecha = Date.parse(prompt('Introduce una nueva fecha:'));
+        let nuevasEtiquetas = prompt('Introduce nuevas etiquetas:');
+
+        this.gasto.actualizarValor(nuevoValor);
+        this.gasto.actualizarDescripcion(nuevaDescripcion);
+        this.gasto.actualizarFecha(nuevaFecha);
+        this.gasto.anyadirEtiquetas(...nuevasEtiquetas);
+
+        repintar();
+    }
+}
 
 export {
     mostrarDatoEnId,
