@@ -137,7 +137,8 @@ function nuevoGastoWeb(){
 document.getElementById("anyadirgasto").addEventListener("click",nuevoGastoWeb)
 
 function EditarHandle(){
-    this.handleEvent = function(){
+    this.handleEvent = function(event){
+        event.preventDefault();
         let descripcion = prompt("Introduce una descripción:");
         let valor = parseFloat(prompt("Introduce un valor:"));
         let fecha = Date.parse(prompt("Introduce la fecha:"));
@@ -151,7 +152,7 @@ function EditarHandle(){
 };
 
 function BorrarHandle(){
-    this.handleEvent = function(){
+    this.handleEvent = function(event){
         let borrarHandle = this.gasto.id;
         gestionPresupuesto.borrarGasto(borrarHandle);
         repintar();
@@ -159,11 +160,20 @@ function BorrarHandle(){
 };
 
 function BorrarEtiquetasHandle(){
-    this.handleEvent = function(){
+    this.handleEvent = function(event){
         this.gasto.borrarEtiquetas(this.etiquetas);
         repintar();
     };
 };
+
+//Función nuevo gasto web formulario y botón añadir gasto formulario
+function nuevoGastoWebFormulario(){
+    let plantillaFormulario = document.getElementById("formulario-template").content.cloneNode(true);;
+    var formulario = plantillaFormulario.querySelector("form");
+    
+};
+//Botón añadir gasto formulario
+document.getElementById("anyadirgasto-formulario").addEventListener("submit",nuevoGastoWebFormulario)
 
 
 
@@ -176,5 +186,6 @@ export{
     nuevoGastoWeb,
     EditarHandle,
     BorrarHandle,
-    BorrarEtiquetasHandle
+    BorrarEtiquetasHandle,
+    nuevoGastoWebFormulario
 };
