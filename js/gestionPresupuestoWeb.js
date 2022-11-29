@@ -40,7 +40,7 @@ function mostrarGastoWeb(idElemento, gasto){
         span.className = "gasto-etiquetas-etiqueta";
         span.innerHTML = gasto.etiquetas[i];
         divGastoEtiquetas.append(span);
-        gasto.etiqueta = gasto.etiquetas[i];
+        hand3.etiqueta = gasto.etiquetas[i];
     }
     let BotonEdit = document.createElement("button");
     BotonEdit.className = "gasto-editar";
@@ -70,8 +70,6 @@ function mostrarGastoWeb(idElemento, gasto){
     ///////////////////////////////
     ///////////////////////////////
     divGastoEtiquetas.addEventListener("click", hand3);
-    ///////////////////////////////
-    ///////////////////////////////
 
 
 
