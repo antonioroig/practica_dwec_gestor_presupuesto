@@ -26,7 +26,7 @@ function actualizarPresupuestoWeb(){
 }
 
 let btnActualizarPresupuesto = document.getElementById('actualizarpresupuesto');
-btnActualizarPresupuesto.onclick = actualizarPresupuestoWeb();
+btnActualizarPresupuesto.onclick = actualizarPresupuestoWeb;
 
 function nuevoGastoWeb(){
     let descripcion = prompt("Introduzca la descripcion");
@@ -34,13 +34,13 @@ function nuevoGastoWeb(){
     let fecha = prompt("Introduzca la fecha");
     let etiquetas = prompt("Introduzca las etiquetas").split(',');
 
-    let newGasto = gp.CrearGasto(descripcion, valor, fecha, etiquetas);
+    let newGasto = new gp.CrearGasto(descripcion, valor, fecha, etiquetas);
     gp.anyadirGasto(newGasto);
     repintar();
 }
 
 let btnAnyadirGasto = document.getElementById('anyadirgasto');
-btnAnyadirGasto.onclick = nuevoGastoWeb();
+btnAnyadirGasto.onclick = nuevoGastoWeb;
 
 let editarHandle = function(){
     this.handleEvent = function(){
@@ -113,31 +113,31 @@ function mostrarGastoWeb(gasto, idElemento) {
             let objBorrarEtiqueta = new borrarEtiquetasHandle();
             objBorrarEtiqueta.gasto = gasto;
             objBorrarEtiqueta.etiqueta = etiqueta;
-            span.addEventListener('click', objBorrarEtiqueta);
+            span.addEventListener("click", objBorrarEtiqueta);
 
         });
         gastoHTML.appendChild(etiquetasHTML);
         
-        let bntEditar = document.createElement('button');
-        bntEditar.type = 'button';
-        bntEditar.textContent = 'Editar';
-        bntEditar.className = 'gasto-editar';
+        let btnEditar = document.createElement("button");
+        btnEditar.type = "button";
+        btnEditar.textContent = "Editar";
+        btnEditar.className = "gasto-editar";
 
         let objEditar = new editarHandle();
         objEditar.gasto = gasto;
 
-        bntEditar.addEventListener('click', objEditar);
-        gastoHTML.appendChild(bntEditar);
+        btnEditar.addEventListener("click", objEditar);
+        gastoHTML.appendChild(btnEditar);
 
-        let btnBorrar = document.createElement('button');
-        btnBorrar.type = 'button';
-        btnBorrar.textContent = 'Borrar';
-        btnBorrar.className = 'gasto-borrar';
+        let btnBorrar = document.createElement("button");
+        btnBorrar.type = "button";
+        btnBorrar.textContent = "Borrar";
+        btnBorrar.className = "gasto-borrar";
 
         let objBorrar = new borrarHandle();
         objBorrar.gasto = gasto;
 
-        btnBorrar.addEventListener('click', objBorrar);
+        btnBorrar.addEventListener("click", objBorrar);
         gastoHTML.appendChild(btnBorrar);
     }
 }
