@@ -170,7 +170,7 @@ function EditarHandle()
     this.handleEvent = function (event)
     {
         let nuevaDescripcion = prompt('Introduce una nueva descripción:');
-        let nuevoValor = prompt('Introduce un nuevo valor:');
+        let nuevoValor = parseFloat(prompt('Introduce un nuevo valor:'));
         let nuevaFecha = Date.parse(prompt('Introduce una nueva fecha:'));
         let nuevasEtiquetas = prompt('Introduce nuevas etiquetas:').split(',');
 
