@@ -35,7 +35,7 @@ let btnAnyadirGasto = document.getElementById('anyadirgasto');
 btnAnyadirGasto.onclick = nuevoGastoWeb();
 
 let editarHandle = function(){
-    this.handleEvent = () => {
+    this.handleEvent = function(){
         let descripcion = prompt("Introduzca la descripcion");
         let valor = parseFloat(prompt("Introduzca el valor"));
         let fecha = prompt("Introduzca la fecha");
@@ -50,14 +50,16 @@ let editarHandle = function(){
 }
 
 let borrarHandle = function(){
-    this.handleEvent = () => {
+    this.handleEvent = function(){
         gp.borrarGasto(this.gasto.id);
         repintar();
     }
 }
 
 let borrarEtiquetasHandle = function(){
-
+    this.handleEvent = function(){
+        
+    }
 }
 
 function mostrarDatoEnId(valor, idElemento) {
