@@ -4,7 +4,9 @@ function repintar(){
     mostrarDatoEnId(gp.mostrarPresupuesto(), "presupuesto");
     mostrarDatoEnId(gp.calcularTotalGastos(), "gastos-totales");
     mostrarDatoEnId(gp.calcularBalance(), "balance-total");
-    mostrarDatoEnId(gp.element.innerHTML, "listado-gastos-completo");
+
+    let actLista = document.getElementById("listado-gastos-completo");
+    actLista.innerHTML='';
 
     gp.listarGastos().forEach(gasto => {
         mostrarGastoWeb(gasto, "listado-gastos-completo");
@@ -12,9 +14,15 @@ function repintar(){
 }
 
 function actualizarPresupuestoWeb(){
-    let presupuesto = parseFloat(prompt("Introduzca presupuesto"));
-    gp.actualizarPresupuesto(presupuesto);
-    repintar();
+    let presupuesto = prompt("Introduzca presupuesto");
+    if(presupuesto != null){
+        presupuesto = parseFloat(presupuesto);
+        gp.actualizarPresupuesto(presupuesto);
+        repintar();
+    }
+    else{
+        alert("El valor introducido no es valido");
+    }
 }
 
 let btnActualizarPresupuesto = document.getElementById('actualizarpresupuesto');
@@ -24,10 +32,10 @@ function nuevoGastoWeb(){
     let descripcion = prompt("Introduzca la descripcion");
     let valor = parseFloat(prompt("Introduzca el valor"));
     let fecha = prompt("Introduzca la fecha");
-    let etiquetas = prompt("Introduzca las etiquetas").split(",");
+    let etiquetas = prompt("Introduzca las etiquetas").split(',');
 
-    let ng = gp.CrearGasto(descripcion, valor, fecha, etiquetas);
-    gp.anyadirGasto(ng);
+    let newGasto = gp.CrearGasto(descripcion, valor, fecha, etiquetas);
+    gp.anyadirGasto(newGasto);
     repintar();
 }
 
@@ -101,8 +109,15 @@ function mostrarGastoWeb(gasto, idElemento) {
             span.className = "gasto-etiquetas-etiqueta";
             span.innerHTML = etiqueta;
             etiquetasHTML.appendChild(span);
-        });
 
+            let objBorrarEtiqueta = new borrarEtiquetasHandle();
+            objBorrarEtiqueta.gasto = gasto;
+            objBorrarEtiqueta.etiqueta = etiqueta;
+            span.addEventListener('click', objBorrarEtiqueta);
+
+        });
+        gastoHTML.appendChild(etiquetasHTML);
+        
         let bntEditar = document.createElement('button');
         bntEditar.type = 'button';
         bntEditar.textContent = 'Editar';
@@ -124,9 +139,6 @@ function mostrarGastoWeb(gasto, idElemento) {
 
         btnBorrar.addEventListener('click', objBorrar);
         gastoHTML.appendChild(btnBorrar);
-
-
-        gastoHTML.appendChild(etiquetasHTML);
     }
 }
 
