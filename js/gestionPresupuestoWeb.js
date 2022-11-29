@@ -125,6 +125,9 @@ function nuevoGastoWeb(){
 
 function EditarHandle(){
   this.handleEvent = function (event) {
+    
+    event.preventDefault();
+
     let nuevaDescripcion = prompt('Introduce la nueva descripcion');
     let nuevoValor =  parseFloat(prompt('Introduce el nuevo valor'));;
     let nuevaFecha = Date.parse(prompt('Introduce la fecha en formato yyyy/mm/dd'));
@@ -160,12 +163,23 @@ function BorrarEtiquetasHandle(){
     } 
 };
 
+function nuevoGastoWebFormulario(){
+    let plantillaFormulario = document.getElementById("formulario-template").content.cloneNode(true);
+    var formulario = plantillaFormulario.querySelector("form");
+
+
+    
+};
+
 //Botones
 let botonActualizar = document.getElementById('actualizarpresupuesto');
 botonActualizar.addEventListener('click',actualizarPresupuestoWeb);
 
 let botonNuevoGasto = document.getElementById('anyadirgasto');
 botonNuevoGasto.addEventListener('click',nuevoGastoWeb);
+
+let botonAnyadirGasto = document.getElementById('anyadirgasto-formulario');
+botonAnyadirGasto.addEventListener('click',nuevoGastoWebFormulario);
 
 export {
     mostrarDatoEnId,
@@ -176,5 +190,6 @@ export {
     nuevoGastoWeb,
     EditarHandle,
     BorrarHandle,
-    BorrarEtiquetasHandle
+    BorrarEtiquetasHandle,
+    nuevoGastoWebFormulario
 }
