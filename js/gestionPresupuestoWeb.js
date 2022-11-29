@@ -1,7 +1,7 @@
 import * as gestionPresupuesto from './gestionPresupuesto.js';
 
-document.getElementById("actualizarPresupuesto").addEventListener("click", actualizarPresupuestoWeb);
-documento.getElementById("anyadirGasto").addEventListener("click", nuevoGastoWeb);
+document.getElementById("actualizarpresupuesto").addEventListener("click", actualizarPresupuestoWeb);
+document.getElementById("anyadirgasto").addEventListener("click", nuevoGastoWeb);
 function mostrarDatoEnId(valor,idElemento) {
     let elemento = document.getElementById(idElemento);
     let parrafo = document.createElement("p");
@@ -114,14 +114,6 @@ function mostrarGastoWeb(idElemento, gasto) {
 
     divGasto.append(btnBorrar);
 
-
-    for(let i = 0; i < gasto.etiquetas.length; i++)
-    {
-        let borrarEtiquetas = new BorrarEtiquetasHandle();
-            borrarEtiquetas.gasto = gasto;
-            borrarEtiquetas.etiqueta = gasto.etiquetas[i];
-    }
-    
 }
 function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo){
     let elemento3 = document.getElementById(idElemento);
