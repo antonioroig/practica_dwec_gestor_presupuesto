@@ -113,7 +113,19 @@ function nuevoGastoWeb(){
 }
 
 function EditarHandle(){
-    
+    this.handleEvent = function (gasto)
+    {
+        let descripcion = prompt("Introduce la nueva descripción del gasto");
+        let valor = parseFloat(prompt("Introduce la nueva valor del gasto"));
+        let fecha = prompt("Introduce la fecha del gasto en formato yyyy-mm-dd");
+        let etiqueta = prompt("Introduce las etiquetas del gasto separadas por ,");
+        let etiquetas = etiqueta.split(',');
+        this.gasto.actualizarValor(valor);
+        this.gasto.actualizarDescripcion(descripcion);
+        this.gasto.actualizarFecha(fecha);
+        this.gasto.anyadirEtiquetas(...etiquetas);
+        repintar();
+    }
 }
 
 export {
