@@ -37,6 +37,13 @@ function mostrarGastoWeb(idElemento,gasto){
         let spanE = document.createElement("span");
         spanE.className = "gasto-etiquetas-etiqueta";
         spanE.innerHTML = gasto.etiquetas[i];
+        
+        let btnBorrarHandle = new BorrarEtiquetasHandle();
+        btnBorrarHandle.gasto = gasto;
+        btnBorrarHandle.petiquetas = gasto.etiquetas[i];
+        spanE.addEventListener("click", btnBorrarHandle);
+        spanE.textContent = gasto.etiquetas[i] + " ";
+
         divEtiquetas.append(spanE);
     }
     divGasto.append(divEtiquetas);
@@ -166,7 +173,7 @@ function BorrarHandle(){
 
 function BorrarEtiquetasHandle(){
     this.handleEvent = function(){
-        this.gasto.borrarEtiquetas(this.etiquetas);
+        this.gasto.borrarEtiquetas(this.petiquetas);
         repintar();
     }
 }
