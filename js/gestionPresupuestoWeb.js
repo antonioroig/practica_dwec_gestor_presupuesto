@@ -102,6 +102,9 @@
     repintar();
     
   }
+
+  let botonactpresupuesto = document.getElementById('actualizarpresupuesto');
+  botonactpresupuesto.addEventListener('click',actualizarPresupuestoWeb);
   
   
   export{
