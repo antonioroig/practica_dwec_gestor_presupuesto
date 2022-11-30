@@ -1,3 +1,4 @@
+'use strict';
 // TODO: Variable global
 let presupuesto = 0;
 let gastos = [];
@@ -117,7 +118,7 @@ function CrearGasto(descripcion,valor,fecha = Date.now(), ...etiquetas)
         {
            dia = "0" + fechaPeriodo.getDate();
         }
-        if(periodo === "dia")
+        if(periodo === "dia" || periodo === "día")
         {
             return anyo + "-" + mes + "-" + dia;
         }
