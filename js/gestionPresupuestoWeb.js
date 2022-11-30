@@ -214,6 +214,20 @@ function BorrarHandle()
 
 }
 
+function borrarEtiquetasHandle()
+{
+
+    this.handleEvent = function()
+    {
+
+        this.gasto.borrarEtiquetas(this.etiquetas)
+
+        repintar();
+
+    }
+
+}
+
 
 export{
 
