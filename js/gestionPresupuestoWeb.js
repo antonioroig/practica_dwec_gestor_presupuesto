@@ -135,7 +135,22 @@ function repintar()
 
 }
 
-function
+function nuevoGastoWeb()
+{
+
+    let descripcion = prompt("introduce una descripcion");
+
+    let valorSTR = prompt("introduce un valor de el gasto");
+
+    let valor = parseFloat(valorSTR);
+
+    let date = prompt("introduce una fecha (formato yyy-mm-dd)");
+
+    let etiquetas = prompt("introduce las etiquetas para el gasto (formato etiq1 qtiq2 etiq3)");
+
+    let etiquetasarray = prompt("introduce una descripcion");
+
+}
 
 
 
