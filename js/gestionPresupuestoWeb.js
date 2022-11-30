@@ -118,10 +118,10 @@ function EditarHandle(){
         let newEtiquetas = prompt('Escribe una o varias etiquetas nuevas: ', this.gasto.etiquetas.join(', '));
         let arrayNEtiquetas = newEtiquetas.split(',');
 
-        this.gasto.actualizarDescripcion(nuevaDescripcion);
-        this.gasto.actualizarValor(nuevoValor);
-        this.gasto.actualizarFecha(new Date(nuevaFecha));
-        this.gasto.anyadirEtiquetas(etiquetasArray);
+        this.gasto.actualizarDescripcion(newDesc);
+        this.gasto.actualizarValor(newValor);
+        this.gasto.actualizarFecha(new Date(newFecha));
+        this.gasto.anyadirEtiquetas(arrayNEtiquetas);
 
         repintar();
     };
@@ -129,18 +129,14 @@ function EditarHandle(){
 
 let BorrarHandle = function(){
     this.handleEvent = function() {
-        
-        gestionPresupuesto.borrarGasto(this.gasto.id)
-        
+        gestionPresupuesto.borrarGasto(this.gasto.id) 
         repintar();
     }
 }
 
 let BorrarEtiquetasHandle = function(){
     this.handleEvent = function() {
-        
         this.gasto.borrarEtiquetas(this.etiqueta);
-        
         repintar();
     }
 }
