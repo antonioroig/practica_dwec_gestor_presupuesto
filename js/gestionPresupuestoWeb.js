@@ -63,8 +63,36 @@ function mostrarGastosAgrupadosWeb(idElemento,agrup,periodo)
     element.appendChild(agrupDIV);
 }
 
+function repintar(){
+    mostrarDatoEnId('gastos-totales',gestionPresupuesto.calcularTotalGastos());
+    mostrarDatoEnId('presupuesto',gestionPresupuesto.mostrarPresupuesto());
+    mostrarDatoEnId('listado-gastos-completo',"");
+    mostrarGastoWeb('listado-gastos-completo',gestionPresupuesto.listarGastos());
+}
+
+function actualizarPresupuestoWeb(){
+    let alert = prompt("Introduce un nuevo presupuesto:",'');
+    gestionPresupuesto.actualizarPresupuesto(parseInt(`${alert}`,10));
+    repintar();
+}
+
+function nuevoGastoWeb(){
+    let descripción = prompt("Introduce una nueva descripción:",'');
+    let valor = prompt("Introduce un nuevo valor:",'');
+    let valorint = parseFloat(`${valor}`, 10);
+    let fecha = prompt("Introduce una nueva fecha:",'');
+    let etiquetas = prompt("Introduce nuevas etiquetas:",'');
+    let arretiquetas = etiquetas.split(',');
+    let newgasto = gestionPresupuesto.CrearGasto(descripción, valorint, fecha, ...arretiquetas);
+    gestionPresupuesto.anyadirGasto(newgasto);
+    repintar();
+}
+
 export{
     mostrarDatoEnId,
     mostrarGastoWeb,
     mostrarGastosAgrupadosWeb,
+    actualizarPresupuestoWeb,
+    nuevoGastoWeb,
+    repintar,
 }

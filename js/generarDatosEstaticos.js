@@ -40,6 +40,9 @@ export let DEVagrupadogastosMES = gestionPresupuestoWeb.mostrarGastosAgrupadosWe
 
 export let DEVagrupadogastosANYO = gestionPresupuestoWeb.mostrarGastosAgrupadosWeb('agrupacion-anyo',gestionPresupuesto.agruparGastos("anyo"), "año");
 
+let actualizarpresupuesto5 = document.getElementById('actualizarpresupuesto');
+actualizarpresupuesto5.addEventListener('click', gestionPresupuestoWeb.actualizarPresupuestoWeb);
 
-
+let anyadirGasto5 = document.getElementById('anyadirgasto');
+anyadirGasto5.addEventListener('click', gestionPresupuestoWeb.nuevoGastoWeb);
 
