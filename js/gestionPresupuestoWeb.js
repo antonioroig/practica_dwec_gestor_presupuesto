@@ -84,19 +84,14 @@ function mostrarGastosAgrupadosWeb(idElemento,agrup,periodo)
 
 function repintar()
 {
-    document.getElementById('presupuesto');
+   
     mostrarDatoEnId(pres.mostrarPresupuesto(),'presupuesto');
-
-    document.getElementById('gastos-totales');
     mostrarDatoEnId(pres.calcularTotalGastos(),'gastos-totales');
-
-    document.getElementById('balance-total');
     mostrarDatoEnId(pres.calcularBalance(),'balance-total');
-
-    document.getElementById('listado-gasto-completo').textContent="";
+    document.getElementById('listado-gastos-completo').innerHTML = '';
     for(let gasto_completo of pres.listarGastos())
     {
-        mostrarGastoWeb('listado-gasto-completo',gasto_completo);
+        mostrarGastoWeb('listado-gastos-completo',gasto_completo);
     }
     
 }
@@ -105,6 +100,7 @@ function actualizarPresupuestoWeb()
 {
     let presupuesto = parseInt(prompt('Introduce el presupuesto actualizado'));
     pres.actualizarPresupuesto(presupuesto);
+    repintar();
 }
 
 let botonActualizar = document.getElementById('actualizarpresupuesto');
