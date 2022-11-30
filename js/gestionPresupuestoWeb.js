@@ -158,6 +158,19 @@ function nuevoGastoWeb()
 
 }
 
+function actualizarPresupuestoWeb()
+{
+
+    let question = prompt("introduce un presupuesto");
+    
+    let questionFloat = parseFloat(question);
+
+    gesPresupuesto.actualizarPresupuesto(questionFloat);
+
+    repintar();
+
+}
+
 
 
 
