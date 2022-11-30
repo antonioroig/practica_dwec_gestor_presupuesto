@@ -62,6 +62,7 @@ function repintar(){
     mostrarDatoEnId("balance-total", gestionPresupuesto.calcularBalance());
 
     let parrafo = document.getElementById("listado-gastos-completo");
+    parrafo.innerHTML = '';
 
     gestionPresupuesto.listarGastos().forEach(gasto =>{
         mostrarGastoWeb("listado-gastos-completo", gasto);
@@ -77,9 +78,21 @@ function actualizarPresupuestoWeb(){
     };
 }
 
-function actualizarpresupuesto(){
+let btnActualizarPresupestoWeb = document.getElementById('actualizarpresupuesto');
+btnActualizarPresupestoWeb.addEventListener('click', actualizarPresupuestoWeb);
 
+function nuevoGastoWeb(){
+    let newDesc = prompt('Introduce una nueva descripcion: ', 'descripcion');
+    let newValor = parseFloat(prompt('Escribe un nuevo valor: ', 420));
+    let newFecha = prompt('Escribe una nueva fecha: ', '29-11-2022');
+    let newEtiquetas = prompt('Escribe una o varias etiquetas nuevas: ', 'etiqueta1,etiqueta2,etiqueta3');
+    let arrayNEtiquetas = newEtiquetas.split(',');
+    let newGasto = new gestionPresupuesto.CrearGasto(newDesc,newValor,newFecha,arrayNEtiquetas);
+    gestionPresupuesto.anyadirGasto(newGasto);
+    repintar();
 }
+let btnNuevoGasto = document.getElementById('anyadirgasto');
+btnNuevoGasto.addEventListener('click', nuevoGastoWeb);
 
 export{
     mostrarDatoEnId,
@@ -87,5 +100,5 @@ export{
     mostrarGastosAgrupadosWeb,
     repintar,
     actualizarPresupuestoWeb,
-    actualizarpresupuesto
+    nuevoGastoWeb
 }
