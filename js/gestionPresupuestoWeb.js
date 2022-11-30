@@ -148,7 +148,13 @@ function nuevoGastoWeb()
 
     let etiquetas = prompt("introduce las etiquetas para el gasto (formato etiq1 qtiq2 etiq3)");
 
-    let etiquetasarray = prompt("introduce una descripcion");
+    let etiquetasarray = etiquetas.split(',');
+
+    let crearGasto = new gesPresupuesto.CrearGasto(descripcion, valor, fecha, etiquetasarray);
+
+    gesPresupuesto.anyadirGasto(crearGasto);
+
+    repintar();
 
 }
 
