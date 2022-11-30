@@ -94,6 +94,14 @@
       mostrarGastoWeb('listado-gastos-completo',gasto);
     }
   }
+  function actualizarPresupuestoWeb(){
+    let  presupuestoWeb = prompt('Introduce el presupuesto')
+    let presupuestostring = parseInt(presupuestoWeb);
+    gestionPresupuesto.actualizarPresupuesto(presupuestostring);
+
+    repintar();
+    
+  }
   
   
   export{
@@ -101,5 +109,6 @@
     mostrarGastoWeb,
     mostrarGastosAgrupadosWeb,
     repintar,
+    actualizarPresupuestoWeb
   }
 
