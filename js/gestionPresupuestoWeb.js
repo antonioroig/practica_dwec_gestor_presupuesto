@@ -1,12 +1,15 @@
 import * as gestionPresupuesto from './gestionPresupuesto.js';
 
-document.getElementById("actualizarpresupuesto").addEventListener("click", actualizarPresupuestoWeb);
-document.getElementById("anyadirgasto").addEventListener("click", nuevoGastoWeb);
+let botonActualizar = document.getElementById('actualizarpresupuesto');
+botonActualizar.OnClick = actualizarPresupuestoWeb;
+let botonNuevo = document.getElementById("anyadirgasto");
+botonNuevo.OnClick = nuevoGastoWeb;
+
 function mostrarDatoEnId(valor,idElemento) {
     let elemento = document.getElementById(idElemento);
     let parrafo = document.createElement("p");
     parrafo.textContent = valor;
-    elemento.append(parrafo);
+    elemento.appendChild(parrafo);
 }
 
 /*
@@ -84,6 +87,13 @@ function mostrarGastoWeb(idElemento, gasto) {
         let spanEtiqueta = document.createElement('span');
         spanEtiqueta.className = 'gasto-etiquetas-etiqueta';
         spanEtiqueta.textContent =  `${gasto.etiquetas[i]}\n`;
+
+        let borrarEtiquetas = new BorrarEtiquetasHandle();
+        borrarEtiquetas.gasto = gasto;
+        borrarEtiquetas.etiqueta = gasto.etiquetas[i];
+        if(idElemento == "listado-gastos-completo"){
+            spanEtiqueta.addEventListener("click", borrarEtiquetas);
+        }
         divGastoEtiquetas.appendChild(spanEtiqueta);
     }
     elemento2.appendChild(divGasto);
@@ -97,8 +107,7 @@ function mostrarGastoWeb(idElemento, gasto) {
     // objeto editar
     let objetoEditar = new EditarHandle();
     objetoEditar.gasto = gasto;
-    btnEditar.addEventListener('click', objetoEditar);   
-    
+    btnEditar.addEventListener('click', objetoEditar); 
     divGasto.append(btnEditar);
 
     // boton borrar
@@ -111,9 +120,7 @@ function mostrarGastoWeb(idElemento, gasto) {
     let objetoBorrar = new BorrarHandle();
     objetoBorrar.gasto = gasto;
     btnBorrar.addEventListener('click', objetoBorrar);
-
     divGasto.append(btnBorrar);
-
 }
 function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo){
     let elemento3 = document.getElementById(idElemento);
@@ -220,9 +227,5 @@ export {
     mostrarGastoWeb,
     mostrarGastosAgrupadosWeb,
     repintar,
-    actualizarPresupuestoWeb,
-    nuevoGastoWeb,
-    EditarHandle,
-    BorrarHandle,
-    BorrarEtiquetasHandle
+    nuevoGastoWeb
 }
