@@ -42,3 +42,9 @@ let listaGastos5 = gestionPresupuesto.filtrarGastos({valorMaximo: 50, etiquetasT
 for (let i = 0; i < listaGastos5.length; i++) {
     gestionPresupuestoWeb.mostrarGastoWeb("listado-gastos-filtrado-4", listaGastos5[i]);
 }
+
+
+gestionPresupuestoWeb.mostrarGastosAgrupadosWeb("agrupacion-dia", gestionPresupuesto.agruparGastos("dia"), "día");
+gestionPresupuestoWeb.mostrarGastosAgrupadosWeb("agrupacion-mes", gestionPresupuesto.agruparGastos("mes"), "mes");
+gestionPresupuestoWeb.mostrarGastosAgrupadosWeb("agrupacion-anyo", gestionPresupuesto.agruparGastos("anyo"), "año");
+

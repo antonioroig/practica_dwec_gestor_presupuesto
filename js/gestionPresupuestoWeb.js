@@ -56,36 +56,29 @@ function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo) {
     agrupacion.className = "agrupacion";
 
     let encabezado = document.createElement('h1');
-    encabezado.innerHTML = "Gasto agrupados por " + periodo;
+    let claves = Object.keys(agrup);
+    let long = claves.length;
+    encabezado.innerHTML = "Gastos agrupados por " + periodo;
+    
     agrupacion.append(encabezado);
+    let valores = Object.values(agrup);
 
-    for (let i = 0; i < agrup.length; i++) {
+    for (let i = 0; i < long ; i++) {
         let agrupaciondato = document.createElement('div');
         agrupaciondato.className = "agrupacion-dato";
 
         let dataclave = document.createElement('span');
-        dataclave.className = "agrupacion-dato-clave";
-        let Arrclaves =  Object.keys(agrup[i]);
-        let claves;
-        for (let i = 0; i < Arrclaves.length; i++) {
-            claves += Arrclaves[i] + "\n";
-        }
-        dataclave.innerHTML(claves);
+        dataclave.className = "agrupacion-dato-clave";    
+        dataclave.innerHTML += claves[i];
+        agrupaciondato.append(dataclave);
 
         let datavalor = document.createElement('span');
         datavalor.className = "agrupacion-dato-valor";
-        let ArrValores = Object.values(agrup[i]);
-        let valores;
-        for (let i = 0; i < ArrValores.length; i++) {
-            valores += ArrValores[i] + "\n";
-        }
-        datavalor.innerHTML(valores);
+        datavalor.innerHTML += valores[i]; 
+        agrupaciondato.append(datavalor); 
 
-        agrupaciondato.append(dataclave);
-        agrupaciondato.append(datavalor);  
+        agrupacion.append(agrupaciondato); 
     }
-
-    agrupacion.append(agrupaciondato);
     div.append(agrupacion);
 }
 
