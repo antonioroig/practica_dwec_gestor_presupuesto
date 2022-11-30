@@ -114,8 +114,7 @@ function mostrarGastoWeb(gasto, idElemento)
     elem.appendChild(padre);
 }
 function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo)
-{
-    
+{   
     let elem = document.getElementById(idElemento);
     let padre = document.createElement("div");
     padre.className  = 'agrupacion';
