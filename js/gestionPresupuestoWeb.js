@@ -38,6 +38,11 @@ function mostrarGastoWeb(idElemento,gasto)
     span.className = "gasto-etiquetas-etiqueta";
     span.textContent = etiqueta;
     etiquetas_gasto.appendChild(span);
+
+    let etiquetas_borradas = new BorrarEtiquetasHandle();
+    etiquetas_borradas.gasto = gasto;
+    etiquetas_borradas.etiquetas = etiqueta;
+    span.addEventListener('click',etiquetas_borradas);
  }
  div.append(etiquetas_gasto);
 
@@ -79,10 +84,13 @@ function mostrarGastosAgrupadosWeb(idElemento,agrup,periodo)
 
 function repintar()
 {
-    
+    document.getElementById('presupuesto');
     mostrarDatoEnId(pres.mostrarPresupuesto(),'presupuesto');
+
     mostrarDatoEnId(pres.calcularTotalGastos(),'gastos-totales');
+
     mostrarDatoEnId(pres.calcularBalance(),'balance-total');
+    
     for(let gasto_completo of pres.listarGastos())
     {
         mostrarGastoWeb('listado-gasto-completo',gasto_completo);
