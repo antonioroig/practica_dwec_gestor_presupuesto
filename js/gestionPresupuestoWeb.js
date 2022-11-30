@@ -40,6 +40,28 @@ function mostrarGastoWeb(idElemento,gasto)
     etiquetas_gasto.appendChild(span);
  }
  div.append(etiquetas_gasto);
+
+ let btnEditar = document.createElement('button');
+ btnEditar.type ='button';
+ btnEditar.className = 'gasto-editar';
+ btnEditar.textContent = 'Editar';
+ 
+ let gasto_editar = new EditarHandle(gasto);
+ gasto_editar.gasto = gasto;
+
+ btnEditar.addEventListener('click',gasto_editar)
+ div.append(btnEditar);
+
+ let btnBorrar = document.createElement('button');
+ btnBorrar.type ='button';
+ btnBorrar.className = 'gasto-borrar';
+ btnBorrar.textContent = 'Borrar';
+ 
+ let borrar_gasto = new BorrarHandle(gasto);
+ borrar_gasto.gasto = gasto;
+
+ btnBorrar.addEventListener('click',borrar_gasto)
+ div.append(btnBorrar);
 };
 function mostrarGastosAgrupadosWeb(idElemento,agrup,periodo)
 {
