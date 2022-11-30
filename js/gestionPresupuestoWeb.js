@@ -59,10 +59,18 @@ function mostrarGastoWeb(idElemento, gasto)
             divEtiquetaNuevaGasto.className = "gasto-etiquetas-etiqueta";
             divEtiquetaNuevaGasto.innerHTML += gasto.etiquetas[i];
 
+            let etiqBorrarHanBoton = new borrarEtiquetasHandle();
+
+            etiqBorrarHanBoton.gasto = gasto;
+
+            etiqBorrarHanBoton.etiquetas = gasto.etiquetas[i] + " ";
+
             divEtiquetaPorGasto.append(divEtiquetaNuevaGasto);
 
         }
         divGasto.append(divEtiquetaPorGasto);
+
+        
 
     }
 
@@ -228,6 +236,9 @@ function borrarEtiquetasHandle()
 
 }
 
+actualizarPresupuesto.addEventListener("clicl", actualizarPresupuestoWeb);
+
+anyadirGasto.addEventListener("click", nuevoGastoWeb);
 
 export{
 
@@ -239,5 +250,6 @@ export{
     nuevoGastoWeb,
     EditarHandle,
     BorrarHandle,
+    borrarEtiquetasHandle
 
 }
