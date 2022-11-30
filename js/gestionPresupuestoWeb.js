@@ -37,8 +37,24 @@ function mostrarGastoWeb(idElemento,gasto){
         spanEtiqueta .className = 'gasto-etiquetas-etiqueta';
         spanEtiqueta .textContent = " " + etiq;
         divEtiquetas.append(spanEtiqueta);
+
+        let borrar_Etiquetas = new BorrarEtiquetasHandle();
+        borrar_Etiquetas.gasto = gasto;
+        borrar_Etiquetas.etiquetas = etiq;
+        spanEtiqueta.addEventListener('click',borrar_Etiquetas);
     }
     divGasto.append(divEtiquetas);
+
+    let btnEditarGasto = document.createElement('button');
+    btnEditarGasto.type = 'button';
+    btnEditarGasto.className = 'gasto-editar';
+    btnEditarGasto.textContent = 'Editar';
+
+    let EditarGasto = new EditarHandle(gasto);
+    EditarGasto.gasto = gasto;
+
+    btnEditarGasto.addEventListener('click',EditarGasto);
+    divGasto.append(btnEditarGasto);
 }
 
 function mostrarGastosAgrupadosWeb(idElemento,agrup,periodo){
@@ -93,6 +109,41 @@ function nuevoGastoWeb(){
 }
 let btnNuevoGasto = document.getElementById('anyadirgasto');
 btnNuevoGasto.addEventListener('click', nuevoGastoWeb);
+
+function EditarHandle(){
+    this.handleEvent = function(){
+        let newDesc = prompt('Introduce una nueva descripcion: ', this.gasto.descripcion);
+        let newValor = parseFloat(prompt('Escribe un nuevo valor: ', this.gasto.valor));
+        let newFecha = prompt('Escribe una nueva fecha: ', this.gasto.fecha);
+        let newEtiquetas = prompt('Escribe una o varias etiquetas nuevas: ', this.gasto.etiquetas.join(', '));
+        let arrayNEtiquetas = newEtiquetas.split(',');
+
+        this.gasto.actualizarDescripcion(nuevaDescripcion);
+        this.gasto.actualizarValor(nuevoValor);
+        this.gasto.actualizarFecha(new Date(nuevaFecha));
+        this.gasto.anyadirEtiquetas(etiquetasArray);
+
+        repintar();
+    };
+}
+
+let BorrarHandle = function(){
+    this.handleEvent = function() {
+        
+        gestionPresupuesto.borrarGasto(this.gasto.id)
+        
+        repintar();
+    }
+}
+
+let BorrarEtiquetasHandle = function(){
+    this.handleEvent = function() {
+        
+        this.gasto.borrarEtiquetas(this.etiqueta);
+        
+        repintar();
+    }
+}
 
 export{
     mostrarDatoEnId,
