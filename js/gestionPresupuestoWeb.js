@@ -56,39 +56,55 @@ function mostrarGastoWeb(idElemento, gasto)
             divEtiquetaNuevaGasto.className = "gasto-etiquetas-etiqueta";
             divEtiquetaNuevaGasto.textContent = gasto.etiquetas[i];
 
-            let btnBorrarHandle = new BorrarEtiquetasHandle();
-            btnBorrarHandle.gasto = gasto;
-            btnBorrarHandle.etiquetas = gasto.etiquetas[i];
+            let etiqBorrarHanBoton = new BorrarEtiquetasHandle();
 
-            divEtiquetaPorGasto.addEventListener("click", btnBorrarHandle);
+            etiqBorrarHanBoton.gasto = gasto;
+
+            etiqBorrarHanBoton.etiquetas = gasto.etiquetas[i];
+            
+            divEtiquetaNuevaGasto.addEventListener("click", editarHandleBtn);
+
+            divEtiquetaNuevaGasto.textContent = gasto.etiquetas[i] + " ";
+
             divEtiquetaPorGasto.append(divEtiquetaNuevaGasto);
 
         }
         divGasto.append(divEtiquetaPorGasto);
         elemento.append(divGasto);
 
-
         let btnEditar = document.createElement("button");
+
         btnEditar.className = "gasto-editar";
+
         btnEditar.type = "button";
+
         btnEditar.innerHTML = "Editar";
 
 
         let editarHandleBtn = new EditarHandle();
+
         editarHandleBtn.gasto = gasto;
+
         btnEditar.addEventListener("click", editarHandleBtn);
+
         divGasto.append(btnEditar);
 
 
         let btnBorrar = document.createElement("button");
+
         btnEditar.className = "gasto-borrar";
+
         btnEditar.type = "button";
+
         btnEditar.innerHTML = "Borrar";
 
 
         let borrarHandleBtn = new BorrarHandle();
+
         borrarHandleBtn.gasto = gasto;
+
         btnEditar.addEventListener("click", borrarHandleBtn);
+
         divGasto.append(btnBorrar);
 
     }
