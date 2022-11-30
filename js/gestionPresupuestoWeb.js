@@ -171,7 +171,19 @@ function actualizarPresupuestoWeb()
 
 }
 
+function BorrarHandle()
+{
 
+    this.handleEvent = function()
+    {
+
+        gesPresupuesto.borrarGasto(this.gasto.id);
+        
+        repintar();
+
+    }
+
+}
 
 
 export{
