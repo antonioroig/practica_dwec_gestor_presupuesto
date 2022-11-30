@@ -72,7 +72,7 @@ function mostrarGastoWeb(idElemento, gasto)
     let editar = new EditarHandle(gasto);
     editar.gasto = gasto;
     botonEditar.addEventListener('click', editar);
-    divGasto.append(botonEditar);
+    divGasto.appendChild(botonEditar);
 
     let botonEliminar = document.createElement('button');
     botonEliminar.type = 'button';
@@ -82,7 +82,7 @@ function mostrarGastoWeb(idElemento, gasto)
     let borrar = new BorrarHandle(gasto);
     borrar.gasto = gasto;
     botonEliminar.addEventListener('click', borrar);
-    divGasto.append(botonEliminar);
+    divGasto.appendChild(botonEliminar);
 }
 
 function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo)
