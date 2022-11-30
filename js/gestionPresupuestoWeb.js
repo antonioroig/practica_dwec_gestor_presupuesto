@@ -86,18 +86,17 @@
     mostrarDatoEnId('balance-total', presupuesto.calcularBalance());
 
     document.getElementById('listado-gastos-completo').innerHTML = '';
-
-    document.getElementById('listado-gastos-completo');
     
     for (let gasto of presupuesto.listarGastos())
     {
       mostrarGastoWeb('listado-gastos-completo',gasto);
     }
   }
+
   function actualizarPresupuestoWeb(){
-    let  presupuestoWeb = prompt('Introduce el presupuesto')
-    let presupuestostring = parseInt(presupuestoWeb);
-    gestionPresupuesto.actualizarPresupuesto(presupuestostring);
+    let  presupuestoWeb = prompt('Presupuesto:')
+    let presupuestostring = parseFloat(presupuestoWeb);
+    presupuesto.actualizarPresupuesto(presupuestostring);
 
     repintar();
     
@@ -105,6 +104,43 @@
 
   let botonactpresupuesto = document.getElementById('actualizarpresupuesto');
   botonactpresupuesto.addEventListener('click',actualizarPresupuestoWeb);
+
+  function nuevoGastoWeb(){
+    let descripcion = prompt('Descripcion: ');
+    let valorstring = prompt('Valor: ');
+    let valor = parseFloat(valorstring);
+    let fechatemp = prompt('Fecha: ');
+    let fecha = Date.parse(fechatemp);
+    let etiquetas = prompt('Etiquetas: Separador " , "').split(',');
+
+    let nuevoGastoWeb = new presupuesto.CrearGasto(descripcion,valor,fecha,...etiquetas);
+    presupuesto.anyadirGasto(nuevoGastoWeb);
+
+    repintar();
+  }
+
+  let botonanyadirgasto = document.getElementById('anyadirgasto');
+  botonanyadirgasto.addEventListener('click',nuevoGastoWeb);
+
+  function EditarHandle(){
+    this.handleEvent = function (){
+      let Editardescripcion = prompt('Descripcion: ');
+      let valorstring = prompt('Valor: ');
+      let Editarvalor = parseFloat(valorstring);
+      let fechatemp = prompt('Fecha: ');
+      let Editarfecha = Date.parse(fechatemp);
+      let Editaretiquetas = prompt('Etiquetas: Separador " , "').split(',');
+
+      this.gasto.actualizarDescripcion(Editardescripcion);
+      this.gasto.actualizarValor(Editarvalor);
+      this.gasto.actualizarFecha(Editarfecha);
+      this.gasto.anyadirEtiquetas(...Editaretiquetas);
+
+      repintar();
+      
+    }
+
+  }
   
   
   export{
@@ -112,6 +148,8 @@
     mostrarGastoWeb,
     mostrarGastosAgrupadosWeb,
     repintar,
-    actualizarPresupuestoWeb
+    actualizarPresupuestoWeb,
+    nuevoGastoWeb,
+    EditarHandle
   }
 
