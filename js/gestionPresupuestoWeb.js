@@ -21,9 +21,6 @@ function mostrarGastoWeb(idElemento, gasto)
 
         divGasto.className = "gasto";
 
-        elemento.append(divGasto);
-        
-
         let divDescripcionPorGasto = document.createElement('div');
 
         divDescripcionPorGasto.className = "gasto-descripcion";
@@ -57,53 +54,41 @@ function mostrarGastoWeb(idElemento, gasto)
             let divEtiquetaNuevaGasto = document.createElement('span');
 
             divEtiquetaNuevaGasto.className = "gasto-etiquetas-etiqueta";
-            divEtiquetaNuevaGasto.innerHTML += gasto.etiquetas[i];
+            divEtiquetaNuevaGasto.textContent = gasto.etiquetas[i];
 
-            let etiqBorrarHanBoton = new borrarEtiquetasHandle();
+            let btnBorrarHandle = new BorrarEtiquetasHandle();
+            btnBorrarHandle.gasto = gasto;
+            btnBorrarHandle.etiquetas = gasto.etiquetas[i];
 
-            etiqBorrarHanBoton.gasto = gasto;
-
-            etiqBorrarHanBoton.etiquetas = gasto.etiquetas[i] + " ";
-
+            divEtiquetaPorGasto.addEventListener("click", btnBorrarHandle);
             divEtiquetaPorGasto.append(divEtiquetaNuevaGasto);
 
         }
         divGasto.append(divEtiquetaPorGasto);
+        elemento.append(divGasto);
 
 
         let btnEditar = document.createElement("button");
-
         btnEditar.className = "gasto-editar";
-
         btnEditar.type = "button";
-
         btnEditar.innerHTML = "Editar";
 
 
         let editarHandleBtn = new EditarHandle();
-
         editarHandleBtn.gasto = gasto;
-
         btnEditar.addEventListener("click", editarHandleBtn);
-
         divGasto.append(btnEditar);
 
 
         let btnBorrar = document.createElement("button");
-
         btnEditar.className = "gasto-borrar";
-
         btnEditar.type = "button";
-
         btnEditar.innerHTML = "Borrar";
 
 
         let borrarHandleBtn = new BorrarHandle();
-
         borrarHandleBtn.gasto = gasto;
-
         btnEditar.addEventListener("click", borrarHandleBtn);
-
         divGasto.append(btnBorrar);
 
     }
@@ -168,7 +153,7 @@ function repintar()
     mostrarDatoEnId(gesPresupuesto.mostrarPresupuesto("balance-total"));
     
     document.getElementById('listado-gastos-completo').innerHTML = "";
-    
+
     for(let gastos of gesPresupuesto.listarGastos())
     {
 
@@ -257,7 +242,7 @@ function BorrarHandle()
 
 }
 
-function borrarEtiquetasHandle()
+function BorrarEtiquetasHandle()
 {
 
     this.handleEvent = function()
@@ -271,7 +256,7 @@ function borrarEtiquetasHandle()
 
 }
 
-actualizarpresupuesto.addEventListener("clicl", actualizarPresupuestoWeb);
+actualizarpresupuesto.addEventListener("click", actualizarPresupuestoWeb);
 
 anyadirgasto.addEventListener("click", nuevoGastoWeb);
 
@@ -285,6 +270,6 @@ export{
     nuevoGastoWeb,
     EditarHandle,
     BorrarHandle,
-    borrarEtiquetasHandle
+    BorrarEtiquetasHandle
 
 }
