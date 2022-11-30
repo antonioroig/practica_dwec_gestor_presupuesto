@@ -140,9 +140,9 @@ function nuevoGastoWeb()
 
     let descripcion = prompt("introduce una descripcion");
 
-    let valorSTR = prompt("introduce un valor de el gasto");
+    let strValor = prompt("introduce un valor de el gasto");
 
-    let valor = parseFloat(valorSTR);
+    let valor = parseFloat(strValor);
 
     let date = prompt("introduce una fecha (formato yyy-mm-dd)");
 
@@ -150,7 +150,7 @@ function nuevoGastoWeb()
 
     let etiquetasarray = etiquetas.split(',');
 
-    let crearGasto = new gesPresupuesto.CrearGasto(descripcion, valor, fecha, etiquetasarray);
+    let crearGasto = new gesPresupuesto.CrearGasto(descripcion, valor, date, etiquetasarray);
 
     gesPresupuesto.anyadirGasto(crearGasto);
 
@@ -168,6 +168,35 @@ function actualizarPresupuestoWeb()
     gesPresupuesto.actualizarPresupuesto(questionFloat);
 
     repintar();
+
+}
+
+function EditarHandle()
+{
+
+    this.handleEvent = function()
+    {
+
+        let descripcion = prompt("introduce una descripcion");
+
+        let strValor = prompt("introduce un valor de el gasto");
+
+        let valor = parseFloat(strValor);
+
+        let date = prompt("introduce una fecha (formato yyy-mm-dd)");
+
+        let etiquetas = prompt("introduce las etiquetas para el gasto (formato etiq1 qtiq2 etiq3)");
+
+        let etiquetasarray = etiquetas.split(',');
+
+        this.gasto.actualizarValor(valor);
+        this.gasto.actualizarDescripcion(descripcion);
+        this.gasto.actualizarFecha(date);
+        this.gasto.anyadirEtiquetas(etiquetas);
+
+        repintar();
+
+    }
 
 }
 
