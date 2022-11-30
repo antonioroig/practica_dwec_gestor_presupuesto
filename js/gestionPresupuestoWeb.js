@@ -1,7 +1,12 @@
+"use strict";
 import * as exGp from './gestionPresupuesto.js';
 
-document.getElementById("actualizarpresupuesto").addEventListener("click", actualizarPresupuestoWeb);
-document.getElementById("anyadirgasto").addEventListener("click", nuevoGastoWeb);
+let btnActualizarpres = document.getElementById("actualizarpresupuesto");
+btnActualizarpres.onclick = actualizarPresupuestoWeb;
+let btnAnyadirgast = document.getElementById("anyadirgasto");
+btnAnyadirgast.onclick =  nuevoGastoWeb;
+//document.getElementById("actualizarpresupuesto").addEventListener("click", actualizarPresupuestoWeb);
+//document.getElementById("anyadirgasto").addEventListener("click", nuevoGastoWeb);
 function mostrarDatoEnId(valor, idElemento)
 {
     let elem = document.getElementById(idElemento);
@@ -35,12 +40,48 @@ function mostrarGastoWeb(gasto, idElemento)
 
     let gastEtiq = document.createElement("div");
     gastEtiq. className = "gasto-etiquetas";
-    gasto.etiquetas.forEach(etiqueta => {
+    /*gasto.etiquetas.forEach(etiqueta =>
+        {
+            let borrarEtiqueta = new BorrarEtiquetasHandle();
+            borrarEtiqueta.gasto = gasto;
+            borrarEtiqueta.etiqueta = etiqueta;
+    
+            let etiq = document.createElement('span');
+            etiq.className = 'gasto-etiquetas-etiqueta';
+            etiq.textContent = etiqueta +"";
+            if(idElemento == "listado-gastos-completo"){
+                etiq.addEventListener("click", borrarEtiqueta);
+            }
+            gastEtiq.appendChild(etiq);        
+        });*/
+
+   for(let i=0; i < gasto.etiquetas.length;i++)
+    {
+        let borrarEtiqueta = new BorrarEtiquetasHandle();
+        borrarEtiqueta.gasto = gasto;
+        borrarEtiqueta.etiqueta = gasto.etiquetas[i];
+
         let etiq = document.createElement('span');
         etiq.className = 'gasto-etiquetas-etiqueta';
-        etiq.textContent = etiqueta;
+        etiq.textContent = `${gasto.etiquetas[i]}` +"";
+        etiq.addEventListener("click", borrarEtiqueta);
         gastEtiq.appendChild(etiq);
-    });
+    }
+  
+   /* gasto.etiquetas.forEach(etiqueta => {
+        let borrarEtiqueta = new BorrarEtiquetasHandle();
+        borrarEtiqueta.gasto = gasto;
+        borrarEtiqueta.etiqueta = etiqueta;
+
+        let etiq = document.createElement('span');
+        etiq.className = 'gasto-etiquetas-etiqueta';
+        etiq.textContent = etiqueta +"";
+        if(idElemento == "listado-gastos-completo"){
+            etiq.addEventListener("click", borrarEtiqueta);
+        }
+        gastEtiq.appendChild(etiq);
+
+    });*/
     /*
     for (let i = 0; i < gasto.etiquetas.length; i++)
     {
@@ -49,8 +90,29 @@ function mostrarGastoWeb(gasto, idElemento)
         etiq.textContent = etiqueta;
         gastEtiq.appendChild(etiq);
     }  */      
+
+    let botonEditar = document.createElement('button');
+    botonEditar.className = 'gasto-editar';
+    botonEditar.type = 'button';
+    botonEditar.textContent = 'Editar';
+
+    let editarEvento = new EditarHandle();
+    editarEvento.gasto = gasto;
+    botonEditar.addEventListener('click', editarEvento); 
+
+    let botonBorrar = document.createElement('button');
+    botonBorrar.className = 'gasto-borrar';
+    botonBorrar.type = 'button';
+    botonBorrar.textContent = 'Borrar';
+
+    let borrarEvento = new BorrarHandle();
+    borrarEvento.gasto = gasto;
+    botonBorrar.addEventListener('click', borrarEvento);
+    padre.append(botonEditar);
+    padre.append(botonBorrar);
     padre.appendChild(gastEtiq);
     elem.appendChild(padre);
+    
 }
 function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo)
 {
@@ -89,20 +151,14 @@ function repintar()
 
     document.getElementById('balance-total').innerHTML = exGp.calcularTotalGastos;
     document.getElementById('balance-total').innerHTML += mostrarDatoEnId;*/
-    document.getElementById('presupuesto').innerHTML = "";
-    mostrarDatoEnId(exGp.mostrarPresupuesto, 'presupuesto');
-
-    document.getElementById('gastos-totales').innerHTML = "";
-    mostrarDatoEnId(exGp.calcularTotalGastos, 'gastos-totales');
-
-    document.getElementById('balance-total').innerHTML = "";
-    mostrarDatoEnId(exGp.calcularBalance, 'balance-total');
-
-    document.getElementById('listado-gastos-completo').innerHTML ="";
-
-    document.getElementById('listado-gastos-completo').innerHTML = "";
+    
+    mostrarDatoEnId(exGp.mostrarPresupuesto(), 'presupuesto');  
+    mostrarDatoEnId(exGp.calcularTotalGastos(), 'gastos-totales');
+    mostrarDatoEnId(exGp.calcularBalance(), 'balance-total');
+    let aux = document.getElementById('listado-gastos-completo');
+    aux.innerHTML = "";
     exGp.listarGastos().forEach(gasto => {
-        mostrarGastoWeb("listado-gastos-completo", gasto);
+        mostrarGastoWeb(gasto,"listado-gastos-completo");
     });
 }
 
@@ -121,7 +177,7 @@ function nuevoGastoWeb ()
     let fecha = prompt("Introduzca la fecha: ");
     let etiqueta = prompt("Introduzca las etiquetas separadas por comas ,: ")
     let etiquetas= etiqueta.split(',');
-    let nuevoGasto = new exGp.CrearGasto(descripcion,v1,fecha,...etiquetas);
+    let nuevoGasto = new exGp.CrearGasto(descripcion,valor,fecha,...etiquetas);
     exGp.anyadirGasto(nuevoGasto);
     repintar();
 }
@@ -139,10 +195,27 @@ function EditarHandle()
         this.gasto.actualizarDescripcion(descripcion);
         this.gasto.actualizarValor(valor);
         this.gasto.actualizarFecha(fecha);
-        this.gasto.anyadirEtiquetas(...etiquetas);
+        this.gasto.anyadirEtiquetas(etiquetas);
         repintar();
     }
 }
+function BorrarHandle() 
+{
+    this.handleEvent = function()
+    {
+        exGp.borrarGasto(this.gasto.id);
+        repintar();
+    };
+}
+let BorrarEtiquetasHandle = function() 
+{
+    this.handleEvent = function ()
+    {
+        this.gasto.borrarEtiquetas(this.etiqueta);
+        repintar();
+    };
+}
+
 export   {  
     mostrarDatoEnId,
     mostrarGastoWeb,
