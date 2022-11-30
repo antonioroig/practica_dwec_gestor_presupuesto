@@ -70,7 +70,32 @@ function mostrarGastoWeb(idElemento, gasto)
         }
         divGasto.append(divEtiquetaPorGasto);
 
-        
+
+        let btnEditar = document.createElement("button");
+
+        btnEditar.className = "gasto-editar";
+
+        btnEditar.type = "button";
+
+        btnEditar.innerHTML = "Editar";
+
+
+        let editarHandleBtn = new EditarHandle();
+
+        editarHandleBtn.gasto = gasto;
+
+        btnEditar.addEventListener("click", editarHandleBtn);
+
+        divGasto.append(btnEditar);
+
+
+        let btnBorrar = document.createElement("button");
+
+        btnEditar.className = "gasto-borrar";
+
+        btnEditar.type = "button";
+
+        btnEditar.innerHTML = "Borrar";
 
     }
 
