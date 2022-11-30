@@ -81,7 +81,6 @@ function mostrarGastosAgrupadosWeb(idElemento, agrupar, periodo)
             let h1Div = document.createElement('h1');
 
             h1Div.innerHTML += `Gastos agrupados por ${periodo}`;
-
             agrupacionDiv.append(h1Div);
 
             for(let llave of Object.keys(agrupar))
@@ -117,16 +116,19 @@ function mostrarGastosAgrupadosWeb(idElemento, agrupar, periodo)
 function repintar()
 {
 
-    document.getElementById('presupuesto');
-    mostrarDatoEnId('presupuesto', gesPresupuesto.mostrarPresupuesto);
+    document.getElementById('presupuesto').innerHTML = "";
+    mostrarDatoEnId(gesPresupuesto.mostrarPresupuesto("presupuesto"));
 
-    document.getElementById('gastos-totales');
-    mostrarDatoEnId('gastos-totales', gesPresupuesto.calcularTotalGastos);
+    document.getElementById('gastos-totales').innerHTML = "";
+    mostrarDatoEnId(gesPresupuesto.mostrarPresupuesto("presupuesto"));
 
-    document.getElementById('balance-total');
-    mostrarDatoEnId('balance-total', gesPresupuesto.calcularBalance);
-
+    document.getElementById('balance-total').innerHTML = "";
+    mostrarDatoEnId(gesPresupuesto.mostrarPresupuesto("presupuesto"));
+    
 }
+
+
+
 
 export{
 
