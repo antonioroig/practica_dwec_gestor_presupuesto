@@ -112,7 +112,6 @@ function mostrarGastoWeb(gasto, idElemento)
     padre.append(botonBorrar);
     padre.appendChild(gastEtiq);
     elem.appendChild(padre);
-    
 }
 function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo)
 {
@@ -215,7 +214,6 @@ let BorrarEtiquetasHandle = function()
         repintar();
     };
 }
-
 export   {  
     mostrarDatoEnId,
     mostrarGastoWeb,
