@@ -74,9 +74,32 @@
       idGrupo.append(divAgrupacion);
   }
 
+  function repintar()
+  {
+    document.getElementById('presupuesto');
+    mostrarDatoEnId('presupuesto', presupuesto.mostrarPresupuesto());
+
+    document.getElementById('gastos-totales');
+    mostrarDatoEnId('gastos-totales', presupuesto.calcularTotalGastos());
+
+    document.getElementById('balance-total');
+    mostrarDatoEnId('balance-total', presupuesto.calcularBalance());
+
+    document.getElementById('listado-gastos-completo').innerHTML = '';
+
+    document.getElementById('listado-gastos-completo');
+    
+    for (let gasto of presupuesto.listarGastos())
+    {
+      mostrarGastoWeb('listado-gastos-completo',gasto);
+    }
+  }
+  
+  
   export{
     mostrarDatoEnId,
     mostrarGastoWeb,
-    mostrarGastosAgrupadosWeb
+    mostrarGastosAgrupadosWeb,
+    repintar,
   }
 

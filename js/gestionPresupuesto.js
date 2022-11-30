@@ -1,3 +1,5 @@
+'use strict';
+
 // TODO: Variable global
 
 let presupuesto = 0;
