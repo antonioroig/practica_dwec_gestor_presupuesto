@@ -97,6 +97,15 @@ function mostrarGastoWeb(idElemento, gasto)
 
         btnEditar.innerHTML = "Borrar";
 
+
+        let borrarHandleBtn = new BorrarHandle();
+
+        borrarHandleBtn.gasto = gasto;
+
+        btnEditar.addEventListener("click", borrarHandleBtn);
+
+        divGasto.append(btnBorrar);
+
     }
 
 function mostrarGastosAgrupadosWeb(idElemento, agrupar, periodo)
@@ -159,12 +168,26 @@ function repintar()
     mostrarDatoEnId(gesPresupuesto.mostrarPresupuesto("balance-total"));
     
     document.getElementById('listado-gastos-completo').innerHTML = "";
+    
     for(let gastos of gesPresupuesto.listarGastos())
     {
 
         mostrarGastoWeb("listado-gastos-completo", gastos)
 
     }
+
+}
+
+function actualizarPresupuestoWeb()
+{
+
+    let question = prompt("introduce un presupuesto");
+    
+    let questionFloat = parseFloat(question);
+
+    gesPresupuesto.actualizarPresupuesto(questionFloat);
+
+    repintar();
 
 }
 
@@ -186,19 +209,6 @@ function nuevoGastoWeb()
     let crearGasto = new gesPresupuesto.CrearGasto(descripcion, valor, date, etiquetasarray);
 
     gesPresupuesto.anyadirGasto(crearGasto);
-
-    repintar();
-
-}
-
-function actualizarPresupuestoWeb()
-{
-
-    let question = prompt("introduce un presupuesto");
-    
-    let questionFloat = parseFloat(question);
-
-    gesPresupuesto.actualizarPresupuesto(questionFloat);
 
     repintar();
 
@@ -261,9 +271,9 @@ function borrarEtiquetasHandle()
 
 }
 
-actualizarPresupuesto.addEventListener("clicl", actualizarPresupuestoWeb);
+actualizarpresupuesto.addEventListener("clicl", actualizarPresupuestoWeb);
 
-anyadirGasto.addEventListener("click", nuevoGastoWeb);
+anyadirgasto.addEventListener("click", nuevoGastoWeb);
 
 export{
 
