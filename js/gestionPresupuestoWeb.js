@@ -110,6 +110,7 @@ function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo)
 
 }
 
+ 
 
 function repintar()
 {
@@ -119,21 +120,56 @@ function repintar()
     mostrarDatoEnId("gastos-totales", gasto.calcularTotalGastos());
     document.getElementById("balance-total");
     mostrarDatoEnId("balance-total", gasto.calcularBalance());
-
+    document.getElementById("listado-gastos-completo").innerHTML = " ";
    
-    for(let i = 0; i < gasto.listarGastos(); i++)
+    for(let gas of gasto.listarGastos())
     {
-        let gas = gasto.listarGastos[i];
-
+        
         mostrarGastoWeb("listado-gastos-completo", gas);
     }
-    document.getElementById("listado-gasto-completo").innerHTML = " ";
+    
 
 }
 
+function actualizarPresupuestoWeb() 
+{
+    let pres = prompt('Escriba un presupuesto');
+    let tot = parseFloat(pres);
+    gasto.actualizarPresupuesto(tot);
+    repintar();
+}
+
+let actualizarPresButton = document.getElementById('actualizarpresupuesto');
+actualizarPresButton.addEventListener('click', actualizarPresupuestoWeb);
 
 
+function nuevoGastoWeb()
+{
+    let desc = prompt('Introduzca una descripción');
+    let val = prompt('Introduzca el valor del gasto');
+    let valFloat = parseFloat(val);
+    let fec = prompt('Introduzca la fecha del gasto');
+    let fecParse = Date.parse(fec);
+    let etiq = prompt('Introduzca las etiquetas del gasto').split(", ");
+    let gas = new gasto.CrearGasto(desc, valFloat, fecParse, ...etiq);
+    gasto.anyadirGasto(gas);
 
+
+}
+
+let nuevoGastoWebButton = document.getElementById('anyadirgasto');
+actualizarPresButton.addEventListener('click', nuevoGastoWeb);
+
+
+/*
+function EditarHandle()
+{
+    this.handleEvent = function(){
+        let descrip = prom("Escriba una descripción");
+        this.gasto.actualizarDescripcion(descrip);
+    }
+}
+*/
 
 
 
@@ -142,5 +178,8 @@ function repintar()
 export   {
 mostrarDatoEnId,
 mostrarGastoWeb,
-mostrarGastosAgrupadosWeb
+mostrarGastosAgrupadosWeb,
+repintar,
+actualizarPresupuestoWeb,
+nuevoGastoWeb
 }
