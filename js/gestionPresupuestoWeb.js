@@ -120,12 +120,22 @@ function repintar()
     mostrarDatoEnId(gesPresupuesto.mostrarPresupuesto("presupuesto"));
 
     document.getElementById('gastos-totales').innerHTML = "";
-    mostrarDatoEnId(gesPresupuesto.mostrarPresupuesto("presupuesto"));
+    mostrarDatoEnId(gesPresupuesto.mostrarPresupuesto("gastos-totales"));
 
     document.getElementById('balance-total').innerHTML = "";
-    mostrarDatoEnId(gesPresupuesto.mostrarPresupuesto("presupuesto"));
+    mostrarDatoEnId(gesPresupuesto.mostrarPresupuesto("balance-total"));
     
+    document.getElementById('listado-gastos-completo').innerHTML = "";
+    for(let gastos of gesPresupuesto.listarGastos())
+    {
+
+        mostrarGastoWeb("listado-gastos-completo", gastos)
+
+    }
+
 }
+
+function
 
 
 
