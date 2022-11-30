@@ -111,6 +111,29 @@ function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo)
 }
 
 
+function repintar()
+{
+    document.getElementById("presupuesto");
+    mostrarDatoEnId("presupuesto",gasto.mostrarPresupuesto());
+    document.getElementById("gastos-totales");
+    mostrarDatoEnId("gastos-totales", gasto.calcularTotalGastos());
+    document.getElementById("balance-total");
+    mostrarDatoEnId("balance-total", gasto.calcularBalance());
+
+   
+    for(let i = 0; i < gasto.listarGastos(); i++)
+    {
+        let gas = gasto.listarGastos[i];
+
+        mostrarGastoWeb("listado-gastos-completo", gas);
+    }
+    document.getElementById("listado-gasto-completo").innerHTML = " ";
+
+}
+
+
+
+
 
 
 
