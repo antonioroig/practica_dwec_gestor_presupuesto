@@ -87,10 +87,13 @@ function repintar()
     document.getElementById('presupuesto');
     mostrarDatoEnId(pres.mostrarPresupuesto(),'presupuesto');
 
+    document.getElementById('gastos-totales');
     mostrarDatoEnId(pres.calcularTotalGastos(),'gastos-totales');
 
+    document.getElementById('balance-total');
     mostrarDatoEnId(pres.calcularBalance(),'balance-total');
-    
+
+    document.getElementById('listado-gasto-completo').textContent="";
     for(let gasto_completo of pres.listarGastos())
     {
         mostrarGastoWeb('listado-gasto-completo',gasto_completo);
@@ -104,7 +107,7 @@ function actualizarPresupuestoWeb()
     pres.actualizarPresupuesto(presupuesto);
 }
 
-let botonActualizar = document.getElementById('actualizarPresupuesto');
+let botonActualizar = document.getElementById('actualizarpresupuesto');
 botonActualizar.addEventListener('click',actualizarPresupuestoWeb);
 
 
