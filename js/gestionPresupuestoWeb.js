@@ -75,4 +75,19 @@ function actualizarPresupuestoWeb()
 }
 let botonActualizar = document.getElementById('actualizarPresupuesto');
 botonActualizar.addEventListener('click',actualizarPresupuestoWeb);
-export{mostrarDatoEnId,mostrarGastoWeb,mostrarGastosAgrupadosWeb,repintar,actualizarPresupuestoWeb}
+
+
+function nuevoGastoWeb()
+{
+    let descripcion = prompt('Introduce la descripcion:');
+    let valor = parseFloat(prompt('Introduce el valor del gasto:'));
+    let fecha = Date.parse(prompt('Introduce la fecha en formato yyyy/mm/dd'));
+    let etiquetas = prompt('Introduce las estiquetas de este gasto separadas por ,').split(',');
+
+    let gasto_nuevo = new pres.CrearGasto(descripcion,valor,fecha,...etiquetas);
+
+    pres.anyadirGasto(gasto_nuevo);
+
+    repintar();
+}
+export{mostrarDatoEnId,mostrarGastoWeb,mostrarGastosAgrupadosWeb,repintar,actualizarPresupuestoWeb,nuevoGastoWeb}
