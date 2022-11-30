@@ -219,6 +219,11 @@ export{
 
     mostrarDatoEnId,
     mostrarGastoWeb,
-    mostrarGastosAgrupadosWeb
+    mostrarGastosAgrupadosWeb,
+    repintar,
+    actualizarPresupuestoWeb,
+    nuevoGastoWeb,
+    EditarHandle,
+    BorrarHandle,
 
 }
