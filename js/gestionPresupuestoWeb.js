@@ -26,7 +26,7 @@ function mostrarGastoWeb(idElemento,gasto){
 
     let divValor = document.createElement('div');
     divValor.className = 'gasto-valor';
-    divValor.textContent = gasto.valor + "€";
+    divValor.textContent = gasto.valor;
     divGasto.append(divValor);
 
     let divEtiquetas = document.createElement('div');
@@ -55,6 +55,17 @@ function mostrarGastoWeb(idElemento,gasto){
 
     btnEditarGasto.addEventListener('click',EditarGasto);
     divGasto.append(btnEditarGasto);
+
+    let btnBorrarGasto = document.createElement('button');
+    btnBorrarGasto.type = 'button';
+    btnBorrarGasto.className = 'gasto-borrar';
+    btnBorrarGasto.textContent = 'Borrar';
+
+    let BorrarGasto = new BorrarHandle(gasto);
+    BorrarGasto.gasto = gasto;
+
+    btnBorrarGasto.addEventListener('click',BorrarGasto);
+    divGasto.append(btnBorrarGasto);
 }
 
 function mostrarGastosAgrupadosWeb(idElemento,agrup,periodo){
@@ -77,8 +88,7 @@ function repintar(){
 
     mostrarDatoEnId("balance-total", gestionPresupuesto.calcularBalance());
 
-    let parrafo = document.getElementById("listado-gastos-completo");
-    parrafo.innerHTML = '';
+    document.getElementById("listado-gastos-completo").innerHTML = "";
 
     gestionPresupuesto.listarGastos().forEach(gasto =>{
         mostrarGastoWeb("listado-gastos-completo", gasto);
@@ -111,7 +121,7 @@ let btnNuevoGasto = document.getElementById('anyadirgasto');
 btnNuevoGasto.addEventListener('click', nuevoGastoWeb);
 
 function EditarHandle(){
-    this.handleEvent = function(){
+    this.handleEvent = function(event){
         let newDesc = prompt('Introduce una nueva descripcion: ', this.gasto.descripcion);
         let newValor = parseFloat(prompt('Escribe un nuevo valor: ', this.gasto.valor));
         let newFecha = prompt('Escribe una nueva fecha: ', this.gasto.fecha);
@@ -127,15 +137,16 @@ function EditarHandle(){
     };
 }
 
-let BorrarHandle = function(){
-    this.handleEvent = function() {
-        gestionPresupuesto.borrarGasto(this.gasto.id) 
+function BorrarHandle(){
+    this.handleEvent = function(event) {
+        let idGasto = this.gasto.id;
+        gestionPresupuesto.borrarGasto(idGasto); 
         repintar();
     }
 }
 
-let BorrarEtiquetasHandle = function(){
-    this.handleEvent = function() {
+function BorrarEtiquetasHandle(){
+    this.handleEvent = function(event) {
         this.gasto.borrarEtiquetas(this.etiqueta);
         repintar();
     }
