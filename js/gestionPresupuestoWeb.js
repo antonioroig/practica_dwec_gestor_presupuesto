@@ -34,7 +34,18 @@ function mostrarGastoWeb(idElemento,gastos)
         spanEti.className = 'gasto-etiquetas-etiqueta';
         spanEti.innerHTML = etiqueta;
         gastoEti.appendChild(spanEti);
-    });      
+    }); 
+    let gastoButtonEditar = document.createElement('button');
+    gastoButtonEditar.className = 'gasto-editar';
+    gastoButtonEditar.innerHTML = 'Editar gasto';
+    let BtnEditar = new EditarHandle();
+    BtnEditar.gasto = gasto;
+    gastoButtonEditar.addEventListener('click',BtnEditar);
+    let gastoButtonBorrar = document.createElement('button');
+    gastoButtonBorrar.className = 'gasto-borrar';
+    gastoButtonBorrar.innerHTML = 'Borrar gasto';
+    gastoDiv.appendChild(gastoButtonBorrar);
+    gastoDiv.appendChild(gastoButtonEditar);    
     element.appendChild(gastoDiv); 
     });
 }
@@ -86,6 +97,18 @@ function nuevoGastoWeb(){
     let newgasto = new gestionPresupuesto.CrearGasto(descripción, valor, fecha, arretiquetas);
     gestionPresupuesto.anyadirGasto(newgasto);
     repintar();
+}
+
+function EditarHandle(){
+    this.handleEvent = function(){
+        let descripción = prompt("Introduce una nueva descripción:",'');
+        let valor = parseFloat(prompt("Introduce un nuevo valor:",''));
+        let fecha = prompt("Introduce una nueva fecha:",'');
+        let etiquetas = prompt("Introduce nuevas etiquetas:",'');
+        let arretiquetas = etiquetas.split(',');
+
+        repintar();
+    }
 }
 
 export{
