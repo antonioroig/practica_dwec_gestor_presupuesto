@@ -66,6 +66,7 @@ function mostrarGastosAgrupadosWeb(idElemento,agrup,periodo)
 function repintar(){
     mostrarDatoEnId('gastos-totales',gestionPresupuesto.calcularTotalGastos());
     mostrarDatoEnId('presupuesto',gestionPresupuesto.mostrarPresupuesto());
+    mostrarDatoEnId('balance-total',gestionPresupuesto.calcularBalance());
     mostrarDatoEnId('listado-gastos-completo',"");
     mostrarGastoWeb('listado-gastos-completo',gestionPresupuesto.listarGastos());
 }
@@ -78,12 +79,11 @@ function actualizarPresupuestoWeb(){
 
 function nuevoGastoWeb(){
     let descripción = prompt("Introduce una nueva descripción:",'');
-    let valor = prompt("Introduce un nuevo valor:",'');
-    let valorint = parseFloat(`${valor}`, 10);
+    let valor = parseFloat(prompt("Introduce un nuevo valor:",''));
     let fecha = prompt("Introduce una nueva fecha:",'');
     let etiquetas = prompt("Introduce nuevas etiquetas:",'');
     let arretiquetas = etiquetas.split(',');
-    let newgasto = gestionPresupuesto.CrearGasto(descripción, valorint, fecha, ...arretiquetas);
+    let newgasto = new gestionPresupuesto.CrearGasto(descripción, valor, fecha, arretiquetas);
     gestionPresupuesto.anyadirGasto(newgasto);
     repintar();
 }
