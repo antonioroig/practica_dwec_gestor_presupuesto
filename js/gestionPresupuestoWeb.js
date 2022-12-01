@@ -1,5 +1,5 @@
 //gestionPresupuestoWeb.js
-
+//
 /*
 mostrarDatoEnId
 mostrarGastoWeb
