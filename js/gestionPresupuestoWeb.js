@@ -182,6 +182,23 @@ function BorrarEtiquetasHandle(){
 function EditarHandleFormulario(){
     this.handleEvent = function(event){
         event.preventDefault()
+        let plantillaFormulario = document.getElementById("formulario-template").content.cloneNode(true);;
+        var formulario = plantillaFormulario.querySelector("form");
+    
+        let botonFormulario = event.currentTarget;
+        botonFormulario.append(formulario);
+
+        formulario.elements.descripcion.value = this.gasto.descripcion;
+        formulario.elements.valor.value = this.gasto.valor;
+        formulario.elements.fecha.value = new Date(this.gasto.fecha);
+        formulario.elements.etiquetas.value = this.gasto.etiquetas;
+
+        
+        let cancelar = new CancelarHandleFormulario();
+        let botonCancelar = formulario.querySelector("button.cancelar")
+        botonCancelar.addEventListener('click',cancelar);
+
+        botonFormulario = document.getElementById("anyadirgasto-formulario").setAttribute('disabled');
 
     }
 }
@@ -189,6 +206,10 @@ function EditarHandleFormulario(){
 function CancelarHandleFormulario(){
     this.handleEvent = function(event){
         event.preventDefault()
+
+        event.currentTarget.parentNode();
+        let botonAnyaGastForm = document.getElementById("anyadirgasto-formulario").removeAttribute('disabled');
+        repintar();
 
     }
 }
