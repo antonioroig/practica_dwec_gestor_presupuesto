@@ -67,6 +67,16 @@ function mostrarGastoWeb(idElemento,gasto){
     borrar.gasto = gasto;
     botonBorrar.addEventListener('click', borrar);
     divGasto.append(botonBorrar);
+
+    let botonEditarForm = document.createElement('button');
+    botonEditarForm.type = 'button';
+    botonEditarForm.className = 'gasto-editar-formulario';
+    botonEditarForm.textContent = 'Editar Formulario';
+
+    let editarForm = new EditarHandleFormulario(gasto);
+    editarForm.gasto = gasto;
+    botonEditarForm.addEventListener('click',editarForm);
+    divGasto.append(botonEditarForm);
      
 };
 
@@ -198,7 +208,7 @@ function EditarHandleFormulario(){
         let botonCancelar = formulario.querySelector("button.cancelar")
         botonCancelar.addEventListener('click',cancelar);
 
-        botonFormulario = document.getElementById("anyadirgasto-formulario").setAttribute('disabled');
+        botonFormulario = document.getElementById("anyadirgasto-formulario").setAttribute('disabled', true);
 
     }
 }
