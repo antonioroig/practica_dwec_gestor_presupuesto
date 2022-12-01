@@ -38,3 +38,10 @@ export let DIVagrupadosdia = PresupuestoWeb.mostrarGastosAgrupadosWeb('agrupacio
 export let DIVagrupadosmes = PresupuestoWeb.mostrarGastosAgrupadosWeb('agrupacion-mes',Presupuesto.agruparGastos("mes"),"mes");
 
 export let DIVagrupadosanyo = PresupuestoWeb.mostrarGastosAgrupadosWeb('agrupacion-anyo',Presupuesto.agruparGastos("anyo"),"año");
+
+PresupuestoWeb.repintar();
+let BUTTONactualizapresupuesto = document.getElementById('actualizarpresupuesto');
+BUTTONactualizapresupuesto.addEventListener('click', PresupuestoWeb.actualizarPresupuestoWeb);
+
+let BUTTONanyadirgasto = document.getElementById('anyadirgasto');
+BUTTONanyadirgasto.addEventListener('click', PresupuestoWeb.nuevoGastoWeb);
