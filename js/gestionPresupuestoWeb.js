@@ -17,7 +17,7 @@ function mostrarDatoEnId(idElemento, valor)
 
 }
 
-function mostrarGastoWeb(idElemento, gp) //mostrargpWeb
+function mostrarGastoWeb(idElemento, gasto) //mostrargpWeb
 {
     if(idElemento)
     {
@@ -28,28 +28,28 @@ function mostrarGastoWeb(idElemento, gp) //mostrargpWeb
 
         let divDes = document.createElement('div');
         divDes.className = "gasto-descripcion";
-        divDes.innerHTML += gp.descripcion;
+        divDes.innerHTML += gasto.descripcion;
         divGas.append(divDes);
 
         let divFec = document.createElement('div');
         divFec.className = "gasto-fecha";
-        divFec.innerHTML += gp.fecha;
+        divFec.innerHTML += gasto.fecha;
         divGas.append(divFec);
 
         let divVal = document.createElement('div');
         divVal.className = "gasto-valor";
-        divVal.innerHTML += gp.valor;
+        divVal.innerHTML += gasto.valor;
         divGas.append(divVal);
 
         let divEtiq = document.createElement('div');
         divEtiq.className = "gasto-etiquetas";
         
         
-        for(let i = 0; i < gp.etiquetas.length; i++)
+        for(let i = 0; i < gasto.etiquetas.length; i++)
         {
             let spanEtiquetas = document.createElement('span');
             spanEtiquetas.className = "gasto-etiquetas-etiqueta";
-            let val = gp.etiquetas[i];
+            let val = gasto.etiquetas[i];
             spanEtiquetas.innerHTML += " " + val + "\n";
             divEtiq.append(spanEtiquetas);
             
@@ -60,7 +60,16 @@ function mostrarGastoWeb(idElemento, gp) //mostrargpWeb
 
         divGas.append(divEtiq);
         
-       
+        let editarBoton = document.createElement('button');
+        editarBoton.type = 'button';
+        editarBoton.className = 'gasto-editar';
+        editarBoton.innerHTML = 'Editar';
+
+        let edit = new EditarHandle(gasto);
+        edit.gasto = gasto;
+        editarBoton.addEventListener('click', edit);
+        divGas.append(editarBoton);
+    
 
 
 
@@ -105,7 +114,11 @@ function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo) //mostrargastosAg
      
         ele.append(divGrup);
          
+       
     }
+
+
+    
 
 
 }
@@ -165,9 +178,24 @@ nuevoGastoButton.addEventListener('click', nuevoGastoWeb);
 
 function EditarHandle()
 {
-    this.handleEvent = function(){
-        let descrip = prom("Escriba una descripción");
-        this.gp.actualizarDescripcion(descrip);
+    this.handleEvent = function(edit){
+
+       
+
+        let descrip = prompt("Escriba una descripción");
+        this.gasto.actualizarDescripcion(descrip);
+
+        let val = prompt("Escriba un nuevo valor");
+        let valFloat = parseFloat(val)
+        this.gasto.actualizarValor(valFloat);
+
+        let fec = Date.parse(prompt("Escriba la fecha"));
+        this.gasto.actualizarFecha(fec);
+
+        let etiq = prompt("Escriba las etiquetas").split(',');
+        this.gasto.anyadirEtiquetas(...etiq);
+
+        repintar();
     }
 }
 
@@ -182,5 +210,6 @@ mostrarGastoWeb,
 mostrarGastosAgrupadosWeb,
 repintar,
 actualizarPresupuestoWeb,
-nuevoGastoWeb
+nuevoGastoWeb,
+EditarHandle
 }
