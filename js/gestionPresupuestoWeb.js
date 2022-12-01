@@ -1,7 +1,7 @@
 
 
 
-import * as gasto from './gestionPresupuesto.js';
+import * as gp from './gestionPresupuesto.js';
 
 
 
@@ -17,7 +17,7 @@ function mostrarDatoEnId(idElemento, valor)
 
 }
 
-function mostrarGastoWeb(idElemento, gasto)
+function mostrarGastoWeb(idElemento, gp) //mostrargpWeb
 {
     if(idElemento)
     {
@@ -28,28 +28,28 @@ function mostrarGastoWeb(idElemento, gasto)
 
         let divDes = document.createElement('div');
         divDes.className = "gasto-descripcion";
-        divDes.innerHTML += gasto.descripcion;
+        divDes.innerHTML += gp.descripcion;
         divGas.append(divDes);
 
         let divFec = document.createElement('div');
         divFec.className = "gasto-fecha";
-        divFec.innerHTML += gasto.fecha;
+        divFec.innerHTML += gp.fecha;
         divGas.append(divFec);
 
         let divVal = document.createElement('div');
         divVal.className = "gasto-valor";
-        divVal.innerHTML += gasto.valor;
+        divVal.innerHTML += gp.valor;
         divGas.append(divVal);
 
         let divEtiq = document.createElement('div');
         divEtiq.className = "gasto-etiquetas";
         
         
-        for(let i = 0; i < gasto.etiquetas.length; i++)
+        for(let i = 0; i < gp.etiquetas.length; i++)
         {
             let spanEtiquetas = document.createElement('span');
             spanEtiquetas.className = "gasto-etiquetas-etiqueta";
-            let val = gasto.etiquetas[i];
+            let val = gp.etiquetas[i];
             spanEtiquetas.innerHTML += " " + val + "\n";
             divEtiq.append(spanEtiquetas);
             
@@ -69,7 +69,7 @@ function mostrarGastoWeb(idElemento, gasto)
 
 
 
-function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo)
+function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo) //mostrargastosAgrupadosWeb
 {
 
     if(idElemento)
@@ -115,14 +115,14 @@ function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo)
 function repintar()
 {
     document.getElementById("presupuesto");
-    mostrarDatoEnId("presupuesto",gasto.mostrarPresupuesto());
+    mostrarDatoEnId("presupuesto",gp.mostrarPresupuesto());
     document.getElementById("gastos-totales");
-    mostrarDatoEnId("gastos-totales", gasto.calcularTotalGastos());
+    mostrarDatoEnId("gastos-totales", gp.calcularTotalGastos());
     document.getElementById("balance-total");
-    mostrarDatoEnId("balance-total", gasto.calcularBalance());
+    mostrarDatoEnId("balance-total", gp.calcularBalance());
     document.getElementById("listado-gastos-completo").innerHTML = " ";
    
-    for(let gas of gasto.listarGastos())
+    for(let gas of gp.listarGastos())
     {
         
         mostrarGastoWeb("listado-gastos-completo", gas);
@@ -135,7 +135,7 @@ function actualizarPresupuestoWeb()
 {
     let pres = prompt('Escriba un presupuesto');
     let tot = parseFloat(pres);
-    gasto.actualizarPresupuesto(tot);
+    gp.actualizarPresupuesto(tot);
     repintar();
 }
 
@@ -143,33 +143,34 @@ let actualizarPresButton = document.getElementById('actualizarpresupuesto');
 actualizarPresButton.addEventListener('click', actualizarPresupuestoWeb);
 
 
-function nuevoGastoWeb()
+function nuevoGastoWeb ()
 {
     let desc = prompt('Introduzca una descripción');
     let val = prompt('Introduzca el valor del gasto');
     let valFloat = parseFloat(val);
-    let fec = prompt('Introduzca la fecha del gasto');
-    let fecParse = Date.parse(fec);
-    let etiq = prompt('Introduzca las etiquetas del gasto').split(", ");
-    let gas = new gasto.CrearGasto(desc, valFloat, fecParse, ...etiq);
-    gasto.anyadirGasto(gas);
+    let fec = Date.parse(prompt('Introduzca la fecha del gasto'));
+    let etiq = prompt('Introduzca las etiquetas del gasto').split(',');
+    let gas = new gp.CrearGasto(desc, valFloat, fec,...etiq);
+    gp.anyadirGasto(gas);
+
+    repintar()
 
 
 }
 
-let nuevoGastoWebButton = document.getElementById('anyadirgasto');
-actualizarPresButton.addEventListener('click', nuevoGastoWeb);
+let nuevoGastoButton = document.getElementById('anyadirgasto');
+nuevoGastoButton.addEventListener('click', nuevoGastoWeb);
 
 
-/*
+
 function EditarHandle()
 {
     this.handleEvent = function(){
         let descrip = prom("Escriba una descripción");
-        this.gasto.actualizarDescripcion(descrip);
+        this.gp.actualizarDescripcion(descrip);
     }
 }
-*/
+
 
 
 
