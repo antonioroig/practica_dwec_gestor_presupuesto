@@ -47,16 +47,12 @@ function mostrarGastoWeb(idElemento, gasto)
         divEtiquetaNuevoGasto.textContent = gasto.etiquetas[i];
         
         let BtnEtiqBorrarHandle = new BorrarEtiquetasHandle();
-
         BtnEtiqBorrarHandle.gasto = gasto;
-        
-        BtnEtiqBorrarHandle.petiquetas = gasto.etiquetas[i];
-        
+        BtnEtiqBorrarHandle.etiquetas = gasto.etiquetas[i];
         divEtiquetaNuevoGasto.addEventListener("click", BtnEtiqBorrarHandle);
-        
         divEtiquetaNuevoGasto.textContent = gasto.etiquetas[i] + " ";
-
         divEtiquetasPorGasto.append(divEtiquetaNuevoGasto);
+        
     }
     divGasto.append(divEtiquetasPorGasto);
     elemento.append(divGasto);
@@ -214,28 +210,27 @@ btnAddGasto.addEventListener('click', nuevoGastoWeb);
 function EditarHandle()
 {
 
-    this.handleEvent = function(array)
+    this.handleEvent= function() 
     {
-
+           
         let descripcion = prompt("introduce una descripcion");
-
-        let strValor = prompt("introduce un valor de el gasto");
-
+       
+        let strValor = prompt("introduce un valor para el gasto");
+       
         let valor = parseFloat(strValor);
-
-        let date = prompt("introduce una fecha (formato yyy-mm-dd)");
-        
-        let fecha = Date.parse(date);
-
-        let etiquetasarray = prompt('Etiquetas: Separador " , "').split(',');
+       
+        let date = prompt("introduce una fecha en yyyy-mm-dd para el gasto");
+       
+        let etiquetas = prompt("introduce unas etiquetas para el gasto en fomato etiq1,etiq2,etiq3");
+       
+        let etiquetasArray = etiquetas.split(',');
 
         this.gasto.actualizarValor(valor);
         this.gasto.actualizarDescripcion(descripcion);
-        this.gasto.actualizarFecha(fecha);
-        this.gasto.anyadirEtiquetas(...etiquetasarray);
+        this.gasto.actualizarFecha(date);
+        this.gasto.anyadirEtiquetas(etiquetas);
 
         repintar();
-
     }
 
 }
@@ -257,14 +252,14 @@ function BorrarHandle()
 function BorrarEtiquetasHandle()
 {
 
-    this.handleEvent = function()
-    {
+    this.handleEvent= function() 
+        {
 
-        this.gasto.borrarEtiquetas(this.etiquetas)
+            this.gasto.borrarEtiquetas(this.etiquetas);
 
-        repintar();
-
-    }
+            repintar();
+            
+        }
 
 }
 
