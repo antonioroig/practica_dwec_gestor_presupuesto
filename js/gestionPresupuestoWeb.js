@@ -123,10 +123,27 @@ function nuevoGastoWeb(){
 
 }
 
+function nuevoGastoWebFormulario(){
+    let plantillaFormulario = document.getElementById("formulario-template").content.cloneNode(true);
+    var formulario = plantillaFormulario.querySelector("form");
+    formulario.addEventListener('submit', function(event){
+
+        let controles = document.getElementById('controlesprincipales');
+        controles.innerHTML = formulario;
+
+        let botonAnyaGastForm = document.getElementById("anyadirgasto-formulario").setAttribute('disabled',true);
+
+        let cancelar = new CancelarHandleFormulario();
+        let botonCancelar = formulario.querySelector("button.cancelar")
+        botonCancelar.addEventListener('click',cancelar);
+
+
+    });   
+};
+
+//Funciones constructoras
 function EditarHandle(){
   this.handleEvent = function (event) {
-    
-    event.preventDefault();
 
     let nuevaDescripcion = prompt('Introduce la nueva descripcion');
     let nuevoValor =  parseFloat(prompt('Introduce el nuevo valor'));;
@@ -145,7 +162,6 @@ function EditarHandle(){
 
 };
 
-//Funciones constructoras
 function BorrarHandle(){
   this.handleEvent = function (event) {
     let borrarGasto = this.gasto.id;
@@ -163,13 +179,21 @@ function BorrarEtiquetasHandle(){
     } 
 };
 
-function nuevoGastoWebFormulario(){
-    let plantillaFormulario = document.getElementById("formulario-template").content.cloneNode(true);
-    var formulario = plantillaFormulario.querySelector("form");
+function EditarHandleFormulario(){
+    this.handleEvent = function(event){
+        event.preventDefault()
+
+    }
+}
+
+function CancelarHandleFormulario(){
+    this.handleEvent = function(event){
+        event.preventDefault()
+
+    }
+}
 
 
-    
-};
 
 //Botones
 let botonActualizar = document.getElementById('actualizarpresupuesto');
@@ -191,5 +215,7 @@ export {
     EditarHandle,
     BorrarHandle,
     BorrarEtiquetasHandle,
+    EditarHandleFormulario,
+    CancelarHandleFormulario,
     nuevoGastoWebFormulario
 }
