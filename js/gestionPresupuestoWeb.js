@@ -82,6 +82,7 @@ function mostrarGastosAgrupadosWeb(idElemento,agrup,periodo){
 }
 
 function repintar(){
+    document.getElementById('presupuesto').innerHTML = '';
     mostrarDatoEnId("presupuesto", gestionPresupuesto.mostrarPresupuesto());
 
     mostrarDatoEnId("gastos-totales", gestionPresupuesto.calcularTotalGastos());
@@ -147,7 +148,7 @@ function BorrarHandle(){
 
 function BorrarEtiquetasHandle(){
     this.handleEvent = function(event) {
-        this.gasto.borrarEtiquetas(this.etiqueta);
+        this.gasto.borrarEtiquetas(this.etiquetas);
         repintar();
     }
 }
