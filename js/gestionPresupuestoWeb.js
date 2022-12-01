@@ -27,7 +27,7 @@
 
         let divValor = document.createElement("div");
         divValor.className = "gasto-valor";
-        divValor.innerHTML += gasto.valor + " ";
+        divValor.innerHTML += gasto.valor;
         divGasto.append(divValor);
 
         let divEtiquetas = document.createElement('div');
@@ -39,9 +39,29 @@
           divEtiqEtiq.className = 'gasto-etiquetas-etiqueta'
           divEtiqEtiq.innerHTML = etiquetas;
           
-          divEtiquetas.append(divEtiqEtiq);
+          divEtiquetas.append(divEtiqEtiq);git 
         }
         divGasto.append(divEtiquetas);
+
+        let botonEditar = document.createElement('button');
+        botonEditar.type = 'button';
+        botonEditar.className = 'gasto-editar';
+        botonEditar.innerHTML += 'Editar';
+
+        let objetoeditar = new EditarHandle(gasto);
+        objetoeditar.gasto = gasto;
+        botonEditar.addEventListener('click',objetoeditar);
+        divGasto.append(botonEditar);
+
+        let botonBorrar = document.createElement('button');
+        botonBorrar.type = 'button';
+        botonBorrar.className = 'gasto-borrar';
+        botonBorrar.innerHTML += 'Borrar';
+
+        let objetoborrar = new BorrarHandle(gasto);
+        objetoborrar.gasto = gasto;
+        botonBorrar.addEventListener('click', objetoborrar);
+        divGasto.append(botonBorrar);
   }
   function mostrarGastosAgrupadosWeb (idElemento,agrup,periodo)
   {
@@ -171,6 +191,6 @@
     nuevoGastoWeb,
     EditarHandle,
     BorrarHandle,
-    BorrarEtiquetasHandle,
+    BorrarEtiquetasHandle
   }
 
