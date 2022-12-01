@@ -123,7 +123,7 @@
   botonanyadirgasto.addEventListener('click',nuevoGastoWeb);
 
   function EditarHandle(){
-    this.handleEvent = function (){
+    this.handleEvent = function (some){
       let Editardescripcion = prompt('Descripcion: ');
       let valorstring = prompt('Valor: ');
       let Editarvalor = parseFloat(valorstring);
@@ -139,9 +139,28 @@
       repintar();
       
     }
-
   }
+  function BorrarHandle(){
+    
+    this.handleEvent = function (some)
+    {
+        let borrar = this.gasto.id;
+        presupuesto.borrarGasto(borrar);
+
+        repintar();
+   }
+  }
+
+  function BorrarEtiquetasHandle(){
+    
+    this.handleEvent = function (some) {
+
+        this.gasto.borrarEtiquetas(this.etiquetas);
   
+        repintar();
+      } 
+  }
+
   
   export{
     mostrarDatoEnId,
@@ -150,6 +169,8 @@
     repintar,
     actualizarPresupuestoWeb,
     nuevoGastoWeb,
-    EditarHandle
+    EditarHandle,
+    BorrarHandle,
+    BorrarEtiquetasHandle,
   }
 
