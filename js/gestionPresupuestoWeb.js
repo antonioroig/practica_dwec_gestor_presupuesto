@@ -70,6 +70,15 @@ function mostrarGastoWeb(idElemento, gasto) //mostrargpWeb
         editarBoton.addEventListener('click', edit);
         divGas.append(editarBoton);
     
+        let borrarBoton = document.createElement('button');
+        borrarBoton.type = 'button';
+        borrarBoton.className = 'gasto-borrar';
+        borrarBoton.innerHTML = 'Borrar';
+
+        let bor = new BorrarHandle(gasto);
+        bor.gasto = gasto;
+        borrarBoton.addEventListener('click', bor);
+        divGas.append(borrarBoton);
 
 
 
@@ -176,6 +185,9 @@ nuevoGastoButton.addEventListener('click', nuevoGastoWeb);
 
 
 
+
+
+
 function EditarHandle()
 {
     this.handleEvent = function(edit){
@@ -199,6 +211,21 @@ function EditarHandle()
     }
 }
 
+function BorrarHandle()
+{
+
+    this.handleEvent = function(deleate)
+    {
+        let borrar = this.gasto.id;
+        gp.borrarGasto(borrar);
+        repintar();
+
+    }
+
+}
+
+
+
 
 
 
@@ -211,5 +238,6 @@ mostrarGastosAgrupadosWeb,
 repintar,
 actualizarPresupuestoWeb,
 nuevoGastoWeb,
-EditarHandle
+EditarHandle,
+BorrarHandle
 }
