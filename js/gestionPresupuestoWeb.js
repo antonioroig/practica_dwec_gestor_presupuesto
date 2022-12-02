@@ -131,7 +131,7 @@ function repintar(){
     });
 }
 
- let actualizarPresupuestoWeb = function(){
+let actualizarPresupuestoWeb = function(){
     let presupuesto = Number(prompt("Introduzca un nuevo presupuesto", 100));
     actualizarPresupuesto(presupuesto);
     repintar()
@@ -185,6 +185,26 @@ function BorrarEtiquetasHandle(){
         repintar();
     }
 }
+
+/*
+let actualizarPresupuestoWebFormulario = function(){
+    let presupuesto = Number(prompt("Introduzca un nuevo presupuesto", 100));
+    actualizarPresupuesto(presupuesto);
+    repintar()
+}
+
+let btnPresupuesto = document.getElementById("actualizarpresupuesto");
+btnPresupuesto.onclick = actualizarPresupuestoWeb
+
+let nuevoGastoWebFormulario = function() {
+    let plantillaFormulario = document.getElementById("formulario-template").content.cloneNode(true);
+    var formulario = plantillaFormulario.querySelector("form");
+    repintar();
+}
+
+let btnAnyadirGasto = document.getElementById("anyadirgasto");
+btnAnyadirGasto.onclick = nuevoGastoWeb
+*/
 export{
     mostrarDatoEnId,
     mostrarGastoWeb,
