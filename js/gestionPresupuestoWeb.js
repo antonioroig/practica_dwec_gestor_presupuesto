@@ -52,6 +52,15 @@ function mostrarGastoWeb(idElemento, gasto) //mostrargpWeb
             let val = gasto.etiquetas[i];
             spanEtiquetas.innerHTML += " " + val + "\n";
             divEtiq.append(spanEtiquetas);
+
+            
+
+        let borEtiq = new BorrarEtiquetasHandle();
+        borEtiq.gasto = gasto;
+        borEtiq.etiquetas = val;
+        spanEtiquetas.addEventListener('click', borEtiq);
+        
+
             
         }
 
@@ -79,6 +88,10 @@ function mostrarGastoWeb(idElemento, gasto) //mostrargpWeb
         bor.gasto = gasto;
         borrarBoton.addEventListener('click', bor);
         divGas.append(borrarBoton);
+
+        
+
+        
 
 
 
@@ -224,6 +237,17 @@ function BorrarHandle()
 
 }
 
+function BorrarEtiquetasHandle()
+{
+
+    this.handleEvent = function(deleteEtiquetas)
+    {
+        this.gasto.borrarEtiquetas(this.etiquetas);
+        repintar();
+    }
+
+}
+
 
 
 
@@ -239,5 +263,6 @@ repintar,
 actualizarPresupuestoWeb,
 nuevoGastoWeb,
 EditarHandle,
-BorrarHandle
+BorrarHandle,
+BorrarEtiquetasHandle
 }
