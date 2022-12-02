@@ -215,6 +215,16 @@ let BorrarEtiquetasHandle = function(){
     }
 
 }
+
+// Practica 6
+
+function nuevoGastoWebFormulario(){
+  
+  let plantillaFormulario = document.getElementById("formulario-template").content.cloneNode(true);
+  var formulario = plantillaFormulario.querySelector("form");
+    
+}
+
 export    {
 
   mostrarDatoEnId,
@@ -222,7 +232,8 @@ export    {
   mostrarGastosAgrupadosWeb, 
   repintar,
   actualizarPresupuestoWeb,
-  nuevoGastoWeb
+  nuevoGastoWeb,
+  nuevoGastoWebFormulario
 
 }
 
