@@ -213,7 +213,7 @@ function EditarHandleFormulario(){
 
         formulario.elements.descripcion.value = this.gasto.descripcion;
         formulario.elements.valor.value = this.gasto.valor;
-        formulario.elements.fecha.value = new Date(this.gasto.fecha);
+        formulario.elements.fecha.value = new Date(this.gasto.fecha.toISOString().substring(0,10));
         formulario.elements.etiquetas.value = this.gasto.etiquetas;
         
         //Boton cancelar
