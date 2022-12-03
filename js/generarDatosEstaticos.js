@@ -22,10 +22,10 @@ gestionPresupuesto.anyadirGasto(gasto5);
 gestionPresupuesto.anyadirGasto(gasto6);
 
 let gastosTotales = gestionPresupuesto.calcularTotalGastos();
-gestionPresupuestoWeb.mostrarDatoEnId("gastos-totales",gastosTotales);
+gestionPresupuestoWeb.mostrarDatoEnId("gastos-totales",gastosTotales.toFixed(2));
 
 let balanceTotal = gestionPresupuesto.calcularBalance();
-gestionPresupuestoWeb.mostrarDatoEnId("balance-total",balanceTotal);
+gestionPresupuestoWeb.mostrarDatoEnId("balance-total",balanceTotal.toFixed(2));
 
 let listadoGastos = gestionPresupuesto.listarGastos();
 for(let elemento of listadoGastos){

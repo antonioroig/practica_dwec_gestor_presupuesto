@@ -99,10 +99,10 @@ function repintar(){
     mostrarDatoEnId('presupuesto',gestionPresupuesto.mostrarPresupuesto())
 
     document.getElementById('gastos-totales');
-    mostrarDatoEnId('gastos-totales',gestionPresupuesto.calcularTotalGastos());
+    mostrarDatoEnId('gastos-totales',gestionPresupuesto.calcularTotalGastos().toFixed(2));
 
     document.getElementById('balance-total');
-    mostrarDatoEnId('balance-total',gestionPresupuesto.calcularBalance());
+    mostrarDatoEnId('balance-total',gestionPresupuesto.calcularBalance().toFixed(2));
     
     document.getElementById('listado-gastos-completo').innerHTML = '';
 
@@ -145,6 +145,10 @@ function nuevoGastoWebFormulario(){
         let cancelar = new CancelarHandleFormulario();
         let botonCancelar = formulario.querySelector("button.cancelar")
         botonCancelar.addEventListener('click',cancelar);
+
+        let enviar = new EnviarHandleFormulario();
+        //let botonEnviar = formulario.querySelector("button.enviar")
+        formulario.addEventListener('submit',enviar);
 
 };
 
@@ -209,6 +213,11 @@ function EditarHandleFormulario(){
         let botonCancelar = formulario.querySelector("button.cancelar")
         botonCancelar.addEventListener('click',cancelar);
 
+        let enviar = new EnviarHandleFormulario();
+        enviar.gasto = this.gasto;
+        //let botonEnviar = formulario.querySelector("button.enviar")
+        formulario.addEventListener('submit',enviar);
+
         botonFormulario.setAttribute('disabled', "");
 
     }
@@ -222,6 +231,35 @@ function CancelarHandleFormulario(){
         event.currentTarget.parentNode.remove();
         document.getElementById("anyadirgasto-formulario").removeAttribute("disabled");
         repintar();
+
+    }
+}
+
+function EnviarHandleFormulario(){
+    this.handleEvent = function(event){
+
+        //event.prevenDefault();
+
+        let formulario = event.currentTarget.parentNode;
+
+        let descripcion = formulario.elements.descripcion.value;
+        this.gasto.actualizarDescripcion(nuevaDescripcion);
+
+        let valor = parseFloat(formulario.elements.valor.value);
+        this.gasto.actualizarValor(nuevoValor);
+
+        let fecha = formulario.elements.fecha.value;
+        this.gasto.actualizarFecha(nuevaFecha);
+
+        let etiquetas = formulario.elements.etiquetas.value;
+        this.gasto.anyadirEtiquetas(...nuevasEtiquetas);
+
+        let nuevoGasto = new gestionPresupuesto.CrearGasto(descripcion,valor,fecha,...etiquetas);
+        gestionPresupuesto.anyadirGasto(nuevoGasto);
+        
+        repintar();
+
+        document.getElementById("anyadirgasto-formulario").removeAttribute("disabled");
 
     }
 }
@@ -247,5 +285,6 @@ export {
     BorrarEtiquetasHandle,
     EditarHandleFormulario,
     CancelarHandleFormulario,
+    EnviarHandleFormulario,
     nuevoGastoWebFormulario
 }
