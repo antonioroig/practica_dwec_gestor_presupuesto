@@ -5,7 +5,6 @@ function mostrarDatoEnId(valor, idElemento){
     elemento.innerHTML+=valor;
 }
 
-
 function mostrarGastoWeb(idElemento, gasto){
     
     let elemento = document.getElementById(idElemento);
