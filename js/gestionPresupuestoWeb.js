@@ -48,6 +48,9 @@ function mostrarGastoWeb(idElemento,gasto){
 
     divGasto.append(divEtiquetas); 
 
+    //Botones para añadir en el formulario
+
+    //Boton editar
     let botonEditar = document.createElement('button');
     botonEditar.type = 'button';
     botonEditar.className = 'gasto-editar';
@@ -58,6 +61,7 @@ function mostrarGastoWeb(idElemento,gasto){
     botonEditar.addEventListener('click',editar);
     divGasto.append(botonEditar);
     
+    //Boton borrar
     let botonBorrar = document.createElement('button');
     botonBorrar.type = 'button';
     botonBorrar.className = 'gasto-borrar';
@@ -68,6 +72,7 @@ function mostrarGastoWeb(idElemento,gasto){
     botonBorrar.addEventListener('click', borrar);
     divGasto.append(botonBorrar);
 
+    //Boton editar formulario
     let botonEditarForm = document.createElement('button');
     botonEditarForm.type = 'button';
     botonEditarForm.className = 'gasto-editar-formulario';
@@ -80,6 +85,7 @@ function mostrarGastoWeb(idElemento,gasto){
      
 };
 
+//Funciones
 function mostrarGastosAgrupadosWeb(idElemento,agrup,periodo){
     let idAgrupado = document.getElementById(idElemento);
     idAgrupado.innerHTML = '';
@@ -142,16 +148,18 @@ function nuevoGastoWebFormulario(){
 
         document.getElementById("anyadirgasto-formulario").setAttribute('disabled', "");
 
+        //Boton cancelar
         let cancelar = new CancelarHandleFormulario();
         let botonCancelar = formulario.querySelector("button.cancelar")
         botonCancelar.addEventListener('click',cancelar);
 
+        //Boton enviar formulario
         let enviar = new EnviarHandleFormulario();
         formulario.addEventListener('submit',enviar);
 
 };
 
-//Funciones constructoras
+//Funciones constructoras y metodos
 function EditarHandle(){
   this.handleEvent = function (event) {
 
@@ -161,7 +169,7 @@ function EditarHandle(){
     let nuevasEtiquetas = prompt('Introduce las etiquetas como una lista separadas por ,');
     nuevasEtiquetas = nuevasEtiquetas.split(',');
 
-  
+    //Actualizar gasto
     this.gasto.actualizarValor(nuevoValor);
     this.gasto.actualizarDescripcion(nuevaDescripcion);
     this.gasto.actualizarFecha(nuevaFecha);
@@ -208,14 +216,17 @@ function EditarHandleFormulario(){
         formulario.elements.fecha.value = new Date(this.gasto.fecha);
         formulario.elements.etiquetas.value = this.gasto.etiquetas;
         
+        //Boton cancelar
         let cancelar = new CancelarHandleFormulario();
         let botonCancelar = formulario.querySelector("button.cancelar")
         botonCancelar.addEventListener('click',cancelar);
 
+        //Boton enviar
         let enviar = new EnviarHandle();
         enviar.gasto = this.gasto;
         formulario.addEventListener('submit',enviar);
 
+        //Desabilitar boton
         botonFormulario.setAttribute('disabled', "");
 
     }
@@ -276,7 +287,7 @@ function EnviarHandleFormulario(){
 
     }
 }
-//Botones
+//Botones para añadir al html
 let botonActualizar = document.getElementById('actualizarpresupuesto');
 botonActualizar.addEventListener('click',actualizarPresupuestoWeb);
 
