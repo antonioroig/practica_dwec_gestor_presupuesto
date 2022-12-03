@@ -144,7 +144,6 @@ function nuevoGastoWeb(){
     repintar();
 }
 
-
 document.getElementById("anyadirgasto").addEventListener("click", nuevoGastoWeb);
 
 function EditarHandle(){
