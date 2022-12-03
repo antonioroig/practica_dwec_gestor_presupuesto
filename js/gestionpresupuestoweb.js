@@ -38,6 +38,10 @@ function mostrarGastoWeb(idElemento, gasto){
         let gastoEtiqueta = document.createElement("span");
         gastoEtiqueta.classList = "gasto-etiquetas-etiqueta";
         gastoEtiqueta.textContent = element;
+        let objBorrarEqt = new BorrarEtiquetasHandle();
+        objBorrarEqt.gasto=gasto;
+        objBorrarEqt.etiqueta=element;
+        gastoEtiqueta.addEventListener("click", objBorrarEqt);
         gastoEtiquetas.appendChild(gastoEtiqueta)
     });
     gastoD.appendChild(gastoEtiquetas)
@@ -180,6 +184,9 @@ function BorrarHandle(){
 let BorrarEtiquetasHandle = function(){
     this.handleEvent = function() {
         
+        this.gasto.borrarEtiquetas(this.etiqueta);
+        
+        repintar();
     }
 }
 
