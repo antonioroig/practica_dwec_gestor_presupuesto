@@ -90,26 +90,44 @@ function repintar(){
     element.innerHTML = "";
 
     gp.listarGastos().forEach(gasto =>{
-        mostrarGastoWeb(gasto, "listado-gastos-completo");
+        mostrarGastoWeb("listado-gastos-completo", gasto);
     });
 }
 
 function actualizarPresupuestoWeb(){
     let pres = prompt("Dame un presupuesto", 0)
     pres = parseFloat(pres, 10)
+
     if ((pres !== null) && (pres !== undefined)){
       gp.actualizarPresupuesto(pres)
       repintar()  
     }
 }
 
-var btnAP = document.getElementById("actualizarpresupuesto");
-btnAP.onclick = actualizarPresupuestoWeb;
+document.getElementById("actualizarpresupuesto").addEventListener("click", actualizarPresupuestoWeb);
+
+
+function nuevoGastoWeb(){
+    let desc = prompt("Dame la descripcion del nuevo gasto: ", "Descripcion");
+    let val = prompt("Dame el valor del nuevo gasto: ", 100);
+    val = parseFloat(val, 10)
+    let fecha = prompt("Dame la fecha del nuevo gasto: ", "2022-09-22");
+    let etiquetas = prompt("Dame las etiquetas del nuevo gasto separadas por comas: ", "et1,et2,et3");
+
+    let arrayEtiquetas = etiquetas.split(",");
+    var nuevoGasto = new gp.CrearGasto(desc, val, fecha, arrayEtiquetas);
+    gp.anyadirGasto(nuevoGasto);
+    repintar();
+}
+
+
+document.getElementById("anyadirgasto").addEventListener("click", nuevoGastoWeb);
 
 export{
     mostrarDatoEnId,
     mostrarGastoWeb,
     mostrarGastosAgrupadosWeb,
     repintar,
-    actualizarPresupuestoWeb
+    actualizarPresupuestoWeb,
+    nuevoGastoWeb
 }
