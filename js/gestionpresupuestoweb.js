@@ -177,6 +177,11 @@ function BorrarHandle(){
     }
 }
 
+let BorrarEtiquetasHandle = function(){
+    this.handleEvent = function() {
+        
+    }
+}
 
 export{
     mostrarDatoEnId,
