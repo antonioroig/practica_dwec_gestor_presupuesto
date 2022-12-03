@@ -13,8 +13,6 @@ function mostrarGastoWeb(idElemento, gasto){
     
     let gastoD = document.createElement("div"); 
     gastoD.classList = "gasto";
-    
-    //let elementoGasto = document.getElementsByClassName("gasto") elemento.appendChild(gastoD)
 
     let gastoDesc = document.createElement("div");
     gastoDesc.classList = "gasto-descripcion";
@@ -60,7 +58,7 @@ function mostrarGastoWeb(idElemento, gasto){
     gastoD.appendChild(btnEdit);
 
     
-    var objBorrar = new BorrarHandle();
+    let objBorrar = new BorrarHandle();
     objBorrar.gasto=gasto;
 
     let btnborrar = document.createElement('button');
@@ -79,8 +77,6 @@ function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo  ){
     agrupD.classList = "agrupacion";
     
     
-    // let elementoAgrup = document.getElementsByClassName("agrupacion") elemento.appendChild(agrupD)
-
     let agrupH1 = document.createElement("h1");
     agrupH1.textContent = `Gastos agrupados por ${periodo}`;
     agrupD.appendChild(agrupH1)
@@ -143,7 +139,7 @@ function nuevoGastoWeb(){
     let etiquetas = prompt("Dame las etiquetas del nuevo gasto separadas por comas: ", "et1,et2,et3");
 
     let arrayEtiquetas = etiquetas.split(",");
-    var nuevoGasto = new gp.CrearGasto(desc, val, fecha, arrayEtiquetas);
+    let nuevoGasto = new gp.CrearGasto(desc, val, fecha, arrayEtiquetas);
     gp.anyadirGasto(nuevoGasto);
     repintar();
 }
