@@ -15,7 +15,6 @@ function mostrarGastoWeb(idElemento, gasto){
     gastoD.classList = "gasto";
     
     //let elementoGasto = document.getElementsByClassName("gasto") elemento.appendChild(gastoD)
-    
 
     let gastoDesc = document.createElement("div");
     gastoDesc.classList = "gasto-descripcion";
