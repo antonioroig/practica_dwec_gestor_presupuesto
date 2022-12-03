@@ -147,7 +147,6 @@ function nuevoGastoWebFormulario(){
         botonCancelar.addEventListener('click',cancelar);
 
         let enviar = new EnviarHandleFormulario();
-        //let botonEnviar = formulario.querySelector("button.enviar")
         formulario.addEventListener('submit',enviar);
 
 };
@@ -213,9 +212,8 @@ function EditarHandleFormulario(){
         let botonCancelar = formulario.querySelector("button.cancelar")
         botonCancelar.addEventListener('click',cancelar);
 
-        let enviar = new EnviarHandleFormulario();
+        let enviar = new EnviarHandle();
         enviar.gasto = this.gasto;
-        //let botonEnviar = formulario.querySelector("button.enviar")
         formulario.addEventListener('submit',enviar);
 
         botonFormulario.setAttribute('disabled', "");
@@ -235,24 +233,39 @@ function CancelarHandleFormulario(){
     }
 }
 
+function EnviarHandle(){
+    this.handleEvent = function(event){
+     
+        event.preventDefault();
+        
+        let formulario = event.currentTarget;
+
+        let descripcion = formulario.elements.descripcion.value;
+        this.gasto.actualizarDescripcion(descripcion);
+
+        let valor = parseFloat(formulario.elements.valor.value);
+        this.gasto.actualizarValor(valor);
+
+        let fecha = formulario.elements.fecha.value;
+        this.gasto.actualizarFecha(fecha);
+
+        let etiquetas = formulario.elements.etiquetas.value;
+        this.gasto.anyadirEtiquetas(...etiquetas);
+
+        repintar();
+    }
+}
+
 function EnviarHandleFormulario(){
     this.handleEvent = function(event){
 
-        //event.prevenDefault();
+        event.preventDefault();
 
-        let formulario = event.currentTarget.parentNode;
-
+        let formulario = event.currentTarget;
         let descripcion = formulario.elements.descripcion.value;
-        this.gasto.actualizarDescripcion(nuevaDescripcion);
-
         let valor = parseFloat(formulario.elements.valor.value);
-        this.gasto.actualizarValor(nuevoValor);
-
         let fecha = formulario.elements.fecha.value;
-        this.gasto.actualizarFecha(nuevaFecha);
-
         let etiquetas = formulario.elements.etiquetas.value;
-        this.gasto.anyadirEtiquetas(...nuevasEtiquetas);
 
         let nuevoGasto = new gestionPresupuesto.CrearGasto(descripcion,valor,fecha,...etiquetas);
         gestionPresupuesto.anyadirGasto(nuevoGasto);
@@ -286,5 +299,6 @@ export {
     EditarHandleFormulario,
     CancelarHandleFormulario,
     EnviarHandleFormulario,
+    EnviarHandle,
     nuevoGastoWebFormulario
 }
