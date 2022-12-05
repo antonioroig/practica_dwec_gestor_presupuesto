@@ -173,6 +173,10 @@ function nuevoGastoWebFormulario(){
     let cancel = new CancelarHandleFormulario();
     let butCancel = formulario.querySelector("button.cancelar");
     butCancel.addEventListener("click", cancel); 
+
+    let enviadorForm = new EnviarHandleFormulario();
+
+    formulario.addEventListener("submit", enviadorForm);
 };
 
 function EditarHandleFormulario(){
@@ -196,6 +200,11 @@ function EditarHandleFormulario(){
         let cancel = new CancelarHandleFormulario();
         let butCancel = formulario.querySelector("button.cancelar");
         butCancel.addEventListener("click", cancel);
+
+        let enviador = new EnviarHandle();
+        enviador.gasto = this.gasto;
+
+        formulario.addEventListener("submit", enviador);
         
     }
 };
@@ -209,16 +218,39 @@ function CancelarHandleFormulario(){
 
 function EnviarHandle(){
     this.handleEvent = function(event){
+        event.preventDefault();
+        let formulario = event.currentTarget;
+
+        let valor = parseFloat(formulario.elements.valor.value);
         this.gasto.actualizarValor(valor);
+
+        let descripcion = formulario.elements.descripcion.value;
         this.gasto.actualizarDescripcion(descripcion);
+
+        let fecha = Date.parse(formulario.elements.fecha.value);
         this.gasto.actualizarFecha(fecha);
+
+        let etiquetas = formulario.elements.etiquetas.value;
         this.gasto.anyadirEtiquetas(...etiquetas);
         repintar();
     }
-}
+};
 function EnviarHandleFormulario(){
+    this.handleEvent = function(event){
+        event.preventDefault();
+        let formulario = event.currentTarget;
 
-}
+        let valor = parseFloat(formulario.elements.valor.value);
+        let descripcion = formulario.elements.descripcion.value;
+        let fecha = Date.parse(formulario.elements.fecha.value);
+        let etiquetas = formulario.elements.etiquetas.value;
+
+        gestionPresupuesto.anyadirGasto(new gestionPresupuesto.CrearGasto(descripcion,valor,fecha,...etiquetas));
+        repintar();
+
+        document.getElementById("anyadirgasto-formulario").removeAttribute("disabled");
+    }
+};
 
 
 //He puesto aquí los botones todos juntos porque luego no los encuentro.
@@ -239,5 +271,7 @@ export{
     BorrarEtiquetasHandle,
     nuevoGastoWebFormulario,
     EditarHandleFormulario,
-    CancelarHandleFormulario
+    CancelarHandleFormulario,
+    EnviarHandle,
+    EnviarHandleFormulario
 };
