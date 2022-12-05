@@ -1,10 +1,12 @@
 "use strict";
 import * as exGp from './gestionPresupuesto.js';
-
+document.getElementById("actualizarpresupuesto").addEventListener("click", actualizarPresupuestoWeb);
+document.getElementById("anyadirgasto").addEventListener("click", nuevoGastoWeb);
+/*
 let btnActualizarpres = document.getElementById("actualizarpresupuesto");
 btnActualizarpres.onclick = actualizarPresupuestoWeb;
 let btnAnyadirgast = document.getElementById("anyadirgasto");
-btnAnyadirgast.onclick =  nuevoGastoWeb;
+btnAnyadirgast.onclick =  nuevoGastoWeb;*/
 //document.getElementById("actualizarpresupuesto").addEventListener("click", actualizarPresupuestoWeb);
 //document.getElementById("anyadirgasto").addEventListener("click", nuevoGastoWeb);
 function mostrarDatoEnId(valor, idElemento)
