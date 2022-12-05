@@ -66,6 +66,16 @@ function mostrarGastoWeb(idElemento, gasto)
     botonBorrar.addEventListener('click', borrar);
     divGasto.append(botonBorrar);
 
+    let botonEditarForm = document.createElement('button');
+    botonEditarForm.type = 'button';
+    botonEditarForm.className = 'gasto-editar-formulario';
+    botonEditarForm.textContent = 'Editar (formulario)';
+
+    let editarForm = new EditarHandleFormulario(gasto);
+    editarForm.gasto = gasto;
+    botonEditarForm.addEventListener('click',editarForm);
+    divGasto.append(botonEditarForm);
+
 
     
 }
@@ -119,6 +129,24 @@ function nuevoGastoWeb() {
     repintar();
 }
 
+function nuevoGastoWebFormulario(){
+    let plantillaFormulario = document.getElementById("formulario-template").content.cloneNode(true);
+    var formulario = plantillaFormulario.querySelector("form");
+   
+        let controles = document.getElementById("controlesprincipales");
+        controles.append(formulario);
+
+        document.getElementById("anyadirgasto-formulario").setAttribute('disabled', "");
+
+        let cancelar = new CancelarHandleFormulario();
+        let botonCancelar = formulario.querySelector("button.cancelar")
+        botonCancelar.addEventListener('click',cancelar);
+
+        let enviar = new EnviarHandleFormulario();
+        formulario.addEventListener('submit',enviar);
+
+};
+
 function EditarHandle() {
     this.handleEvent = function (event) {
         let nuevaDescripcion = prompt('Introduce la descripcion de la nueva etiqueta');
@@ -153,11 +181,104 @@ function BorrarEtiquestasHandle() {
     }
 }
 
+function EditarHandleFormulario(){
+    this.handleEvent = function(event){
+
+        event.preventDefault()
+
+        let plantillaFormulario = document.getElementById("formulario-template").content.cloneNode(true);;
+        var formulario = plantillaFormulario.querySelector("form");
+
+        let controles = document.getElementById("controlesprincipales");
+        controles.append(formulario);
+    
+        let botonFormulario = event.currentTarget;
+        botonFormulario.append(formulario);
+
+        formulario.elements.descripcion.value = this.gasto.descripcion;
+        formulario.elements.valor.value = this.gasto.valor;
+        formulario.elements.fecha.value = new Date(this.gasto.fecha).toISOString().substring(0,10);
+        formulario.elements.etiquetas.value = this.gasto.etiquetas;
+        
+        let cancelar = new CancelarHandleFormulario();
+        let botonCancelar = formulario.querySelector("button.cancelar")
+        botonCancelar.addEventListener('click',cancelar);
+
+        let enviar = new EnviarHandle();
+        enviar.gasto = this.gasto;
+        formulario.addEventListener('submit',enviar);
+
+        botonFormulario.setAttribute('disabled', "");
+
+    }
+}
+
+function CancelarHandleFormulario(){
+    this.handleEvent = function(event){
+
+        event.preventDefault();
+
+        event.currentTarget.parentNode.remove();
+        document.getElementById("anyadirgasto-formulario").removeAttribute("disabled");
+        repintar();
+
+    }
+}
+
+function EnviarHandle(){
+    this.handleEvent = function(event){
+     
+        event.preventDefault();
+        
+        let formulario = event.currentTarget;
+
+        let descripcion = formulario.elements.descripcion.value;
+        this.gasto.actualizarDescripcion(descripcion);
+
+        let valor = parseFloat(formulario.elements.valor.value);
+        this.gasto.actualizarValor(valor);
+
+        let fecha = formulario.elements.fecha.value;
+        this.gasto.actualizarFecha(fecha);
+
+        let etiquetas = formulario.elements.etiquetas.value;
+        this.gasto.anyadirEtiquetas(...etiquetas);
+
+        repintar();
+    }
+}
+
+function EnviarHandleFormulario(){
+    this.handleEvent = function(event){
+
+        event.preventDefault();
+
+        let formulario = event.currentTarget;
+        let descripcion = formulario.elements.descripcion.value;
+        let valor = parseFloat(formulario.elements.valor.value);
+        let fecha = formulario.elements.fecha.value;
+        let etiquetas = formulario.elements.etiquetas.value;
+
+        let nuevoGasto = new gestionPresupuesto.CrearGasto(descripcion,valor,fecha,...etiquetas);
+        gestionPresupuesto.anyadirGasto(nuevoGasto);
+        
+        repintar();
+
+        document.getElementById("anyadirgasto-formulario").removeAttribute("disabled");
+
+    }
+}
+
+
 let botonActualizarPresupuesto = document.getElementById('actualizarpresupuesto');
 botonActualizarPresupuesto.addEventListener('click', function () { actualizarPresupuestoWeb() });
     
 let botonAnyadirGasto = document.getElementById('anyadirgasto');
 botonAnyadirGasto.addEventListener('click', function () { nuevoGastoWeb() });
+
+let botonNuevoGasto = document.getElementById('anyadirgasto-formulario');
+botonNuevoGasto.addEventListener('click', function () { nuevoGastoWebFormulario() });
+
 
 export {
     mostrarDatoEnId,
