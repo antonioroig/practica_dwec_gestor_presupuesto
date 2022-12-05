@@ -80,9 +80,27 @@ function mostrarGastoWeb(idElemento, gasto){
             gastoBorrar.gasto = gasto;
             btnBorrar.addEventListener('click', gastoBorrar);
             divGasto.appendChild(btnBorrar);
+
+
+        let btnEditarForm = document.createElement('button');
+            btnEditarForm.type = 'button';
+            btnEditarForm.className = 'gasto-editar-formulario';
+            btnEditarForm.textContent = 'Editar (formulario)';
+            
+        let gastoEditarForm = new EditarHandleformulario();
+            gastoEditarForm.gasto = gasto;
+            btnEditarForm.addEventListener('click', gastoEditarForm);
+            divGasto.appendChild(btnEditarForm);
+
     }
 }
+/*            
+let plantillaFormulario = document.getElementById("formulario-template").content.cloneNode(true);
+let formulario = plantillaFormulario.querySelector("form");
+divGasto.appendChild(formulario);
 
+gastoEditarForm.formulario = formulario; 
+*/
 function mostrarGastosAgrupadosWeb(agrup, periodo, idElemento){
     
     if(idElemento != null){
@@ -186,25 +204,79 @@ function BorrarEtiquetasHandle(){
     }
 }
 
-/*
-let actualizarPresupuestoWebFormulario = function(){
-    let presupuesto = Number(prompt("Introduzca un nuevo presupuesto", 100));
-    actualizarPresupuesto(presupuesto);
-    repintar()
-}
-
-let btnPresupuesto = document.getElementById("actualizarpresupuesto");
-btnPresupuesto.onclick = actualizarPresupuestoWeb
-
 let nuevoGastoWebFormulario = function() {
+
     let plantillaFormulario = document.getElementById("formulario-template").content.cloneNode(true);
-    var formulario = plantillaFormulario.querySelector("form");
-    repintar();
+    let formulario = plantillaFormulario.querySelector("form");
+
+    let divControles = document.getElementById("controlesprincipales");
+    divControles.appendChild(formulario);
+
+    let anyadirForm = new AnyadirHandleFormulario();
+    formulario.addEventListener('submit', anyadirForm);
+    
+    let btnAnyadirGastoForm = document.getElementById("anyadirgasto-formulario");
+    btnAnyadirGastoForm.setAttribute('disabled', "");
+    
+    let cancelarForm = new CancelarHandleFormulario();
+    cancelarForm.formulario = formulario;
+
+    let btnCancelarForm = formulario.querySelector("button.cancelar");
+    btnCancelarForm.addEventListener('click', cancelarForm);
+    
+
 }
 
-let btnAnyadirGasto = document.getElementById("anyadirgasto");
-btnAnyadirGasto.onclick = nuevoGastoWeb
-*/
+document.getElementById("anyadirgasto-formulario").addEventListener("click", nuevoGastoWebFormulario)
+
+function AnyadirHandleFormulario(){
+    this.handleEvent = function(event){
+        event.preventDefault();
+
+        let formulario = document.forms[0];
+
+        let descripcion = formulario.elements.descripcion.value;
+
+        let valor = Number(formulario.elements.valor.value);
+    
+        let fecha = new Date (formulario.elements.fecha.value);
+
+        let etiquetas = formulario.elements.etiquetas.value;
+        
+        anyadirGasto(new CrearGasto(descripcion,valor,fecha,...etiquetas));
+        repintar()
+
+        document.getElementById("anyadirgasto-formulario").removeAttribute("disabled")
+    }
+};
+    
+let CancelarHandleFormulario = function(){
+    this.handleEvent = function(event){
+        this.formulario.remove();
+        document.getElementById("anyadirgasto-formulario").removeAttribute("disabled")
+    }
+}
+
+function EditarHandleformulario(){
+    this.handleEvent = function(event){
+        
+        let formulario = document.forms[0];
+
+        let descripcion = formulario.elements.descripcion.value;
+        this.gasto.actualizarDescripcion(descripcion);
+
+        let valor = Number(formulario.elements.valor.value);
+        this.gasto.actualizarValor(valor)
+
+        let fecha = new Date (formulario.elements.fecha.value);
+        this.gasto.actualizarFecha(fecha)
+
+        let etiquetas = formulario.elements.etiquetas.value;
+        this.gasto.anyadirEtiquetas(...etiquetas)
+
+        repintar()
+    }
+} 
 export{
     mostrarDatoEnId,
     mostrarGastoWeb,
