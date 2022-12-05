@@ -207,13 +207,18 @@ function BorrarHandle()
         repintar();
     };
 }
-let BorrarEtiquetasHandle = function() 
+function BorrarEtiquetasHandle() 
 {
     this.handleEvent = function ()
     {
         this.gasto.borrarEtiquetas(this.etiqueta);
         repintar();
     };
+}
+function nuevoGastoWebFormulario()
+{
+    let plantillaFormulario = document.getElementById("formulario-template").content.cloneNode(true);;
+    var form = pFormulario.querySelector("form");
 }
 export   {  
     mostrarDatoEnId,
