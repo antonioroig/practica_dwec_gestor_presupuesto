@@ -69,6 +69,7 @@ function mostrarGastoWeb(idElemento, gasto){
             editarHandle.gasto = gasto;
             btnEditar.addEventListener('click', editarHandle); // addEventListener nos permite utilizar un objeto como manejador de eventos.
             divGasto.append(btnEditar);
+            
             // HANDLE - borrar gasto - - - - - - - - - - - - - - - - - - - -
             let btnBorrar = document.createElement('button');
             btnBorrar.className = 'gasto-borrar';
@@ -79,8 +80,22 @@ function mostrarGastoWeb(idElemento, gasto){
             borrarHandle.gasto = gasto;
             btnBorrar.addEventListener('click', borrarHandle); // addEventListener nos permite utilizar un objeto como manejador de eventos.
             divGasto.append(btnBorrar);
-        
-        elemento.append(divGasto); 
+
+            // HANDLE - editar formulario gasto  - - - - - - - - - - - - - - - - - - - -
+            let btnEditarForm = document.createElement('button');
+            btnEditarForm.className = 'gasto-editar-formulario';
+            btnEditarForm.type = 'button';
+            btnEditarForm.textContent = 'Editar Form';
+
+            let editarFormHandle = new EditarHandleFormulario();
+            editarFormHandle.gasto = gasto;
+            editarFormHandle.btnEditarGasto = btnEditarForm;
+            editarFormHandle.divGasto = divGasto;
+            btnEditarForm.addEventListener('click',editarFormHandle);
+            divGasto.append(btnEditarForm);
+
+
+            elemento.append(divGasto); 
     }
 }
 
@@ -232,14 +247,66 @@ function nuevoGastoWebFormulario()
     document.getElementById('anyadirgasto-formulario').disabled = true;
 
     let copiaForm = document.getElementById('formulario-template').content.cloneNode(true);
-
     let formulario = copiaForm.querySelector('form');
+
+    // Button enviar Evento
+    formulario.addEventListener('submit', this.handleEvent = function(event)
+    {   
+        event.preventDefault();
+
+       // ???¿¿¿¿????
+
+        gestionPresupuesto.anyadirGasto(gasto);
+        
+        document.getElementById('anyadirgasto-formulario').disabled = false;
+        document.getElementById('controlesprincipales').removeChild(formulario);
+        repintar();
+    });
+
+    
+    document.getElementById('controlesprincipales').append(formulario);  
+
+    // button cancelar Evento // comprobar si va a ir * * * *
+    formulario.querySelector('button.cancelar').addEventListener('click', this.handleEvent = function()
+    {
+        document.getElementById('anyadirgasto-formulario').disabled = false;
+        document.getElementById('controlesprincipales').removeChild(formulario);
+        repintar();
+    });
+}
+
+function EditarHandleFormulario()
+{    
+    this.handleEvent = function()
+    {
+        // ???¿¿¿¿¿???
+
+        divGasto.appendChild(formulario);
+
+
+        formulario.addEventListener('submit', this.handleEvent = function(evento)
+        {
+            // ????¿¿¿¿¿?????
+            
+            btnEditarGasto.disabled = false;
+
+            divGasto.removeChild(formulario);
+            repintar();
+        });
+        // comprobar si va a ir * * * *
+        formulario.querySelector('button.cancelar').addEventListener('click', this.handleEvent = function()
+        {
+            btnEditarGasto.disabled = false;
+
+            divGasto.removeChild(formulario);
+            repintar();
+        });
+
+    }
 }
 
 
-
-
-// BUTTONES
+// BUTTONES ACTIVIDAD 5
 let btnActualizarPresupuesto = document.getElementById('actualizarpresupuesto');
 btnActualizarPresupuesto.onclick = actualizarPresupuestoWeb;
 
@@ -256,10 +323,14 @@ export   {
     repintar,
     actualizarPresupuestoWeb,
     nuevoGastoWeb,
-
+    // actividad 5
     EditarHandle,
     BorrarHandle,
     BorrarEtiquetasHandle,
+    // actividad 6
+    nuevoGastoWebFormulario,
+    EditarHandleFormulario,
+
 }
 
 /*
