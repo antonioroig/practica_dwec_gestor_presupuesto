@@ -1,7 +1,7 @@
 "use strict";
 
 //import { mostrarPresupuesto } from "./gestionPresupuesto";
-import * as gestionPresupuesto from "./gestionPresupuesto.js";
+import * as gp from "./gestionPresupuesto.js";
 
 // Añadir eventos a los botones
 let btnActualizar = document.getElementById("actualizarpresupuesto");
@@ -10,6 +10,8 @@ btnActualizar.onclick = actualizarPresupuestoWeb;
 let btnAnyadir = document.getElementById("anyadirgasto");
 btnAnyadir.onclick = nuevoGastoWeb;
 
+let btnAnyadirGastoformulario = document.getElementById("anyadirgasto-formulario");
+btnAnyadirGastoformulario.onclick = nuevoGastoWebFormulario;
 // sdocument.getElementById("actualizarpresupuesto").addEventListener("click", actualizarPresupuestoWeb);
 //document.getElementById("anyadirgasto").addEventListener("click", nuevoGastoWeb);
 
@@ -145,22 +147,22 @@ function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo){
 
 function repintar(){
   
-  mostrarDatoEnId(gestionPresupuesto.mostrarPresupuesto(), "presupuesto");
-  mostrarDatoEnId(gestionPresupuesto.calcularTotalGastos(), "gastos-totales");
-  mostrarDatoEnId(gestionPresupuesto.calcularBalance(), "balance-total");
+  mostrarDatoEnId(gp.mostrarPresupuesto(), "presupuesto");
+  mostrarDatoEnId(gp.calcularTotalGastos(), "gastos-totales");
+  mostrarDatoEnId(gp.calcularBalance(), "balance-total");
 
   
   let actLista = document.getElementById("listado-gastos-completo");
     actLista.innerHTML='';
 
-    gestionPresupuesto.listarGastos().forEach(gasto => {
+    gp.listarGastos().forEach(gasto => {
         mostrarGastoWeb(gasto, "listado-gastos-completo");
     });
 }
 function actualizarPresupuestoWeb (){
 
   let presupuesto = parseInt(prompt("Por favor, introduzca el nuevo presupuesto: "));
-  gestionPresupuesto.actualizarPresupuesto(presupuesto);
+  gp.actualizarPresupuesto(presupuesto);
   repintar();
 
 }
@@ -171,8 +173,8 @@ function nuevoGastoWeb(){
   let fecha = prompt("Fecha");
   let etiquetas = prompt("Por favor, introduzca las etiquetas separadas por comas ");
   let array = etiquetas.split(', ');
-  let gasto = new gestionPresupuesto.CrearGasto(descripcion,valor,fecha, array);
-  gestionPresupuesto.anyadirGasto(gasto);
+  let gasto = new gp.CrearGasto(descripcion,valor,fecha, array);
+  gp.anyadirGasto(gasto);
   repintar(); 
 
 }
@@ -199,7 +201,7 @@ let BorrarHandle = function(){
 
   this.handleEvent = function(){
 
-    gestionPresupuesto.borrarGasto(this.gasto.id);
+    gp.borrarGasto(this.gasto.id);
     repintar();
 
   }
@@ -222,9 +224,41 @@ function nuevoGastoWebFormulario(){
   
   let plantillaFormulario = document.getElementById("formulario-template").content.cloneNode(true);
   var formulario = plantillaFormulario.querySelector("form");
-    
-}
 
+  let btnEnviar = formulario.querySelector('button[type="submit"]');
+  btnEnviar.addEventListener("click", function(){
+
+    let descripcion = formulario.descripcion;
+    let valor = parseFloat(formulario.valor);
+    let fecha = formulario.fecha;
+    let etiquetas = splice(', ', (formulario.etiquetas));
+
+    let gasto = new gp.CrearGasto(descripcion, valor, fecha, etiquetas);
+    gp.anyadirGasto(gasto);
+    repintar();
+
+    document.getElementById("anyadirgasto-formulario").disabled = true;
+
+  });
+  /*btnEnviar.onclick =  function(event){
+    event.preventDefault()
+};*/
+ /* btnEnviar.addEventListener("click", function(event){
+    event.preventDefault()
+});*/
+  
+
+
+
+  let btnCancelar = formulario.querySelector("button.cancelar");
+  btnCancelar.addEventListener("click", function(){
+
+  });
+}
+//  Objeto manejador de eventos
+let EditarHandleFormulario = function(){
+
+}
 export    {
 
   mostrarDatoEnId,
