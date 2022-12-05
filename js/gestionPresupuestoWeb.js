@@ -225,6 +225,19 @@ function BorrarEtiquetasHandle()
         repintar();
     };
 }
+// --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+// ACTIVIDAD 6
+function nuevoGastoWebFormulario()
+{
+    document.getElementById('anyadirgasto-formulario').disabled = true;
+
+    let copiaForm = document.getElementById('formulario-template').content.cloneNode(true);
+
+    let formulario = copiaForm.querySelector('form');
+}
+
+
+
 
 // BUTTONES
 let btnActualizarPresupuesto = document.getElementById('actualizarpresupuesto');
