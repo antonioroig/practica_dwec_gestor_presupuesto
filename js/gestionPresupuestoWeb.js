@@ -219,6 +219,9 @@ function nuevoGastoWebFormulario()
 {
     let plantillaFormulario = document.getElementById("formulario-template").content.cloneNode(true);;
     var formulario = plantillaFormulario.querySelector("form");
+    let divContPrincipales = document.getElementById("controlesprincipales")
+    divContPrincipales.appendChild(formulario);
+    let btnAnyadirGastFormulario = document.getElementById("anyadirgasto-formulario").setAttribute("disabled", "");
 }
 export   {  
     mostrarDatoEnId,
