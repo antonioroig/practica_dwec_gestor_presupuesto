@@ -81,7 +81,6 @@ function mostrarGastoWeb(idElemento, gasto){
             btnBorrar.addEventListener('click', gastoBorrar);
             divGasto.appendChild(btnBorrar);
 
-
         let btnEditarForm = document.createElement('button');
             btnEditarForm.type = 'button';
             btnEditarForm.className = 'gasto-editar-formulario';
@@ -89,18 +88,32 @@ function mostrarGastoWeb(idElemento, gasto){
             
         let gastoEditarForm = new EditarHandleformulario();
             gastoEditarForm.gasto = gasto;
-            btnEditarForm.addEventListener('click', gastoEditarForm);
+            btnEditarForm.addEventListener('click', editarGastoWebFormulario);
             divGasto.appendChild(btnEditarForm);
 
     }
 }
-/*            
-let plantillaFormulario = document.getElementById("formulario-template").content.cloneNode(true);
-let formulario = plantillaFormulario.querySelector("form");
-divGasto.appendChild(formulario);
 
-gastoEditarForm.formulario = formulario; 
-*/
+function EditarHandleformulario(){
+    this.handleEvent = function(event){
+        
+        let formulario = document.forms[0];
+
+        let descripcion = formulario.elements.descripcion.value;
+        this.gasto.actualizarDescripcion(descripcion);
+
+        let valor = Number(formulario.elements.valor.value);
+        this.gasto.actualizarValor(valor)
+
+        let fecha = new Date (formulario.elements.fecha.value);
+        this.gasto.actualizarFecha(fecha)
+
+        let etiquetas = formulario.elements.etiquetas.value;
+        this.gasto.anyadirEtiquetas(...etiquetas)
+
+        repintar()
+    }
+} 
 function mostrarGastosAgrupadosWeb(agrup, periodo, idElemento){
     
     if(idElemento != null){
@@ -226,7 +239,6 @@ let nuevoGastoWebFormulario = function() {
     
 
 }
-
 document.getElementById("anyadirgasto-formulario").addEventListener("click", nuevoGastoWebFormulario)
 
 function AnyadirHandleFormulario(){
@@ -257,26 +269,6 @@ let CancelarHandleFormulario = function(){
     }
 }
 
-function EditarHandleformulario(){
-    this.handleEvent = function(event){
-        
-        let formulario = document.forms[0];
-
-        let descripcion = formulario.elements.descripcion.value;
-        this.gasto.actualizarDescripcion(descripcion);
-
-        let valor = Number(formulario.elements.valor.value);
-        this.gasto.actualizarValor(valor)
-
-        let fecha = new Date (formulario.elements.fecha.value);
-        this.gasto.actualizarFecha(fecha)
-
-        let etiquetas = formulario.elements.etiquetas.value;
-        this.gasto.anyadirEtiquetas(...etiquetas)
-
-        repintar()
-    }
-} 
 export{
     mostrarDatoEnId,
     mostrarGastoWeb,
