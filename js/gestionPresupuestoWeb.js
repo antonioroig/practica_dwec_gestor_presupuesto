@@ -218,7 +218,7 @@ function BorrarEtiquetasHandle()
 function nuevoGastoWebFormulario()
 {
     let plantillaFormulario = document.getElementById("formulario-template").content.cloneNode(true);;
-    var form = pFormulario.querySelector("form");
+    var formulario = plantillaFormulario.querySelector("form");
 }
 export   {  
     mostrarDatoEnId,
