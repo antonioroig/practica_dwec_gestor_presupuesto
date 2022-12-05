@@ -203,6 +203,45 @@ let BorrarEtiquetasHandle = function(){
     }
 }
 
+var CrearGastoHandle = function(){
+    this.handleEvent= function(event){
+        event.preventDefault();
+        let form = document.forms[0];
+
+        var nuevoGasto = new gestionPresupuesto.CrearGasto(form.elements.descripcion.value, Number(form.elements.valor.value), new Date(form.elements.fecha.value), form.elements.etiquetas.value);
+        gestionPresupuesto.anyadirGasto(nuevoGasto);
+
+        repintar();
+
+        var botonAnyadirGastoForm = document.getElementById("anyadirgasto-formulario");
+        botonAnyadirGastoForm.removeAttribute("disabled");
+    }
+}
+
+
+let nuevoGastoWebFormulario = function(){
+    let plantillaFormulario = document.getElementById("formulario-template").content.cloneNode(true);
+    let formulario = plantillaFormulario.querySelector("form");
+
+    let divControles = document.getElementById("controlesprincipales");
+    divControles.appendChild(formulario);
+
+    let form = new CrearGastoHandle();
+    formulario.addEventListener('submit', form);
+
+    let btnAnyadirGastoForm = document.getElementById("anyadirgasto-formulario");
+    btnAnyadirGastoForm.setAttribute('disabled', "");
+
+}
+
+document.getElementById("anyadirgasto-formulario").addEventListener("click", nuevoGastoWebFormulario);
+
+
+
+
+
+
+
 export{
     mostrarDatoEnId,
     mostrarGastoWeb,
