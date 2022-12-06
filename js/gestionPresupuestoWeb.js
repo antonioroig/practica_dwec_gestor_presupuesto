@@ -45,6 +45,7 @@ function mostrarGastoWeb(idElemento,gasto){
     }
     divGasto.append(divEtiquetas);
 
+    //boton editar gasto
     let btnEditarGasto = document.createElement('button');
     btnEditarGasto.type = 'button';
     btnEditarGasto.className = 'gasto-editar';
@@ -56,6 +57,7 @@ function mostrarGastoWeb(idElemento,gasto){
     btnEditarGasto.addEventListener('click',EditarGasto);
     divGasto.append(btnEditarGasto);
 
+    //boton borrar gasto
     let btnBorrarGasto = document.createElement('button');
     btnBorrarGasto.type = 'button';
     btnBorrarGasto.className = 'gasto-borrar';
@@ -66,6 +68,18 @@ function mostrarGastoWeb(idElemento,gasto){
 
     btnBorrarGasto.addEventListener('click',BorrarGasto);
     divGasto.append(btnBorrarGasto);
+
+    //boton form   
+    let btnEditarForm = document.createElement('button');
+    btnEditarForm.type = 'button';
+    btnEditarForm.className = 'gasto-editar-formulario';
+    btnEditarForm.textContent = 'Editar (formulario)';
+
+    let EditarForm = new EditarHandleFormulario(gasto);
+    EditarForm.gasto = gasto;
+
+    btnEditarForm.addEventListener('click',EditarForm);
+    divGasto.append(btnEditarForm);
 }
 
 function mostrarGastosAgrupadosWeb(idElemento,agrup,periodo){
