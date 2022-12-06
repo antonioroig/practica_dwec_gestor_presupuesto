@@ -135,6 +135,17 @@ function nuevoGastoWeb(){
 let btnNuevoGasto = document.getElementById('anyadirgasto');
 btnNuevoGasto.addEventListener('click', nuevoGastoWeb);
 
+function nuevoGastoWebFormulario(){
+    let plantilla = document.getElementById("formulario-template").content.cloneNode(true);
+    let formulario = plantilla.querySelector("form");
+
+    let botones = document.getElementById("controlesprincipales");
+    botones.append(formulario);
+
+    document.getElementById("anyadirgasto-formulario").setAttribute('disabled', "");
+
+}
+
 function EditarHandle(){
     this.handleEvent = function(event){
         let newDesc = prompt('Introduce una nueva descripcion: ', this.gasto.descripcion);
@@ -173,5 +184,6 @@ export{
     mostrarGastosAgrupadosWeb,
     repintar,
     actualizarPresupuestoWeb,
-    nuevoGastoWeb
+    nuevoGastoWeb,
+    nuevoGastoWebFormulario
 }
