@@ -99,8 +99,10 @@ function repintar(){
     document.getElementById('presupuesto').innerHTML = '';
     mostrarDatoEnId("presupuesto", gestionPresupuesto.mostrarPresupuesto());
 
+    document.getElementById('gastos-totales');
     mostrarDatoEnId("gastos-totales", gestionPresupuesto.calcularTotalGastos());
 
+    document.getElementById('balance-total');
     mostrarDatoEnId("balance-total", gestionPresupuesto.calcularBalance());
 
     document.getElementById("listado-gastos-completo").innerHTML = "";
@@ -113,7 +115,7 @@ function repintar(){
 function actualizarPresupuestoWeb(){
     let presupuesto = prompt('Introduce un presupuesto',1500);
     if(presupuesto != undefined){
-        presupuesto = parseInt(presupuesto);
+        presupuesto = parseFloat(presupuesto);
         gestionPresupuesto.actualizarPresupuesto(presupuesto);
         repintar();
     };
@@ -189,6 +191,8 @@ function BorrarEtiquetasHandle(){
 
 function EditarHandleFormulario(){
     this.handleEvent = function(event){
+        event.preventDefault();
+
         let plantilla = document.getElementById("formulario-template").content.cloneNode(true);
         let formulario = plantilla.querySelector("form");
 
@@ -217,6 +221,8 @@ function EditarHandleFormulario(){
 
 function CancelarHandleFormulario(){
     this.handleEvent = function(event){
+        event.preventDefault();
+
         event.currentTarget.parentNode.remove();
         document.getElementById("anyadirgasto-formulario").removeAttribute("disabled");
 
@@ -226,6 +232,8 @@ function CancelarHandleFormulario(){
 
 function EnviarHandle(){
     this.handleEvent = function(event){
+        event.preventDefault();
+
         let formulario = event.currentTarget;
 
         let descripcion = formulario.elements.descripcion.value;
@@ -246,6 +254,8 @@ function EnviarHandle(){
 
 function EnviarHandleFormulario(){
     this.handleEvent = function(event){
+        event.preventDefault();
+
         let formulario = event.currentTarget;
         let descripcion = formulario.elements.descripcion.value;
         let valor = parseFloat(formulario.elements.valor.value);
