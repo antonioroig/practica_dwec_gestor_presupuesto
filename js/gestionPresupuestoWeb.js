@@ -209,10 +209,57 @@ function nuevoGastoWebFormulario()
     let plantillaFormulario = document.getElementById('formulario-template').content.cloneNode(true);
 
     let formulario = plantillaFormulario.querySelector('form');
+
+    let botones = document.getElementById('controlesprincipales');
+    botones.append(formulario);
+
+    document.getElementById('anyadirgasto-formulario').setAttribute('disabled','');
+
+    let cancelar = new CancelarHandleFormulario();
+    let botonCancelar = formulario.querySelector('button.cancelar');
+    botonCancelar.addEventListener('submit', cancelar);
+
+    let enviar = new EnviarHandleFormulario();
+    formulario.addEventListener('submit', enviar);
+
 }
 
 let botonGastoFormulario = document.getElementById('anyadirgasto-formulario');
 botonGastoFormulario.addEventListener('click', nuevoGastoWebFormulario);
+
+function CancelarHandleFormulario()
+{
+    this.handleEvent = function(event)
+    {
+        event.preventDefault();
+        event.currentTarget.parentNode.remove();
+        document.getElementById('anyadirgasto-formulario').removeAttribute('disabled');
+
+        repintar();
+    }
+}
+
+function EnviarHandleFormulario()
+{
+    this.handleEvent = function(event)
+    {
+        event.preventDefault();
+
+        let form = event.currentTarget;
+        let desc = formulario.elements.descripcion.value;
+        let valor = parseFloat(formulario.elements.valor.value);
+        let fecha = formulario.elements.fecha.value;
+        let etiquetas = formulario.elements.etiquetas.value;
+
+        let gastoNuevo = new gestionPresupuesto.CrearGasto(desc,valor,fecha,...etiquetas);
+        gestionPresupuesto.anyadirGasto(gastoNuevo);
+
+        repintar();
+
+        document.getElementById('anyadirgasto-formulario').removeAttribute('disabled');
+    }
+}
+
 export {
     mostrarDatoEnId,
     mostrarGastoWeb,
