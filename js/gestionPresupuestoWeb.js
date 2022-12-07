@@ -179,10 +179,75 @@ let BorrarEtiquetasHandle = function(){
     }
 }
 
+let nuevoGastoWebFormulario = function(){
+    let plantillaFormulario = document.getElementById("formulario-template").content.cloneNode(true);
+    let formulario = plantillaFormulario.querySelector("form");
+
+    let divControles = document.getElementById("controlesprincipales");
+    divControles.appendChild(formulario);
+
+    let anyadirForm = new AnyadirGastoFormulario();
+    formulario.addEventListener('submit', anyadirForm);
+    
+    let btnAnyadirGastoForm = document.getElementById("anyadirgasto-formulario");
+    btnAnyadirGastoForm.setAttribute('disabled', "");
+    
+    let cancelarForm = new CancelarGastoFormulario();
+    cancelarForm.formulario = formulario;
+
+    let btnCancelarForm = formulario.querySelector("button.cancelar");
+    btnCancelarForm.addEventListener('click', cancelarForm);
+}
+
+document.getElementById("anyadirgasto-formulario").addEventListener("click", nuevoGastoWebFormulario)
+
+function AnyadirGastoFormulario(){
+    this.handleEvent = function(event){
+        event.preventDefault();
+
+        let formulario = document.forms[0];
+        let descripcion = formulario.elements.descripcion.value;
+        let valor = Number(formulario.elements.valor.value);
+        let fecha = new Date (formulario.elements.fecha.value);
+        let etiquetas = formulario.elements.etiquetas.value;
+        
+        gestionPresupuesto.anyadirGasto(new gestionPresupuesto.CrearGasto(descripcion, valor, fecha, etiquetas));
+        repintarWeb();
+
+        document.getElementById("anyadirgasto-formulario").removeAttribute("disabled");
+    }
+}
+    
+let CancelarGastoFormulario = function(){
+    this.handleEvent = function(event){
+        this.formulario.remove();
+        document.getElementById("anyadirgasto-formulario").removeAttribute("disabled");
+    }
+}
+
+let EditarGastoFormulario = function(){
+    this.handleEvent = function(event){
+        
+        let forms = document.forms[0];
+
+        let descripcion = forms.elements.descripcion.value;
+        this.gasto.actualizarDescripcion(descripcion);
+
+        let valor = Number(forms.elements.valor.value);
+        this.gasto.actualizarValor(valor);
+
+        let fecha = new Date (forms.elements.fecha.value);
+        this.gasto.actualizarFecha(fecha);
+
+        let etiquetas = forms.elements.etiquetas.value;
+        this.gasto.anyadirEtiquetas(etiquetas);
+
+        repintarWeb();
+    }
+}
+
 export{
     mostrarDatoEnId,
     mostrarGastoWeb,
-    mostrarGastosAgrupadosWeb,
-    repintarWeb,
-    nuevoGastoWeb
+    mostrarGastosAgrupadosWeb
 }
