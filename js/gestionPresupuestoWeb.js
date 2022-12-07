@@ -230,7 +230,7 @@ function nuevoGastoWebFormulario()
 
     let cancelar = new CancelarHandleFormulario();
     let botonCancelar = formulario.querySelector('button.cancelar');
-    botonCancelar.addEventListener('submit', cancelar);
+    botonCancelar.addEventListener('click', cancelar);
 
     let enviar = new EnviarHandleFormulario();
     formulario.addEventListener('submit', enviar);
