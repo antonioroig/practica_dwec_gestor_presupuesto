@@ -12,8 +12,7 @@ btnAnyadir.onclick = nuevoGastoWeb;
 
 let btnAnyadirGastoformulario = document.getElementById("anyadirgasto-formulario");
 btnAnyadirGastoformulario.onclick = nuevoGastoWebFormulario;
-// sdocument.getElementById("actualizarpresupuesto").addEventListener("click", actualizarPresupuestoWeb);
-//document.getElementById("anyadirgasto").addEventListener("click", nuevoGastoWeb);
+// btnAnyadirGastoformulario.setAttribute('disabled', '');
 
 // Muestra en un div el valor que se le pasa por parámetro
 function mostrarDatoEnId(valor, idElemento){
@@ -221,44 +220,39 @@ let BorrarEtiquetasHandle = function(){
 // Practica 6
 
 function nuevoGastoWebFormulario(){
-  
+  // Tomamos el template del documento
   let plantillaFormulario = document.getElementById("formulario-template").content.cloneNode(true);
+
+  // Tomamos el formulario
   var formulario = plantillaFormulario.querySelector("form");
 
+  //Tomamos el div comntr
+  var divControles = document.querySelector("controlesprincipales");
+  divControles.appendChild(form);
+
+  // Heceos uso del atributo diseable
+  let btnAnyadirGastoForm = document.getElementById("anyadirgasto-formulario").setAttribute("disabled", "");
+
+
   let btnEnviar = formulario.querySelector('button[type="submit"]');
-  btnEnviar.addEventListener("click", function(){
 
-    let descripcion = formulario.descripcion;
-    let valor = parseFloat(formulario.valor);
-    let fecha = formulario.fecha;
-    let etiquetas = splice(', ', (formulario.etiquetas));
-
-    let gasto = new gp.CrearGasto(descripcion, valor, fecha, etiquetas);
-    gp.anyadirGasto(gasto);
-    repintar();
-
-    document.getElementById("anyadirgasto-formulario").disabled = true;
-
-  });
-  /*btnEnviar.onclick =  function(event){
-    event.preventDefault()
-};*/
- /* btnEnviar.addEventListener("click", function(event){
-    event.preventDefault()
-});*/
-  
-
-
-
-  let btnCancelar = formulario.querySelector("button.cancelar");
-  btnCancelar.addEventListener("click", function(){
-
-  });
-}
-//  Objeto manejador de eventos
-let EditarHandleFormulario = function(){
 
 }
+
+
+// Objeto manejador de eventos
+let EditarHandleFormulario = function() {
+
+  this.handleEvent = function (event){
+
+    let plantillaFormulario = document.getElementById("formulario-template").content.cloneNode(true);
+    var formulario = plantillaFormulario.querySelector("form");
+
+
+    let btnCancelar = formulario.querySelector("button.cancelar");
+  }
+}
+
 export    {
 
   mostrarDatoEnId,
