@@ -232,17 +232,61 @@ let EditarGastoFormulario = function(){
 
         let descripcion = forms.elements.descripcion.value;
         this.gasto.actualizarDescripcion(descripcion);
-
         let valor = Number(forms.elements.valor.value);
         this.gasto.actualizarValor(valor);
-
         let fecha = new Date (forms.elements.fecha.value);
         this.gasto.actualizarFecha(fecha);
-
         let etiquetas = forms.elements.etiquetas.value;
         this.gasto.anyadirEtiquetas(etiquetas);
 
         repintarWeb();
+    }
+}
+
+let CancelarCrearGastoFormulario = function(boton){
+    this.handleEvent= function(event){
+        document.forms[0].remove();
+
+        boton.removeAttribute("disabled");
+    }
+}
+
+let EditarGastoHandle=function(){
+    this.handleEvent = function(event) {
+        event.preventDefault();
+        let form = document.forms[0];
+        this.gasto.descripcion = form.elements.descripcion.value;
+        this.gasto.valor = Number(form.elements.valor.value);
+        this.gasto.fecha = new Date(form.elements.fecha.value);
+        this.gasto.etiquetas = form.elements.etiquetas.value.split(",");
+
+        repintarWeb();
+    }
+}
+let EditarHandleformulario = function(){
+    this.handleEvent = function() {
+        
+        let plantillaFormulario = document.getElementById("formulario-template").content.cloneNode(true);
+        let formulario = plantillaFormulario.querySelector("form");
+
+
+        this.divGasto.appendChild(formulario);
+
+        this.botonEditar.setAttribute('disabled', "");
+
+        formulario.elements.descripcion.value=this.gasto.descripcion;
+        formulario.elements.valor.value=this.gasto.valor;
+        formulario.elements.fecha.value=this.gasto.fecha;
+        formulario.elements.etiquetas.value=this.gasto.etiquetas;
+
+        let form = new EditarGastoHandle();
+        form.gasto = this.gasto;
+        formulario.addEventListener("submit", form);
+
+        let btnCancelar = formulario.querySelector("button.cancelar");
+        let cancelarForm = new CancelarCrearGastoHandle(this.botonEditar);
+        btnCancelar.addEventListener('click', cancelarForm);
+        
     }
 }
 
