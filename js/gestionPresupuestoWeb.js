@@ -253,10 +253,10 @@ function EnviarHandleFormulario()
         event.preventDefault();
 
         let form = event.currentTarget;
-        let desc = formulario.elements.descripcion.value;
-        let valor = parseFloat(formulario.elements.valor.value);
-        let fecha = formulario.elements.fecha.value;
-        let etiquetas = formulario.elements.etiquetas.value;
+        let desc = form.elements.descripcion.value;
+        let valor = parseFloat(form.elements.valor.value);
+        let fecha = form.elements.fecha.value;
+        let etiquetas = form.elements.etiquetas.value;
 
         let gastoNuevo = new gestionPresupuesto.CrearGasto(desc,valor,fecha,...etiquetas);
         gestionPresupuesto.anyadirGasto(gastoNuevo);
