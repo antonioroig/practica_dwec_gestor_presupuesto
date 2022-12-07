@@ -89,6 +89,12 @@ function mostrarGastoWeb(idElemento, gasto)
     botonEditarForm.className = 'gasto-editar-formulario';
     botonEditarForm.textContent = 'Editar(Formulario)';
 
+    let editarFormulario = new EditarHandleFormulario(gasto);
+    editarFormulario.gasto = gasto;
+
+    botonEditarForm.addEventListener('click', editarFormulario);
+    divGasto.appendChild(botonEditarForm);
+
 
 }
 
@@ -220,7 +226,7 @@ function nuevoGastoWebFormulario()
     let botones = document.getElementById('controlesprincipales');
     botones.append(formulario);
 
-    document.getElementById('anyadirgasto-formulario').setAttribute('disabled','');
+    document.getElementById('anyadirgasto-formulario').setAttribute('disabled',"");
 
     let cancelar = new CancelarHandleFormulario();
     let botonCancelar = formulario.querySelector('button.cancelar');
@@ -240,7 +246,7 @@ function CancelarHandleFormulario()
     {
         event.preventDefault();
         event.currentTarget.parentNode.remove();
-        document.getElementById('anyadirgasto-formulario').removeAttribute('disabled');
+        document.getElementById("anyadirgasto-formulario").removeAttribute("disabled");
 
         repintar();
     }
@@ -263,7 +269,7 @@ function EnviarHandleFormulario()
 
         repintar();
 
-        document.getElementById('anyadirgasto-formulario').removeAttribute('disabled');
+        document.getElementById("anyadirgasto-formulario").removeAttribute("disabled");
     }
 }
 
@@ -297,7 +303,7 @@ function EditarHandleFormulario()
         enviar.gasto = this.gasto;
         formulario.addEventListener('submit', enviar);
 
-        botonFormulario.setAttribute('disabled','');
+        botonFormulario.setAttribute('disabled',"");
     }
 }
 
