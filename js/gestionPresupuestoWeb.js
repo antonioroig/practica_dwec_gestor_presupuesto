@@ -67,6 +67,19 @@ function mostrarGastoWeb(gasto, idElemento){
 
         btnBorrar.addEventListener("click", objetoBorrar);
         divGasto.appendChild(btnBorrar);
+
+        let botonEditarFormulario = document.createElement('button');
+        botonEditarFormulario.type="button";
+        botonEditarFormulario.textContent="Editar (formulario)";
+        botonEditarFormulario.classList="gasto-editar-formulario";
+
+        let objetoEditarFormulario = new EditarHandleFormulario();
+        objetoEditarFormulario.gasto=gasto;
+        objetoEditarFormulario.divGasto = divGasto;
+        objetoEditarFormulario.botonEditar = botonEditarFormulario;
+
+        botonEditarFormulario.addEventListener("click", objetoEditarFormulario);
+        divGasto.appendChild(botonEditarFormulario);
     }
 }
 
@@ -263,15 +276,13 @@ let EditarGastoHandle=function(){
         repintarWeb();
     }
 }
-let EditarHandleformulario = function(){
+let EditarHandleFormulario = function(){
     this.handleEvent = function() {
         
         let plantillaFormulario = document.getElementById("formulario-template").content.cloneNode(true);
         let formulario = plantillaFormulario.querySelector("form");
 
-
         this.divGasto.appendChild(formulario);
-
         this.botonEditar.setAttribute('disabled', "");
 
         formulario.elements.descripcion.value=this.gasto.descripcion;
@@ -284,9 +295,8 @@ let EditarHandleformulario = function(){
         formulario.addEventListener("submit", form);
 
         let btnCancelar = formulario.querySelector("button.cancelar");
-        let cancelarForm = new CancelarCrearGastoHandle(this.botonEditar);
+        let cancelarForm = new CancelarCrearGastoFormulario(this.botonEditar);
         btnCancelar.addEventListener('click', cancelarForm);
-        
     }
 }
 
