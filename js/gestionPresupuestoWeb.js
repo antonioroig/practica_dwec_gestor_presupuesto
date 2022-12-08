@@ -72,6 +72,8 @@ function mostrarGastoWeb(idElemento, gasto) {
 
     let editarForm = new EditarHandleFormulario();
     editarForm.gasto = gasto;
+    editarForm.divContenedor = divContenedor;
+    editarForm.botonEditarForm = botonEditarForm;
     botonEditarForm.addEventListener("click", editarForm);
     divContenedor.appendChild(botonEditarForm); 
 
@@ -216,49 +218,51 @@ botonAnyadirGastoForm.addEventListener('click', function () { nuevoGastoWebFormu
 function EditarHandleFormulario(){
     this.handleEvent = function(){
         let plantillaFormulario = document.getElementById("formulario-template").content.cloneNode(true);;
-        var formularioEditar = plantillaFormulario.querySelector("form");
+        var formulario = plantillaFormulario.querySelector("form");
     
-        let divControles = document.getElementById('controlesprincipales');
-        divControles.append(formularioEditar);
-    
-        let formulario = document.forms[0];
-        formulario.elements.descripcion.value = this.gasto.descripcion;
-        formulario.elements.valor.value = this.gasto.valor;
-        formulario.elements.fecha.value = this.gasto.fecha;
-       formulario.elements.etiquetas.value = this.gasto.etiquetas;
+        this.divContenedor.append(formulario);
+
+        formulario.elements.descripcion.value=this.gasto.descripcion;
+        formulario.elements.valor.value=this.gasto.valor;
+        formulario.elements.fecha.value=this.gasto.fecha;
+        formulario.elements.etiquetas.value=this.gasto.etiquetas;
 
         let enviarForm = new EnviarHandleEditarFormulario();
-        formularioEditar.addEventListener("submit", enviarForm);
-    
+        enviarForm.gasto = this.gasto;
+        enviarForm.formulario = formulario;
+        formulario.addEventListener("submit", enviarForm);
+
+        this.botonEditarForm.setAttribute("disabled","")
+
         let cancelarForm = new CancelarHandleEditarFormulario(); 
-        cancelarForm.formularioEditar = formularioEditar;
-        let botonCancelar = formularioEditar.querySelector("button.cancelar");
+        cancelarForm.formulario = formulario;
+        cancelarForm.botonEditarForm = this.botonEditarForm;
+        cancelarForm.formulario = formulario;
+        let botonCancelar = formulario.querySelector("button.cancelar");
         botonCancelar.addEventListener("click", cancelarForm); 
     
-        document.getElementById("gasto-editar-formulario").setAttribute("disabled", "");
-
+       
     }
 }
 function CancelarHandleEditarFormulario(){
     this.handleEvent = function(event)
     {
-        this.formularioEditar.remove();
-  
+        this.formulario.remove();
+        this.botonEditarForm.removeAttribute("disabled");
     }
 }
 function EnviarHandleEditarFormulario(){
-    this.handleEvent = function()
+    this.handleEvent = function(event)
     {
-        let formularioEditar = document.forms[0];
-        let descripcion = formularioEditar.elements.descripcion.value;
-        let  valor = parseFloat(formularioEditar.elements.valor.value);
-        let fecha = new Date(formularioEditar.elements.fecha.value);
-        let etiquetas = toString(formularioEditar.elements.etiquetas.value).split(',');
+        event.preventDefault();
 
-        this.gasto.actualizarDescripcion(descripcion);
-        this.gasto.actualizarValor(valor);
-        this.gasto.actualizarFecha(new Date(fecha));
-        this.gasto.anyadirEtiquetas(etiquetas);
+        this.gasto.descripcion = this.formulario.elements.descripcion.value;
+
+        this.gasto.valor = Number(this.formulario.elements.valor.value);
+
+        this.gasto.fecha = new Date(this.formulario.elements.fecha.value);
+
+        this.gasto.etiquetas = this.formulario.elements.etiquetas.value.split(",");
 
         repintar();
     }
