@@ -220,21 +220,52 @@ let BorrarEtiquetasHandle = function(){
 // Practica 6
 
 function nuevoGastoWebFormulario(){
+  
   // Tomamos el template del documento
   let plantillaFormulario = document.getElementById("formulario-template").content.cloneNode(true);
-
+  
   // Tomamos el formulario
   var formulario = plantillaFormulario.querySelector("form");
-
-  //Tomamos el div comntr
+  
+  //Tomamos el div de los controles principales y le agragamos el formulario
   var divControles = document.querySelector("controlesprincipales");
   divControles.appendChild(form);
 
-  // Heceos uso del atributo diseable
-  let btnAnyadirGastoForm = document.getElementById("anyadirgasto-formulario").setAttribute("disabled", "");
-
-
+  // Manajador de evento para submit
   let btnEnviar = formulario.querySelector('button[type="submit"]');
+  btnEnviar.addEventListener(`click`, function(event){
+
+
+    // Previene el envio del formulario
+    event.preventDefault();
+
+    //Previene el abandono de la pagina
+    event.stopPropagation();
+
+
+    let descripcion = formulario.form.descripcion;
+    let valor = parseFloat(formulario.form.valor);
+    let fecha = formulario.form.fecha;
+    let etiquetas = splice(', ', formulario.form.etiquetas );
+    
+    // Toma los datos y crea un nuevo gasto
+    
+    let nuevoGasto = new gp.CrearGasto(descripcion,valor, fecha, etiquetas);
+    gp.anyadirGasto(nuevoGasto);
+    
+    let btnAnyadirGastoForm = document.getElementById("anyadirgasto-formulario");
+    btnAnyadirGastoForm.removeAttribute('disabled');
+
+
+    repintar();   
+  });
+
+  // Manejador de evento Cancelar
+  let btnCancelar = formulario.querySelector("button.cancelar");
+  btnCancelar.addEventListener("click", function(){
+    
+  });
+  
 
 
 }
