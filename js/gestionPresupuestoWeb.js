@@ -82,6 +82,7 @@ function mostrarGastoWeb(idElemento, gasto){
             divGasto.append(btnBorrar);
 
             // HANDLE - editar formulario gasto  - - - - - - - - - - - - - - - - - - - -
+
             let btnEditarForm = document.createElement('button');
             btnEditarForm.className = 'gasto-editar-formulario';
             btnEditarForm.type = 'button';
@@ -93,7 +94,6 @@ function mostrarGastoWeb(idElemento, gasto){
             editarFormHandle.divGasto = divGasto;
             btnEditarForm.addEventListener('click',editarFormHandle);
             divGasto.append(btnEditarForm);
-
 
             elemento.append(divGasto); 
     }
@@ -152,15 +152,6 @@ function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo){
         */
 // --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 // ACTIVIDAD 5
-
-// Estamos desarrollando una aplicación JavaScript controlada por datos. Cada vez que se añade, 
-// modifica o borra un gasto, debemos mostrar el resultado en la página HTML. Recordemos que la aplicación debe mostrar:
-    // - El presupuesto --> Mostrar el presupuesto en div#presupuesto (funciones mostrarPresupuesto y mostrarDatoEnId)
-    // - El total de gastos --> Mostrar los gastos totales en div#gastos-totales (funciones calcularTotalGastos y mostrarDatoEnId)
-    // - El balance actual --> Mostrar el balance total en div#balance-total (funciones calcularBalance y mostrarDatoEnId)
-    // Borrar el contenido de div#listado-gastos-completo, para que el paso siguiente no duplique la información. Puedes utilizar innerHTML para borrar el contenido de dicha capa.
-    // - El listado con los gastos y sus datos --> Mostrar el listado completo de gastos en div#listado-gastos-completo (funciones listarGastos y mostrarGastoWeb)
-    // - Otra información (agrupaciones de gastos, etc.)
 
 function repintar(){
     
@@ -244,67 +235,83 @@ function BorrarEtiquetasHandle()
 // ACTIVIDAD 6
 function nuevoGastoWebFormulario()
 {
-    document.getElementById('anyadirgasto-formulario').disabled = true;
+    document.getElementById('anyadirgasto-formulario').disabled = true; // desabilitar button Añadir Gasto (Formulario)
+    // Clonar plantilla (template)
+    let formTemplate = document.getElementById("formulario-template").content.cloneNode(true);
+    let formulario = formTemplate.querySelector("form");
 
-    let copiaForm = document.getElementById('formulario-template').content.cloneNode(true);
-    let formulario = copiaForm.querySelector('form');
+    let divFormControles = document.getElementById("controlesprincipales");
+    divFormControles.appendChild(formulario);
 
-    // Button enviar Evento
+    // submit form == enviar
     formulario.addEventListener('submit', this.handleEvent = function(event)
-    {   
+    {
         event.preventDefault();
 
-       // ???¿¿¿¿????
+        let desc = formulario.elements.descripcion;
+        let valor = formulario.elements.valor;
+        let fecha = formulario.elements.fecha;
+        let etiquetas = formulario.elements.etiquetas;
 
+        etiquetas = etiquetas.value.split(',');
+        
+        let gasto = new gestionPresupuesto.CrearGasto(desc.value, parseFloat(valor.value), fecha.value, ...etiquetas);        
         gestionPresupuesto.anyadirGasto(gasto);
         
         document.getElementById('anyadirgasto-formulario').disabled = false;
         document.getElementById('controlesprincipales').removeChild(formulario);
         repintar();
     });
-
+    // cancelar 
     
-    document.getElementById('controlesprincipales').append(formulario);  
-
-    // button cancelar Evento // comprobar si va a ir * * * *
-    formulario.querySelector('button.cancelar').addEventListener('click', this.handleEvent = function()
-    {
-        document.getElementById('anyadirgasto-formulario').disabled = false;
-        document.getElementById('controlesprincipales').removeChild(formulario);
-        repintar();
-    });
 }
-
+// HUNDLE evento 
 function EditarHandleFormulario()
 {    
     this.handleEvent = function()
     {
-        // ???¿¿¿¿¿???
+        let gastoForm = this.gasto;
+        let btnEditarGasto = this.btnEditarGasto;
+        let divGastoForm = this.divGasto;
 
-        divGasto.appendChild(formulario);
+        this.btnEditarGasto.disabled = true;
+        // copy template
+        let formTemplate = document.getElementById('formulario-template').content.cloneNode(true);;
+        let formulario = formTemplate.querySelector('form');
 
-
-        formulario.addEventListener('submit', this.handleEvent = function(evento)
+        formulario.elements.descripcion.value = gastoForm.descripcion;
+        formulario.elements.valor.value = gastoForm.valor;
+        formulario.elements.fecha.value = new Date(gastoForm.fecha).toISOString().substring(0,10);
+        formulario.elements.etiquetas.value = gastoForm.etiquetas.toString();
+        
+        divGastoForm.appendChild(formulario);
+        // editar
+        formulario.addEventListener('submit', this.handleEvent = function(event)
         {
-            // ????¿¿¿¿¿?????
-            
-            btnEditarGasto.disabled = false;
+            let etiquetasFormulario = formulario.elements.etiquetas;          
 
-            divGasto.removeChild(formulario);
+            event.preventDefault();
+
+            gastoForm.actualizarDescripcion(formulario.elements.descripcion.value);
+            gastoForm.actualizarValor(parseFloat(formulario.elements.valor.value));
+            gastoForm.actualizarFecha(formulario.elements.fecha.value);   
+
+            etiquetasFormulario = etiquetasFormulario.value.split(',');
+
+            gastoForm.borrarEtiquetas(...gastoForm.etiquetas);
+            gastoForm.anyadirEtiquetas(...etiquetasFormulario);
+
+            btnEditarGasto.disabled = false;
+            divGastoForm.removeChild(formulario);
+
             repintar();
         });
-        // comprobar si va a ir * * * *
-        formulario.querySelector('button.cancelar').addEventListener('click', this.handleEvent = function()
-        {
-            btnEditarGasto.disabled = false;
-
-            divGasto.removeChild(formulario);
-            repintar();
-        });
-
+        // cancelar
+        
     }
 }
 
+// * * * * BUTTONS * * * * 
 
 // BUTTONES ACTIVIDAD 5
 let btnActualizarPresupuesto = document.getElementById('actualizarpresupuesto');
@@ -312,6 +319,12 @@ btnActualizarPresupuesto.onclick = actualizarPresupuestoWeb;
 
 let btnAnyadirGasto = document.getElementById('anyadirgasto');
 btnAnyadirGasto.onclick = nuevoGastoWeb;
+
+// BUTTONES ACTIVIDAD 6
+let btnAnyadirFormulario = document.getElementById('anyadirgasto-formulario');
+btnAnyadirFormulario.onclick = nuevoGastoWebFormulario;
+
+
 // npx cypress open -- PARA HACER TEST GRÁFICO
 // npm run test --> pasa todos los tests
 // EXPORT
