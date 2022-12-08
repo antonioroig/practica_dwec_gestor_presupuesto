@@ -42,7 +42,7 @@ function mostrarGastoWeb(idElemento, gasto){
         let divEtiquetas = document.createElement('div');
         divEtiquetas.className = 'gasto-etiquetas';
         
-        for(let i = 0; i < gasto.etiquetas.length; i++){
+        for(let i = 0; i <gasto.etiquetas.length; i++){
             // gasto-etiquetas-etiqueta
             let contenidoEtiqueta = gasto.etiquetas[i];
             let spanEtiqueta = document.createElement('span');
@@ -56,7 +56,10 @@ function mostrarGastoWeb(idElemento, gasto){
             spanEtiqueta.addEventListener('click', borrarEtiquetas);
             divEtiquetas.append(spanEtiqueta);   
         }
+
         divGasto.append(divEtiquetas);
+        
+        
         // - - - - - - - - - - - - - -
         
             // HANDLE - editar gasto  - - - - - - - - - - - - - - - - - - -
@@ -94,7 +97,7 @@ function mostrarGastoWeb(idElemento, gasto){
             editarFormHandle.divGasto = divGasto;
             btnEditarForm.addEventListener('click',editarFormHandle);
             divGasto.append(btnEditarForm);
-
+            
             elemento.append(divGasto); 
     }
 }
@@ -243,7 +246,7 @@ function nuevoGastoWebFormulario()
     let divFormControles = document.getElementById("controlesprincipales");
     divFormControles.appendChild(formulario);
 
-    // submit form == enviar
+    // submit form == enviar form
     formulario.addEventListener('submit', this.handleEvent = function(event)
     {
         event.preventDefault();
@@ -262,8 +265,14 @@ function nuevoGastoWebFormulario()
         document.getElementById('controlesprincipales').removeChild(formulario);
         repintar();
     });
-    // cancelar 
-    
+    // cancelar Form
+    document.getElementById('controlesprincipales').append(formulario);    
+    formulario.querySelector('button.cancelar').addEventListener('click', this.handleEvent = function()
+    {
+        document.getElementById('anyadirgasto-formulario').disabled = false;
+        document.getElementById('controlesprincipales').removeChild(formulario);
+        repintar();
+    });
 }
 // HUNDLE evento 
 function EditarHandleFormulario()
@@ -275,7 +284,7 @@ function EditarHandleFormulario()
         let divGastoForm = this.divGasto;
 
         this.btnEditarGasto.disabled = true;
-        // copy template
+        // Clonar plantilla (template)
         let formTemplate = document.getElementById('formulario-template').content.cloneNode(true);;
         let formulario = formTemplate.querySelector('form');
 
@@ -285,7 +294,7 @@ function EditarHandleFormulario()
         formulario.elements.etiquetas.value = gastoForm.etiquetas.toString();
         
         divGastoForm.appendChild(formulario);
-        // editar
+        // Editar Gasto
         formulario.addEventListener('submit', this.handleEvent = function(event)
         {
             let etiquetasFormulario = formulario.elements.etiquetas;          
@@ -306,8 +315,13 @@ function EditarHandleFormulario()
 
             repintar();
         });
-        // cancelar
-        
+        // cancelar Edición Gasto
+        formulario.querySelector('button.cancelar').addEventListener('click', this.handleEvent = function()
+        {
+            btnEditarGasto.disabled = false;
+            divGastoForm.removeChild(formulario);
+            repintar();
+        });
     }
 }
 
@@ -332,7 +346,7 @@ export   {
     mostrarDatoEnId,
     mostrarGastoWeb,
     mostrarGastosAgrupadosWeb,
-
+    // - - - - - - -
     repintar,
     actualizarPresupuestoWeb,
     nuevoGastoWeb,
@@ -343,9 +357,11 @@ export   {
     // actividad 6
     nuevoGastoWebFormulario,
     EditarHandleFormulario,
+    // - - - - - - -
 
 }
 
+// Mis cosas
 /*
     https://www.w3schools.com/jsref/event_onclick.asp
  */
