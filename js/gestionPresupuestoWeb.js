@@ -182,7 +182,7 @@ function EditarHandle(){
 ////////////////////////////////////////////////////////   Practica de formularios   /////////////////////////////////////////////////////////////////////////////////////
 
 
-function nuevoGastoWebFormulario() //PRACTICA 6 - a y b
+function nuevoGastoWebFormulario() //PRACTICA 6 La primera parte 
 {
     //Copia en enunciado, aqui se esta creadno una copia del forrmulario que esta en el html
     let plantillaFormulario = document.getElementById("formulario-template").content.cloneNode(true);
@@ -207,12 +207,13 @@ function nuevoGastoWebFormulario() //PRACTICA 6 - a y b
     botonCancelar.addEventListener('click', cancelar);
 }
 
-function EnviarFormularioHandle() //PRACTICA 6 - a y b
+function EnviarFormularioHandle() //PRACTICA 6 La primera parte 
 {
     this.handleEvent = function(event)
     {
         event.preventDefault();
-        let formulario = event.currentTarget;
+        let formulario = event.currentTarget; //acceder al formulario
+        /////////////////// Se cogen los valores  ////////////////////
         let desc = formulario.elements.descripcion.value;
         let val = parseFloat(formulario.elements.valor.value);
         let fec = formulario.elements.fecha.value;
@@ -227,7 +228,7 @@ function EnviarFormularioHandle() //PRACTICA 6 - a y b
     }    
 }
 
-function CancelarFormularioHandle() //PRACTICA 6 - a y b
+function CancelarFormularioHandle() //PRACTICA 6 La primera parte 
 {
     this.handleEvent = function(event)
     {
@@ -238,7 +239,7 @@ function CancelarFormularioHandle() //PRACTICA 6 - a y b
     }
 }
 
-function EditarHandleFormulario() //PRACTICA 6 - c y d
+function EditarHandleFormulario() //PRACTICA 6 La segunda parte 
 {
     this.handleEvent = function(event) 
     {
@@ -248,7 +249,7 @@ function EditarHandleFormulario() //PRACTICA 6 - c y d
         let divContrPrinc = document.getElementById("controlesprincipales");
         divContrPrinc.append(formulario);
 
-        let botonEditForm  = event.currentTarget;
+        let botonEditForm  = event.currentTarget; //acceder al formulario
         botonEditForm.after(formulario);
         botonEditForm.disabled = true;
 
@@ -268,12 +269,12 @@ function EditarHandleFormulario() //PRACTICA 6 - c y d
         let botonCancelarFormulario = formulario.querySelector("button.cancelar");
         botonCancelarFormulario.addEventListener('click', cancelarFormulario);
     }
-}function EnviarHandle() //PRACTICA 6 - c y d
+}function EnviarHandle() //PRACTICA La segunda parte 
 {
     this.handleEvent = function(event) 
     {
         event.preventDefault();
-        let formulario = event.currentTarget;
+        let formulario = event.currentTarget; //acceder al formulario
         
         let desc = formulario.elements.descripcion.value;
         this.gasto.actualizarDescripcion(desc);
