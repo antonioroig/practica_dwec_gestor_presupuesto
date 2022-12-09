@@ -238,7 +238,58 @@ function CancelarFormularioHandle() //PRACTICA 6 - a y b
     }
 }
 
+function EditarHandleFormulario() //PRACTICA 6 - c y d
+{
+    this.handleEvent = function(event) 
+    {
+        let plantillaFormulario = document.getElementById("formulario-template").content.cloneNode(true);
+        var formulario = plantillaFormulario.querySelector("form");
 
+        let divContrPrinc = document.getElementById("controlesprincipales");
+        divContrPrinc.append(formulario);
+
+        let botonEditForm  = event.currentTarget;
+        botonEditForm.after(formulario);
+        botonEditForm.disabled = true;
+
+        formulario.elements.descripcion.value = this.gasto.descripcion;
+        formulario.elements.valor.value = parseFloat(this.gasto.valor);
+        formulario.elements.fecha.value = new Date(this.gasto.fecha).toISOString().substring(0,10);
+        formulario.elements.etiquetas.value = this.gasto.etiquetas.toString(); 
+
+        //Boton Enviar
+        let enviarFormulario = new EnviarHandle();
+        enviarFormulario.gasto = this.gasto;
+        formulario.addEventListener('submit', enviarFormulario);
+
+        //Boton Cancelar
+        let cancelarFormulario = new CancelarFormularioHandle();
+        cancelarFormulario.botonAnyadir = botonEditForm;
+        let botonCancelarFormulario = formulario.querySelector("button.cancelar");
+        botonCancelarFormulario.addEventListener('click', cancelarFormulario);
+    }
+}function EnviarHandle() //PRACTICA 6 - c y d
+{
+    this.handleEvent = function(event) 
+    {
+        event.preventDefault();
+        let formulario = event.currentTarget;
+        
+        let desc = formulario.elements.descripcion.value;
+        this.gasto.actualizarDescripcion(desc);
+
+        let val = parseFloat(formulario.elements.valor.value);
+        this.gasto.actualizarValor(val);
+
+        let fec = formulario.elements.fecha.value;
+        this.gasto.actualizarFecha(fec);
+
+        let etique = formulario.elements.etiquetas.value; 
+        this.gasto.anyadirEtiquetas(etique);           
+
+        repintar();
+    }
+}
 
   let s = document.getElementById('actualizarpresupuesto')
 
