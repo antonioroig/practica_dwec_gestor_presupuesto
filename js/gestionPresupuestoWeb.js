@@ -229,14 +229,23 @@ botonNuevo.addEventListener('click', nuevoGastoWeb);
 function nuevoGastoWebFormulario(){
     let plantillaFormulario = document.getElementById("formulario-template").content.cloneNode(true);
     var formulario = plantillaFormulario.querySelector("form");
-    
-    let divControlesPrincipales = document.getElementById("controlesprincipales")
-    divControlesPrincipales.appendChild(form);
-    
 
+    let divControlesPrincipales = document.getElementById('controlesprincipales');
+    divControlesPrincipales.append(formulario);
 
+    let enviarForm = new EnviarHandleFormulario();
+    formulario.addEventListener("submit", enviarForm);
 
+    let cancelarForm = new CancelarHandleFormulario(); 
+    cancelarForm.formulario = formulario;
+    let botonCancelar = formulario.querySelector("button.cancelar");
+    botonCancelar.addEventListener("click", cancelarForm); 
+
+    document.getElementById("anyadirgasto-formulario").setAttribute("disabled", "");
+  
+    repintar();
 }
+
 
 export {
     mostrarDatoEnId,
