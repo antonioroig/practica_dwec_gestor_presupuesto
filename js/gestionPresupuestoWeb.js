@@ -62,6 +62,18 @@ let mostrarGastoWeb = function(idsento,gasto){
     borrarEtiquetasHandler.etiqueta = et;
     divEtiquetas.addEventListener('click', borrarEtiquetasHandler);
 
+    let botonEditForm = document.createElement('button');
+        botonEditForm.className += 'gasto-editar-formulario';
+        botonEditForm.id = "gasto-editar-formulario";
+        botonEditForm.textContent = 'Editar (formulario)';
+        botonEditForm.type = 'button';
+
+        let editarFormNew = new EditarHandleFormulario();
+        editarFormNew.gasto = gasto;
+
+        botonEditForm.addEventListener('click', editarFormNew);
+        divContenedor.append(botonEditForm);
+
     return sento;
 }
 
@@ -167,6 +179,65 @@ function EditarHandle(){
     }
   };
 
+////////////////////////////////////////////////////////   Practica de formularios   /////////////////////////////////////////////////////////////////////////////////////
+
+
+function nuevoGastoWebFormulario() //PRACTICA 6 - a y b
+{
+    //Copia en enunciado, aqui se esta creadno una copia del forrmulario que esta en el html
+    let plantillaFormulario = document.getElementById("formulario-template").content.cloneNode(true);
+    var formulario = plantillaFormulario.querySelector("form");
+
+    let divContrPrinc = document.getElementById("controlesprincipales");
+    divContrPrinc.append(formulario);
+
+    //Para desactivar boton, cuando se elige laopcion de formulario se tiene que desactivar los otros botones.
+    let botonAnyadir = document.getElementById("anyadirgasto-formulario");
+    botonAnyadir.disabled = true;
+
+    //Boton Enviar
+    let enviar = new EnviarFormularioHandle();
+    formulario.addEventListener('submit', enviar);
+
+    //Boton Cancelar
+    // lasiguiente linea sale en elenunciado y basicamente te dice de localizar el boton
+    let botonCancelar = formulario.querySelector("button.cancelar");
+    let cancelar = new CancelarFormularioHandle();
+    cancelar.botonAnyadir = botonAnyadir;
+    botonCancelar.addEventListener('click', cancelar);
+}
+
+function EnviarFormularioHandle() //PRACTICA 6 - a y b
+{
+    this.handleEvent = function(event)
+    {
+        event.preventDefault();
+        let formulario = event.currentTarget;
+        let desc = formulario.elements.descripcion.value;
+        let val = parseFloat(formulario.elements.valor.value);
+        let fec = formulario.elements.fecha.value;
+        let etique = formulario.elements.etiquetas.value;       
+
+        let gastoEnv = new gestionpr.CrearGasto(desc, val, fec, etique);
+        gestionpr.anyadirGasto(gastoEnv);      
+
+        repintar();
+        document.getElementById("anyadirgasto-formulario").disabled = false;
+
+    }    
+}
+
+function CancelarFormularioHandle() //PRACTICA 6 - a y b
+{
+    this.handleEvent = function(event)
+    {
+        this.botonAnyadir.disabled = false;
+        document.getElementById("anyadirgasto-formulario").disabled = false;
+        event.currentTarget.parentNode.remove();
+        repintar();
+    }
+}
+
 
 
   let s = document.getElementById('actualizarpresupuesto')
@@ -178,7 +249,8 @@ function EditarHandle(){
   e.onclick = nuevoGastoWeb;
 
 
-
+  let anyadirgastoForm = document.getElementById("anyadirgasto-formulario");
+  anyadirgastoForm.addEventListener('click', nuevoGastoWebFormulario);
 
 
 export   {
@@ -187,5 +259,6 @@ export   {
     mostrarGastosAgrupadosWeb,
     repintar,
     actualizarPresupuestoWeb,
-    nuevoGastoWeb
+    nuevoGastoWeb,
+    nuevoGastoWebFormulario
 }
