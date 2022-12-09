@@ -262,8 +262,9 @@ function nuevoGastoWebFormulario(){
 
   // Manejador de evento Cancelar
   let btnCancelar = formulario.querySelector("button.cancelar");
-  btnCancelar.addEventListener("click", function(){
-    
+  btnCancelar.addEventListener("click", function(event){
+    event.preventDefault();
+
   });
   
 
