@@ -223,6 +223,21 @@ botonActualizar.addEventListener('click', actualizarPresupuestoWeb);
 let botonNuevo = document.getElementById("anyadirgasto");
 botonNuevo.addEventListener('click', nuevoGastoWeb);
 
+
+// Práctica 6
+
+function nuevoGastoWebFormulario(){
+    let plantillaFormulario = document.getElementById("formulario-template").content.cloneNode(true);
+    var formulario = plantillaFormulario.querySelector("form");
+    
+    let divControlesPrincipales = document.getElementById("controlesprincipales")
+    divControlesPrincipales.appendChild(form);
+    
+
+
+
+}
+
 export {
     mostrarDatoEnId,
     mostrarGastoWeb,
