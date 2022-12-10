@@ -72,9 +72,6 @@ function mostrarGastoWeb(idElemento, gasto){
         divGastoEtiqueta.addEventListener("click", handleBorrarEtiqueta);
 
 
-        
-
-
     divGasto.append(divGastoEtiqueta);
     id.append(divGasto);
 
@@ -175,6 +172,29 @@ function BorrarEtiquetasHandle(){
         repintar();
     }
 }
+
+function nuevoGastoWebFormulario (){
+    let plantillaFormulario = document.getElementById("formulario-template").content.cloneNode(true);
+    var formulario = plantillaFormulario.querySelector("form");
+}
+
+function SubmitHandle(){
+    this.handleEvent = function(event){
+        event.preventDefault();
+        let datosFormulario = event.currentTarget;
+        let descripcion = datosFormulario.elements.descripcion;
+        let valor = parsefloat(datosFormulario.elements.valor);
+        let fecha = datosFormulario.elements.fecha;
+        let etiquetas = datosFormulario.elements.Etiquetas;
+
+        let gasto1 =new gestion.CrearGasto(descripcion,valor,fecha,etiquetas);
+        gestion.anyadirGasto(gasto1);
+        repintar();
+        let id = getElementById("anyadirgasto-formulario");
+        id.disabled = true;
+    };
+}
+
 
 actualizarpresupuesto.addEventListener("click", actualizarPresupuestoWeb);
 
