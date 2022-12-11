@@ -195,6 +195,15 @@ function SubmitHandle(){
     };
 }
 
+function CancelarHandle(){
+    this.handleEvent = function(event){
+        this.buttonAnyadir.disabled = false;
+        event.currentTarget.parentNode.remove();
+        document.getElementById("anyadirgasto-formulario").disabled = false;
+        repintar();
+    }
+}
+
 
 actualizarpresupuesto.addEventListener("click", actualizarPresupuestoWeb);
 
@@ -206,5 +215,6 @@ export	{
     mostrarGastosAgrupadosWeb,
     repintar,
     actualizarPresupuestoWeb,
-    nuevoGastoWeb
+    nuevoGastoWeb,
+    nuevoGastoWebFormulario
 }
