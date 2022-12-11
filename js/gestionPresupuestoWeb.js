@@ -1,5 +1,6 @@
 import * as gp from './gestionPresupuesto.js';
 
+
 function repintar(){
     mostrarDatoEnId(gp.mostrarPresupuesto(), "presupuesto");
     mostrarDatoEnId(gp.calcularTotalGastos(), "gastos-totales");
