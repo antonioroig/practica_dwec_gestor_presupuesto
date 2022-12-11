@@ -173,41 +173,60 @@ function BorrarEtiquetasHandle(){
     }
 }
 
-function nuevoGastoWebFormulario (){
-    let plantillaFormulario = document.getElementById("formulario-template").content.cloneNode(true);
-    var formulario = plantillaFormulario.querySelector("form");
+function nuevoGastoWebFormulario(){
+   let plantillaFormulario = document.getElementById("formulario-template").content.cloneNode(true);
+   var formulario = plantillaFormulario.querySelector("form");
+
+   let dicControlesPrincipales = document.getElementById("controlesprincipales");
+   dicControlesPrincipales.append(formulario);
+
+
+   let botonAnyadir = document.getElementById("anyadirgasto-formulario");
+   botonAnyadir.disabled = true;
+
+
+   let botonSubmit = new SubmitHandle();
+   formulario.addEventListener('submit', botonSubmit);
+
+
+   let botonCancelar = formulario.querySelector("button.cancelar");
+   let cancelar = new botonCancelarHandle();
+   cancelar.buttonAnyadir = botonAnyadir;
+   botonCancelar.addEventListener('click', cancelar);
 }
 
 function SubmitHandle(){
     this.handleEvent = function(event){
         event.preventDefault();
         let datosFormulario = event.currentTarget;
-        let descripcion = datosFormulario.elements.descripcion;
-        let valor = parsefloat(datosFormulario.elements.valor);
-        let fecha = datosFormulario.elements.fecha;
-        let etiquetas = datosFormulario.elements.Etiquetas;
+        let descripcion = datosFormulario.elements.descripcion.value;
+        let valor = parseFloat(datosFormulario.elements.valor.value);
+        let fecha = datosFormulario.elements.fecha.value;
+        let etiquetas = datosFormulario.elements.etiquetas.value;
 
         let gasto1 =new gestion.CrearGasto(descripcion,valor,fecha,etiquetas);
         gestion.anyadirGasto(gasto1);
         repintar();
-        let id = getElementById("anyadirgasto-formulario");
-        id.disabled = true;
+        let id = document.getElementById("anyadirgasto-formulario");
+        id.disabled = false;
     };
 }
 
-function CancelarHandle(){
+function botonCancelarHandle(){
     this.handleEvent = function(event){
         this.buttonAnyadir.disabled = false;
-        event.currentTarget.parentNode.remove();
         document.getElementById("anyadirgasto-formulario").disabled = false;
+        event.currentTarget.parentNode.remove();
         repintar();
     }
 }
 
-
 actualizarpresupuesto.addEventListener("click", actualizarPresupuestoWeb);
 
 anyadirgasto.addEventListener("click", nuevoGastoWeb);
+
+let anyadirgastoForm = document.getElementById("anyadirgasto-formulario");
+anyadirgastoForm.addEventListener('click', nuevoGastoWebFormulario);
 
 export	{
     mostrarDatoEnId,
