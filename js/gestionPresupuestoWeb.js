@@ -4,7 +4,7 @@ function repintar(){
     mostrarDatoEnId(gp.mostrarPresupuesto(), "presupuesto");
     mostrarDatoEnId(gp.calcularTotalGastos(), "gastos-totales");
     mostrarDatoEnId(gp.calcularBalance(), "balance-total");
-
+    
     let actLista = document.getElementById("listado-gastos-completo");
     actLista.innerHTML='';
 
@@ -51,7 +51,7 @@ let editarHandle = function(){
 
         this.gasto.actualizarDescripcion(descripcion);
         this.gasto.actualizarValor(valor);
-        this.gasto.actualizarFecha(fecha);
+        this.gasto.actualizarFecha(new Date(fecha));
         this.gasto.anyadirEtiquetas(etiquetas);
         repintar();
     }
@@ -117,7 +117,7 @@ function mostrarGastoWeb(gasto, idElemento) {
 
         });
         gastoHTML.appendChild(etiquetasHTML);
-        
+
         let btnEditar = document.createElement("button");
         btnEditar.type = "button";
         btnEditar.textContent = "Editar";
@@ -139,6 +139,19 @@ function mostrarGastoWeb(gasto, idElemento) {
 
         btnBorrar.addEventListener("click", objBorrar);
         gastoHTML.appendChild(btnBorrar);
+
+        let botonEditarFormulario = document.createElement('button');
+        botonEditarFormulario.type="button";
+        botonEditarFormulario.textContent="Editar (formulario)";
+        botonEditarFormulario.classList="gasto-editar-formulario";
+
+        let objetoEditarFormulario = new EditarHandleFormulario();
+        objetoEditarFormulario.gasto=gasto;
+        objetoEditarFormulario.divGasto = gastoHTML;
+        objetoEditarFormulario.botonEditar = botonEditarFormulario;
+
+        botonEditarFormulario.addEventListener("click", objetoEditarFormulario);
+        gastoHTML.appendChild(botonEditarFormulario);
     }
 }
 
@@ -150,9 +163,9 @@ function mostrarGastosAgrupadosWeb(agrup, periodo, idElemento){
         let agrupHTML = document.createElement("div");
         agrupHTML.className = "agrupacion";
             
-        let titleHTML = document.createElement('h1');
-        titleHTML.innerHTML = "Gastos agrupados por " + periodo;
-        agrupHTML.appendChild(titleHTML);
+        let titleH1HTML = document.createElement('h1');
+        titleH1HTML.innerHTML = "Gastos agrupados por " + periodo;
+        agrupHTML.appendChild(titleH1HTML);
     
         let keys = Object.keys(agrup);
         for(let actualAgroup in agrup){
@@ -174,15 +187,38 @@ function mostrarGastosAgrupadosWeb(agrup, periodo, idElemento){
 
             i++;
         }
-
+        
         elemento.appendChild(agrupHTML);
     }
 }
 
-export {
+function nuevoGastoWebFormulario(){
+    let plantillaFormulario = document.getElementById("formulario-template").content.cloneNode(true);
+    let formulario = plantillaFormulario.querySelector("form");
+
+    let divControles = document.getElementById("controlesprincipales");
+    divControles.appendChild(formulario);
+
+    let anyadirForm = new AnyadirGastoFormulario();
+    formulario.addEventListener("submit", anyadirForm);
+    
+    let btnAnyadirGastoForm = document.getElementById("anyadirgasto-formulario");
+    btnAnyadirGastoForm.setAttribute("disabled", "");
+    
+    let cancelarForm = new CancelarGastoFormulario();
+    cancelarForm.formulario = formulario;
+
+    let btnCancelarForm = formulario.querySelector("button.cancelar");
+    btnCancelarForm.addEventListener("click", cancelarForm);
+}
+
+document.getElementById("anyadirgasto-formulario").addEventListener("click", nuevoGastoWebFormulario);
+
+export{
     mostrarDatoEnId,
     mostrarGastoWeb,
     mostrarGastosAgrupadosWeb,
+    nuevoGastoWebFormulario,
     repintar,
     actualizarPresupuestoWeb,
     nuevoGastoWeb
