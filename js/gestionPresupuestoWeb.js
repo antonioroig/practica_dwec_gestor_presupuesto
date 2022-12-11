@@ -71,6 +71,17 @@ function mostrarGastoWeb(idElemento, gasto){
 
         divGastoEtiqueta.addEventListener("click", handleBorrarEtiqueta);
 
+        let botonEditarForm = document.createElement("button");
+        botonEditarForm.className = "gasto-editar-formulario";
+        botonEditarForm.id = "gasto-editar-formulario";
+        botonEditarForm.type = "button";
+        botonEditarForm.textContent = "Editar (formulario)";
+
+        let editarHandleFormulario = new EditarHandleFormulario();
+        editarHandleFormulario.gasto = gasto;
+        botonEditarForm.addEventListener("click", editarHandleFormulario);
+        divGasto.append(botonEditarForm);
+
 
     divGasto.append(divGastoEtiqueta);
     id.append(divGasto);
@@ -204,7 +215,7 @@ function SubmitHandle(){
         let fecha = datosFormulario.elements.fecha.value;
         let etiquetas = datosFormulario.elements.etiquetas.value;
 
-        let gasto1 =new gestion.CrearGasto(descripcion,valor,fecha,etiquetas);
+        let gasto1 = new gestion.CrearGasto(descripcion,valor,fecha,etiquetas);
         gestion.anyadirGasto(gasto1);
         repintar();
         let id = document.getElementById("anyadirgasto-formulario");
@@ -220,6 +231,30 @@ function botonCancelarHandle(){
         repintar();
     }
 }
+
+
+function EditarHandleFormulario(){
+    this.handleEvent = function(event){
+        let plantillaFormulario = document.getElementById("formulario-template").content.cloneNode(true);
+        var formulario = plantillaFormulario.querySelector("form");
+
+        let divControlesPrincipales = document.getElementById("controlesprincipales");
+        divControlesPrincipales.append(formulario);
+
+        let botonEdit = event.currentTarget;
+        botonEdit.after(formulario);
+        botonEdit.disabled = true;
+
+        formulario.elements.descripcion.value = this.gasto.descripcion;
+        formulario.elements.valor.value = this.gasto.valor;
+        formulario.elements.fecha.value = this.gasto.fecha;
+        formulario.elements.etiquetas.value = this.gasto.etiquetas;
+
+        
+    }
+}
+
+
 
 actualizarpresupuesto.addEventListener("click", actualizarPresupuestoWeb);
 
