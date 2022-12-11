@@ -214,6 +214,21 @@ function nuevoGastoWebFormulario(){
 
 document.getElementById("anyadirgasto-formulario").addEventListener("click", nuevoGastoWebFormulario);
 
+let CancelarGastoFormulario = function(){
+    this.handleEvent = function(event){
+        this.formulario.remove();
+        document.getElementById("anyadirgasto-formulario").removeAttribute("disabled");
+    }
+}
+
+let CancelarCrearGastoFormulario = function(boton){
+    this.handleEvent= function(event){
+        document.forms[0].remove();
+
+        boton.removeAttribute("disabled");
+    }
+}
+
 export{
     mostrarDatoEnId,
     mostrarGastoWeb,
