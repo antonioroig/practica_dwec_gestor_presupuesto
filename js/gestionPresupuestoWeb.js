@@ -32,7 +32,11 @@ function mostrarGastoWeb(idElemento, gasto){
     let divGastoEtiquetas = document.createElement("div");
     divGastoEtiquetas.className = "gasto-etiquetas";
 
+    let hand3 = new BorrarEtiquetasHandle();
+    hand3.gasto = gasto;
+
     for(let i = 0; i < gasto.etiquetas.length; i++){
+        hand3.etiqueta = gasto.etiquetas[i];
         let span = document.createElement("span");
         span.className = "gasto-etiquetas-etiqueta";
         span.innerHTML = gasto.etiquetas[i];
@@ -65,13 +69,9 @@ function mostrarGastoWeb(idElemento, gasto){
     Botoneditareti.innerHTML = "Borrar";
     ///////////////////////////////
     ///////////////////////////////
-    let hand3 = new BorrarEtiquetasHandle();
-    hand3.gasto = gasto;
-    Botoneditareti.addEventListener("click", hand3);
-    divGasto.append(Botoneditareti);
-    ///////////////////////////////
-    ///////////////////////////////
-
+    divGastoEtiquetas.addEventListener("click", hand3);
+    divGasto.append(divGastoEtiquetas);
+    //
 
 
 
