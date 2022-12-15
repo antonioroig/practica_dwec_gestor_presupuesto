@@ -202,8 +202,21 @@ function SubmitHandle(){
         repintar();
 
         let id = getElementById("anyadirgasto-formulario");
-        id.disabled = true;
+        id.disabled = false;
     }
+}
+
+function botonCancelarHandle(){
+    this.handleEvent = function(event){
+        this.buttonAnyadir.disabled = false;
+        document.getElementById("anyadirgasto-formulario").disabled = true;
+        event.currentTarget.parentNode.remove();
+        repintar();
+    }
+}
+
+function EditarHandleFormulario(){
+
 }
 
 export{
