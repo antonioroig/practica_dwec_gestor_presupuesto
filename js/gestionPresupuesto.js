@@ -183,12 +183,17 @@ function calcularTotalGastos() {
     for (let i = 0; i < gastos.length; i++) {
         total += gastos[i].valor;
     };
+    total = total.toFixed(2);
+    total = Number(total);
     return total;
 }
 
 
 function calcularBalance() {
-    return presupuesto - calcularTotalGastos();
+    let res = presupuesto - calcularTotalGastos();
+    res = res.toFixed(2);
+    res = Number(res);
+    return res;
 }
 
 function filtrarGastos({fechaDesde,

@@ -3,6 +3,7 @@ import * as gestionPresupuesto from '../js/gestionPresupuesto.js';
 function mostrarDatoEnId(idElemento, valor) {
     if(idElemento != undefined) {
         let div = document.getElementById(idElemento);
+        //let valor = valor.toFixed(2);
         div.innerHTML += "" + valor;
     }
 }
@@ -81,6 +82,53 @@ function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo) {
     }
     div.append(agrupacion);
 }
+
+
+function repintar() {
+    let div = document.getElementById("presupuesto");
+    div.innerHTML = "";
+    mostrarDatoEnId("presupuesto", gestionPresupuesto.mostrarPresupuesto());
+
+    div = document.getElementById("gastos-totales");
+    div.innerHTML = "";
+    mostrarDatoEnId("gastos-totales", gestionPresupuesto.calcularTotalGastos());
+
+    div = document.getElementById("balance-total");
+    div.innerHTML = "";
+    mostrarDatoEnId("balance-total", gestionPresupuesto.calcularBalance());
+
+    listado_completo = document.getElementById("listado-gastos-completo"); 
+    listado_completo.innerHTML += "";
+    let listaGastos1 = gestionPresupuesto.listarGastos();
+    for (let i = 0; i < listaGastos1.length; i++) {
+        gestionPresupuestoWeb.mostrarGastoWeb("listado-gastos-completo", listaGastos1[i]);
+    }
+}
+
+
+function actualizarPresupuestoWeb() {
+    let presupuesto = prompt("Introduce un presupuesto");
+    let presupuesto_num;
+    if (parseFloat(presupuesto)) {
+        presupuesto_num = parseFloat(presupuesto);
+    }
+    gestionPresupuesto.actualizarPresupuesto(presupuesto_num);
+    repintar();   
+}
+
+let boton_actualizar = document.getElementById("actualizarpresupuesto");
+boton_actualizar.addEventListener("click", actualizarPresupuestoWeb);
+
+function nuevoGastoWeb() {
+    let presupuesto = prompt("Introduce un presupuesto");
+    let presupuesto_num;
+    if (parseFloat(presupuesto)) {
+        presupuesto_num = parseFloat(presupuesto);
+    }
+    gestionPresupuesto.actualizarPresupuesto(presupuesto_num);
+    repintar();   
+}
+
 
 export   {
     mostrarDatoEnId,
