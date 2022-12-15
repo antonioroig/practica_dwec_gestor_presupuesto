@@ -8,7 +8,8 @@ import{
     calcularTotalGastos,
     calcularBalance,
     filtrarGastos,
-    agruparGastos 
+    agruparGastos,
+    transformarListadoEtiquetas
 } from './gestionPresupuesto.js';
 
 function mostrarDatoEnId(valor, idElemento){
@@ -308,5 +309,5 @@ function CancelarGastoHandle(){
 export{
     mostrarDatoEnId,
     mostrarGastoWeb,
-    mostrarGastosAgrupadosWeb
+    mostrarGastosAgrupadosWeb,
 }
