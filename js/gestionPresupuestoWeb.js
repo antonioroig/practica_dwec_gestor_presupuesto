@@ -76,7 +76,7 @@ function mostrarGastoWeb(idElemento, gasto){
 
 
 
-    id.append(divGasto);
+     id.append(divGasto);
 
     return id;
 }
