@@ -250,10 +250,38 @@ function EditarHandleFormulario(){
         formulario.elements.fecha.value = this.gasto.fecha;
         formulario.elements.etiquetas.value = this.gasto.etiquetas;
 
-        
+        let enviarFormulario = new EnviarEditarHandle();
+        enviarFormulario.gasto = this.gasto;
+        formulario.addEventListener('submit', enviarFormulario);
+
+        let cancelar = new botonCancelarHandle();
+        cancelar.buttonAnyadir = botonEdit;
+        let botonCancelar = formulario.querySelector("button.cancelar");
+        botonCancelar.addEventListener('click', cancelar);
     }
 }
 
+function EnviarEditarHandle(){
+    this.handleEvent = function(event){
+        event.preventDefault();
+
+        let formulario = event.currentTarget;
+
+        let descripcion = formulario.elements.descripcion.value;
+        this.gasto.actualizarDescripcion(descripcion);
+
+        let valor = parseFloat(formulario.elements.valor.value);
+        this.gasto.actualizarValor(valor);
+
+        let fecha = formulario.elements.fecha.value;
+        this.gasto.actualizarFecha(fecha);
+
+        let etiquetas = formulario.elements.etiquetas.value;
+        this.gasto.anyadirEtiquetas(etiquetas);
+
+        repintar();
+    }
+}
 
 
 actualizarpresupuesto.addEventListener("click", actualizarPresupuestoWeb);
