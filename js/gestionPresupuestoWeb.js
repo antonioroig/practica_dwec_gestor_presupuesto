@@ -306,53 +306,42 @@ function CancelarGastoHandle(){
     }
 }
 
+
 function filtrarGastosWeb(){
-    let plantillaFormulario = document.getElementById("filtrar-gastos").content.cloneNode(true);
-    let formulario = plantillaFormulario.querySelector("form");
-
-    let form = new FiltrarGastosHandle();
-    form.formulario = formulario;
-    formulario.addEventListener('submit', form);
-
-}
-
-function FiltrarGastosHandle(){
     this.handleEvent = function(event){
         event.preventDefault();
 
-        let descripcion = this.formulario.elements.formulario-filtrado-descripcion.value;
-
-        let valorMinimo = Number(this.formulario.elements.formulario-filtrado-valor-minimo.value);
-
-        let valorMaximo = Number(this.formulario.elements.formulario-filtrado-valor-maximo.value);
-
-        let fechaDesde = new Date(this.formulario.elements.formulario-filtrado-fecha-desde.value);
-
-        let fechaHasta = new Date(this.formulario.elements.formulario-filtrado-fecha-hasta.value);
-
-        let etiquetas = this.formulario.elements.formulario-filtrado-etiquetas-tiene.value
+        let etiquetas = this.formulario.elements["formulario-filtrado-etiquetas-tiene"].value
 
         if(etiquetas){
             etiquetas = transformarListadoEtiquetas(etiquetas)
         }
         
         let objFilt = {
-            descripcion:descripcion,
-            valorMinimo:valorMinimo,
-            valorMaximo:valorMaximo,
-            fechaDesde:fechaDesde,
-            fechaHasta:fechaHasta,
-            etiquetas:etiquetas
+            descripcionContiene:this.formulario.elements["formulario-filtrado-descripcion"].value,
+            valorMinimo:Number(this.formulario.elements["formulario-filtrado-valor-minimo"].value),
+            valorMaximo:Number(this.formulario.elements["formulario-filtrado-valor-maximo"].value),
+            fechaDesde:new Date(this.formulario.elements["formulario-filtrado-fecha-desde"].value),
+            fechaHasta:new Date(this.formulario.elements["formulario-filtrado-fecha-hasta"].value),
+            etiquetasTiene:etiquetas
         }
+        document.getElementById("listado-gastos-completo").innerHTML = "";
+
         filtrarGastos(objFilt).forEach(gasto => {
             mostrarGastoWeb("listado-gastos-completo",gasto);
         })
-        
-        
     }
 }
+
+let divFormulario = document.getElementById("filtrar-gastos")
+let formulario = divFormulario.querySelector("form");
+
+let form = new filtrarGastosWeb();
+form.formulario = formulario;
+formulario.addEventListener('submit', form);
 export{
     mostrarDatoEnId,
     mostrarGastoWeb,
     mostrarGastosAgrupadosWeb,
+    filtrarGastosWeb
 }
