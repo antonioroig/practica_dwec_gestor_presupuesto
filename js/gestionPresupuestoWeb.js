@@ -228,8 +228,8 @@ function nuevoGastoWebFormulario(){
   var formulario = plantillaFormulario.querySelector("form");
   
   //Tomamos el div de los controles principales y le agragamos el formulario
-  var divControles = document.querySelector("controlesprincipales");
-  divControles.appendChild(form);
+  /*var divControles = document.querySelector("controlesprincipales");
+  divControles.append(form);*/
 
   // Manajador de evento para submit
   let btnEnviar = formulario.querySelector('button[type="submit"]');
