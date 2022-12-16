@@ -204,6 +204,9 @@ function nuevoGastoWebFormulario(){
     //////////
     cancelar.buttonAnyadir = botoncitoAnyadir;
     botonCancelar.addEventListener('click', cancelar);
+    //////////
+    cancelar.buttonAnyadir = botoncitoAnyadir;
+    botonCancelar.addEventListener('click', cancelar);
 }
 
 
