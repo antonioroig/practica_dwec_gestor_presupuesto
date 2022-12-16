@@ -238,7 +238,7 @@ function botonCancelarHandle(){
 }
 function EditarHandleFormulario(){
     this.handleEvent = function(event){
-        let plantillaFormulario = document.getElementById("formulario-template");
+        let plantillaFormulario = document.getElementById("formulario-template").content.cloneNode(true);;
         var formulario = plantillaFormulario.querySelector("form");
         //////////
         let divControlesPrincipales = document.getElementById("controlesprincipales");
@@ -256,7 +256,7 @@ function EditarHandleFormulario(){
 
         let enviarForm = new enviarEditarHandle();
         enviarForm.gasto = this.gasto;
-        form.addEventListener('submit', enviarForm);
+        formulario.addEventListener('submit', enviarForm);
         //////////
         let cancel = new botonCancelarHandle();
         cancel.buttonAnyadir = botoncitoEdit;
