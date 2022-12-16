@@ -27,7 +27,7 @@ function mostrarGastoWeb(idElemento, gasto)
         divGasto.className = "gasto";
         let divGastoDescripcion = document.createElement('div');
         divGastoDescripcion.className = "gasto-descripcion";
-        divGastoDescripcion.innerHTML+=gasto.descricpion;
+        divGastoDescripcion.innerHTML+=gasto.descripcion;
         divGasto.append(divGastoDescripcion);
 
         let divGastoFecha = document.createElement('div');
@@ -81,10 +81,7 @@ function mostrarGastoWeb(idElemento, gasto)
         bBorrar.addEventListener("click", BtnBorrarHandle);
         divGasto.append(bBorrar);
         
-        let BtnEditarHandleFormulario;
-        BtnBorrarHandle.gasto = gasto;
-        bBorrar.addEventListener("click", BtnEditarHandleFormulario);
-        divGasto.append(bBorrar);
+        
 
 
     }
@@ -205,26 +202,26 @@ function nuevoGastoWebFormulario()
     btnAnyadirGasto.disabled = true;
 
     let btnEnviar = new EnviarFormHandle();
-    plantillaForm.addEventListener('submit', btnEnviar);
+    formControles.addEventListener("submit", btnEnviar);
 
     let btnCancelar = formControles.querySelector("button.cancelar");
     let cancelar = new btnCancelarHandle();
     cancelar.btnAnyadirGasto = btnAnyadirGasto;
-    btnCancelar.addEventListener('click', cancelar);
+    btnCancelar.addEventListener("click", cancelar);
 
 }
 
 function EnviarFormHandle(){
     this.handleEvent = function(event){
         event.preventDefault();
-        let datos = event.currentTarget;
-        let desc = datos.elements.descripcion.value;
-        let valor = parsefloat(datos.elements.valor.value);
-        let fecha = datos.elements.fecha.value;
-        let etiq = datosformulario.elements.etiquetas.value;
+        let form = event.currentTarget;
+        let desc = form.elements.descripcion.value;
+        let valor = parseFloat(form.elements.valor.value)
+        let fecha = form.elements.fecha.value;
+        let etiq = form.elements.etiquetas.value;
 
-        let gasto = new gesP.CrearGasto(desc, valor, fecha, etiq);
-        gesP.anyadirGasto(gasto);
+        let gastoEnviar = new gesP.CrearGasto(desc, valor, fecha, etiq);
+        gesP.anyadirGasto(gastoEnviar);
         repintar();
         let id = document.getElementById("anyadirgastos-formulario");
         id.disabled = true;
