@@ -233,6 +233,30 @@ function botonCancelarHandle(){
         repintar();
     }
 }
+function enviarEditarHandle(){
+    this.handleEvent = function(event){
+        event.preventDefault();
+        //////////
+        //////////
+        let form = event.currentTarget();
+        //////////
+        let des = form.elements.descripcion.value;
+        this.gasto.actualizarDescripcion(des);
+        //////////
+        let valor = parseFloat(form.elements.valor.value);
+        this.gasto.actualizarValor(valor);
+        //////////
+        let fecha = form.elements.fecha.value;
+        this.gasto.actualizarFecha(fecha);
+        //////////
+        let etis = form.elements.etiquetas.value;
+        this.gasto.anyadirEtquetas(etis);
+        //////////
+        //////////
+        repintar();
+        
+    }
+}
 
 function EditarHandleFormulario(){
     this.handleEvent = function(event){
