@@ -301,6 +301,35 @@ let EditarHandleformulario = function(){
     }
 }
 
+let filtrarGastoWeb = function(){
+    this.handleEvent = function(event) {
+        event.preventDefault();
+        
+        let descripcionContiene = this.formulario.elements["formulario-filtrado-descripcion"].value;
+        let valorMinimo = this.formulario.elements["formulario-filtrado-valor-minimo"].value;
+        let valorMaximo = this.formulario.elements["formulario-filtrado-valor-maximo"].value;
+        let fechaDesde = this.formulario.elements["formulario-filtrado-fecha-desde"].value;
+        let fechaHasta = this.formulario.elements["formulario-filtrado-fecha-hasta"].value;
+        let etiquetasTiene = this.formulario.elements["formulario-filtrado-etiquetas-tiene"].value;
+
+        if(etiquetasTiene){
+            etiquetasTiene = gestionPresupuesto.transformarListadoEtiquetas(etiquetasTiene);
+        }
+        document.getElementById("listado-gastos-completo").innerHTML="";
+        
+        var filtrados = gestionPresupuesto.filtrarGastos({fechaDesde, fechaHasta, valorMaximo, valorMinimo, descripcionContiene, etiquetasTiene})
+        
+        filtrados.forEach(gasto=>{
+            mostrarGastoWeb(gasto, "listado-gastos-completo");
+        });
+    }
+}
+
+    let formulario = document.getElementById("formulario-filtrado");
+
+    let filtrarResultados = new filtrarGastoWeb();
+    filtrarResultados.formulario = formulario;
+    formulario.addEventListener('submit', filtrarResultados);
 
 
 
