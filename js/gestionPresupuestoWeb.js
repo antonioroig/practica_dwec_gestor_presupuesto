@@ -306,6 +306,9 @@ function CancelarGastoHandle(){
     }
 }
 
+function filtrarGastosWeb(){
+    
+}
 export{
     mostrarDatoEnId,
     mostrarGastoWeb,
