@@ -299,9 +299,13 @@ let EditarHandleFormulario = function(){
         btnCancelar.addEventListener('click', cancelarForm);
     }
 }
+function filtrarGastosWeb(){
+
+}
 
 export{
     mostrarDatoEnId,
     mostrarGastoWeb,
-    mostrarGastosAgrupadosWeb
+    mostrarGastosAgrupadosWeb,
+    filtrarGastosWeb
 }
