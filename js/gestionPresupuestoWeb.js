@@ -235,7 +235,10 @@ function nuevoGastoWebFormulario()
 }
 function EditarHandleFormulario()
 {
-    
+    this.handleEvent = function(evento)
+    {
+        
+    }
 }
 
 export   {  
