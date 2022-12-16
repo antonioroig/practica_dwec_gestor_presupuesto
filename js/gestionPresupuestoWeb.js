@@ -81,7 +81,10 @@ function mostrarGastoWeb(idElemento, gasto)
         bBorrar.addEventListener("click", BtnBorrarHandle);
         divGasto.append(bBorrar);
         
-        
+        let BtnEditarHandleFormulario;
+        BtnBorrarHandle.gasto = gasto;
+        bBorrar.addEventListener("click", BtnEditarHandleFormulario);
+        divGasto.append(bBorrar);
 
 
     }
@@ -201,17 +204,17 @@ function nuevoGastoWebFormulario()
     let btnAnyadirGasto = document.getElementById("anyadirgasto-formulario");
     btnAnyadirGasto.disabled = true;
 
-    let btnSubmit = new SubmitHandle();
-    plantillaForm.addEventListener('submit', btnSubmit);
+    let btnEnviar = new EnviarFormHandle();
+    plantillaForm.addEventListener('submit', btnEnviar);
 
-    let btnCancelar = formulario.querySelector("button.cancelar");
+    let btnCancelar = formControles.querySelector("button.cancelar");
     let cancelar = new btnCancelarHandle();
     cancelar.btnAnyadirGasto = btnAnyadirGasto;
     btnCancelar.addEventListener('click', cancelar);
 
 }
 
-function SubmitHandle(){
+function EnviarFormHandle(){
     this.handleEvent = function(event){
         event.preventDefault();
         let datos = event.currentTarget;
@@ -229,12 +232,20 @@ function SubmitHandle(){
 }
 function btnCancelarHandle(){
     this.handleEvent = function(event){
-
+        this.btnAnyadirGasto.disabled = false;
+        document.getElementById("anyadirgasto-formulario").disabled = false;
+        event.currentTarget.parentNode.remove();
+        repintar();
     }
 }
 
 actualizarpresupuesto.addEventListener("click",actualizarPresupuestoWeb);
 anyadirgasto.addEventListener("click",nuevoGastoWeb);
+
+let anyadirgastoForm = document.getElementById("anyadirgasto-formulario");
+anyadirgastoForm.addEventListener('click', nuevoGastoWebFormulario);
+
+
 export{
     mostrarDatoEnId,
     mostrarGastoWeb,
