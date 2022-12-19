@@ -188,6 +188,10 @@ function filtrarGastos({fechaDesde, fechaHasta, valorMaximo, valorMinimo, descri
     }
    return filtrados;
 }
+function transformarListadoEtiquetas(etiquetasTiene){
+let etiquetas = etiquetasTiene.split(/\s*[,;.:\s]+\s*/);
+return etiquetas;
+}
 function agruparGastos(periodo = `mes`, etiquetas, fechaDesde, fechaHasta){
     let obj = {
         fechaDesde: fechaDesde,
@@ -219,5 +223,6 @@ export {
     calcularTotalGastos,
     calcularBalance,
     filtrarGastos,
-    agruparGastos
+    agruparGastos,
+    transformarListadoEtiquetas
 }

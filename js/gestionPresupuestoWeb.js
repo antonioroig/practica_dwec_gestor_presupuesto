@@ -267,6 +267,23 @@ function EnviarHandleEditarFormulario(){
         repintar();
     }
 }
+function filtrarGastosWeb()
+{
+    this.handleEvent = function(event){
+        event.preventDefault();
+        let formulario = document.getElementById("formulario-filtrado")
+        let descripcion = document.getElementById("formulario-filtrado-descripcion").value
+        let valorMinimo = document.getElementById("formulario-filtrado-valor-minimo").value
+        let valorMaximo = document.getElementById("formulario-filtrado-valor-maximo").value
+        let fechaInicial = document.getElementById("formulario-filtrado-fecha-desde").value
+        let fechaFinal = document.getElementById("formulario-filtrado-fecha-hasta").value
+        if(document.getElementById("formulario-filtrado-etiquetas-tiene").value != null)
+        {
+            let etiquetas = gestionPre.transformarListadoEtiquetas(document.getElementById("formulario-filtrado-etiquetas-tiene").value);
+        }
+       
+    }
+}
 export {
     mostrarDatoEnId,
     mostrarGastoWeb,
