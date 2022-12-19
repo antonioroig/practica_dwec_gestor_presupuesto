@@ -1,3 +1,4 @@
+'use strict'
 import * as gestionPresupuesto from './gestionPresupuesto.js';
 
 function mostrarDatoEnId(valor,idElemento) {
@@ -225,7 +226,6 @@ botonNuevo.addEventListener('click', nuevoGastoWeb);
 
 
 // Práctica 6
-
 function nuevoGastoWebFormulario(){
     let plantillaFormulario = document.getElementById("formulario-template").content.cloneNode(true);
     var formulario = plantillaFormulario.querySelector("form");
@@ -245,6 +245,8 @@ function nuevoGastoWebFormulario(){
   
     repintar();
 }
+
+
 
 
 export {
