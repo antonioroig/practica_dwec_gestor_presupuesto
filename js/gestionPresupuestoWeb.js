@@ -233,6 +233,42 @@ function nuevoGastoWebFormulario()
 
     
 }
+
+function EnviarHandle()
+{
+    this.handleEvent = function(event)
+    {
+        
+        event.preventDefault();
+        
+        let form = event.currentTarget;
+        let descrip = form.elements.descripcion.value;
+        this.gasto.actualizarDescripcion(descrip);
+        let valor = parseFloat(form.elements.valor.value);
+        this.gasto.actualizarValor(valor);
+        let fecha = form.elements.fecha.value;
+        this.gasto.actualizarFecha(fecha);
+        let etiquestas = form.elements.etiquetas.value;
+        this.gasto.anyadirEtiquetas(etiquetas);
+        repintar();
+    }
+}
+function EnviarGastoFormHandle()
+{
+    this.handleEvent = function(e)
+    {
+        e.preventDefault();
+         let form = e.currentTarget;
+         let descripcion = form.elements.descripcion.value;
+         let valor = parseFloat(form.elements.valor.value);
+         let fecha = form.elements.fecha.value;
+         let etiquetas = form.elements.etiquetas.value;
+        let Nuevogas = new exGp.CrearGasto(descripcion, valor, fecha, etiquetas);
+        exGp.anyadirGasto(Nuevogas);
+        repintar();
+        document.getElementById("anyadirgasto-formulario").removeAttribute("disabled");
+    }
+}
 function EditarHandleFormulario()
 {
     this.handleEvent = function(evento)
