@@ -229,7 +229,10 @@ function nuevoGastoWebFormulario()
     var formulario = plantillaFormulario.querySelector("form");
     let divContPrincipales = document.getElementById("controlesprincipales")
     divContPrincipales.appendChild(formulario);
-    //let btnAnyadirGastFormulario = document.getElementById("anyadirgasto-formulario").setAttribute("disabled", "");
+    let btnAnyadirGast = document.getElementById("anyadirgasto-formulario").setAttribute("disabled", "");
+   
+    let SendObj = new EnviarGastoFormHandle();
+    form.addEventListener('submit', SendObj);
 
     
 }
@@ -248,17 +251,17 @@ function EnviarHandle()
         this.gasto.actualizarValor(valor);
         let fecha = form.elements.fecha.value;
         this.gasto.actualizarFecha(fecha);
-        let etiquestas = form.elements.etiquetas.value;
+        let etiquetas = form.elements.etiquetas.value;
         this.gasto.anyadirEtiquetas(etiquetas);
         repintar();
     }
 }
 function EnviarGastoFormHandle()
 {
-    this.handleEvent = function(e)
+    this.handleEvent = function(event)
     {
         e.preventDefault();
-         let form = e.currentTarget;
+         let form = event.currentTarget;
          let descripcion = form.elements.descripcion.value;
          let valor = parseFloat(form.elements.valor.value);
          let fecha = form.elements.fecha.value;
