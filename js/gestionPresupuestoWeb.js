@@ -316,9 +316,10 @@ function filtrarGastosWeb(){
             etiquetasTiene: etiquetas
         }
 
-        gestionPresupuesto.filtrarGastos(obj);
-
-        mostrarGastoWeb(obj, "listado-gastos-completo");
+        let gastosFiltrados = gestionPresupuesto.filtrarGastos(obj);
+        gastosFiltrados.forEach(gasto => function(){
+            mostrarGastoWeb(obj, "listado-gastos-completo");
+        })
     }
 }
 let formulario = document.getElementById("formulario-filtrado");
