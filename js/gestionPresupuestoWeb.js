@@ -246,6 +246,30 @@ function nuevoGastoWebFormulario(){
     repintar();
 }
 
+function EnviarHandleFormulario(){
+    this.handleEvent = function(event){
+        event.preventDefault();
+        let formulario = document.forms[0];
+        let descripcion = formulario.elements.descripcion.value;
+        let valor = parseFloat(formulario.elements.valor.value);
+        let fecha = new Date(formulario.elements.fecha.value);
+        let etiquetas = toString(formulario.elements.etiquetas.value).split(',');
+        let nuevoGasto = new gestionPresupuesto.CrearGasto(descripcion, valor, fecha, ...etiquetas);
+        gestionPresupuesto.anyadirGasto(nuevoGasto);
+        document.getElementById('anyadirgasto-formulario').removeAttribute('disabled');
+        repintar();
+    }
+}
+
+function CancelarHandleFormulario(){
+    this.handleEvent = function(event)
+    {
+        this.formulario.remove();
+        document.getElementById("anyadirgasto-formulario").removeAttribute("disabled");
+  
+    }
+}
+
 
 
 
