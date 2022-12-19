@@ -291,7 +291,6 @@ function EditarHandleFormulario() //PRACTICA 6 La segunda parte
         repintar();
     }
 }
-
   let s = document.getElementById('actualizarpresupuesto')
 
   s.onclick = actualizarPresupuestoWeb;
