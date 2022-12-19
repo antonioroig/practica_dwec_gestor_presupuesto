@@ -167,7 +167,7 @@ function EditarHandle()
             this.gasto.actualizarValor(valor);
             this.gasto.actualizarDescripcion(descripcion);
             this.gasto.actualizarFecha(fecha);
-            this.gasto.anyadirEtiquetas(etiquetas);
+            this.gasto.etiquetas = etiquetasArray;
 
             repintar();
         }
@@ -220,11 +220,12 @@ function EnviarFormHandle(){
         let fecha = form.elements.fecha.value;
         let etiq = form.elements.etiquetas.value;
 
-        let gastoEnviar = new gesP.CrearGasto(desc, valor, fecha, etiq);
+         gastoEnviar = new gesP.CrearGasto(desc, valor, fecha, etiq);
+
         gesP.anyadirGasto(gastoEnviar);
         repintar();
-        let id = document.getElementById("anyadirgastos-formulario");
-        id.disabled = true;
+        let id = document.getElementById("anyadirgasto-formulario");
+        id.disabled = false;
     }
 }
 function btnCancelarHandle(){
