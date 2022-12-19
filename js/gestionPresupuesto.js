@@ -236,6 +236,11 @@ function agruparGastos(periodo = 'mes', etiquetas, fechaDesde, fechaHasta = Date
 
     return result;
 }
+// Actividad 7
+function transformarListadoEtiquetas(txt)
+{
+    return txt.split(/[ ,;:\.~]+/g);
+}
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
@@ -244,16 +249,18 @@ function agruparGastos(periodo = 'mes', etiquetas, fechaDesde, fechaHasta = Date
 Las funciones y objetos deben tener los nombres que se indican en el enunciado
 Si al obtener el código de una práctica se genera un conflicto, por favor incluye todo el código que aparece aquí debajo */
 export   {
-   mostrarPresupuesto,
-   actualizarPresupuesto,
-   CrearGasto,
-   listarGastos,
-   anyadirGasto,
-   borrarGasto,
-   calcularTotalGastos,
-   calcularBalance,
-   filtrarGastos,
-   agruparGastos,
+    mostrarPresupuesto,
+    actualizarPresupuesto,
+    CrearGasto,
+    listarGastos,
+    anyadirGasto,
+    borrarGasto,
+    calcularTotalGastos,
+    calcularBalance,
+    filtrarGastos,
+    agruparGastos,
+    // Actividad 7
+    transformarListadoEtiquetas,
 
 }
 
