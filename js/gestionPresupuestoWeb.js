@@ -22,6 +22,8 @@ function mostrarGastoWeb(idElemento, gasto){
         // gasto
         let divGasto = document.createElement('div');
         divGasto.className = 'gasto';
+        divGasto.style = "margin: 10px; padding: 5px; border: 1px dotted; background-color: #E0FFFF"; // añado mi estilo para mejorar la vista
+        
         // - - - - - - - - - - -
         // gasto-descripcion
         let divDesc = document.createElement('div');
@@ -67,6 +69,7 @@ function mostrarGastoWeb(idElemento, gasto){
             btnEditar.className = 'gasto-editar';
             btnEditar.type = 'button';
             btnEditar.textContent = 'Editar';
+            btnEditar.style = "margin-left: 3px; margin-right: 3px";
     
             let editarHandle = new EditarHandle();
             editarHandle.gasto = gasto;
@@ -78,11 +81,13 @@ function mostrarGastoWeb(idElemento, gasto){
             btnBorrar.className = 'gasto-borrar';
             btnBorrar.type = 'button';
             btnBorrar.textContent = 'Borrar';
+            btnBorrar.style = "margin-left: 3px; margin-right: 3px";
 
             let borrarHandle = new BorrarHandle();
             borrarHandle.gasto = gasto;
             btnBorrar.addEventListener('click', borrarHandle); // addEventListener nos permite utilizar un objeto como manejador de eventos.
             divGasto.append(btnBorrar);
+            
 
             // HANDLE - editar formulario gasto  - - - - - - - - - - - - - - - - - - - -
 
@@ -90,6 +95,7 @@ function mostrarGastoWeb(idElemento, gasto){
             btnEditarForm.className = 'gasto-editar-formulario';
             btnEditarForm.type = 'button';
             btnEditarForm.textContent = 'Editar Form';
+            btnEditarForm.style = "margin-left: 3px; margin-right: 3px";
 
             let editarFormHandle = new EditarHandleFormulario();
             editarFormHandle.gasto = gasto;
@@ -193,6 +199,49 @@ function nuevoGastoWeb()
 
     gestionPresupuesto.anyadirGasto(gasto);
     repintar();
+}
+// Actividad 7 - filtrarGastosWeb
+function FiltrarGastosWeb()
+{
+    this.handleEvent = function(evento)
+    {
+        evento.preventDefault(); // enunciado 
+
+        let etiquetasBuscar = new Array();
+        let filtro = {};
+
+
+        let descFunc = document.getElementById('formulario-filtrado-descripcion').value;
+
+        let valorMinFunc = parseFloat(document.getElementById('formulario-filtrado-valor-minimo').value);
+        let valorMaxFunc = parseFloat(document.getElementById('formulario-filtrado-valor-maximo').value);
+
+        let fechaDesdeFunc = document.getElementById('formulario-filtrado-fecha-desde').value;
+        let fechaHastaFunc = document.getElementById('formulario-filtrado-fecha-hasta').value;
+
+        let etiquetasTiene = document.getElementById('formulario-filtrado-etiquetas-tiene').value;
+
+
+        typeof etiquetasTiene != 'undefined' && etiquetasTiene != '' ? etiquetasBuscar = gestionPresupuesto.transformarListadoEtiquetas(etiquetasTiene) : etiquetasTiene;
+
+        typeof descFunc != 'undefined' && descFunc != '' ? filtro.descripcionContiene = descFunc : descFunc;
+
+        typeof valorMinFunc != 'undefined' && !isNaN(valorMinFunc) && valorMinFunc != '' ?  filtro.valorMinimo = valorMinFunc : valorMinFunc;
+        typeof valorMaxFunc != 'undefined' && !isNaN(valorMaxFunc) && valorMaxFunc!= '' ? filtro.valorMaximo = valorMaxFunc : valorMaxFunc;
+        
+        typeof fechaDesdeFunc != 'undefined' && fechaDesdeFunc != '' ? filtro.fechaDesde = fechaDesdeFunc : fechaDesdeFunc;
+        typeof fechaHastaFunc != 'undefined' && fechaHastaFunc != '' ? filtro.fechaHasta = fechaHastaFunc : fechaHastaFunc;
+        
+        etiquetasBuscar.length > 0 ? filtro.etiquetasTiene = etiquetasBuscar : etiquetasBuscar;
+           
+        
+        let filtroGasto = gestionPresupuesto.filtrarGastos(filtro);
+        document.getElementById('listado-gastos-completo').innerHTML = ''; 
+
+        filtroGasto.forEach(gastoFiltrado => {mostrarGastoWeb('listado-gastos-completo', gastoFiltrado);});
+
+        
+    };
 }
 
 // Handle Functions
@@ -338,6 +387,11 @@ btnAnyadirGasto.onclick = nuevoGastoWeb;
 let btnAnyadirFormulario = document.getElementById('anyadirgasto-formulario');
 btnAnyadirFormulario.onclick = nuevoGastoWebFormulario;
 
+// Actividad 7
+let FormularioHandler = new FiltrarGastosWeb();
+
+let form = document.getElementById('formulario-filtrado');
+form.addEventListener('submit', FormularioHandler);
 
 // npx cypress open -- PARA HACER TEST GRÁFICO
 // npm run test --> pasa todos los tests
@@ -357,7 +411,8 @@ export   {
     // actividad 6
     nuevoGastoWebFormulario,
     EditarHandleFormulario,
-    // - - - - - - -
+    // actividad 7
+    FiltrarGastosWeb,
 
 }
 
