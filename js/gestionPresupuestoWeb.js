@@ -291,6 +291,56 @@ function EditarHandleFormulario() //PRACTICA 6 La segunda parte
         repintar();
     }
 }
+/////////////////////////////////////////////////////// Práctica de expresiones regulares ////////////////////////////////////////////////////////
+
+function filtrarGastosWeb()
+{
+    this.handleEvent = function(event) 
+    {
+        event.preventDefault();
+
+        let form = event.currentTarget;
+        let desc = form.elements['formulario-filtrado-descripcion'].value;
+        let minimo = parseFloat(form.elements['formulario-filtrado-valor-minimo'].value);
+        let maximo = parseFloat(form.elements['formulario-filtrado-valor-maximo'].value);
+        let desde = form.elements['formulario-filtrado-fecha-desde'].value;
+        let hasta = form.elements['formulario-filtrado-fecha-hasta'].value;
+        let etiq = form.elements['formulario-filtrado-etiquetas-tiene'].value;
+        let filtro = {};
+
+        if(etiq.length > 0){
+            filtro.etiquetasTiene = gestionpr.transformarListadoEtiquetas(etiq);
+        }
+        if(desc != ""){
+            filtro.descripcionContiene = desc;
+        }
+        if(minimo != "" && typeof minimo !== "undefined" && !isNaN(minimo)){
+            filtro.valorMinimo = minimo;
+        }
+        if(maximo != "" && typeof maximo !== "undefined" && !isNaN(maximo)){
+            filtro.valorMaximo = maximo;
+        }
+        if(Date.parse(desde)){
+            filtro.fechaDesde = desde;
+        }
+        if(Date.parse(hasta)){
+            filtro.fechaHasta = hasta;
+        }
+        
+        document.getElementById("listado-gastos-completo").innerHTML="";
+        let gFiltrado = gestionpr.filtrarGastos(filtro);
+
+        gFiltrado.forEach(g => {
+            mostrarGastoWeb('listado-gastos-completo',g);
+        });
+        
+    }
+}
+
+
+
+
+
   let s = document.getElementById('actualizarpresupuesto')
 
   s.onclick = actualizarPresupuestoWeb;
@@ -302,6 +352,9 @@ function EditarHandleFormulario() //PRACTICA 6 La segunda parte
 
   let anyadirgastoForm = document.getElementById("anyadirgasto-formulario");
   anyadirgastoForm.addEventListener('click', nuevoGastoWebFormulario);
+
+let filtrarLosGastos = new filtrarGastosWeb();
+ document.getElementById("formulario-filtrado").addEventListener("submit", filtrarLosGastos);
 
 
 export   {
