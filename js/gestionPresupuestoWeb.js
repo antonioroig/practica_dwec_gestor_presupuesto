@@ -278,7 +278,6 @@ let EditarGastoHandle=function(){
 }
 let EditarHandleFormulario = function(){
     this.handleEvent = function() {
-        
         let plantillaFormulario = document.getElementById("formulario-template").content.cloneNode(true);
         let formulario = plantillaFormulario.querySelector("form");
 
@@ -300,8 +299,30 @@ let EditarHandleFormulario = function(){
     }
 }
 function filtrarGastosWeb(){
+    this.handleEvent = function(evento){
+        evento.preventDefault();
 
+        let etiquetas = document.getElementById(etiquetas).value;
+        if(etiquetas){
+            etiquetas = gestionPresupuesto.transformarListadoEtiquetas(etiquetas);
+        }
+
+        let obj = {
+            fechaDesde: new Date(document.getElementById("formulario-filtrado-fecha-desde").value),
+            fechaHasta: new Date(document.getElementById("formulario-filtrado-fecha-hasta").value),
+            valorMinimo: Number(document.getElementById("formulario-filtrado-valor-minimo").value),
+            valorMaximo: Number(document.getElementById("formulario-filtrado-valor-maximo").value),
+            descripcionContiene: document.getElementById("formulario-filtrado-descripcion").value,
+            etiquetasTiene: etiquetas
+        }
+
+        gestionPresupuesto.filtrarGastos(obj);
+
+        mostrarGastoWeb(obj, "listado-gastos-completo");
+    }
 }
+let formulario = document.getElementById("formulario-filtrado");
+formulario.addEventListener('submit', filtrarGastosWeb);
 
 export{
     mostrarDatoEnId,
