@@ -202,7 +202,7 @@ function nuevoGastoWebFormulario()
     btnAnyadirGasto.disabled = true;
 
     let btnEnviar = new EnviarFormHandle();
-    formControles.addEventListener("submit", btnEnviar);
+    form.addEventListener("submit", btnEnviar);
 
     let btnCancelar = formControles.querySelector("button.cancelar");
     let cancelar = new btnCancelarHandle();
@@ -220,7 +220,7 @@ function EnviarFormHandle(){
         let fecha = form.elements.fecha.value;
         let etiq = form.elements.etiquetas.value;
 
-         gastoEnviar = new gesP.CrearGasto(desc, valor, fecha, etiq);
+        let gastoEnviar = new gesP.CrearGasto(desc, valor, fecha, etiq);
 
         gesP.anyadirGasto(gastoEnviar);
         repintar();
