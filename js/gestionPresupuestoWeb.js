@@ -43,6 +43,9 @@ function mostrarGastoWeb(idElemento, gasto)
         let divGastoEtiquetas = document.createElement('div');
         divGastoEtiquetas.className = "gasto-etiquetas";
         
+        let handleBorrarEtiq = document.createElement("div");
+        handleBorrarEtiq.gasto = gasto;
+
         for(let i = 0; i < gasto.etiquetas.length; i++){
             let divGastoEtiquetasEtiqueta = document.createElement('span');
             divGastoEtiquetasEtiqueta.className = "gasto-etiquetas-etiqueta";
@@ -81,9 +84,24 @@ function mostrarGastoWeb(idElemento, gasto)
         bBorrar.addEventListener("click", BtnBorrarHandle);
         divGasto.append(bBorrar);
         
-        
+        divGastoEtiquetas.addEventListener("click", handleBorrarEtiq);
+
+        let btnEditForm = document.createElement("button");
+        btnEditForm.className = "gasto-editar-formulario";
+        btnEditForm.elemento = "gasto-editar-formulario";
+        btnEditForm.type = "button";
+        btnEditForm.textContent = "Editar (formulario)";
 
 
+        let handleEditForm = new EditarHandleFormulario();
+        handleEditForm.gasto = gasto;
+        btnEditForm.addEventListener('click', handleEditForm);
+        divGasto.append(btnEditForm);
+
+        divGasto.append(divGastoEtiquetas);
+        elemento.append(divGasto);
+
+        return elemento;
     }
 }
 
@@ -228,14 +246,7 @@ function EnviarFormHandle(){
         id.disabled = false;
     }
 }
-function btnCancelarHandle(){
-    this.handleEvent = function(event){
-        this.btnAnyadirGasto.disabled = false;
-        document.getElementById("anyadirgasto-formulario").disabled = false;
-        event.currentTarget.parentNode.remove();
-        repintar();
-    }
-}
+
 
 function EditarHandleFormulario(){
     this.handleEvent = function(event){
@@ -258,13 +269,20 @@ function EditarHandleFormulario(){
         envForm.gasto = this.gasto;
         form.addEventListener('submit', envForm);
 
-        let cancelForm = new btnCancelHandle();
+        let cancelForm = new btnCancelarHandle();
         cancelForm.btnAnyadirGasto = btnEditarForm;
         let btnCancelHandle = form.querySelector("button.cancelar");
         btnCancelHandle.addEventListener('click', cancelForm);
     }
 }
-
+function btnCancelarHandle(){
+    this.handleEvent = function(event){
+        this.btnAnyadirGasto.disabled = false;
+        document.getElementById("anyadirgasto-formulario").disabled = false;
+        event.currentTarget.parentNode.remove();
+        repintar();
+    }
+}
 function EnvEditarHandleForm(){
     this.handleEvent = function(event){
         event.preventDefault();
@@ -303,3 +321,4 @@ export{
     BorrarEtiquetasHandle,
     nuevoGastoWebFormulario
 }
+
