@@ -186,4 +186,14 @@ function EnviarEventoFormulario()
         document.getElementById('anyadirgasto-formulario').removeAttribute("disabled");
     } 
 }
+function CancelarEventoFormulario()
+{
+    this.handleEvent = function (event)
+    {
+        event.preventDefault();
+        event.currentTarget.parentNode.remove();
+        document.getElementById('anyadirgasto-formulario').removeAttribute("disabled");
+        repintar();
+    }
+}
 export{mostrarDatoEnId,mostrarGastoWeb,mostrarGastosAgrupadosWeb,repintar,actualizarPresupuestoWeb,nuevoGastoWeb,EditarHandle,BorrarHandle,BorrarEtiquetasHandle,nuevoGastoWebFormulario,EnviarEventoFormulario}
