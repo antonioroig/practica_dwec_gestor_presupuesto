@@ -165,4 +165,25 @@ function nuevoGastoWebFormulario()
     var formulario = plantillaFormulario.querySelector("form");
     
 }
-export{mostrarDatoEnId,mostrarGastoWeb,mostrarGastosAgrupadosWeb,repintar,actualizarPresupuestoWeb,nuevoGastoWeb,EditarHandle,BorrarHandle,BorrarEtiquetasHandle,nuevoGastoWebFormulario}
+function EnviarEventoFormulario()
+{
+    this.handleEvent = function (event)
+    {
+        event.preventDefault();
+        let formulario = event.currentTarget;
+
+        let new_desc = formulario.elements.descripcion.value;
+        let new_valor = parseFloat(formulario.elemts.valor.value);
+        let new_fecha = formulario.elements.fecha.value;
+        let new_etiquetas = formulario.elements.etiquetas.value;
+
+        let new_gasto = new pres.CrearGasto(new_desc,new_valor,new_fecha,...new_etiquetas);
+
+        pres.anyadirGasto(new_gasto);
+
+        repintar();
+
+        document.getElementById('anyadirgasto-formulario').removeAttribute("disabled");
+    } 
+}
+export{mostrarDatoEnId,mostrarGastoWeb,mostrarGastosAgrupadosWeb,repintar,actualizarPresupuestoWeb,nuevoGastoWeb,EditarHandle,BorrarHandle,BorrarEtiquetasHandle,nuevoGastoWebFormulario,EnviarEventoFormulario}
