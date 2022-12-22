@@ -67,6 +67,19 @@ function mostrarGastoWeb(idElemento,gasto)
 
  btnBorrar.addEventListener('click',borrar_gasto)
  div.append(btnBorrar);
+
+ let btnEditarForm = document.createElement('button');
+ 
+ btnEditarForm.type = 'button';
+ btnEditar.className = 'gasto-editar-formulario';
+
+ btnEditarForm.textContent = 'Editar(Formulario)';
+
+ let editar_form = new EditarHandleformulario(gasto);
+ editar_form.gasto = gasto;
+
+ btnEditarForm.addEventListener('click',editar_form);
+ div.appendChild(btnEditarForm);
 };
 function mostrarGastosAgrupadosWeb(idElemento,agrup,periodo)
 {
