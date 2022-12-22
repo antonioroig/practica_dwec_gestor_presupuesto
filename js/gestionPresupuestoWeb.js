@@ -163,7 +163,19 @@ function nuevoGastoWebFormulario()
 {
     let plantillaFormulario = document.getElementById("formulario-template").content.cloneNode(true);
     var formulario = plantillaFormulario.querySelector("form");
-    
+
+    let controles = document.getElementById('controlesprincipales');
+    controles.append(formulario);
+
+    document.getElementById('anyadirgasto-formulario').setAttribute('disabled',"");
+
+    let cancelar = new CancelarEventoFormulario();
+    let cancelar_boton = formulario.querySelector('button.cancelar');
+
+    cancelar_boton.addEventListener('click',cancelar);
+
+    let enviar = new EnviarEventoFormulario();
+    formulario.addEventListener('submit', enviar);
 }
 function EnviarEventoFormulario()
 {
