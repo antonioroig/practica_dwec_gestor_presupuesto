@@ -248,6 +248,26 @@ function BorrarEtiquetasHandle()
 
 }
 
+function nuevoGastoWebFormulario(){
+    let plantillaFormulario = document.getElementById("formulario-template").contentEditable.cloneNode(true);
+
+    let formulario = plantillaFormulario.querySelector("form");
+
+    let controles = document.getElementById("controlesprincipales");
+    controles.appendChild(formulario);
+
+    let botonAnyGasto = document.getElementById("anyadirgasto-formulario");
+    botonAnyGasto.disabled = true;
+
+    let enviar = new SubmitHandle();
+    formulario.addEventListener('submit', enviar);
+
+    let botonCancelar = formulario.querySelector("button.cancelar");
+    let cancelar = new botonCancelarHandle();
+    cancelar.btnAnyadir = botonAnyGasto;
+    botonCancelar.addEventListener('click', cancelar);
+}
+
 
 
 
