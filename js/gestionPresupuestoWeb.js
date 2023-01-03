@@ -1,4 +1,6 @@
  'use strict';
+ import * as gestionPresu from './gestionPresu.js';
+
 function mostrarDatoEnId(valor,idElemento)
 {
    let elemento = document.getElementById(idElemento);
@@ -39,21 +41,13 @@ function mostrarGastoWeb(gasto,idElemento)
   let etiquetasDiv = document.createElement('div');
   etiquetasDiv.className = 'gasto-etiquetas'; 
 
-  /*gasto.etiquetas.forEach(etiqueta => {
-
-    let span = document.createElement('span');
-    span.className = 'gasto-etiquetas-etiqueta';
-    span.textContent = etiqueta;
-    etiquetasDiv.append(span);
-
-  });*/
-
   for(let etiqueta of gasto.etiquetas){
 
     let span = document.createElement('span');
     span.classList.add('gasto-etiquetas-etiqueta') 
     span.textContent += etiqueta
     etiquetasDiv.append(span)
+
   }
   
   
@@ -64,7 +58,11 @@ function mostrarGastoWeb(gasto,idElemento)
   gastoDiv.append(valorDiv);
   gastoDiv.append(etiquetasDiv);
   elemento.append(gastoDiv);
+
+
+
 }
+
 
 function mostrarGastosAgrupadosWeb(idElemento,agrup,periodo)
 {
@@ -92,9 +90,40 @@ function mostrarGastosAgrupadosWeb(idElemento,agrup,periodo)
   
 }
 
+function repintar() {
+  // Limpiar contenido de div#presupuesto y mostrar presupuesto actual
+  limpiarContenidoDeId("presupuesto");
+  mostrarDatoEnId("presupuesto", gestionPresu.mostrarPresupuesto());
+
+  // Limpiar contenido de div#gastos-totales y mostrar gastos totales
+  limpiarContenidoDeId("gastos-totales");
+  mostrarDatoEnId("gastos-totales", gestionPresu.calcularTotalGastos());
+
+  // Limpiar contenido de div#balance-total y mostrar balance total
+  limpiarContenidoDeId("balance-total");
+  mostrarDatoEnId("balance-total", gestionPresu.calcularBalance());
+
+  // Limpiar contenido de div#listado-gastos-completo
+  limpiarContenidoDeId("listado-gastos-completo");
+
+  // Mostrar listado completo de gastos en div#listado-gastos-completo
+  let gastos = gestionPresu.listarGastos();
+  for (let gasto of gastos) {
+      mostrarGastoWeb("listado-gastos-completo", gasto);
+  }
+}
+
+
+function limpiarContenidoDeId(id) {
+  document.getElementById(id).innerHTML = "";
+}
+document.getElementById("actualizarpresupuesto").addEventListener("click",actualizarPresupuestoWeb);
+
 export{
-    mostrarDatoEnId,
-    mostrarGastoWeb,
-    mostrarGastosAgrupadosWeb
+  mostrarDatoEnId,
+  mostrarGastoWeb,
+  mostrarGastosAgrupadosWeb,
+  repintar,
+ 
 }
 //Texto de prueba para la resolución del problema de git basch
