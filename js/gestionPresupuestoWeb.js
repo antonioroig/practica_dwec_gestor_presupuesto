@@ -117,7 +117,29 @@ function repintar() {
 function limpiarContenidoDeId(id) {
   document.getElementById(id).innerHTML = "";
 }
+
+function actualizarPresupuestoWeb() {
+  let presupuesto = prompt("Introduce un presupuesto");
+  gestionPresu.actualizarPresupuesto(Number(presupuesto));
+  repintar();
+}
+
 document.getElementById("actualizarpresupuesto").addEventListener("click",actualizarPresupuestoWeb);
+
+function nuevoGastoWeb() {
+
+  let descripcion = prompt("Introduce una descripción:");
+  let valor = parseFloat(prompt("Introduce un valor:"));
+  let fecha = Date.parse(prompt("Introduce la fecha:"));
+  let etiquetas = prompt("Introduce las etiquetas:").split(',');
+
+  let nuevoGasto = new gestionPresu.CrearGasto(descripcion, valor, fecha, ...etiquetas);
+  gestionPresu.anyadirGasto(nuevoGasto);
+
+  repintar();
+}
+document.getElementById("anyadirgasto").addEventListener("click",nuevoGastoWeb);
+
 
 export{
   mostrarDatoEnId,
