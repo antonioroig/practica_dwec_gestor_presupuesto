@@ -268,6 +268,28 @@ function nuevoGastoWebFormulario(){
     botonCancelar.addEventListener('click', cancelar);
 }
 
+let gasForm = document.getElementById('anyadirgasto-formulario');
+gasForm.addEventListener('click', nuevoGastoWeb);
+
+function SubmitHandle(){
+
+    this.handleEvent = function(enviar){
+        enviar.preventDefault();
+        let data = enviar.currentTarget;
+        let val = parseFloat(data);
+        let etiq = data.etiquetas;
+        let desc = data.descripcion;
+        let fec = data.fecha;
+
+        let id = document.getElementById('anyadirgasto-formulario');
+        id.disabled = false;
+        let gas = new gp.CrearGasto(desc,val,fec,etiq);
+        gp.anyadirGasto(gas);
+        
+    }
+
+}
+
 
 
 
@@ -284,5 +306,6 @@ actualizarPresupuestoWeb,
 nuevoGastoWeb,
 EditarHandle,
 BorrarHandle,
-BorrarEtiquetasHandle
+BorrarEtiquetasHandle,
+nuevoGastoButton
 }
