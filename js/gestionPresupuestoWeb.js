@@ -47,6 +47,11 @@ function mostrarGastoWeb(gasto,idElemento)
     span.classList.add('gasto-etiquetas-etiqueta') 
     span.textContent += etiqueta
     etiquetasDiv.append(span)
+/*------------------------------------------*/
+    let Evento = new BorrarEtiquetasHandle();
+    Evento.gasto = gasto;
+    Evento.etiqueta = etiqueta;
+    span.addEventListener('click', Evento);
 
   }
   
@@ -71,7 +76,17 @@ function mostrarGastoWeb(gasto,idElemento)
   botonEditar.addEventListener("click", editar);
   gastoDiv.appendChild(botonEditar);//Añadir el botón al DOM a continuación de las etiquetas
  
+/*-----------------------------------*/
 
+    let botonBorrar = document.createElement('button');
+    botonBorrar.type = 'button';
+    botonBorrar.textContent = 'Borrrar';
+    botonBorrar.className = 'gasto-borrar';
+
+    let borrar = new BorrarHandle();
+    borrar.gasto = gasto;
+    botonBorrar.addEventListener('click', borrar);
+    gastoDiv.appendChild(botonBorrar);
 }
 
 
