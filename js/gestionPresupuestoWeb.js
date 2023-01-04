@@ -1,5 +1,5 @@
  'use strict';
- import * as gestionPresu from './gestionPresu.js';
+ import * as gestionPresu from './gestionPresupuesto';
 
 function mostrarDatoEnId(valor,idElemento)
 {
@@ -59,7 +59,18 @@ function mostrarGastoWeb(gasto,idElemento)
   gastoDiv.append(etiquetasDiv);
   elemento.append(gastoDiv);
 
-
+  //Crear un botón con texto Editar de tipo button (<button type="button">) con clase gasto-editar.
+  let botonEditar = document.createElement('button');
+  botonEditar.type = "button";
+  botonEditar.textContent = "Editar";
+  botonEditar.className = "gasto-editar";
+//Crear un nuevo objeto a partir de la función constructora EditarHandle.
+  let editar = new EditarHandle();
+  editar.gasto = gasto;//Establecer la propiedad gasto del objeto creado al objeto gasto (recuerda que el objeto gasto es un parámetro pasado a la función mostrarGastoWeb)
+  //Añadir el objeto recién creado como objeto manejador del evento click al botón Editar recién creado.
+  botonEditar.addEventListener("click", editar);
+  gastoDiv.appendChild(botonEditar);//Añadir el botón al DOM a continuación de las etiquetas
+ 
 
 }
 
@@ -160,6 +171,21 @@ function EditarHandle(){
   }
 };
 
+let BorrarHandle = function(){
+  this.handleEvent = function() {
+      gestionPresu.borrarGasto(this.gasto.id)
+
+      repintar();
+  }
+}
+
+let BorrarEtiquetasHandle = function(){
+  this.handleEvent = function() {
+      this.gasto.borrarEtiquetas(this.etiqueta);
+      
+      repintar();
+  }
+}
 export{
   mostrarDatoEnId,
   mostrarGastoWeb,
@@ -168,6 +194,7 @@ export{
   actualizarPresupuestoWeb,
   nuevoGastoWeb,
   EditarHandle,
-  
+  BorrarHandle,
+  BorrarEtiquetasHandle
 }
 //Texto de prueba para la resolución del problema de git basch
