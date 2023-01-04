@@ -50,3 +50,4 @@ gestionPresuWeb.mostrarGastoWeb(element,"listado-gastos-filtrado-4");
 gestionPresuWeb.mostrarGastosAgrupadosWeb("agrupacion-dia", gestionPresu.agruparGastos("dia"), "día");
 gestionPresuWeb.mostrarGastosAgrupadosWeb("agrupacion-mes", gestionPresu.agruparGastos("mes"), "mes");
 gestionPresuWeb.mostrarGastosAgrupadosWeb("agrupacion-anyo", gestionPresu.agruparGastos("anyo"), "año");
+

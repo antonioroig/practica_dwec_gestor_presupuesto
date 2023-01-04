@@ -141,11 +141,33 @@ function nuevoGastoWeb() {
 document.getElementById("anyadirgasto").addEventListener("click",nuevoGastoWeb);
 
 
+
+function EditarHandle(){
+
+  this.handleEvent = function(event)
+  {
+
+      let descripcion = prompt("Introduce una descripción:");
+      let valor = parseFloat(prompt("Introduce un valor:"));
+      let fecha = Date.parse(prompt("Introduce la fecha:"));
+      let etiquetas = prompt(("Introduce las etiquetas:").split(','));
+      this.gasto.actualizarValor(valor);
+      this.gasto.actualizarDescripcion(descripcion);
+      this.gasto.actualizarFecha(fecha);
+      this.gasto.anyadirEtiquetas(...etiquetas);
+      repintar();
+
+  }
+};
+
 export{
   mostrarDatoEnId,
   mostrarGastoWeb,
   mostrarGastosAgrupadosWeb,
   repintar,
- 
+  actualizarPresupuestoWeb,
+  nuevoGastoWeb,
+  EditarHandle,
+  
 }
 //Texto de prueba para la resolución del problema de git basch

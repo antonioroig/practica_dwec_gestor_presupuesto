@@ -55,7 +55,7 @@ function CrearGasto(descripcion,valor ,fecha= Date.now(), ...etiquetas )
 
         this.mostrarGasto = function() 
         {
-            return (`Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €`)
+            return (`Gasto correspondiente a ${this.descripcion} con valor ${this.valor}€`)
         }
 
         this.actualizarDescripcion =function(nuevaDescripcion)
@@ -347,6 +347,3 @@ export   {
 
    
 }
- 
- 
-
