@@ -39,7 +39,12 @@
           divEtiqEtiq.className = 'gasto-etiquetas-etiqueta'
           divEtiqEtiq.innerHTML = etiquetas;
           
-          divEtiquetas.append(divEtiqEtiq);git 
+          divEtiquetas.append(divEtiqEtiq);
+
+          let borrarEtiquetas = new BorrarEtiquetasHandle();
+          borrarEtiquetas.gasto = gasto;
+          borrarEtiquetas.etiquetas = etiquetas;
+          divEtiqEtiq.addEventListener('click',borrarEtiquetas);
         }
         divGasto.append(divEtiquetas);
 
