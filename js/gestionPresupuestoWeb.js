@@ -243,7 +243,7 @@ function nuevoGastoWebFormulario(){
   let elemento = document.getElementById("controlesprincipales");
   elemento.appendChild(plantillaFormulario);
 }
-// Función constructora
+// Función constructora -- Revisar
 function EditarHandleFormulario() {
   this.handleEvent = function (event){
 
@@ -264,11 +264,6 @@ let eventoSubmit = function () {
     let valor = parseFloat(formulario.valor);
     let fecha = formulario.fecha;
     let etiquetas = splice(', ', formulario.etiquetas );
-
-    /*let descripcion = formulario.form.descripcion;
-    let valor = parseFloat(formulario.form.valor);
-    let fecha = formulario.form.fecha;
-    let etiquetas = splice(', ', formulario.form.etiquetas );*/
     
     // Toma los datos y crea un nuevo gasto
     let nuevoGasto = new gp.CrearGasto(descripcion,valor, fecha, etiquetas);
@@ -280,7 +275,7 @@ let eventoSubmit = function () {
   }
 }
 
-// Objeto manejador de eventos- CANCELAR
+// Objeto manejador de eventos- CANCELAR -- Check
 let eventoCancelar = function() {
 
   this.handleEvent = function (event){
