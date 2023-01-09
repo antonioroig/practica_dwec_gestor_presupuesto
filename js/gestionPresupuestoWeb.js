@@ -316,11 +316,6 @@ function EditarHandleFormulario()
 
         
         botonEditarForm.setAttribute("disabled", "");
-
-        let editarFormularioApi = form.querySelector("button.gasto-enviar-api");
-        let eventEditar = new EditarGastoApi();
-        eventEditar.gasto = this.gasto;
-        editarFormularioApi.addEventListener("click", eventEditar);
     }
 }
 
