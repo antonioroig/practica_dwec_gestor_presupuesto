@@ -117,10 +117,10 @@ function mostrarGastoWeb(gasto, idElemento)
     botonEditarForm.type="button";
     botonEditarForm.textContent="Editar Form";
 
-    let editarFormEvent = new EditarHandleformulario();
+    let editarFormEvent = new EditarHandleFormulario();
     editarFormEvent.gasto=gasto;
-    editarFormEvent.boton=btnEditarFormulario;
-    editarFormEvent.elem= divGasto;
+    editarFormEvent.boton=botonEditarForm;
+    editarFormEvent.elem= padre;
     botonEditarForm.addEventListener("click",editarFormEvent);
      
     padre.append(botonEditarForm);
@@ -281,9 +281,37 @@ function EnviarGastoFormHandle()
 }
 function EditarHandleFormulario()
 {
-    this.handleEvent = function(evento)
+    this.handleEvent = function(gasto)
     {
+        let pFormulario = document.getElementById("formulario-template").content.cloneNode(true);;
+        var form = pFormulario.querySelector("form");
         
+        let divControlesPrincipales = document.getElementById("controlesprincipales")
+        divControlesPrincipales.appendChild(form);
+       
+        let botonEditarForm = gasto.currentTarget;
+        botonEditarForm.appendChild(form);
+        form.elements.descripcion.value  = this.gasto.descripcion;
+        form.elements.valor.value = this.gasto.valor;
+        form.elements.fecha.value = new Date(this.gasto.fecha).toISOString().substr(0,10);
+        form.elements.etiquetas.value = this.gasto.etiquetas;
+
+        
+        let EditarFormHandle1 = new EnviarHandle();
+        EditarFormHandle1.gasto = this.gasto;
+        form.addEventListener('submit', EditarFormHandle1);
+        
+        let Cancelar = form.querySelector("button.cancelar");
+        let cancelarObj = new CancelarFormHandle();
+        Cancelar.addEventListener("click", cancelarObj);
+
+        
+        botonEditarForm.setAttribute("disabled", "");
+
+        let editarFormularioApi = form.querySelector("button.gasto-enviar-api");
+        let eventEditar = new EditarGastoApi();
+        eventEditar.gasto = this.gasto;
+        editarFormularioApi.addEventListener("click", eventEditar);
     }
 }
 
