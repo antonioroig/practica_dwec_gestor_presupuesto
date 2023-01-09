@@ -279,6 +279,15 @@ function EnviarGastoFormHandle()
         document.getElementById("anyadirgasto-formulario").removeAttribute("disabled");
     }
 }
+function CancelarFormHandle() 
+{
+    this.handleEvent = function (event)
+    {
+        event.currentTarget.parentNode.remove();
+        let botonAnyadirGastoForm = document.getElementById("anyadirgasto-formulario").removeAttribute("disabled");
+        repintar();
+    }
+}
 function EditarHandleFormulario()
 {
     this.handleEvent = function(gasto)
