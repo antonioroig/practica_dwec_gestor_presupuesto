@@ -306,7 +306,7 @@ function filtrarGastosWeb(){
         let obj = {
             descripcionContiene : des,
             fechaHasta : fechaH,
-            vechaDesde : fechaD,
+            fechaDesde : fechaD,
             valorMaximo : valorMax,
             valorMinimo : valorMin,
             etiquetasTiene : etiNueva
