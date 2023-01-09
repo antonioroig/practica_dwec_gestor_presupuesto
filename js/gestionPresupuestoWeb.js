@@ -289,8 +289,8 @@ function filtrarGastosWeb(){
         let formulario = event.currentTarget;
 
         let descripcion = formulario.elements["formulario-filtrado-descripcion"].value;
-        let valorMin = formulario.elements["formulario-filtrado-valor-minimo"].value;
-        let valorMax = formulario.elements["formulario-filtrado-valor-maximo"].value;
+        let valorMin =  parseFloat(formulario.elements["formulario-filtrado-valor-minimo"].value);
+        let valorMax = parseFloat(formulario.elements["formulario-filtrado-valor-maximo"].value);
         let fechaInicial = formulario.elements["formulario-filtrado-fecha-desde"].value;
         let fechaFinal = formulario.elements["formulario-filtrado-fecha-hasta"].value;
         let etiquetas = formulario.elements["formulario-filtrado-etiquetas-tiene"].value;
@@ -309,7 +309,14 @@ function filtrarGastosWeb(){
             etiquetasTiene : etiquetasTienes,
         }
 
-        mostrarGastoWeb("listado-gastos-completo",gestion.filtrarGastos(gasto));
+        document.getElementById("listado-gastos-completo").innerHTML = "";
+
+        let Filtrado = gestion.filtrarGastos(gasto);
+
+        Filtrado.forEach(g => {
+            mostrarGastoWeb("listado-gastos-completo",g);
+
+        })
     }
 }
 
