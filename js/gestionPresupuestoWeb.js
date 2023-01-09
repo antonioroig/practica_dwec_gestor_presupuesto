@@ -236,10 +236,10 @@ function nuevoGastoWebFormulario()
     var formulario = plantillaFormulario.querySelector("form");
     let divContPrincipales = document.getElementById("controlesprincipales")
     divContPrincipales.appendChild(formulario);
-    let btnAnyadirGast = document.getElementById("anyadirgasto-formulario").setAttribute("disabled", "");
+    let botonAnyadirGast = document.getElementById("anyadirgasto-formulario").setAttribute("disabled", "");
    
     let SendObj = new EnviarGastoFormHandle();
-    form.addEventListener('submit', SendObj);
+    formulario.addEventListener('submit', SendObj);
 
     
 }
@@ -267,12 +267,12 @@ function EnviarGastoFormHandle()
 {
     this.handleEvent = function(event)
     {
-        e.preventDefault();
-         let form = event.currentTarget;
-         let descripcion = form.elements.descripcion.value;
-         let valor = parseFloat(form.elements.valor.value);
-         let fecha = form.elements.fecha.value;
-         let etiquetas = form.elements.etiquetas.value;
+        event.preventDefault();
+        let form = event.currentTarget;
+        let descripcion = form.elements.descripcion.value;
+        let valor = parseFloat(form.elements.valor.value);
+        let fecha = form.elements.fecha.value;
+        let etiquetas = form.elements.etiquetas.value;
         let Nuevogas = new exGp.CrearGasto(descripcion, valor, fecha, etiquetas);
         exGp.anyadirGasto(Nuevogas);
         repintar();
@@ -314,10 +314,15 @@ function EditarHandleFormulario()
         let cancelarObj = new CancelarFormHandle();
         Cancelar.addEventListener("click", cancelarObj);
 
-        
+  
         botonEditarForm.setAttribute("disabled", "");
+
     }
-}
+}/*
+function CancelarHandleEditarForulario(){
+    this.form.remove();
+    this.botonEditarForm.removeAttribute("disabled")
+}*/
 
 export   {  
     mostrarDatoEnId,
