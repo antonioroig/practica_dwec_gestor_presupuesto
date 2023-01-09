@@ -312,8 +312,12 @@ function filtrarGastosWeb(){
             etiquetasTiene : etiNueva
         }
         
+        document.getElementById("listado-gastos-completo").innerHTML = "";
+        let gFiltrado = scriptsGestion.filtrarGastos(obj);
 
-        mostrarGastoWeb("listado-gastos-completo", scriptsGestion.filtrarGastos(obj));
+        gFiltrado.forEach(g => {
+            mostrarGastoWeb("listado-gastos-completo", g)
+        })
     }
     
 }
