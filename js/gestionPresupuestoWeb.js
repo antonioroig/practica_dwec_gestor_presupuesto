@@ -1,5 +1,5 @@
  'use strict';
- import * as gestionPresu from './gestionPresupuesto';
+ import * as gestionPresu from './gestionPresupuesto.js';
 
 function mostrarDatoEnId(valor,idElemento)
 {
@@ -119,15 +119,15 @@ function mostrarGastosAgrupadosWeb(idElemento,agrup,periodo)
 function repintar() {
   // Limpiar contenido de div#presupuesto y mostrar presupuesto actual
   limpiarContenidoDeId("presupuesto");
-  mostrarDatoEnId("presupuesto", gestionPresu.mostrarPresupuesto());
+  mostrarDatoEnId(gestionPresu.mostrarPresupuesto(),"presupuesto");
 
   // Limpiar contenido de div#gastos-totales y mostrar gastos totales
   limpiarContenidoDeId("gastos-totales");
-  mostrarDatoEnId("gastos-totales", gestionPresu.calcularTotalGastos());
+  mostrarDatoEnId( gestionPresu.calcularTotalGastos(),"gastos-totales");
 
   // Limpiar contenido de div#balance-total y mostrar balance total
   limpiarContenidoDeId("balance-total");
-  mostrarDatoEnId("balance-total", gestionPresu.calcularBalance());
+  mostrarDatoEnId( gestionPresu.calcularBalance(),"balance-total");
 
   // Limpiar contenido de div#listado-gastos-completo
   limpiarContenidoDeId("listado-gastos-completo");
@@ -135,7 +135,7 @@ function repintar() {
   // Mostrar listado completo de gastos en div#listado-gastos-completo
   let gastos = gestionPresu.listarGastos();
   for (let gasto of gastos) {
-      mostrarGastoWeb("listado-gastos-completo", gasto);
+      mostrarGastoWeb(gasto,"listado-gastos-completo");
   }
 }
 
