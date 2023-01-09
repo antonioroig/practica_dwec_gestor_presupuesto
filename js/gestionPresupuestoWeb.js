@@ -263,7 +263,7 @@ botonNuevoGasto.addEventListener('click', nuevoGastoWebFormulario);
 function EnviarHandleFormulario(){
     this.handleEvent = function(event){
         event.preventDefault();
-        let formulario = document.currentTarget;
+        let formulario = event.currentTarget;
         let descripcion = formulario.elements.descripcion.value;
         let valor = parseFloat(formulario.elements.valor.value);
         let fecha = new Date(formulario.elements.fecha.value);
