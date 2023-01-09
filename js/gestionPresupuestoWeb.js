@@ -87,6 +87,19 @@ function mostrarGastoWeb(gasto,idElemento)
     borrar.gasto = gasto;
     botonBorrar.addEventListener('click', borrar);
     gastoDiv.appendChild(botonBorrar);
+
+  /*------------------------------------------------- */
+
+  let botonEditarFor = document.createElement('button');
+  botonEditarFor.type = "button";
+  botonEditarFor.textContent = "Editar";
+  botonEditarFor.className = "gasto-editar";
+//Crear un nuevo objeto a partir de la función constructora EditarHandle.
+  let editarfor = new EditarHandle();
+  editarfor.gasto = gasto;//Establecer la propiedad gasto del objeto creado al objeto gasto (recuerda que el objeto gasto es un parámetro pasado a la función mostrarGastoWeb)
+  //Añadir el objeto recién creado como objeto manejador del evento click al botón Editar recién creado.
+  botonEditar.addEventListener("click", editarfor);
+  gastoDiv.appendChild(botonEditar);
 }
 
 
