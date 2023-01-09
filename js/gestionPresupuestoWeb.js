@@ -114,7 +114,7 @@ function mostrarGastoWeb(idElemento, gasto){
     divGasto.append(btnBorrar);
 
     let botonEditarForm = document.createElement('button');
-    botonEditarForm.textContent = 'Editar (Formulario)';
+    botonEditarForm.textContent = 'Editar Formulario';
     botonEditarForm.type = 'button';
     botonEditarForm.className = 'gasto-editar-formulario';
 
@@ -122,9 +122,9 @@ function mostrarGastoWeb(idElemento, gasto){
     editarForm.gasto = gasto;
     editarForm.divGasto = divGasto;
     editarForm.botonEditarForm = botonEditarForm;
-    botonEditarForm.addEventListener("click", editarForm);
+    botonEditarForm.addEventListener('click', editarForm);
 
-    divGasto.appendChild(BotonEditarForm);
+    divGasto.appendChild(botonEditarForm);
 
     divGasto.appendChild(divGastoEtiquetas);
     elemento2.appendChild(divGasto);
@@ -184,6 +184,8 @@ function actualizarPresupuestoWeb(){
     gestionPresupuesto.actualizarPresupuesto(presupuesto);
     repintar();
 }
+let botonActualizar = document.getElementById('actualizarpresupuesto');
+botonActualizar.addEventListener('click', actualizarPresupuestoWeb);
 
 function nuevoGastoWeb(){
     let descripcion = prompt('Introduce la descripción del gasto');
@@ -196,6 +198,8 @@ function nuevoGastoWeb(){
     gestionPresupuesto.anyadirGasto(nuevoGasto);
     repintar();
 }
+let botonNuevo = document.getElementById('anyadirgasto');
+botonNuevo.addEventListener('click', nuevoGastoWeb);
 
 function EditarHandle(){
     this.handleEvent = function (event)
@@ -231,23 +235,17 @@ function BorrarEtiquetasHandle()
     };
 }
 
-let botonActualizar = document.getElementById('actualizarpresupuesto');
-botonActualizar.addEventListener('click', actualizarPresupuestoWeb);
-
-let botonNuevo = document.getElementById('anyadirgasto');
-botonNuevo.addEventListener('click', nuevoGastoWeb);
-
 
 // Práctica 6
 function nuevoGastoWebFormulario(){
-    let plantillaFormulario = document.getElementById('formulario-template').content.cloneNode(true);
+    let plantillaFormulario = document.getElementById('formulario-template').content.cloneNode(true);;
     var formulario = plantillaFormulario.querySelector('form');
 
     let divControlesPrincipales = document.getElementById('controlesprincipales');
     divControlesPrincipales.append(formulario);
 
     let enviarForm = new EnviarHandleFormulario();
-    formulario.addEventListener('submit', enviarForm);
+    formulario.addEventListener("submit", enviarForm);
 
     let cancelarForm = new CancelarHandleFormulario(); 
     cancelarForm.formulario = formulario;
@@ -258,6 +256,9 @@ function nuevoGastoWebFormulario(){
   
     repintar();
 }
+let botonNuevoGasto = document.getElementById('anyadirgasto-formulario');
+botonNuevoGasto.addEventListener('click', nuevoGastoWebFormulario);
+
 
 function EnviarHandleFormulario(){
     this.handleEvent = function(event){
@@ -303,7 +304,7 @@ function EditarHandleFormulario(){
         let enviarForm = new EnviarHandleEditarFormulario();
         enviarForm.gasto = this.gasto;
         enviarForm.formulario = formulario;
-        formulario.addEventListener('submit', enviarForm);
+        formulario.addEventListener("submit", enviarForm);
 
         this.botonEditarForm.setAttribute('disabled','')
 
@@ -315,7 +316,29 @@ function EditarHandleFormulario(){
         botonCancelar.addEventListener('click', cancelarForm); 
     }
 }
+function CancelarHandleEditarFormulario(){
+    this.handleEvent = function(event)
+    {
+        this.formulario.remove();
+        this.botonEditarForm.removeAttribute("disabled");
+    }
+}
+function EnviarHandleEditarFormulario(){
+    this.handleEvent = function(event)
+    {
+        event.preventDefault();
 
+        this.gasto.descripcion = this.formulario.elements.descripcion.value;
+
+        this.gasto.valor = Number(this.formulario.elements.valor.value);
+
+        this.gasto.fecha = new Date(this.formulario.elements.fecha.value);
+
+        this.gasto.etiquetas = this.formulario.elements.etiquetas.value.split(",");
+
+        repintar();
+    }
+}
 
 export {
     mostrarDatoEnId,
