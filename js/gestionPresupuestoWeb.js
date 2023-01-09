@@ -271,31 +271,35 @@ function filtrarGastosWeb()
 {
     this.handleEvent = function(event){
         event.preventDefault();
-        let formulario = document.getElementById("formulario-filtrado")
+     
         let descripcion = document.getElementById("formulario-filtrado-descripcion").value
-        let valorMinimo = document.getElementById("formulario-filtrado-valor-minimo").value
-        let valorMaximo = document.getElementById("formulario-filtrado-valor-maximo").value
-        let fechaInicial = document.getElementById("formulario-filtrado-fecha-desde").value
-        let fechaFinal = document.getElementById("formulario-filtrado-fecha-hasta").value
+        let valorMinimo = Number(document.getElementById("formulario-filtrado-valor-minimo").value)
+        let valorMaximo = Number(document.getElementById("formulario-filtrado-valor-maximo").value)
+        let fechaInicial = Date(document.getElementById("formulario-filtrado-fecha-desde").value)
+        let fechaFinal = Date(document.getElementById("formulario-filtrado-fecha-hasta").value)
+        let etiquetas = this.formulario.elements["formulario-filtrado-etiquetas-tiene"].value
 
-        if(document.getElementById("formulario-filtrado-etiquetas-tiene").value != null)
-        {
-            let etiquetas = gestionPre.transformarListadoEtiquetas(document.getElementById("formulario-filtrado-etiquetas-tiene").value);
+        if(etiquetas){
+            etiquetas = transformarListadoEtiquetas(etiquetas)
         }
         
         let filtrado = {
-            descripcion: this.descripcion,
-            valorMinimo: this.valorMinimo,
-            valorMaximo: this.valorMaximo,
-            fechaInicial: this.fechaInicial,
-            fechaFinal: this.fechaFinal,
-            etiquetas: this.etiquetas
+            descripcion: descripcion,
+            valorMinimo: valorMinimo,
+            valorMaximo: valorMaximo,
+            fechaInicial: fechaInicial,
+            fechaFinal: fechaFinal,
+            etiquetas: etiquetas
         }
         gestionPre.filtrarGastos(filtrado);
-        formulario.addEventListener('submit', filtrarResultados);
-       repintar();
     }
 }
+let divFormulario = document.getElementById("filtrar-gastos")
+let formulario = divFormulario.querySelector("form");
+
+let form = new filtrarGastosWeb();
+form.formulario = formulario;
+formulario.addEventListener('submit', form);
 export {
     mostrarDatoEnId,
     mostrarGastoWeb,
