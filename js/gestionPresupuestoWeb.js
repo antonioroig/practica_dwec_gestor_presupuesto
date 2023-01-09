@@ -283,6 +283,38 @@ function EnviarEditarHandle(){
     }
 }
 
+function filtrarGastosWeb(){
+    this.handleEvent = function(event){
+        event.preventDefault();
+        let formulario = event.currentTarget;
+
+        let descripcion = formulario.elements["formulario-filtrado-descripcion"].value;
+        let valorMin = formulario.elements["formulario-filtrado-valor-minimo"].value;
+        let valorMax = formulario.elements["formulario-filtrado-valor-maximo"].value;
+        let fechaInicial = formulario.elements["formulario-filtrado-fecha-desde"].value;
+        let fechaFinal = formulario.elements["formulario-filtrado-fecha-hasta"].value;
+        let etiquetas = formulario.elements["formulario-filtrado-etiquetas-tiene"].value;
+        let etiquetasTienes;
+
+        if(etiquetas.length > 0){
+            etiquetasTienes = gestion.transformarListadoEtiquetas(etiquetas);
+        }
+
+        let gasto = {
+            descripcionContiene : descripcion,
+            valorMinimo : valorMin,
+            valorMaximo : valorMax,
+            fechaDesde : fechaInicial,
+            fechaHasta : fechaFinal,
+            etiquetasTiene : etiquetasTienes,
+        }
+
+        mostrarGastoWeb("listado-gastos-completo",gestion.filtrarGastos(gasto));
+    }
+}
+
+let formularioFiltrado = new filtrarGastosWeb();
+document.getElementById("formulario-filtrado").addEventListener("submit", formularioFiltrado);
 
 actualizarpresupuesto.addEventListener("click", actualizarPresupuestoWeb);
 
