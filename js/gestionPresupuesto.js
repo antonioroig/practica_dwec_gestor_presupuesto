@@ -236,7 +236,8 @@ function agruparGastos(periodo = "mes",etiquetas,fechadesde,fechahasta = Date.no
 }
 
 function transformarListadoEtiquetas(etiquetas){
-    
+    let arr = etiquetas.split(/[,.:;\s]/).filter(s => s != "");
+    return arr;
 }
            
   
