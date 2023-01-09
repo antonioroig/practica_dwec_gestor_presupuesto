@@ -203,7 +203,7 @@ function agruparGastos(periodo = `mes`,etiquetas,fechaDesde2,fechaHasta2 = Date.
     
 }
 function transformarListadoEtiquetas(etiquetas){
-    let array = etiquetas.split(/[,.:;\s]/).filter(s => s != "");
+    let array = etiquetas.match(/[,.:;\s]/);
     return array;
 }
 

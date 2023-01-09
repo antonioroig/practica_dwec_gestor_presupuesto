@@ -290,9 +290,20 @@ function EnviarEditarHandleFormulario(){
 
     }
 }
+function filtrarGastosWeb(){
+    this.handleEvent = function(event){
+        event.preventDefault();
+        let form = event.currentTarget;
 
+        let descripcion = form.elements["formulario-filtrado-descripcion"].value;
+        let valorMin = form.elements["formulario-filtrado-valor-minimo"].value;
+        let valorMax = form.elements["formulario-filtrado-valor-maximo"].value;
+        let fechaInicial = form.elements["formulario-filtrado-fecha-desde"].value;
+        let fechaFinal = form.elements["formulario-filtrado-fecha-hasta"].value;
+        
 
-
+    }
+}
 
 
 //NO MODIFICAR.
@@ -305,5 +316,6 @@ export   {
     nuevoGastoWeb,
     EditarHandle,
     BorrarHandle,
-    nuevoGastoWebFormulario
+    nuevoGastoWebFormulario,
+    filtrarGastosWeb
 }
