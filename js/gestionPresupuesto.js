@@ -202,6 +202,10 @@ function agruparGastos(periodo = `mes`,etiquetas,fechaDesde2,fechaHasta2 = Date.
     return resultado;
     
 }
+function transformarListadoEtiquetas(etiquetas){
+    let array = etiquetas.split(/[,.:;\s]/).filter(s => s != "");
+    return array;
+}
 
 
         
@@ -220,4 +224,5 @@ export   {
     calcularBalance,
     filtrarGastos,
     agruparGastos,
+    transformarListadoEtiquetas
 }
