@@ -171,7 +171,7 @@ function nuevoGastoWebFormulario(){
     DIVcontrolesprincipales.append(formulario);
 
     let enviarForm = EnviarHandleFormulario();
-    enviarForm.addEventListener('submit',enviarForm);
+    formulario.addEventListener('submit',enviarForm);
 
     let cancelarForm = new CancelarHandleFormulario(); 
     cancelarForm.formulario = formulario;
@@ -189,7 +189,7 @@ anyadirGastoForm6.addEventListener('click', nuevoGastoWebFormulario);
 function EnviarHandleFormulario(){
     this.handleEvent = function(event){
         event.preventDefault();
-        let formulario = event.currentTarget();
+        let formulario = event.currentTarget;
         let descripción = formulario.elements.descripcion.value;
         let valor = parseFloat(formulario.elements.valor.value);
         let fecha = new Date(formulario.elements.fecha.value);
