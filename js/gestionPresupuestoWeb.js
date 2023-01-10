@@ -293,7 +293,36 @@ function nuevoGastoWebFormulario()
     cancelar.btnAddGastoo = btnAddGastoo;
 
     btnCancelar.addEventListener("click", cancelar);
-    
+
+}
+
+function EnviarFormHandle()
+{
+
+    this.handleEvent = function(event)
+    {
+
+        let formularios = event.currentTarget;
+
+        let descricpion = formularios.elements.descricpion.value;
+
+        let valor = parseFloat(formularios.elements.valor.value);
+
+        let date = formularios.elements.fecha.value;
+
+        let etiqueta = formularios.elements.etiquetas.value;
+
+        let enviarGasto = new gesPresupuesto.CrearGasto(descricpion, valor, date, etiqueta);
+
+
+        gesPresupuesto.anyadirGasto(enviarGasto);
+
+        repintar();
+
+        let id = document.getElementById
+
+    }
+
 }
 
 actualizarpresupuesto.addEventListener("click", actualizarPresupuestoWeb);
