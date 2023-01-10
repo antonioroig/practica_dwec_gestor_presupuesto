@@ -374,11 +374,29 @@ function EditarHandleFormulario()
 
         formularios.elements.fecha.value = this.gasto.fecha;
 
-        form.elements.etiquetas.value = this.gasto.etiquetas
+        form.elements.etiquetas.value = this.gasto.etiquetas;
+
+
+        let eventFormulario = new editarHandleFormularioEnv();
+
+        eventFormulario.gasto = this.gasto;
+
+        formularios.addEventListener("click", eventFormulario);
+
+
+        let cancelarForm = new btnCancelarHandle();
+
+        cancelarForm.btnAddGastoo = btnEditarFormulario;
+
+        let btnCancelarHandle = form.querySelector("button.cancelar");
+
+        btnCancelarHandle.addEventListener("click", cancelarForm);
 
     }
 
 }
+
+
 
 actualizarpresupuesto.addEventListener("click", actualizarPresupuestoWeb);
 
