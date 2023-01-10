@@ -327,6 +327,24 @@ function EnviarFormHandle()
 
 }
 
+function btnCancelarHandle()
+{
+
+    this.handleEvent = function(event)
+    {
+
+        this.btnAddGastoo.disbled = false;
+
+        document.getElementById("anyadirgasto-formulario").disbled = false;
+
+        event.currentTarget.parentNode.remove();
+
+        repintar();
+
+    }
+
+}
+
 
 
 actualizarpresupuesto.addEventListener("click", actualizarPresupuestoWeb);
