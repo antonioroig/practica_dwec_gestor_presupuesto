@@ -170,15 +170,15 @@ function nuevoGastoWebFormulario(){
     let DIVcontrolesprincipales = document.getElementById('controlesprincipales');
     DIVcontrolesprincipales.append(formulario);
 
-    let enviarForm = EnviarHandleFormulario();
+    let enviarForm = new EnviarHandleFormulario();
     formulario.addEventListener('submit',enviarForm);
+
+    document.getElementById('anyadirgasto-formulario').setAttribute('disabled','');
 
     let cancelarForm = new CancelarHandleFormulario(); 
     cancelarForm.formulario = formulario;
     let botonCancelar = formulario.querySelector('button.cancelar');
     botonCancelar.addEventListener('click', cancelarForm);
-
-    document.getElementById('anyadirgasto-formulario').setAttribute('disabled','');
 
     repintar();
 }
