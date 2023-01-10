@@ -319,7 +319,9 @@ function EnviarFormHandle()
 
         repintar();
 
-        let id = document.getElementById
+        let id = document.getElementById("anyadirgasto-formulario");
+
+        id.disbled = false;
 
     }
 
