@@ -186,6 +186,19 @@
       } 
   }
 
+  function nuevoGastoWebFormulario(){
+    let plantillaFormulario = document.getElementById("formulario-template").content.cloneNode(true);
+    var formulario = plantillaFormulario.querySelector("form");
+
+    let evento = document.getElementById('controlesprincipales');
+    evento.append(formulario);
+
+    document.getElementById('anyadirgasto-formulario').setAttribute('disabled',"");
+
+    
+
+  }
+
   
   export{
     mostrarDatoEnId,
@@ -196,6 +209,7 @@
     nuevoGastoWeb,
     EditarHandle,
     BorrarHandle,
-    BorrarEtiquetasHandle
+    BorrarEtiquetasHandle,
+    nuevoGastoWebFormulario
   }
 
