@@ -176,7 +176,6 @@ function filtrarGastos({fechaDesde,
     });
     return arrayFiltrado;  
 };
-
 function agruparGastos(periodo, etiquetasTiene, fechaDesde, fechaHasta)
 {   let filtro, agrupacion;
     filtro = filtrarGastos({fechaDesde, fechaHasta, etiquetasTiene});
@@ -186,6 +185,10 @@ function agruparGastos(periodo, etiquetasTiene, fechaDesde, fechaHasta)
         return acc;
     },{});
     return agrupacion;
+};
+function transformarListadoEtiquetas(etiquetasTiene){
+    let etiquetas = etiquetasTiene.match(/[a-z0-9]+/gi);
+    return etiquetas;
 };
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
@@ -201,5 +204,6 @@ export   {
     calcularTotalGastos,
     calcularBalance,
     filtrarGastos,
-    agruparGastos
+    agruparGastos,
+    transformarListadoEtiquetas
 }

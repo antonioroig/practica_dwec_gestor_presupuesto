@@ -261,6 +261,33 @@ function EnviarHandleFormulario(){
     }
 };
 
+function filtrarGastosWeb(){
+    this.handleEvent = function(event){
+        event.preventDefault();
+        let desc = document.getElementById("formulario-filtrado-descripcion").value;
+        let minValor = parseFloat(document.getElementById("formulario-filtrado-valor-minimo").value);
+        let MaxValor = parseFloat(document.getElementById("formulario-filtrado-valor-maximo").value);
+        let fechaInicial = Date.parse(document.getElementById("formulario-filtrado-fecha-desde").value);
+        let fechaFinal = Date.parse(document.getElementById("formulario-filtrado-fecha-hasta").value);
+        let eti = document.getElementById("formulario-filtrado-etiquetas-tiene").value;
+
+        let miFiltrado = [];
+
+        if(eti.length > 0){
+            miFiltrado.etiquetasTiene = gestionPresupuesto.transformarListadoEtiquetas(eti);
+        }
+
+        miFiltrado.descripcion = desc;
+        miFiltrado.valorMinimo = minValor;
+        miFiltrado.valorMaximo = MaxValor;
+        miFiltrado.fechaDesde = fechaInicial;
+        miFiltrado.fechaHasta = fechaFinal;
+        miFiltrado.etiquetas = eti;
+
+        document.getElementById("listado-gastos-completo").innerHTML = "";
+        
+    };
+};
 
 //He puesto aquí los botones todos juntos porque luego no los encuentro.
 //Botones
@@ -282,5 +309,6 @@ export{
     EditarHandleFormulario,
     CancelarHandleFormulario,
     EnviarHandle,
-    EnviarHandleFormulario
+    EnviarHandleFormulario,
+    filtrarGastosWeb
 };
