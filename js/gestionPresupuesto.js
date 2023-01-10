@@ -215,9 +215,9 @@ function CrearGasto(descripcion,valor, fecha = Date.now(), ...etiquetas) {
          },{}); return gastosAgrupados;   
         };
 
-        function transformarListadoEtiquetas(etiqueta){
-            let etiquetasTiene = etiqueta.match(/[^a-z\s]/gi);
-            return etiquetasTiene;
+        function transformarListadoEtiquetas(etiquetaTiene){
+            let etiquetasT = etiquetaTiene.match(/[a-z0-9]+/gi);
+            return etiquetasT;
         };
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
