@@ -263,6 +263,18 @@ function BorrarEtiquetasHandle()
 
 }
 
+function gastoWebFormulario()
+{
+
+    let plantillaFormulario = document.getElementById("formulario-template").content.cloneNode(true);;
+ 
+    var formulario = plantillaFormulario.querySelector("form");
+
+    let formularioControles = document.getElementById("controlesprincipales")
+
+
+}
+
 actualizarpresupuesto.addEventListener("click", actualizarPresupuestoWeb);
 
 anyadirgasto.addEventListener("click", nuevoGastoWeb);
