@@ -237,6 +237,8 @@ function BorrarHandle()
 
 }
 
+
+
 function BorrarEtiquetasHandle()
 {
 
@@ -248,8 +250,31 @@ function BorrarEtiquetasHandle()
 
 }
 
+
+function EditarHandleformulario()
+{
+    this.handleEvent = function(editForm)
+    {
+        editForm.preventDefault();
+
+        
+    }
+}
+
+function CancelarFormularioHandle()
+{
+    this.handleEvent = function(cancelar)
+    {
+        cancelar.preventDefault();
+
+        cancelar.currentTarget.parentNode.remove();
+        document.getElementById("anyadirgasto-formulario").removeAttribute("disable");
+    }
+}
+
 function nuevoGastoWebFormulario(){
-    let plantillaFormulario = document.getElementById("formulario-template").contentEditable.cloneNode(true);
+    let plantillaFormulario = document.getElementById("formulario-template").content.cloneNode(true);;
+    
 
     let formulario = plantillaFormulario.querySelector("form");
 
@@ -257,29 +282,33 @@ function nuevoGastoWebFormulario(){
     controles.appendChild(formulario);
 
     let botonAnyGasto = document.getElementById("anyadirgasto-formulario");
-    botonAnyGasto.disabled = true;
+   
+    botonAnyGasto.disabled = true; 
+   
+
+    
+
+    let botonCancelar = formulario.querySelector("button.cancelar");
+    let cancelar = new CancelarFormularioHandle();
+    cancelar.btnAnyadir = botonAnyGasto;
+    botonCancelar.addEventListener('click', cancelar);
 
     let enviar = new SubmitHandle();
     formulario.addEventListener('submit', enviar);
-
-    let botonCancelar = formulario.querySelector("button.cancelar");
-    let cancelar = new botonCancelarHandle();
-    cancelar.btnAnyadir = botonAnyGasto;
-    botonCancelar.addEventListener('click', cancelar);
 }
 
 let gasForm = document.getElementById('anyadirgasto-formulario');
-gasForm.addEventListener('click', nuevoGastoWeb);
+gasForm.addEventListener('click', nuevoGastoWebFormulario);
 
 function SubmitHandle(){
 
     this.handleEvent = function(enviar){
         enviar.preventDefault();
         let data = enviar.currentTarget;
-        let val = parseFloat(data);
-        let etiq = data.etiquetas;
-        let desc = data.descripcion;
-        let fec = data.fecha;
+        let val = parseFloat(data.elements.valor.value);
+        let etiq = data.elements.etiquetas.value;
+        let desc = data.elements.descripcion.value;
+        let fec = data.elements.fecha.value;
 
         let id = document.getElementById('anyadirgasto-formulario');
         id.disabled = false;
@@ -306,6 +335,8 @@ actualizarPresupuestoWeb,
 nuevoGastoWeb,
 EditarHandle,
 BorrarHandle,
+CancelarFormularioHandle,
 BorrarEtiquetasHandle,
-nuevoGastoButton
+EditarHandleformulario,
+SubmitHandle
 }
