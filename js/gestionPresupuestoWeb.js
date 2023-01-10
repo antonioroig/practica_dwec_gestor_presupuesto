@@ -36,7 +36,7 @@ function mostrarGastoWeb(idElemento,gasto)
  {
     let span = document.createElement('span');
     span.className = "gasto-etiquetas-etiqueta";
-    span.textContent = etiqueta;
+    span.textContent = " " + etiqueta;
     etiquetas_gasto.append(span);
 
     let etiquetas_borradas = new BorrarEtiquetasHandle();
@@ -71,7 +71,7 @@ function mostrarGastoWeb(idElemento,gasto)
  let btnEditarForm = document.createElement('button');
  
  btnEditarForm.type = "button";
- btnEditar.className = 'gasto-editar-formulario';
+ btnEditarForm.className = 'gasto-editar-formulario';
 
  btnEditarForm.textContent = 'Editar(formulario)';
 
@@ -102,11 +102,13 @@ function repintar()
     mostrarDatoEnId(pres.calcularTotalGastos(),'gastos-totales');
     mostrarDatoEnId(pres.calcularBalance(),'balance-total');
     document.getElementById('listado-gastos-completo').innerHTML = '';
-    for(let gasto_completo of pres.listarGastos())
-    {
-        mostrarGastoWeb('listado-gastos-completo',gasto_completo);
-    }
-    
+    // for(let gasto_completo of pres.listarGastos())
+    // {
+    //     mostrarGastoWeb('listado-gastos-completo',gasto_completo);
+    // }
+     pres.listarGastos().forEach(gasto =>{
+        mostrarGastoWeb("listado-gastos-completo", gasto);
+     });
 }
 
 function actualizarPresupuestoWeb()
@@ -141,16 +143,16 @@ function EditarHandle()
 {
     this.handleEvent = function (event) 
     {
-        let new_descripcion = prompt('Introduce la nueva descripcion:');
-        let new_valor = parseFloat(prompt('Introduce el nuevo valor del gasto:'));
-        let new_fecha = Date.parse(prompt('Introduce la nueva fecha en formato yyyy/mm/dd'));
-        let new_etiquetas = prompt('Introduce las estiquetas nuevas de este gasto separadas por ,');
-        new_etiquetas = new_etiquetas.split(',');
+        let new_descripcion = prompt('Introduce la nueva descripcion:', this.gasto.descripcion);
+        let new_valor = parseFloat(prompt('Introduce el nuevo valor del gasto:', this.gasto.valor));
+        let new_fecha = Date.parse(prompt('Introduce la nueva fecha en formato yyyy/mm/dd', this.gasto.fecha));
+        let new_etiqueta = prompt('Introduce las estiquetas nuevas de este gasto separadas por ,', this.gasto.etiquetas.join(', '));
+        let new_etiquetas = new_etiqueta.split(',');
 
         this.gasto.actualizarDescripcion(new_descripcion);
         this.gasto.actualizarValor(new_valor);
         this.gasto.actualizarFecha(new_fecha);
-        this.gasto.anyadirEtiquetas(...new_etiquetas);
+        this.gasto.anyadirEtiquetas(new_etiquetas);
 
         repintar();
 
@@ -278,7 +280,7 @@ function EnviarHandle()
         let new_etiquetas = formulario.elements.etiquetas.value;
         this.gasto.anyadirEtiquetas(...new_etiquetas);
 
-        repintar();
+       repintar();
     }
 }
 export{mostrarDatoEnId,mostrarGastoWeb,mostrarGastosAgrupadosWeb,repintar,actualizarPresupuestoWeb,nuevoGastoWeb,EditarHandle,BorrarHandle,BorrarEtiquetasHandle,EnviarHandle,EditarHandleFormulario,EnviarHandleFormulario,CancelarHandleFormulario,nuevoGastoWebFormulario}
