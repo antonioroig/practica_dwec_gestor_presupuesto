@@ -257,6 +257,30 @@ function EditarHandleformulario()
     {
         editForm.preventDefault();
 
+        let pF = document.getElementById("formulario-template").content.cloneNode(true);
+
+        let formu = pF.querySelector("form");
+        let controls = document.getElementById("controlesprincipales");
+        controls.append(formu);
+
+        let bF = editForm.currentTarget;
+        bF.append(formu);
+
+        formu.elements.descripcion.value = this.gasto.descripcion;
+        formu.elements.valor.value = this.gasto.valor;
+        formu.elements.fecha.value = newDate(this.gasto.fecha).toString();
+        formu.elements.etiquetas.value = this.gasto.etiquetas;
+
+        let cancelar = new CancelarFormularioHandle();
+        let buttonCancel = formu.querySelector("button.cancelar");
+        buttonCancel.addEventListener('click', cancelar);
+
+        let submit = new SubmitHandleForm();
+        submit.gasto = this.gasto;
+        formu.addEventListener('submit', submit);
+
+        bF.setAttribute('disabled', "");
+
         
     }
 }
@@ -293,31 +317,58 @@ function nuevoGastoWebFormulario(){
     cancelar.btnAnyadir = botonAnyGasto;
     botonCancelar.addEventListener('click', cancelar);
 
-    let enviar = new SubmitHandle();
+    let enviar = new SubmitHandleForm();
     formulario.addEventListener('submit', enviar);
 }
 
 let gasForm = document.getElementById('anyadirgasto-formulario');
 gasForm.addEventListener('click', nuevoGastoWebFormulario);
 
-function SubmitHandle(){
+function SubmitHandleForm(){
 
-    this.handleEvent = function(enviar){
-        enviar.preventDefault();
-        let data = enviar.currentTarget;
+    this.handleEvent = function(enviarForm){
+        enviarForm.preventDefault();
+        let data = enviarForm.currentTarget;
         let val = parseFloat(data.elements.valor.value);
         let etiq = data.elements.etiquetas.value;
         let desc = data.elements.descripcion.value;
         let fec = data.elements.fecha.value;
 
-        let id = document.getElementById('anyadirgasto-formulario');
-        id.disabled = false;
-        let gas = new gp.CrearGasto(desc,val,fec,etiq);
+        let id = document.getElementById('anyadirgasto-formulario').removeAttribute("disabled");
+        
+        let gas = new gp.CrearGasto(desc,val,fec,...etiq);
         gp.anyadirGasto(gas);
+
+        repintar();
         
     }
 
 }
+
+function SubmitHandle()
+{
+    this.handleEvent = function(enviar){
+
+        enviar.preventDefault();
+
+        let formu = enviar.currentTarget;
+
+        let val = parseFloat(formu.elements.valor.value);
+
+        let etiq = formu.elements.etiquetas.value;
+        this.gasto.anyadirEtiquetas(...etiq);
+
+        let desc = formu.elements.descripcion.value;
+
+        this.gasto.actualizarValor(desc);
+        this.gasto.actualizarValor(val);
+
+        repintar();
+
+    }
+}
+
+
 
 
 
@@ -338,5 +389,6 @@ BorrarHandle,
 CancelarFormularioHandle,
 BorrarEtiquetasHandle,
 EditarHandleformulario,
+SubmitHandleForm,
 SubmitHandle
 }
