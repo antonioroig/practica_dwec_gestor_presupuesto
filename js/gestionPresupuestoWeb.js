@@ -263,7 +263,7 @@ function BorrarEtiquetasHandle()
 
 }
 
-function nuevogastoWebFormulario()
+function nuevoGastoWebFormulario()
 {
 
     let plantillaFormulario = document.getElementById("formulario-template").content.cloneNode(true);;
@@ -285,8 +285,15 @@ function nuevogastoWebFormulario()
 
     formulario.addEventListener("submit", btnEnviarGasto);
 
-    let btnCancelar = formularioControles.querySelector
 
+    let btnCancelar = formularioControles.querySelector("button.cancelar");
+
+    let cancelar = new btnCancelarHandle();
+
+    cancelar.btnAddGastoo = btnAddGastoo;
+
+    btnCancelar.addEventListener("click", cancelar);
+    
 }
 
 actualizarpresupuesto.addEventListener("click", actualizarPresupuestoWeb);
