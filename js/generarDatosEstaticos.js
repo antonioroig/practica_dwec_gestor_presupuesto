@@ -19,6 +19,7 @@ gestionPresupuesto.anyadirGasto(gasto6);
 gestionPresupuestoWeb.mostrarDatoEnId("gastos-totales", gestionPresupuesto.calcularTotalGastos());
 gestionPresupuestoWeb.mostrarDatoEnId("balance-total", gestionPresupuesto.calcularBalance());
 let listaGastos1 = gestionPresupuesto.listarGastos();
+
 for (let i = 0; i < listaGastos1.length; i++) {
     gestionPresupuestoWeb.mostrarGastoWeb("listado-gastos-completo", listaGastos1[i]);
 }

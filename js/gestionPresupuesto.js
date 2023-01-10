@@ -6,6 +6,22 @@ let presupuesto = 0;
 let gastos = new Array();
 let idGasto = 0;
 
+function fecha4y2m2d(hoy) {
+    let y = hoy.getFullYear() + "-";
+
+    let m = "" + hoy.getMonth() + 1 + "-";
+
+    let d = "" + hoy.getDate();
+    if (hoy.getDate() < 10) {
+        d = "0" + hoy.getDate();
+    } else {
+        d += hoy.getDate()
+    }
+    
+    let fecha = y + m + d
+    return fecha;
+}
+
 function actualizarPresupuesto(parameter1) {
     // TODO
     if (typeof(parameter1) === 'number' && parameter1 >= 0) {
