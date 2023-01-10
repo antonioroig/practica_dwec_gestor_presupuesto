@@ -396,7 +396,50 @@ function EditarHandleFormulario()
 
 }
 
+function btnCancelarHandle()
+{
 
+    this.handleEvent = function(event)
+    {
+
+        this.btnAddGastoo.disabled = false;
+
+        document.getElementById("anyadirgasto-formulario").disabled = false;
+
+        event.currentTarget.parentNode.remove();
+
+        repintar();
+
+    }
+
+}
+
+function editarHandleFormularioEnv()
+{
+
+    this.handleEvent = function(event)
+    {
+
+        event.preventDefault();
+
+        let formulario = event.currentTarget;
+
+        let descricpion = formulario.elements.descricpion.value;
+        this.gasto.actualizarDescripcion(descricpion);
+
+        let valor = parseFloat(form.elements.valor.value);
+        this.gasto.actualizarValor(valor)
+
+        let fecha = parseFloat(form.elements.fecha.value);
+        this.gasto.actualizarValor(fecha);
+
+        let etiqueta = form.elements.etiquetas.value;
+        this.gasto.anyadirEtiquetas(etiqueta);
+        repintar();
+
+    }
+
+}
 
 actualizarpresupuesto.addEventListener("click", actualizarPresupuestoWeb);
 
