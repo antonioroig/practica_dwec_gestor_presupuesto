@@ -345,7 +345,40 @@ function btnCancelarHandle()
 
 }
 
+function EditarHandleFormulario()
+{
 
+    this.handleEvent = function(event)
+    {
+
+        let editarForm = document.getElementById("formulario-template").content.cloneNode(true);
+
+        var formularios = editarForm.querySelector("form");
+
+
+        let controlesForm = document.getElementById("controlesprincipales");
+
+        formControles.append(form);
+
+
+        let btnEditarFormulario = event.currentTarget;
+
+        btnEditarFormulario.after(formularios);
+
+        btnEditarFormulario.disbled = true;
+
+
+        formularios.elements.descricpion.value = this.gasto.descricpion;
+
+        formularios.elements.valor.value = this.gasto.valor;
+
+        formularios.elements.fecha.value = this.gasto.fecha;
+
+        form.elements.etiquetas.value = this.gasto.etiquetas
+
+    }
+
+}
 
 actualizarpresupuesto.addEventListener("click", actualizarPresupuestoWeb);
 
