@@ -195,10 +195,24 @@
 
     document.getElementById('anyadirgasto-formulario').setAttribute('disabled',"");
 
-    
+    let cancelar  = new CancelarHandleFormulario();
+    let botonCancelar = formulario.querySelector("button.cancelar");
+    botonCancelar.addEventListener('click', cancelar);
+
+
 
   }
+  function CancelarHandleFormulario(){
+    this.handleEvent = function(event){
 
+        event.preventDefault();
+
+        event.currentTarget.parentNode.remove();
+        document.getElementById("anyadirgasto-formulario").removeAttribute("disabled");
+        repintar();
+
+    }
+}
   
   export{
     mostrarDatoEnId,
@@ -210,6 +224,7 @@
     EditarHandle,
     BorrarHandle,
     BorrarEtiquetasHandle,
-    nuevoGastoWebFormulario
+    nuevoGastoWebFormulario,
+    CancelarHandleFormulario
   }
 
