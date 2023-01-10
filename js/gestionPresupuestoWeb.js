@@ -47,7 +47,8 @@
           divEtiqEtiq.addEventListener('click',borrarEtiquetas);
         }
         divGasto.append(divEtiquetas);
-
+        
+        // Boton Editar 
         let botonEditar = document.createElement('button');
         botonEditar.type = 'button';
         botonEditar.className = 'gasto-editar';
@@ -57,7 +58,8 @@
         objetoeditar.gasto = gasto;
         botonEditar.addEventListener('click',objetoeditar);
         divGasto.append(botonEditar);
-
+        
+        //Boton Borrar
         let botonBorrar = document.createElement('button');
         botonBorrar.type = 'button';
         botonBorrar.className = 'gasto-borrar';
@@ -67,6 +69,18 @@
         objetoborrar.gasto = gasto;
         botonBorrar.addEventListener('click', objetoborrar);
         divGasto.append(botonBorrar);
+        
+        // forma de formulario
+        let botonEditarForm = document.createElement('button');
+        botonEditarForm.type = 'button';
+        botonEditarForm.className = 'gasto-editar-formulario';
+        botonEditarForm.textContent = 'Editar (formulario)';
+
+        let editarForm = new EditarHandleFormulario(gasto);
+        editarForm.gasto = gasto;
+        botonEditarForm.addEventListener('click',editarForm);
+        divGasto.append(botonEditarForm);
+
   }
   function mostrarGastosAgrupadosWeb (idElemento,agrup,periodo)
   {
@@ -196,12 +210,12 @@
 
       document.getElementById("anyadirgasto-formulario").setAttribute('disabled', "");
       
-      let cancelar = new CancelarHandleFormulario();
+      let cancelar = new CancelarHandle();
       let botonCancelar = formulario.querySelector("button.cancelar")
         botonCancelar.addEventListener('click',cancelar);
 
-      let enviar = new EnviarHandleFormulario();
-      formulario.addEventListener('submit', enviar);
+      let botonenviar = new EnviarHandleFormulario();
+      formulario.addEventListener('submit', botonenviar);
 
   }
 
@@ -210,9 +224,7 @@
       botonAnyadirGasto.addEventListener('click',nuevoGastoWebFormulario);
   
 
-
-      //Cancelar Formulario
-      function CancelarHandleFormulario(){
+      function CancelarHandle(){
         this.handleEvent = function(event){
     
             event.preventDefault();
@@ -225,7 +237,6 @@
     }
 
 
-    //Enviar Formulario
       function EnviarHandle()
       {
         this.handleEvent = function(event){
@@ -295,7 +306,7 @@
         formulario.elements.fecha.value = new Date(this.gasto.fecha).toISOString().substring(0,10);
         formulario.elements.etiquetas.value = this.gasto.etiquetas;
         
-        let cancelar = new CancelarHandleFormulario();
+        let cancelar = new CancelarHandle();
         let botonCancelar = formulario.querySelector("button.cancelar")
         botonCancelar.addEventListener('click',cancelar);
 
@@ -319,7 +330,7 @@
     BorrarHandle,
     BorrarEtiquetasHandle,
     nuevoGastoWebFormulario,
-    CancelarHandleFormulario,
+    CancelarHandle,
     EnviarHandle,
     EnviarHandleFormulario,
     EditarHandleFormulario
