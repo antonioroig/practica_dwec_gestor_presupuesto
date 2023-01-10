@@ -271,27 +271,25 @@ function filtrarGastosWeb()
 {
     this.handleEvent = function(event){
         event.preventDefault();
-     
-        let descripcion = document.getElementById("formulario-filtrado-descripcion").value
-        let valorMinimo = Number(document.getElementById("formulario-filtrado-valor-minimo").value)
-        let valorMaximo = Number(document.getElementById("formulario-filtrado-valor-maximo").value)
-        let fechaInicial = Date(document.getElementById("formulario-filtrado-fecha-desde").value)
-        let fechaFinal = Date(document.getElementById("formulario-filtrado-fecha-hasta").value)
         let etiquetas = this.formulario.elements["formulario-filtrado-etiquetas-tiene"].value
 
         if(etiquetas){
-            etiquetas = transformarListadoEtiquetas(etiquetas)
+            etiquetas = gestionPre.transformarListadoEtiquetas(etiquetas)
         }
         
         let filtrado = {
-            descripcion: descripcion,
-            valorMinimo: valorMinimo,
-            valorMaximo: valorMaximo,
-            fechaInicial: fechaInicial,
-            fechaFinal: fechaFinal,
-            etiquetas: etiquetas
+            descripcionContiene:this.formulario.elements["formulario-filtrado-descripcion"].value,
+            valorMinimo:Number(this.formulario.elements["formulario-filtrado-valor-minimo"].value),
+            valorMaximo:Number(this.formulario.elements["formulario-filtrado-valor-maximo"].value),
+            fechaDesde:new Date(this.formulario.elements["formulario-filtrado-fecha-desde"].value),
+            fechaHasta:new Date(this.formulario.elements["formulario-filtrado-fecha-hasta"].value),
+            etiquetasTiene:etiquetas
         }
-        gestionPre.filtrarGastos(filtrado);
+        document.getElementById("listado-gastos-completo").innerHTML = "";
+
+        gestionPre.filtrarGastos(filtrado).forEach(gasto => {
+            mostrarGastoWeb("listado-gastos-completo",gasto);
+        })
     }
 }
 let divFormulario = document.getElementById("filtrar-gastos")
@@ -303,5 +301,6 @@ formulario.addEventListener('submit', form);
 export {
     mostrarDatoEnId,
     mostrarGastoWeb,
-    mostrarGastosAgrupadosWeb
+    mostrarGastosAgrupadosWeb,
+    filtrarGastosWeb
 }
