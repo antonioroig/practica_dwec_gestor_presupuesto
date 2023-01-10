@@ -327,9 +327,15 @@ function EnviarFormHandle()
 
 }
 
+
+
 actualizarpresupuesto.addEventListener("click", actualizarPresupuestoWeb);
 
 anyadirgasto.addEventListener("click", nuevoGastoWeb);
+
+
+let addGastoForm = document.getElementById("anyadirgasto-formulario");
+addGastoForm.addEventListener("click", nuevoGastoWebFormulario);
 
 export{
 
@@ -339,6 +345,7 @@ export{
     repintar,
     actualizarPresupuestoWeb,
     nuevoGastoWeb,
+    nuevoGastoWebFormulario,
     EditarHandle,
     BorrarHandle,
     BorrarEtiquetasHandle
