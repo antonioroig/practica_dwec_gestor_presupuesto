@@ -379,9 +379,9 @@ function EditarHandleFormulario()
 
         formularios.elements.valor.value = this.gasto.valor;
 
-        formularios.elements.fecha.value = this.gasto.fecha;
+        formularios.elements.fecha.value = new Date(this.gasto.fecha).toISOString().substring(0,10);;
 
-        form.elements.etiquetas.value = this.gasto.etiquetas;
+        formularios.elements.etiquetas.value = this.gasto.etiquetas;
 
 
         let eventFormulario = new editarHandleFormularioEnv();
@@ -415,18 +415,20 @@ function editarHandleFormularioEnv()
         let formulario = event.currentTarget;
 
         let descricpion = formulario.elements.descricpion.value;
-        this.gasto.actualizarDescripcion(descricpion);
 
-        let valor = parseFloat(form.elements.valor.value);
-        this.gasto.actualizarValor(valor)
+        let valor = parseFloat(formulario.elements.valor.value);
 
-        let fecha = parseFloat(form.elements.fecha.value);
-        this.gasto.actualizarValor(fecha);
+        let fecha = formulario.elements.fecha.value;
 
-        let etiqueta = form.elements.etiquetas.value;
-        this.gasto.anyadirEtiquetas(etiqueta);
+        let etiqueta = formulario.elements.etiquetas.value;
+
+        let gasto = new gesPresupuesto.CrearGasto(descricpion, valor, fecha, ...etiqueta);
+
+        gesPresupuesto.anyadirGasto(gasto);
 
         repintar();
+
+        document.getElementById("anyadirgasto-formulario").removeAttribute("disabled");
 
     }
 
