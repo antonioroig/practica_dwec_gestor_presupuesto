@@ -226,35 +226,31 @@
   //Enviar Formulario
   function EnviarHandleFormulario()
 {
-    this.handleEvent = function(event)
-    {
+      this.handleEvent = function(event){
+
         event.preventDefault();
 
-        let form = event.currentTarget;
+        let formulario = event.currentTarget;
 
         let descripcion = formulario.elements.descripcion.value;
-        this.gasto.actualizarDescripcion(descripcion);
 
-        let valor = parseFloat(form.elements.valor.value);
-        this.gasto.actualizarValor(valor);
+        let valor = parseFloat(formulario.elements.valor.value);
 
-        let fecha = form.elements.fecha.value;
-        this.gasto.actualizarFecha(fecha);
+        let fecha = formulario.elements.fecha.value;
 
-        let etiquetas = form.elements.etiquetas.value;
-        this.gasto.anyadirEtiquetas(etiquetas);
+        let etiquetas = formulario.elements.etiquetas.value;
 
-
+        let gasto = new presupuesto.CrearGasto(descripcion,valor,fecha,...etiquetas);
+        presupuesto.anyadirGasto(gasto);
+        
         repintar();
+
+        document.getElementById("anyadirgasto-formulario").removeAttribute("disabled");
 
     }
 }
 function EditarHandleFormuario()
 {
-  this.handleEvent = (event)
-  {
-
-  }
 }
 
   export{
