@@ -277,15 +277,18 @@ function filtrarGastosWeb(){
             miFiltrado.etiquetasTiene = gestionPresupuesto.transformarListadoEtiquetas(eti);
         }
 
-        miFiltrado.descripcion = desc;
+        miFiltrado.descripcionContiene = desc;
         miFiltrado.valorMinimo = minValor;
         miFiltrado.valorMaximo = MaxValor;
         miFiltrado.fechaDesde = fechaInicial;
         miFiltrado.fechaHasta = fechaFinal;
-        miFiltrado.etiquetas = eti;
 
         document.getElementById("listado-gastos-completo").innerHTML = "";
-        
+
+
+        for(let misGastosCompletos of gestionPresupuesto.listarGastos(miFiltrado)){
+            mostrarGastoWeb("listado-gastos-completo",misGastosCompletos);
+        };
     };
 };
 
@@ -293,7 +296,8 @@ function filtrarGastosWeb(){
 //Botones
 document.getElementById("actualizarpresupuesto").addEventListener("click",actualizarPresupuestoWeb);
 document.getElementById("anyadirgasto").addEventListener("click",nuevoGastoWeb);
-document.getElementById("anyadirgasto-formulario").addEventListener("click",nuevoGastoWebFormulario)
+document.getElementById("anyadirgasto-formulario").addEventListener("click",nuevoGastoWebFormulario);
+document.getElementById("formulario-filtrado").addEventListener("submit", new filtrarGastosWeb());
 
 export{
     mostrarDatoEnId,
