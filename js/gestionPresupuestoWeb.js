@@ -337,35 +337,35 @@ function filtrarGastosWeb()
     {
         event.preventDefault();
 
-        let descripcion = document.getElementById("formulario-filtrado-descripcion").value;
+        let etiquetas = this.formulario.elements["formulario-filtrado-etiquetas-tiene"].value;
 
-        let valorMin = parseFloat(document.getElementById("formulario-filtrado-valor-minimo").value);
-
-        let valorMax = parseFloat(document.getElementById("formulario-filtrado-valor-maximo").value);
-
-        let fechaInicial = Date.parse(document.getElementById("formulario-filtrado-fecha-desde").value);
-
-        let fechaFinal = Date.parse(document.getElementById("formulario-filtrado-fecha-hasta").value);
-
-        let etiquetas = document.getElementById("formulario-filtrado-etiquetas-tiene").value;
-
-        let filtrado = [];
-
-        if(etiquetas.length > 0)
+        if(etiquetas)
         {
-            filtrado.etiquetasTiene = gestionPresupuesto.transformarListadoEtiquetas(etiquetas);
+            etiquetas = gestionPresupuesto.transformarListadoEtiquetas(etiquetas);
         }
 
-        filtrado.descripcion = descripcion;
-        filtrado.valorMinimo = valorMin;
-        filtrado.valorMaximo = valorMax;
-        filtrado.fechaDesde = fechaInicial;
-        filtrado.fechaHasta = fechaFinal;
-        filtrado.etiquetas = etiquetas;
+        let filtrado =
+        {
+        descripcionContiene : this.formulario.elements["formulario-filtrado-descripcion"].value,
+        valorMinimo : Number(this.formulario.elements["formulario-filtrado-valor-minimo"].value),
+        valorMaximo : Number(this.formulario.elements["formulario-filtrado-valor-maximo"].value),
+        fechaDesde : new Date(this.formulario.elements["formulario-filtrado-fecha-desde"].value),
+        fechaHasta : new Date(this.formulario.elements["formulario-filtrado-fecha-hasta"].value),
+        etiquetasTiene: etiquetas
+        }
+       
+        gestionPresupuesto.filtrarGastos(filtrado);
 
         document.getElementById("listado-gasto-completo").innerHTML = "";
+
+        gestionPresupuesto.filtrarGastos(filtrado).forEach(gasto =>
+            {
+                mostrarGastoWeb("listado-gastos-completo",gasto);
+            })
     }
 }
+
+
 
 export {
     mostrarDatoEnId,
