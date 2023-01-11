@@ -50,10 +50,7 @@ function mostrarGastoWeb(idElemento, gasto) //mostrargpWeb
         buttonEdit.className = 'gasto-editar-formulario';
         buttonEdit.textContent = 'Editar (formulario)';
 
-        let formuEdit = new EditarHandleformulario(gasto);
-        formuEdit.gasto = gasto;
-        buttonEdit.addEventListener('click', formuEdit);
-        divGas.append(buttonEdit);
+        
         
         
         for(let i = 0; i < gasto.etiquetas.length; i++)
@@ -102,10 +99,10 @@ function mostrarGastoWeb(idElemento, gasto) //mostrargpWeb
 
         let editButtonForm = document.createElement('button');
         editButtonForm.type = 'button';
-        editButtonForm.className = 'gasto-editar';
-        editButtonForm.innerHTML += 'Editar';
+        editButtonForm.className = 'gasto-editar-formulario';
+       editButtonForm.textContent = 'Editar (Formulario)'
 
-        let formEdit = new EditarHandle(gasto);
+        let formEdit = new EditarHandleformulario(gasto);
         formEdit.gasto = gasto;
         editButtonForm.addEventListener('click', formEdit);
         divGas.append(editButtonForm);
@@ -296,9 +293,9 @@ function EditarHandleformulario()
         let buttonCancel = formu.querySelector("button.cancelar");
         buttonCancel.addEventListener('click', cancelar);
 
-        let submit = new SubmitHandleForm();
-        submit.gasto = this.gasto;
-        formu.addEventListener('submit', submit);
+        let sub = new SubmitHandle();
+        sub.gasto = this.gasto;
+        formu.addEventListener('submit', sub);
 
         bF.setAttribute('disabled', "");
 
@@ -383,7 +380,7 @@ function SubmitHandle()
 
         let desc = formu.elements.descripcion.value;
 
-        this.gasto.actualizarValor(desc);
+        this.gasto.actualizarDescripcion(desc);
         this.gasto.actualizarValor(val);
 
         repintar();
