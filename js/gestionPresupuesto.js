@@ -31,6 +31,7 @@ function CrearGasto(Descripcion,Valor) {
     }else{
         this.valor = 0;
     };
+
     
 
     this.mostrarGasto = function (){
