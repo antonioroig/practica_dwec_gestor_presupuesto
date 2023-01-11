@@ -243,7 +243,7 @@ function EditarHandle()
        
         let etiquetas = prompt("introduce unas etiquetas para el gasto en fomato etiq1,etiq2,etiq3");
        
-        let etiquetasArray = etiquetas.split(',');
+        etiquetas = etiquetas.split(',');
 
         this.gasto.actualizarValor(valor);
         this.gasto.actualizarDescripcion(descripcion);
@@ -339,7 +339,7 @@ function enviarFormHandle()
 
         let formularios = event.currentTarget;
 
-        let descripcion = formularios.elements.descricpion.value;
+        let descripcion = formularios.elements.descripcion.value;
 
         let valor = parseFloat(formularios.elements.valor.value);
     
@@ -362,7 +362,34 @@ function enviarFormHandle()
 function EnviarHandle()
 {
 
-    this.
+    this.handleEvent = function(event)
+    {
+
+        event.preventDefault();
+
+        let formularios = event.currentTarget;
+
+        let descripcion = formularios.elements.descripcion.value;
+
+        this.gasto.actualizarDescripcion(descripcion);
+
+
+        let valor = parseFloat(formularios.elements.valor.value);
+
+        this.gasto.actualizarValor(valor);
+
+    
+        let date = formularios.elements.fecha.value;
+
+        this.gasto.actualizarFecha(date);
+
+
+        let etiqueta = formularios.elements.etiquetas.value;
+
+        this.gasto.anyadirEtiquetas(...etiqueta);
+        
+        repintar();
+    }
 
 }
 
@@ -373,7 +400,7 @@ function EditarHandleFormulario()
 
         event.preventDefault()
 
-        let plantillaFormulario = document.getElementById("formulario-template").content.cloneNode(true);;
+        let plantillaFormulario = document.getElementById("formulario-template").content.cloneNode(true);
     
         var formularios = plantillaFormulario.querySelector("form");
 
@@ -404,7 +431,7 @@ function EditarHandleFormulario()
         btnCancelar.addEventListener('click',cancelar);
 
 
-        let enviar = new enviarFormHandle();
+        let enviar = new EnviarHandle();
         
         enviar.gasto = this.gasto;
         
@@ -437,7 +464,8 @@ export{
     nuevoGastoWebFormulario,
     btnCancelarHandle,
     enviarFormHandle,
-    EditarHandleFormulario
+    EditarHandleFormulario,
+    EnviarHandle
 
 
 }
