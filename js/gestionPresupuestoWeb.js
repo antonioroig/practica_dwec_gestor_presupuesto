@@ -269,6 +269,41 @@ function EnviarHandleFormulario(){
     }
 }
 
+function filtrarGastosWeb(){
+    this.handleEvent = function(event){
+        event.preventDefault();
+
+        let descripcion = document.getElementById("formulario-filtrado-descripcion").value;
+        let valorMin = parseFloat(document.getElementById("formulario-filtrado-valor-minimo").value);
+        let valorMax = parseFloat(document.getElementById("formulario-filtrado-valor-maximo").value);
+        let fechaDesde =  document.getElementById("formulario-filtrado-fecha-desde").value;
+        let fechaHasta =  document.getElementById("formulario-filtrado-fecha-hasta").value;
+        let etiquetas = document.getElementById("formulario-filtrado-etiquetas-tiene").value;
+        
+        let filtronuevo ={};
+
+        if(etiquetas.length > 0){
+            filtronuevo.etiquetasTiene = gestionPresupuesto.transformarListadoEtiquetas(etiquetas);
+        }
+        
+        filtronuevo.descripcionContiene = descripcion;
+        filtronuevo.valorMinimo = valorMin;
+        filtronuevo.valorMaximo = valorMax;
+        filtronuevo.fechaDesde = fechaDesde;
+        filtronuevo.fechaHasta = fechaHasta;
+        filtronuevo.etiquetas = etiquetas;
+
+        document.getElementById("listado-gastos-completo").innerHTML = "";
+        let gastosFiltrados = gestionPresupuesto.filtrarGastos(filtronuevo);
+
+        for(let gasto of gastosFiltrados){
+            mostrarGastoWeb("listado-gastos-completo",gasto);
+        };
+
+    }
+
+};
+
 
 let botonActualizarPresupuesto = document.getElementById('actualizarpresupuesto');
 botonActualizarPresupuesto.addEventListener('click', function () { actualizarPresupuestoWeb() });
@@ -278,6 +313,9 @@ botonAnyadirGasto.addEventListener('click', function () { nuevoGastoWeb() });
 
 let botonNuevoGasto = document.getElementById('anyadirgasto-formulario');
 botonNuevoGasto.addEventListener('click', function () { nuevoGastoWebFormulario() });
+
+let botonFiltrar = document.getElementById('formulario-filtrado');
+botonFiltrar.addEventListener('submit', new filtrarGastosWeb());
 
 
 export {
@@ -289,5 +327,6 @@ export {
     nuevoGastoWeb,
     EditarHandle,
     BorrarHandle,
-    BorrarEtiquestasHandle
+    BorrarEtiquestasHandle,
+    filtrarGastosWeb
 }
