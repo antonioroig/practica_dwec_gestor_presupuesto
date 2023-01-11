@@ -61,9 +61,9 @@ function mostrarGastoWeb(idElemento,gastos)
         gastoDiv.appendChild(gastoButtonBorrar);
         
         let gastoButtonEditarForm = document.createElement('button');
-        gastoButtonEditar.type = 'button';
-        gastoButtonEditar.className = 'gasto-editar-formulario';
-        gastoButtonEditar.innerHTML = 'Editar (formulario)'; 
+        gastoButtonEditarForm.type = 'button';
+        gastoButtonEditarForm.className = 'gasto-editar-formulario';
+        gastoButtonEditarForm.innerHTML = 'Editar (formulario)'; 
         let EditarGastoForm = new EditarHandleFormulario();
         EditarGastoForm.gasto = gasto;
         EditarGastoForm.gastoDiv = gastoDiv;
@@ -230,9 +230,9 @@ function EditarHandleFormulario(){
         enviarEditarForm.formulario = formulario;
         formulario.addEventListener('submit',enviarEditarForm);
 
-        this.botonEditarForm.setAttribute('disabled','');
+        this.gastoButtonEditarForm.setAttribute('disabled','');
 
-        let cancelarForm = new CancelarHandleEditarFormulario(); 
+        let cancelarForm = new CancelarEditarHandleFormulario(); 
         cancelarForm.formulario = formulario;
         cancelarForm.gastoButtonEditarForm = this.gastoButtonEditarForm;
         cancelarForm.formulario = formulario;
@@ -247,17 +247,17 @@ function EnviarEditarHandleFormulario(){
         this.gasto.descripcion = this.formulario.elements.descripcion.value;
         this.gasto.valor = parseFloat(this.formulario.elements.valor.value);
         this.gasto.fecha = new Date (this.formulario.elements.fecha.value);
-        let arretiquetas = this.formulario.elements.etiquetas.value.split(',');
+        let arretiquetas = toString(this.formulario.elements.etiquetas.value).split(',');
         this.gasto.etiquetas = arretiquetas;
 
         repintar();
     }
 }
 
-function CancelarHandleFormulario(){
+function CancelarEditarHandleFormulario(){
     this.handleEvent = function(){
         this.formulario.remove();
-        this.botonEditarForm.setAttribute('disabled','');
+        this.gastoButtonEditarForm.removeAttribute("disabled");
     }
 }
 
