@@ -100,6 +100,16 @@ function mostrarGastoWeb(idElemento, gasto) //mostrargpWeb
         borrarBoton.addEventListener('click', bor);
         divGas.append(borrarBoton);
 
+        let editButtonForm = document.createElement('button');
+        editButtonForm.type = 'button';
+        editButtonForm.className = 'gasto-editar';
+        editButtonForm.innerHTML += 'Editar';
+
+        let formEdit = new EditarHandle(gasto);
+        formEdit.gasto = gasto;
+        editButtonForm.addEventListener('click', formEdit);
+        divGas.append(editButtonForm);
+
         
 
         
@@ -279,7 +289,7 @@ function EditarHandleformulario()
 
         formu.elements.descripcion.value = this.gasto.descripcion;
         formu.elements.valor.value = this.gasto.valor;
-        formu.elements.fecha.value = newDate(this.gasto.fecha).toISOString().substring(0,10);
+        formu.elements.fecha.value = new Date(this.gasto.fecha).toISOString().substring(0,10);
         formu.elements.etiquetas.value = this.gasto.etiquetas;
 
         let cancelar = new CancelarFormularioHandle();
