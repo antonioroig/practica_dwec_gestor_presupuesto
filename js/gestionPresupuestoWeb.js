@@ -60,30 +60,47 @@ function mostrarGastoWeb(idElemento, gasto) {
         let gastoeti = document.createElement('div');
         gastoeti.className = "gasto-etiquetas";
         
+        
         //if (gasto.etiquetas.length != undefined) {
         for (let i = 0; i < gasto.etiquetas.length; i++) {
             let eti = document.createElement('span');
             eti.className = "gasto-etiquetas-etiqueta";
             eti.innerHTML = gasto.etiquetas[i] + " ";
+
+            let era = new BorrarEtiquetasHandle();
+            era.gasto = gasto;
+            era.etiqueta = gasto.etiquetas[i];
+
+            eti.addEventListener("click", era)
+
             gastoeti.append(eti);
         }                       
-        //}
+        //}      
 
-        
         divgasto.append(gastoeti);
         
         let editar = document.createElement('button');
-        editar.className = "btEditar";
+        editar.className = "gasto-editar";
         editar.innerHTML = "Editar";
 
         let edit = new EditarHandle();
         edit.gasto = gasto;
-        //edit.gasto = gasto;
 
         editar.addEventListener("click", edit)
 
         divgasto.append(editar);
-        
+
+        let borrar = document.createElement('button');
+        borrar.className = "gasto-borrar";
+        borrar.innerHTML = "Borrar";
+
+        let eraser = new BorrarHandle();
+        eraser.gasto = gasto;
+
+        borrar.addEventListener("click", eraser)
+
+        divgasto.append(borrar);
+
         div.append(divgasto);      
     }
 
@@ -161,29 +178,11 @@ function nuevoGastoWeb() {
     let descripcion = prompt("Introduce una descripción:");
     let valor = prompt("Introduce un valor:");
     let fecha = prompt("Introduce una fecha:", fecha4y2m2d());
-    let etiquetas = prompt("Introduce las etiquetas:");
+    let etiquetas = prompt("Introduce las etiquetas:").split(",");
 
     valor = Number(valor);
-    let arreti = new Array();
-    let long = etiquetas.length;
-    for (let i = 0, j = 0; i < long; i++) {
 
-        if (etiquetas[i] === ',') {
-            let eti = etiquetas.slice(j, i);
-            eti = eti.replace(",", "");
-            arreti.push(eti);
-            j = i + 1;
-        }
-
-        if (i == long - 1) {
-            let eti = etiquetas.slice(j);
-            eti = eti.replace(",", "");
-            arreti.push(eti);
-            break;
-        }
-    }
-
-    let newgasto = new gestionPresupuesto.CrearGasto(descripcion, valor, fecha, arreti);
+    let newgasto = new gestionPresupuesto.CrearGasto(descripcion, valor, fecha, ...etiquetas);
     gestionPresupuesto.anyadirGasto(newgasto);
 
     repintar();
@@ -199,47 +198,40 @@ function EditarHandle() {
         let fecha = new Date(this.gasto.fecha);
         fecha = prompt("Introduce una fecha:", fecha4y2m2d(fecha));
         let etis = "";
+
+        valor = Number(valor);
         for (let i = 0; i < this.gasto.etiquetas.length; i++) {
             if (i < this.gasto.etiquetas.length - 1) {
                 etis += this.gasto.etiquetas[i] + ",";
             } else {
                 etis += this.gasto.etiquetas[i];
-            }
-            
-        }
-        let etiquetas = prompt("Introduce las etiquetas:", etis);
-
-        valor = Number(valor);
-        let arreti = new Array();
-        let long = etiquetas.length;
-        for (let i = 0, j = 0; i < long; i++) {
-
-            if (i == long - 1) {
-                let eti = etiquetas.slice(j);
-                eti = eti.replace(",", "");
-                arreti.push(eti);
-            }
-
-            if (etiquetas[i] === ',') {
-                let eti = etiquetas.slice(j, i);
-                eti = eti.replace(",", "");
-                arreti.push(eti);
-                j = i + 1;
             }           
-        }
+        };
 
-        this.gasto.etiquetas = [...this.gasto.etiquetas, arreti];
-        let seteado = new Set(this.gasto.etiquetas);
-        this.gasto.etiquetas = Array.from(seteado);
-
+        
+        let etiquetas = prompt("Introduce las etiquetas:", etis).split(",");
 
         this.gasto.actualizarDescripcion(descripcion);
         this.gasto.actualizarValor(valor);
         this.gasto.actualizarFecha(fecha);
-        //this.gasto.anyadirEtiquetas(arreti);
+        this.gasto.anyadirEtiquetas(...etiquetas);
         repintar();     
     }
      
+}
+
+function BorrarHandle() {
+    this.handleEvent = function() {
+        gestionPresupuesto.borrarGasto(this.gasto.id);
+        repintar();     
+    }    
+}
+
+function BorrarEtiquetasHandle() {
+    this.handleEvent = function() {
+        this.gasto.borrarEtiquetas(this.etiqueta);
+        repintar();
+    }    
 }
 
 export   {
