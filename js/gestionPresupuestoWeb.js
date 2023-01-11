@@ -331,6 +331,42 @@ function EnviarHandle()
     }
 }
 
+function filtrarGastosWeb()
+{
+    this.handleEvent = function(event)
+    {
+        event.preventDefault();
+
+        let descripcion = document.getElementById("formulario-filtrado-descripcion").value;
+
+        let valorMin = parseFloat(document.getElementById("formulario-filtrado-valor-minimo").value);
+
+        let valorMax = parseFloat(document.getElementById("formulario-filtrado-valor-maximo").value);
+
+        let fechaInicial = Date.parse(document.getElementById("formulario-filtrado-fecha-desde").value);
+
+        let fechaFinal = Date.parse(document.getElementById("formulario-filtrado-fecha-hasta").value);
+
+        let etiquetas = document.getElementById("formulario-filtrado-etiquetas-tiene").value;
+
+        let filtrado = [];
+
+        if(etiquetas.length > 0)
+        {
+            filtrado.etiquetasTiene = gestionPresupuesto.transformarListadoEtiquetas(etiquetas);
+        }
+
+        filtrado.descripcion = descripcion;
+        filtrado.valorMinimo = valorMin;
+        filtrado.valorMaximo = valorMax;
+        filtrado.fechaDesde = fechaInicial;
+        filtrado.fechaHasta = fechaFinal;
+        filtrado.etiquetas = etiquetas;
+
+        document.getElementById("listado-gasto-completo").innerHTML = "";
+    }
+}
+
 export {
     mostrarDatoEnId,
     mostrarGastoWeb,
@@ -345,6 +381,6 @@ export {
     EditarHandleFormulario,
     EnviarHandleFormulario,
     CancelarHandleFormulario,
-    nuevoGastoWebFormulario
-
+    nuevoGastoWebFormulario,
+    filtrarGastosWeb
 }
