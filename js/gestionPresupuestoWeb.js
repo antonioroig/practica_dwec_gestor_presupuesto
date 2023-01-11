@@ -43,6 +43,17 @@ function mostrarGastoWeb(idElemento, gasto) //mostrargpWeb
 
         let divEtiq = document.createElement('div');
         divEtiq.className = "gasto-etiquetas";
+
+
+        let buttonEdit = document.createElement('button');
+        buttonEdit.type = 'button';
+        buttonEdit.className = 'gasto-editar-formulario';
+        buttonEdit.textContent = 'Editar (formulario)';
+
+        let formuEdit = new EditarHandleformulario(gasto);
+        formuEdit.gasto = gasto;
+        buttonEdit.addEventListener('click', formuEdit);
+        divGas.append(buttonEdit);
         
         
         for(let i = 0; i < gasto.etiquetas.length; i++)
@@ -259,7 +270,7 @@ function EditarHandleformulario()
 
         let pF = document.getElementById("formulario-template").content.cloneNode(true);
 
-        let formu = pF.querySelector("form");
+        var formu = pF.querySelector("form");
         let controls = document.getElementById("controlesprincipales");
         controls.append(formu);
 
@@ -268,7 +279,7 @@ function EditarHandleformulario()
 
         formu.elements.descripcion.value = this.gasto.descripcion;
         formu.elements.valor.value = this.gasto.valor;
-        formu.elements.fecha.value = newDate(this.gasto.fecha).toString();
+        formu.elements.fecha.value = newDate(this.gasto.fecha).toISOString().substring(0,10);
         formu.elements.etiquetas.value = this.gasto.etiquetas;
 
         let cancelar = new CancelarFormularioHandle();
@@ -292,12 +303,14 @@ function CancelarFormularioHandle()
         cancelar.preventDefault();
 
         cancelar.currentTarget.parentNode.remove();
-        document.getElementById("anyadirgasto-formulario").removeAttribute("disable");
+        document.getElementById("anyadirgasto-formulario").removeAttribute("disabled");
+
+        repintar();
     }
 }
 
 function nuevoGastoWebFormulario(){
-    let plantillaFormulario = document.getElementById("formulario-template").content.cloneNode(true);;
+    var plantillaFormulario = document.getElementById("formulario-template").content.cloneNode(true);;
     
 
     let formulario = plantillaFormulario.querySelector("form");
