@@ -390,6 +390,13 @@ function agruparGastos(periodos = 'mes', etiquetas, fechaDesde, fechaHasta){
 
 }
 
+function transformarListadoEtiquetas()
+{
+
+    
+
+}
+
 
 function calcularBalance()
 {
