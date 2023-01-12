@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 import * as gestionPresupuesto from "./gestionPresupuesto.js";
 function mostrarDatoEnId(idElemento,valor)
 {
@@ -160,7 +160,6 @@ function BorrarEtiquetasHandle(){
 
 function EditarHandleformulario(){
     this.handleEvent = function (event) {
-        event.preventDefault();
         let plantillaFormulario = document.getElementById("formulario-template").content.cloneNode(true);
         let formulario = plantillaFormulario.querySelector("form");
         this.DIVgasto.append(formulario);
@@ -177,16 +176,16 @@ function EditarHandleformulario(){
         let CancelarForm =  new CancelarEditarHandleformulario();
         CancelarForm.formulario = formulario;
         CancelarForm.BUTTONeditarformulario = this.BUTTONeditarformulario;
+        CancelarForm.formulario = formulario;
         let BUTTONcancelar = formulario.querySelector('button.cancelar');
         BUTTONcancelar.addEventListener('click',CancelarForm);
-        repintar();
     };
 }
 
 function CancelarEditarHandleformulario(){
     this.handleEvent = function (event){
         this.formulario.remove();
-        this.BUTTONeditarformulario.removeAttribute("disabled");      
+        this.BUTTONeditarformulario.removeAttribute("disabled");
     }
 
 }
@@ -195,8 +194,8 @@ function EnviarEditarHandleformulario(){
     this.handleEvent = function (event){
         event.preventDefault();
         this.gasto.descripcion = this.formulario.elements.descripcion.value;
-        this.gasto.valor = Number(this.formulario.elements.valor.value);
-        this.gasto.fecha = new Date(this.formulario.elements.fecha.value);
+        this.gasto.valor = parseFloat(this.formulario.elements.valor.value);
+        this.gasto.fecha = new Date (this.formulario.elements.fecha.value);
         this.gasto.etiquetas = toString(this.formulario.elements.etiquetas.value).split(",");
         repintar();
     }
