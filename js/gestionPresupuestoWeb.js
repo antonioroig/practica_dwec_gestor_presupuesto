@@ -308,7 +308,41 @@ anyadirgasto.addEventListener("click",nuevoGastoWeb);
 let anyadirgastoForm = document.getElementById("anyadirgasto-formulario");
 anyadirgastoForm.addEventListener('click', nuevoGastoWebFormulario);
 
+function filtrarGastosWeb(){
+    this.handleEvent = function(event){
+        event.preventDefault();
+        let form = event.currentTarget;
 
+        let desc = form.elements["formulario-filtrado-descripcion"].value;
+        let vMax = form.elements["formulario-filtrado-valor-minimo"].value;
+        let vMin = form.elements["formulario-filtrado-valor-maximo"].value;
+        let fInicial = form.elements["formulario-filtrado-fecha-desde"].value;
+        let fFinal = form.elements["formulario-filtrado-fecha-hasta"].value;
+        let etiq = form.elements["formulario-filtrado-etiquetas-tiene"].value;
+        let etiqNuevo;
+    }
+
+    if(etiq.length > 0){
+        etiqNuevo = gesP.transformarListadoEtiquetas(etiq);
+    }
+
+    let obj = {
+        descripcionContiene : desc,
+        valorMaximo : vMax,
+        valorMinimo : vMin,
+        fechaDesde : fInicial,
+        fechaHasta : fFinal,
+        etiquetasTiene : etiqNuevo
+    }
+
+    document.getElementById("listado-gastos-completo").innerHTML = "";
+    let filtrador = gesP.filtrarGastos(obj);
+
+    filtrador.forEach(gasto=>{
+        mostrarGastoWeb("listado-gastos-completo", gasto)
+    })
+    
+}
 export{
     mostrarDatoEnId,
     mostrarGastoWeb,
@@ -319,6 +353,7 @@ export{
     EditarHandle,
     BorrarHandle,
     BorrarEtiquetasHandle,
-    nuevoGastoWebFormulario
+    nuevoGastoWebFormulario,
+    filtrarGastosWeb
 }
 
