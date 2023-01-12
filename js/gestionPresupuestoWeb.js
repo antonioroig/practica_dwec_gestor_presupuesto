@@ -373,6 +373,14 @@ function EditarHandleFormulario()
         });
     }
 }
+// --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+// ACTIVIDAD 7
+function guardarGastosWeb()
+{
+    localStorage.GestorGastosDWEC=JSON.stringify(gestionPresupuesto.listarGastos());
+}
+
+
 
 // * * * * BUTTONS * * * * 
 
@@ -392,6 +400,11 @@ let FormularioHandler = new FiltrarGastosWeb();
 
 let form = document.getElementById('formulario-filtrado');
 form.addEventListener('submit', FormularioHandler);
+
+// Actividad 8
+let btnGuardarGasto = document.getElementById('guardar-gastos');
+btnGuardarGasto.onclick = guardarGastosWeb;
+
 
 // npx cypress open -- PARA HACER TEST GRÁFICO
 // npm run test --> pasa todos los tests
@@ -413,6 +426,8 @@ export   {
     EditarHandleFormulario,
     // actividad 7
     FiltrarGastosWeb,
+    // Actividad 8
+    guardarGastosWeb,
 
 }
 

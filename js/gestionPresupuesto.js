@@ -249,13 +249,14 @@ function cargarGastos(GastosCargar)
     
     if(GastosCargar.length >= 0)
     {
+        // Reseteamos la variable global "gastos"
         gastos = new Array();
         for (let gasto of GastosCargar)
         {
-            let gastoR = new CrearGasto();
-            Object.assign(gastoR, gasto);
-            gastos.push(gastoR);
-        }
+            let gastoR = new CrearGasto(); // gastoRehidratado
+            Object.assign(gastoR, gasto); // almacenado y además tiene acceso a los métodos de "CrearGasto"
+            gastos.push(gastoR); // Añadimos el gasto rehidratado a "gastos"
+        } 
     } 
 }
 
