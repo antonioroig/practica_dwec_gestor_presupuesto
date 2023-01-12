@@ -22,7 +22,7 @@ El repositorio se ha configurado para que se *ejecuten los tests automáticament
 3. Situarse en la carpeta del repositorio personal de la práctica
 4. *Incorporar a tu repositorio personal los cambios* realizados por el profesor correspondientes a los archivos de esta práctica. Para ello hay que ejecutar:
    #+begin_src shell
-     git pull profesor master
+     git pull profesor main
    #+end_src
 5. Este comando *descarga* los cambios que ha realizado el *profesor* en el *repositorio base* y los *integra* en tu repositorio personal. Tras realizar este paso, seguramente git *abra el editor configurado por defecto* para que introduzcas un *mensaje para crear un nuevo commit* que integre tus cambios y los cambios del profesor. Debes introducir el texto y guardar los cambios.
 6. En principio no deben producirse *conflictos*. En caso de que se produzcan (por ejemplo, porque has editado el fichero ~.gitignore~ y yo también porque lo exigía la práctica), *resuélvelos y notifícamelo a través de un Issue*.
