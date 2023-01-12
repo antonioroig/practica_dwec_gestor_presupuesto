@@ -306,24 +306,38 @@ function filtrarGastosWeb()
         let desde = form.elements['formulario-filtrado-fecha-desde'].value;
         let hasta = form.elements['formulario-filtrado-fecha-hasta'].value;
         let etiq = form.elements['formulario-filtrado-etiquetas-tiene'].value;
-        let a;
+
+
+
+        let filtro = {};
+
+
+
+        
         if(etiq.length > 0){
-            a = gestionpr.transformarListadoEtiquetas(etiq);
+            filtro.etiquetasTiene = gestionpr.transformarListadoEtiquetas(etiq);
         }
-        let obj = {
-            descripcionContiene : desc,
-            fechaHasta : hasta,
-            fechaDesde : desde,
-            valorMaximo : maximo,
-            valorMinimo : minimo,
-            etiquetasTiene : a
+        if(desc != ""){
+            filtro.descripcionContiene = desc;
+        }
+        if(minimo != "" && typeof minimo !== "undefined" && !isNaN(minimo)){
+            filtro.valorMinimo = minimo;
+        }
+        if(maximo != "" && typeof maximo !== "undefined" && !isNaN(maximo)){
+            filtro.valorMaximo = maximo;
+        }
+        if(Date.parse(desde)){
+            filtro.fechaDesde = desde;
+        }
+        if(Date.parse(hasta)){
+            filtro.fechaHasta = hasta;
         }
 
 
         document.getElementById("listado-gastos-completo").innerHTML="";
         
         
-        let gFiltrado = gestionpr.filtrarGastos(obj);
+        let gFiltrado = gestionpr.filtrarGastos(filtro);
 
         gFiltrado.forEach(g => {
             mostrarGastoWeb('listado-gastos-completo',g);
