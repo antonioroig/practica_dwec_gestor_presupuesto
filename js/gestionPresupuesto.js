@@ -283,7 +283,7 @@ function agruparGastos(periodo = "mes",etiquetas, fechaDesde,fechaHasta){
     
     return objetofinal;
 }
-    function transformarListadoEtiquetas()
+    function transformarListadoEtiquetas(ans)
     {
         
     }
