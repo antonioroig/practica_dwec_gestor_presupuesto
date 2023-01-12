@@ -250,11 +250,11 @@ function cargarGastos(expenseLoad)
     if(expenseLoad.length>=0)
     {
         gastos = new Array();
-        for (let expense of expenseLoad)
+        for (let gasto of gastosCargar)
         {
-            let gastoRehidratado = new CrearGasto();
-            Object.assign(gastoRehidratado, expense);
-            gastos.push(gastoRehidratado);
+            let gastoR = new CrearGasto();
+            Object.assign(gastoR, gasto);
+            gastos.push(gasto);
         }
     } 
 }
