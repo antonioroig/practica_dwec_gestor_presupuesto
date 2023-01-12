@@ -305,6 +305,7 @@ function CrearGasto(descripcion,valor,fecha,...etiqueta) {
 
         let nEtiquetas = etiquetasEnTexto.split(/[,.:;\s]/).filter(c => c != "");
         return nEtiquetas;
+        
     }
 
 

@@ -300,16 +300,21 @@ function filtrarGastosWeb()
         event.preventDefault();
 
         let form = event.currentTarget;
+
         let desc = form.elements['formulario-filtrado-descripcion'].value;
         let minimo = parseFloat(form.elements['formulario-filtrado-valor-minimo'].value);
         let maximo = parseFloat(form.elements['formulario-filtrado-valor-maximo'].value);
         let desde = form.elements['formulario-filtrado-fecha-desde'].value;
         let hasta = form.elements['formulario-filtrado-fecha-hasta'].value;
         let etiq = form.elements['formulario-filtrado-etiquetas-tiene'].value;
+
+
         let a;
+
         if(etiq.length > 0){
             a = gestionpr.transformarListadoEtiquetas(etiq);
         }
+        
         let obj = {
             descripcionContiene : desc,
             fechaHasta : hasta,
