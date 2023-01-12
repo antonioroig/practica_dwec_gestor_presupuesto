@@ -292,6 +292,21 @@ function filtrarGastosWeb(){
     };
 };
 
+function guardarGastosWeb(){
+    this.handleEvent = function(event){
+        event.preventDefault();
+        localStorage.setItem('GestorGastosDWEC', JSON.stringify(gestionPresupuesto.listarGastos()));
+    };
+};
+
+function cargarGastosWeb(){
+    this.handleEvent = function(event){
+        event.preventDefault();
+
+        repintar();
+    };
+}
+
 //He puesto aquí los botones todos juntos porque luego no los encuentro.
 //Botones
 document.getElementById("actualizarpresupuesto").addEventListener("click",actualizarPresupuestoWeb);
@@ -314,5 +329,7 @@ export{
     CancelarHandleFormulario,
     EnviarHandle,
     EnviarHandleFormulario,
-    filtrarGastosWeb
+    filtrarGastosWeb,
+    guardarGastosWeb,
+    cargarGastosWeb
 };
