@@ -325,6 +325,10 @@ function filtrarGastosWeb(){
 function guardarGastosWeb(){
     this.handleEvent = function(event){
         event.preventDefault();
+
+        localStorage.setItem('GestorGastosDWEC',JSON.stringify(gestionPresupuesto.listarGastos()));
+
+
     }
 
 };
@@ -333,6 +337,12 @@ function cargarGastosWeb(){
     this.handleEvent = function(event){
         event.preventDefault();
 
+        if(localStorage.getItem('GestorGastosDWEC') != null){
+            gestionPresupuesto.cargarGastos(JSON.parse(localStorage.getItem('GestorGastosDWEC')));
+        }
+        else{
+            gestionPresupuesto.cargarGastos([]);
+        }
 
         repintar();
     }
@@ -351,6 +361,13 @@ botonAnyadirGasto.addEventListener('click',nuevoGastoWebFormulario);
 
 let botonSubmit = document.getElementById('formulario-filtrado');
 botonSubmit.addEventListener('submit', new filtrarGastosWeb());
+
+let botonGuardar = document.getElementById('guardar-gastos');
+botonGuardar.addEventListener('click', new guardarGastosWeb());
+
+let botonCargar = document.getElementById('cargar-gastos');
+botonCargar.addEventListener('click', new cargarGastosWeb());
+
 
 export {
     mostrarDatoEnId,
