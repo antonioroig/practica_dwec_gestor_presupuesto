@@ -312,8 +312,12 @@ function filtrarGastosWeb()
         let filtro = {};
 
 
-
-        
+        if(Date.parse(desde)){
+            filtro.fechaDesde = desde;
+        }
+        if(Date.parse(hasta)){
+            filtro.fechaHasta = hasta;
+        }
         if(etiq.length > 0){
             filtro.etiquetasTiene = gestionpr.transformarListadoEtiquetas(etiq);
         }
@@ -326,12 +330,8 @@ function filtrarGastosWeb()
         if(maximo != "" && typeof maximo !== "undefined" && !isNaN(maximo)){
             filtro.valorMaximo = maximo;
         }
-        if(Date.parse(desde)){
-            filtro.fechaDesde = desde;
-        }
-        if(Date.parse(hasta)){
-            filtro.fechaHasta = hasta;
-        }
+        
+        
 
 
         document.getElementById("listado-gastos-completo").innerHTML="";
