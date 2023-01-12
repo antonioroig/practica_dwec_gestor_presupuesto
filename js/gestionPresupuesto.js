@@ -244,17 +244,17 @@ function transformarListadoEtiquetas(txt)
 
 // Actividad 8 
 
-function cargarGastos(expenseLoad)
+function cargarGastos(GastosCargar)
 {
-    // expenseLoad.length >=0 && (gastos = expenseLoad);
-    if(expenseLoad.length>=0)
+    
+    if(GastosCargar.length >= 0)
     {
         gastos = new Array();
-        for (let gasto of gastosCargar)
+        for (let gasto of GastosCargar)
         {
             let gastoR = new CrearGasto();
             Object.assign(gastoR, gasto);
-            gastos.push(gasto);
+            gastos.push(gastoR);
         }
     } 
 }
