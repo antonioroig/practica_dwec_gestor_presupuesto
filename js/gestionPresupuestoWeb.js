@@ -238,9 +238,12 @@ function nuevoGastoWebFormulario()
     divContPrincipales.appendChild(formulario);
     let botonAnyadirGast = document.getElementById("anyadirgasto-formulario").setAttribute("disabled", "");
    
-    let SendObj = new EnviarGastoFormHandle();
-    formulario.addEventListener('submit', SendObj);
+    let enviar = new EnviarHandleFormulario();
+    formulario.addEventListener('submit', enviar);
 
+    let cancelar = new CancelarHandleFormulario();
+    let btnCancel = formulario.querySelector("button.cancelar");
+    btnCancel.addEventListener("click", cancelar);
     
 }
 
@@ -263,7 +266,7 @@ function EnviarHandle()
         repintar();
     }
 }
-function EnviarGastoFormHandle()
+function EnviarHandleFormulario()
 {
     this.handleEvent = function(event)
     {
@@ -279,13 +282,12 @@ function EnviarGastoFormHandle()
         document.getElementById("anyadirgasto-formulario").removeAttribute("disabled");
     }
 }
-function CancelarFormHandle() 
+function CancelarHandleFormulario() 
 {
     this.handleEvent = function (event)
     {
         event.currentTarget.parentNode.remove();
         let botonAnyadirGastoForm = document.getElementById("anyadirgasto-formulario").removeAttribute("disabled");
-        repintar();
     }
 }
 function EditarHandleFormulario()
@@ -309,20 +311,27 @@ function EditarHandleFormulario()
         let EditarFormHandle1 = new EnviarHandle();
         EditarFormHandle1.gasto = this.gasto;
         form.addEventListener('submit', EditarFormHandle1);
-        
-        let Cancelar = form.querySelector("button.cancelar");
-        let cancelarObj = new CancelarFormHandle();
-        Cancelar.addEventListener("click", cancelarObj);
 
-  
+
         botonEditarForm.setAttribute("disabled", "");
 
+        let Cancelar = form.querySelector("button.cancelar");
+        let cancelarObj = new CancelarHandleEditarForulario();
+        cancelarObj.form = form;
+        cancelarObj.botonEditarForm = this.botonEditarForm;
+        cancelarObj.form = form;
+        Cancelar.addEventListener("click", cancelarObj);
+
     }
-}/*
+}
 function CancelarHandleEditarForulario(){
-    this.form.remove();
-    this.botonEditarForm.removeAttribute("disabled")
-}*/
+    this.handleEvent = function (event)
+    {
+        this.form.remove();
+        this.botonEditarForm.removeAttribute("disabled");
+    }
+    
+}
 
 export   {  
     mostrarDatoEnId,
