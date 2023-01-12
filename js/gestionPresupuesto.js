@@ -242,6 +242,24 @@ function transformarListadoEtiquetas(txt)
     return txt.split(/[ ,;:\.~]+/g);
 }
 
+// Actividad 8 
+
+function cargarGastos(expenseLoad)
+{
+    // expenseLoad.length >=0 && (gastos = expenseLoad);
+    if(expenseLoad.length>=0)
+    {
+        gastos = new Array();
+        for (let expense of expenseLoad)
+        {
+            let gastoRehidratado = new CrearGasto();
+            Object.assign(gastoRehidratado, expense);
+            gastos.push(gastoRehidratado);
+        }
+    } 
+}
+
+
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
@@ -261,6 +279,8 @@ export   {
     agruparGastos,
     // Actividad 7
     transformarListadoEtiquetas,
+    // Actividad 8
+    cargarGastos,
 
 }
 
