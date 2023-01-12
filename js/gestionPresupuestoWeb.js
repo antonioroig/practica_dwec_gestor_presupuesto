@@ -288,6 +288,7 @@ function filtrarGastosWeb ()
     this.handleEvent = function(event){
         event.preventDefault();
 
+        let descripcion = document.getElementById("formulario-filtrado-descripcion").value;
         let min_valor = parseFloat(document.getElementById("formulario-filtrado-valor-minimo").value);
         let max_valor= parseFloat(document.getElementById("formulario-filtrado-valor-maximo").value);
         let fechaDesde = document.getElementById("formulario-filtrado-fecha-desde").value;
@@ -298,9 +299,26 @@ function filtrarGastosWeb ()
         if(etiquetas.lenght > 0)
         {
             gasto_filtrado.etiquetasTiene = pres.transformarListadoEtiquetas(etiquetas)
+        };
+    
+
+        gasto_filtrado.descripcionContiene = descripcion;
+        gasto_filtrado.valorMinimo = min_valor;
+        gasto_filtrado.valorMaximo = max_valor;
+        gasto_filtrado.fechaDesde = fechaDesde;
+        gasto_filtrado.fechaHasta = fechaHasta;
+        gasto_filtrado.etiquetas = etiquetas;
+
+        document.getElementById("lsitado-gasto-completo").innerHTML="";
+
+        let filtrados = pres.filtrarGastos(gasto_filtrado);
+
+        for(let gasto of filtrados)
+        {
+            mostrarGastoWeb("listado-gasto-completo",gasto);
         }
     }
-
-    
 }
-export{mostrarDatoEnId,mostrarGastoWeb,mostrarGastosAgrupadosWeb,repintar,actualizarPresupuestoWeb,nuevoGastoWeb,EditarHandle,BorrarHandle,BorrarEtiquetasHandle,EnviarHandle,EditarHandleFormulario,EnviarHandleFormulario,CancelarHandleFormulario,nuevoGastoWebFormulario}
+let btnEnviar = document.getElementById("formulario-filtrado");
+btnEnviar.addEventListener('submit', new filtrarGastosWeb());
+export{mostrarDatoEnId,mostrarGastoWeb,mostrarGastosAgrupadosWeb,repintar,actualizarPresupuestoWeb,nuevoGastoWeb,EditarHandle,BorrarHandle,BorrarEtiquetasHandle,EnviarHandle,EditarHandleFormulario,EnviarHandleFormulario,CancelarHandleFormulario,nuevoGastoWebFormulario,filtrarGastosWeb}
