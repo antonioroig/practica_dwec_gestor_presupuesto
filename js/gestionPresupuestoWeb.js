@@ -1,5 +1,6 @@
 import * as gp from './gestionPresupuesto.js';
 
+
 "use strict";
 
 function mostrarDatoEnId(valor, idElemento){
