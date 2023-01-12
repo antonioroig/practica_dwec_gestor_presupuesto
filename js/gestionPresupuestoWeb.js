@@ -296,14 +296,40 @@ function filtrarGastosWeb(){
         let form = event.currentTarget;
 
         let descripcion = form.elements["formulario-filtrado-descripcion"].value;
-        let valorMin = form.elements["formulario-filtrado-valor-minimo"].value;
-        let valorMax = form.elements["formulario-filtrado-valor-maximo"].value;
+        let valorMin = parseFloat(form.elements["formulario-filtrado-valor-minimo"].value);
+        let valorMax = parseFloat(form.elements["formulario-filtrado-valor-maximo"].value);
         let fechaInicial = form.elements["formulario-filtrado-fecha-desde"].value;
         let fechaFinal = form.elements["formulario-filtrado-fecha-hasta"].value;
+        let etiquetas = form.elements["formulario-filtrado-etiquetas-tiene"].value;
+        let etiquetasNuevo;
+
+        if(etiquetas.length > 0 ){
+            etiquetasNuevo = ges.transformarListadoEtiquetas(etiquetas);
+        }
         
+        let obj = {
+            fechaDesde : fechaInicial,
+            fechaHasta : fechaFinal,
+            valorMinimo : valorMin,
+            valorMaximo : valorMax,
+            descripcionContiene : descripcion,
+            etiquetasTiene : etiquetasNuevo
+
+        }
+
+        document.getElementById("listado-gastos-completo").innerHTML = "";
+        let filt = ges.filtrarGastos(obj);
+
+        filt.forEach(gasto=>{
+            mostrarGastoWeb("listado-gastos-completo", gasto)
+        })
 
     }
 }
+
+let formularioFilt = new filtrarGastosWeb();
+document.getElementById("formulario-filtrado").addEventListener("submit", formularioFilt);
+
 
 
 //NO MODIFICAR.
