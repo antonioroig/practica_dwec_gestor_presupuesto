@@ -322,6 +322,23 @@ function filtrarGastosWeb(){
 
 };
 
+function guardarGastosWeb(){
+    this.handleEvent = function(event){
+        event.preventDefault();
+    }
+
+};
+
+function cargarGastosWeb(){
+    this.handleEvent = function(event){
+        event.preventDefault();
+
+
+        repintar();
+    }
+
+};
+
 //Botones para añadir al html
 let botonActualizar = document.getElementById('actualizarpresupuesto');
 botonActualizar.addEventListener('click',actualizarPresupuestoWeb);
@@ -350,5 +367,7 @@ export {
     EnviarHandleFormulario,
     EnviarHandle,
     nuevoGastoWebFormulario,
-    filtrarGastosWeb
+    filtrarGastosWeb,
+    guardarGastosWeb,
+    cargarGastosWeb
 }
