@@ -132,13 +132,13 @@
     }
   }
 
-  function actualizarPresupuestoWeb(){
+  function actualizarPresupuestoWeb()
+  {
     let  presupuestoWeb = prompt('Presupuesto:')
     let presupuestostring = parseFloat(presupuestoWeb);
     presupuesto.actualizarPresupuesto(presupuestostring);
 
     repintar();
-    
   }
 
   let botonactpresupuesto = document.getElementById('actualizarpresupuesto');
@@ -179,29 +179,30 @@
       
     }
   }
-  function BorrarHandle(){
+  function BorrarHandle()
+  {
     
-    this.handleEvent = function (event)
-    {
-        let borrar = this.gasto.id;
-        presupuesto.borrarGasto(borrar);
+      this.handleEvent = function (event)
+      {
+          let borrar = this.gasto.id;
+          presupuesto.borrarGasto(borrar);
 
-        repintar();
-   }
+          repintar();
+      }
   }
 
-  function BorrarEtiquetasHandle(){
-    
-    this.handleEvent = function (event) {
-
+  function BorrarEtiquetasHandle()
+  {
+    this.handleEvent = function (event) 
+      {
         this.gasto.borrarEtiquetas(this.etiquetas);
   
         repintar();
       } 
   }
 
-  function nuevoGastoWebFormulario(){
-    
+  function nuevoGastoWebFormulario()
+  {
       let plantillaFormulario = document.getElementById("formulario-template").content.cloneNode(true);
       var formulario = plantillaFormulario.querySelector("form");
 
@@ -216,7 +217,6 @@
 
       let botonenviar = new EnviarHandleFormulario();
       formulario.addEventListener('submit', botonenviar);
-
   }
 
       //boton añadir-gato-fromulario
@@ -224,9 +224,10 @@
       botonAnyadirGasto.addEventListener('click',nuevoGastoWebFormulario);
   
 
-      function CancelarHandle(){
-        this.handleEvent = function(event){
-    
+      function CancelarHandle()
+      {
+        this.handleEvent = function(event)
+        {
             event.preventDefault();
     
             event.currentTarget.parentNode.remove();
@@ -234,13 +235,13 @@
             
             repintar();
         }
-    }
+      }
 
 
       function EnviarHandle()
       {
-        this.handleEvent = function(event){
-     
+        this.handleEvent = function(event)
+        {
           event.preventDefault();
           
           let formulario = event.currentTarget;
@@ -258,12 +259,12 @@
           this.gasto.anyadirEtiquetas(...etiquetas);
   
           repintar();
-      }
+        }
       }
     function EnviarHandleFormulario()
     {
-          this.handleEvent = function(event){
-
+          this.handleEvent = function(event)
+          {
             event.preventDefault();
 
             let formulario = event.currentTarget;
@@ -282,17 +283,17 @@
             repintar();
 
             document.getElementById("anyadirgasto-formulario").removeAttribute("disabled");
-
         }
     }
 
 
-  function EditarHandleFormulario(){
-    this.handleEvent = function(event){
-
+  function EditarHandleFormulario()
+  {
+    this.handleEvent = function(event)
+    {
         event.preventDefault()
 
-        let plantillaFormulario = document.getElementById("formulario-template").content.cloneNode(true);;
+        let plantillaFormulario = document.getElementById("formulario-template").content.cloneNode(true);
         var formulario = plantillaFormulario.querySelector("form");
 
         let controles = document.getElementById("controlesprincipales");
@@ -315,7 +316,14 @@
         formulario.addEventListener('submit',enviar);
 
         botonFormulario.setAttribute('disabled', "");
+    }
+}
 
+function filtrarGastosWeb(){
+  
+  this.handleEvent = function(event)
+    {
+        event.preventDefault()
     }
 }
 
@@ -333,6 +341,7 @@
     CancelarHandle,
     EnviarHandle,
     EnviarHandleFormulario,
-    EditarHandleFormulario
+    EditarHandleFormulario,
+    filtrarGastosWeb
   }
 
