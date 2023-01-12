@@ -323,7 +323,7 @@ function filtrarGastosWeb(){
   
   this.handleEvent = function(event)
     {
-        event.preventDefault()
+        event.preventDefault() 
     }
 }
 
