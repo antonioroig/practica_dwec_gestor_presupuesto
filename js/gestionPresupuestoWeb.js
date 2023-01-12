@@ -301,12 +301,12 @@ function filtrarGastosWeb(){
         }
 
         let gasto = {
-            descripcionContiene : descripcion,
-            valorMinimo : valorMin,
-            valorMaximo : valorMax,
             fechaDesde : fechaInicial,
             fechaHasta : fechaFinal,
-            etiquetasTiene : etiquetasTienes,
+            valorMinimo : valorMin,
+            valorMaximo : valorMax,
+            descripcionContiene : descripcion,
+            etiquetasTiene : etiquetasTienes
         }
 
         document.getElementById("listado-gastos-completo").innerHTML = "";
@@ -315,7 +315,6 @@ function filtrarGastosWeb(){
 
         Filtrado.forEach(g => {
             mostrarGastoWeb("listado-gastos-completo",g);
-
         })
     }
 }
