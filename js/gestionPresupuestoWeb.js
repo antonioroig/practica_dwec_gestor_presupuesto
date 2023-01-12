@@ -299,10 +299,19 @@ function guardarGastosWeb(){
     };
 };
 
+
+
 function cargarGastosWeb(){
     this.handleEvent = function(event){
         event.preventDefault();
+        let miArrayGastos = JSON.parse(localStorage.getItem('GestorGastosDWEC'));
 
+        if(miArrayGastos != null)
+            gestionPresupuesto.cargarGastos(miArrayGastos);
+        else{
+            miArrayGastos = [];
+            gestionPresupuesto.cargarGastos(miArrayGastos);
+        }
         repintar();
     };
 }
@@ -313,6 +322,8 @@ document.getElementById("actualizarpresupuesto").addEventListener("click",actual
 document.getElementById("anyadirgasto").addEventListener("click",nuevoGastoWeb);
 document.getElementById("anyadirgasto-formulario").addEventListener("click",nuevoGastoWebFormulario);
 document.getElementById("formulario-filtrado").addEventListener("submit", new filtrarGastosWeb());
+document.getElementById("guardar-gastos").addEventListener("click", new guardarGastosWeb());
+document.getElementById("cargar-gastos").addEventListener("click", new cargarGastosWeb());
 
 export{
     mostrarDatoEnId,
