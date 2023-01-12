@@ -393,6 +393,18 @@ function EnviarHandle()
 
 }
 
+function filtrarGastosWeb()
+{
+
+    this.handleEvent(event)
+    {
+
+        event.preventDefault();
+
+    }
+
+}
+
 function EditarHandleFormulario()
 {
 
