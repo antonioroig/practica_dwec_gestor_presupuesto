@@ -270,6 +270,9 @@ function EnviarHandleFormulario(){
         document.getElementById("anyadirgasto-formulario").removeAttribute("disabled");
     }
 }
+
+
+
 export{
     mostrarDatoEnId,
     mostrarGastoWeb,
