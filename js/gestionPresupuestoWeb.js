@@ -283,4 +283,24 @@ function EnviarHandle()
        repintar();
     }
 }
+function filtrarGastosWeb () 
+{
+    this.handleEvent = function(event){
+        event.preventDefault();
+
+        let min_valor = parseFloat(document.getElementById("formulario-filtrado-valor-minimo").value);
+        let max_valor= parseFloat(document.getElementById("formulario-filtrado-valor-maximo").value);
+        let fechaDesde = document.getElementById("formulario-filtrado-fecha-desde").value;
+        let fechaHasta = document.getElementById("formulario-filtrado-fecha-hasta").value;
+        let etiquetas = document.getElementById("formulario-filtrado-etiquetas-tiene").value;
+        let gasto_filtrado = {};
+
+        if(etiquetas.lenght > 0)
+        {
+            gasto_filtrado.etiquetasTiene = pres.transformarListadoEtiquetas(etiquetas)
+        }
+    }
+
+    
+}
 export{mostrarDatoEnId,mostrarGastoWeb,mostrarGastosAgrupadosWeb,repintar,actualizarPresupuestoWeb,nuevoGastoWeb,EditarHandle,BorrarHandle,BorrarEtiquetasHandle,EnviarHandle,EditarHandleFormulario,EnviarHandleFormulario,CancelarHandleFormulario,nuevoGastoWebFormulario}
