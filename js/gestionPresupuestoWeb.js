@@ -350,7 +350,7 @@ function filtrarGastosWeb(){
 
 
 let formularioFilt = new filtrarGastosWeb();
-document.getElementById("formulario-filtrado"),addEventListener("submit", formularioFilt);
+document.getElementById("formulario-filtrado").addEventListener("submit", formularioFilt);
 
 
 export{
