@@ -403,15 +403,15 @@ function filtrarGastosWeb()
 
         let descricpion = document.getElementById("formulario-filtrado-descripcion").value;
 
-        let valorMinimo = document.getElementById("formulario-filtrado-valor-minimo").value;
+        let valorMinimo = parseFloat(document.getElementById("formulario-filtrado-valor-minimo").value);
 
-        let valorMaximo = document.getElementById("formulario-filtrado-valor-minimo").value;
+        let valorMaximo = parseFloat(document.getElementById("formulario-filtrado-valor-minimo").value);
 
-        let fechaDesde = document.getElementById("").value;
+        let fechaDesde = document.getElementById("formulario-filtrado-fecha-desde").value;
 
-        let fechaHasta = document.getElementById("").value;
+        let fechaHasta = document.getElementById("formulario-filtrado-fecha-hasta").value;
 
-        let etiquetas = document.getElementById("").value;
+        let etiquetas = document.getElementById("formulario-filtrado-etiquetas-tiene").value;
 
     }
 
