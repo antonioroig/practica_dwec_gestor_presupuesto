@@ -277,6 +277,26 @@ function EditarHandleFormulario() {
   }
 
 }
+// Submit -- este si 
+let eventoSubmitFormulario = function (){
+  this.handleevent = function(e){
+    e.preventDefault();
+
+    let form = e.currentTarget;
+    let descripcion = form.elements.descripcion.value;
+    let valor = parseFloat(form.elements.valor.value);
+    let fecha = form.elements.fecha.value;
+    // let etiq = form.elements.etiquetas.value;
+    let etiquetas = splice(', ', form.elements.etiquetas.value );
+    
+    // Toma los datos y crea un nuevo gasto
+    let nuevoGasto = new gp.CrearGasto(descripcion,valor, fecha, etiquetas);
+    gp.anyadirGasto(nuevoGasto);
+    repintar();
+  }
+}
+
+
 // Objeto manejador de eventos- SUBMIT --REVISAR
 let eventoSubmit = function () {
   this.handleEvent = function(event){  
