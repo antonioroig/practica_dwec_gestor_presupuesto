@@ -239,10 +239,6 @@ function nuevoGastoWebFormulario(){
    let elemento = document.getElementById("controlesprincipales");
   elemento.appendChild(plantillaFormulario);
   
-
-  // MANEJADOR DE EVENTO SUBMIT - REVISAR MAEJADOR DE EVENTO
-  //let btnEnviar = formulario.querySelector("button[type='submit']");
-
   // Con esto suficiente
   let objEnviar = new eventoSubmit();
   formulario.addEventListener('submit',objEnviar);
@@ -254,24 +250,22 @@ function nuevoGastoWebFormulario(){
   
 }
 
-// Función constructora -- Revisar
+// Función constructora -- REVISAR
 function EditarHandleFormulario() {
   this.handleEvent = function (e){
-
+         
       // Tomamos el template del documento
   let plantillaFormulario = document.getElementById("formulario-template").content.cloneNode(true);
   let formulario = plantillaFormulario.querySelector("form");
 
-    let controles = document.getElementById('controlesprincipales');
+  let controles = document.getElementById('anyadirgasto-formulario');
   controles.appendChild(formulario);
-
-    // Tomamos los controles principales
-    //let divControlesPrincipales = document.getElementById("controlesprincipales")
-  //divControlesPrincipales.appendChild(formulario);
 
     //Tomamos el evento
     let btnEditarFormulario = e.currentTarget;
-        btnEditarFormulario.appendChild(formulario);
+        //btnEditarFormulario.appendChild(formulario);
+      
+        btnEditarFormulario.setAttribute('disabled','');
 
   formulario.elements.descripcion.value = this.gasto.descripcion;
   formulario.elements.valor.value = this.gasto.valor;
@@ -288,14 +282,11 @@ function EditarHandleFormulario() {
         let objCancelar = new eventoCancelar();
         btnCancelar.addEventListener('click', objCancelar);
 
-        // Tomamos el boton y lo desactivamos
-        let btnAnyadirGastoForm = document.getElementById("gasto-editar-formulario");
-        btnAnyadirGastoForm.setAttribute('disabled','');
   }
 
 }
 
-// Objeto manejador de eventos- SUBMIT
+// Objeto manejador de eventos- SUBMIT -- Check
 let eventoSubmit = function (){
 
   this.handleEvent = function(e){
