@@ -28,7 +28,6 @@ function mostrarGastoWeb(gasto, idElemento){
 
     let divGasto = document.createElement("div");
     divGasto.classList.add(`gasto`);
-
     // div con descripcion
     let div = document.createElement('div');
     div.classList.add(`gasto-descripcion`);
@@ -104,7 +103,7 @@ function mostrarGastoWeb(gasto, idElemento){
     btnEditarForm.addEventListener('click',editarForm);
     divGasto.appendChild(btnEditarForm);
 
-    elemento.append(divGasto);   
+    elemento.append(divGasto); 
 }
 
 // Muestra los datos del elemento agrupado que se le pasa por parámetro
@@ -235,12 +234,10 @@ function nuevoGastoWebFormulario(){
 
   // Tomamos el template del documento
   let plantillaFormulario = document.getElementById("formulario-template").content.cloneNode(true);
-  // Tomamos el formulario
   var formulario = plantillaFormulario.querySelector("form");
   
-  let divControlesPrincipales = document.getElementById("controlesprincipales")
-  divControlesPrincipales.appendChild(form);
-  let btnAnyadirGastoForm = document.getElementById("anyadirgasto-formulario").setAttribute("disabled", "");
+   let elemento = document.getElementById("controlesprincipales");
+  elemento.appendChild(plantillaFormulario);
   
 
   // MANEJADOR DE EVENTO SUBMIT - REVISAR MAEJADOR DE EVENTO
@@ -255,24 +252,24 @@ function nuevoGastoWebFormulario(){
   let objCancelar = new eventoCancelar();
   btnCancelar.addEventListener('click', objCancelar);
   
-  // Revisar SOBRA OJO
-  let elemento = document.getElementById("controlesprincipales");
-  elemento.appendChild(plantillaFormulario);
 }
+
 // Función constructora -- Revisar
 function EditarHandleFormulario() {
   this.handleEvent = function (e){
+
+            
     
       // Tomamos el template del documento
   let plantillaFormulario = document.getElementById("formulario-template").content.cloneNode(true);
   let formulario = plantillaFormulario.querySelector("form");
 
-  /*let controles = document.getElementById('controlesprincipales');
-  formulario.appendChild(controles);*/
+    let controles = document.getElementById('controlesprincipales');
+  controles.appendChild(formulario);
 
     // Tomamos los controles principales
-    let divControlesPrincipales = document.getElementById("controlesprincipales")
-    divControlesPrincipales.appendChild(form);
+    //let divControlesPrincipales = document.getElementById("controlesprincipales")
+  //divControlesPrincipales.appendChild(formulario);
 
     //Tomamos el evento
     let btnEditarFormulario = e.currentTarget;
@@ -284,30 +281,25 @@ function EditarHandleFormulario() {
   formulario.elements.etiquetas.value = this.gasto.etiquetas;
 
 
-  let eventoEnviar = new eventoSubmit();
-  eventoEnviar.gasto = this.gasto;
+      let eventoEnviar = new eventoSubmit();
+        eventoEnviar.gasto = this.gasto;
         formulario.addEventListener('submit', eventoEnviar);
         
         // MANEJADOR DE EVENTO CANCELAR
         let btnCancelar = formulario.querySelector("button.cancelar");
         let objCancelar = new eventoCancelar();
         btnCancelar.addEventListener('click', objCancelar);
+        btnCancelar.setAttribute('disabled','')
 
         // Tomamos el boton y lo desactivamos
         let btnAnyadirGastoForm = document.getElementById("anyadirgasto-formulario");
-        btnAnyadirGastoForm.setAttribute('disabled', '');
-
-        // Revisar
-        //btnEditarFormulario.setAttribute("disabled", "");
+        btnAnyadirGastoForm.setAttribute('disabled','');
   }
 
 }
-<<<<<<< HEAD
-=======
 
->>>>>>> 67b376e22d0d5854f85a35ec06ac9c476741f20d
 // Submit -- este si 
-let eventoSubmitFormulario = function (){
+let eventoSubmit = function (){
   this.handleevent = function(e){
     e.preventDefault();
 
@@ -315,23 +307,19 @@ let eventoSubmitFormulario = function (){
     let descripcion = form.elements.descripcion.value;
     let valor = parseFloat(form.elements.valor.value);
     let fecha = form.elements.fecha.value;
-    // let etiq = form.elements.etiquetas.value;
-    let etiquetas = splice(', ', form.elements.etiquetas.value );
+    let etiquetas = form.elements.etiquetas.value;
     
     // Toma los datos y crea un nuevo gasto
     let nuevoGasto = new gp.CrearGasto(descripcion,valor, fecha, etiquetas);
     gp.anyadirGasto(nuevoGasto);
     repintar();
-<<<<<<< HEAD
-=======
 
     // Desactiva el botón
-    let btnAnyadirGastoForm = document.getElementById("anyadirgasto-formulario");
-    btnAnyadirGastoForm.removeAttribute('disabled');
->>>>>>> 67b376e22d0d5854f85a35ec06ac9c476741f20d
+let btnAnyadirGastoForm = document.getElementById("anyadirgasto-formulario");
+    btnAnyadirGastoForm.setAttribute('disabled');
   }
 }
-
+/*
 
 // Objeto manejador de eventos- SUBMIT --REVISAR
 let eventoSubmit = function () {
@@ -354,7 +342,7 @@ let eventoSubmit = function () {
     let btnAnyadirGastoForm = document.getElementById("anyadirgasto-formulario");
     btnAnyadirGastoForm.removeAttribute('disabled');
   }
-}
+}*/
 
 // Objeto manejador de eventos- CANCELAR -- Check
 let eventoCancelar = function() {
