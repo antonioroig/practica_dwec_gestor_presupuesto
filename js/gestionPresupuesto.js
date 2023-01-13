@@ -136,6 +136,10 @@ function listarGastos()
 {
     return gastos;
 }
+function cargarGastos()
+{
+
+}
 function anyadirGasto(nuevogasto)
 {
     nuevogasto.id = idGasto;
@@ -261,5 +265,6 @@ export
     calcularBalance,
     filtrarGastos,
     agruparGastos,
+    cargarGastos
 }
 //hola
