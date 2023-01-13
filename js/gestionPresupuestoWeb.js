@@ -284,6 +284,37 @@ function AnyadirGastoFormulario(){
     }
 }
 
+let filtrarGastoWeb = function(){
+    this.handleEvent = function(evento) {
+        evento.preventDefault();
+
+        let descripcionContiene = this.formulario.elements["formulario-filtrado-descripcion"].value;
+        let valorMinimo = this.formulario.elements["formulario-filtrado-valor-minimo"].value;
+        let valorMaximo = this.formulario.elements["formulario-filtrado-valor-maximo"].value;
+        let fechaDesde = this.formulario.elements["formulario-filtrado-fecha-desde"].value;
+        let fechaHasta = this.formulario.elements["formulario-filtrado-fecha-hasta"].value;
+        let etiquetasTiene = this.formulario.elements["formulario-filtrado-etiquetas-tiene"].value;
+
+        if(etiquetasTiene){
+            etiquetasTiene = gp.transformarListadoEtiquetas(etiquetasTiene);
+        }
+
+        document.getElementById("listado-gastos-completo").innerHTML="";
+        
+        let filtrado = gp.filtrarGastos({descripcionContiene, valorMinimo, valorMaximo, fechaDesde, fechaHasta, etiquetasTiene});
+
+        filtrado.forEach(gasto=>{
+            mostrarGastoWeb(gasto, "listado-gastos-completo");
+        });
+    }
+}
+
+let formulario = document.getElementById("formulario-filtrado");
+
+let filtrarResultados = new filtrarGastoWeb();
+filtrarResultados.formulario = formulario;
+formulario.addEventListener('submit', filtrarResultados);
+
 export{
     mostrarDatoEnId,
     mostrarGastoWeb,
@@ -291,5 +322,5 @@ export{
     nuevoGastoWebFormulario,
     repintar,
     actualizarPresupuestoWeb,
-    nuevoGastoWeb
+    nuevoGastoWeb,
 }
