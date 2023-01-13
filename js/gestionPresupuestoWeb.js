@@ -330,6 +330,17 @@ function filtrarGastosWeb(){
 let formularioFilt = new filtrarGastosWeb();
 document.getElementById("formulario-filtrado").addEventListener("submit", formularioFilt);
 
+function guardarGastosWeb(){
+    
+    localStorage.GestorGastosDWEC = ges.listarGastos();
+    
+}
+
+document.getElementById("guardar-gastos").addEventListener("submit", guardarGastosWeb);
+
+function cargarGastosWeb(){
+
+}
 
 
 //NO MODIFICAR.
