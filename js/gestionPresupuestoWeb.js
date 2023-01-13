@@ -436,14 +436,13 @@ function filtrarGastosWeb()
 
         document.getElementById("listado-gastos-completo").innerHTML = "";
 
-        let gastosWebFiltrados;
-
-        gesPresupuesto.filtrarGastos(filtrar) = gastosWebFiltrados;
+        
+        let gastosWebFiltrados = gesPresupuesto.filtrarGastos(filtrar);
 
         for(let gasto of gastosWebFiltrados)
         {
 
-            mostrarGastoWeb("lsitado-gastos-completo", gasto);
+            mostrarGastoWeb("lsitado-gastos-completo",gasto);
 
         }
 
