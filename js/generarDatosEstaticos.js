@@ -1,7 +1,9 @@
 import{
     mostrarDatoEnId,
     mostrarGastoWeb,
-    mostrarGastosAgrupadosWeb
+    mostrarGastosAgrupadosWeb,
+    guardarGastosWeb,
+    cargarGastosWeb
 } from './gestionPresupuestoWeb.js';
 import{
     mostrarPresupuesto,
@@ -13,7 +15,7 @@ import{
     calcularTotalGastos,
     calcularBalance,
     filtrarGastos,
-    agruparGastos 
+    agruparGastos,
 } from './gestionPresupuesto.js';
 
 actualizarPresupuesto(1500);

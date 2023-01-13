@@ -9,7 +9,8 @@ import{
     calcularBalance,
     filtrarGastos,
     agruparGastos,
-    transformarListadoEtiquetas
+    transformarListadoEtiquetas,
+    cargarGastos
 } from './gestionPresupuesto.js';
 
 function mostrarDatoEnId(valor, idElemento){
@@ -343,17 +344,38 @@ formulario.addEventListener('submit', form);
 function guardarGastosWeb(){
     this.handleEvent = function(event){
         event.preventDefault();
-         let gastos = this.listarGastos();
-         localStorage.setItem(GestorGastosDWEC, gastos)
+        let gastosJson = [];
+        listarGastos().forEach(gasto => {
+            gasto = JSON.stringify(gasto)
+            gastosJson.push(gasto);
+        })
+        localStorage.setItem("GestorGastosDWEC", gastosJson);
+        //alert(localStorage.getItem("GestorGastosDWEC"))
     }
 }
 let btnGuardarGasto = document.getElementById("guardar-gastos");
 btnGuardarGasto.addEventListener('click',new guardarGastosWeb());
+  
+function cargarGastosWeb(){
+    this.handleEvent = function(event){
+        event.preventDefault();
+        if(localStorage.getItem("GestorGastosDWEC")){
+            cargarGastos(localStorage.getItem("GestorGastosDWEC"))
+        }else{
+            cargarGastos([]);
+        }
+        repintar();
+    }
+}
+let btncargarGasto = document.getElementById("cargar-gastos");
+btncargarGasto.addEventListener('click',new cargarGastosWeb());
 
-
+  
 export{
     mostrarDatoEnId,
     mostrarGastoWeb,
     mostrarGastosAgrupadosWeb,
-    filtrarGastosWeb
+    filtrarGastosWeb,
+    guardarGastosWeb,
+    cargarGastosWeb
 }
