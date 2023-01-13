@@ -318,7 +318,7 @@
         botonFormulario.setAttribute('disabled', "");
     }
 }
-
+/*
 function filtrarGastosWeb(){
   
   this.handleEvent = function(event)
@@ -326,7 +326,7 @@ function filtrarGastosWeb(){
         event.preventDefault() 
     }
 }
-
+*/
   export{
     mostrarDatoEnId,
     mostrarGastoWeb,
@@ -342,6 +342,6 @@ function filtrarGastosWeb(){
     EnviarHandle,
     EnviarHandleFormulario,
     EditarHandleFormulario,
-    filtrarGastosWeb
+    //filtrarGastosWeb
   }
 
