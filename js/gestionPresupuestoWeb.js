@@ -413,6 +413,15 @@ function filtrarGastosWeb()
 
         let etiquetas = document.getElementById("formulario-filtrado-etiquetas-tiene").value;
 
+        let filtrar = {};
+
+        if(0 < etiquetas.length)
+        {
+
+            gesPresupuesto.transformarListadoEtiquetas(etiquetas) = filtrar.etiquetasHas;
+
+        }
+
     }
 
 }
