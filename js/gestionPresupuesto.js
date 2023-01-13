@@ -132,13 +132,14 @@ function CrearGasto(descripcion,valor,fecha = Date.now(), ...etiquetas)
         }
     }
 }
+function transformarListadoEtiquetas(cadena)
+{
+    let Array  = cadena.split(/[.,:~;/-\s]/).filter(etiqueta => etiqueta != "");
+    return Array;
+}
 function listarGastos()
 {
     return gastos;
-}
-function cargarGastos()
-{
-
 }
 function anyadirGasto(nuevogasto)
 {
@@ -265,6 +266,6 @@ export
     calcularBalance,
     filtrarGastos,
     agruparGastos,
-    cargarGastos
+    transformarListadoEtiquetas
 }
 //hola
