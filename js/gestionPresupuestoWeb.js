@@ -1,105 +1,5 @@
 import * as gestionP from  "./gestionPresupuesto.js";
 
-function repintar()
-{
-    document.getElementById("presupuesto").innerHTML = "";
-    document.getElementById("gastos-totales").innerHTML = "";
-    document.getElementById("balance-total").innerHTML = "";
-    document.getElementById("listado-gastos-completo").innerHTML = "";
-
-    mostrarDatoEnId(gestionP.mostrarPresupuesto(), "presupuesto");
-    mostrarDatoEnId(gestionP.calcularTotalGastos(), "gastos-totales");
-    mostrarDatoEnId(gestionP.calcularBalance(), "balance-total");
-
-    for(let gasto of gestionP.listarGastos())
-    {
-        mostrarGastoWeb("listado-gastos-completo", gasto);
-    }
-}
-
-function actualizarPresupuestoWeb()
-{
-    let presupuesto = prompt("Introduzcir presupuesto");
-
-    if(presupuesto != undefined)
-    {
-        presupuesto = parseFloat(presupuesto);
-        gestionP.actualizarPresupuesto(presupuesto);
-        repintar();
-    }
-
-    else
-    {
-        alert("El valor introducido no es valido");
-    }
-}
-
-let btnActualizarPresupuesto = document.getElementById('actualizarpresupuesto');
-btnActualizarPresupuesto.onclick = actualizarPresupuestoWeb;
-
-function nuevoGastoWeb()
-{
-    let descripcion = prompt("Introduzcir descripción");
-    let valor = parseFloat(prompt("Introduzcir valor"));
-    let fecha = prompt("Introduzcir fecha");
-    let etiquetas = prompt("Introduzcir etiquetas").split(',');
-
-    let newGasto = new gestionP.CrearGasto(descripcion, valor, fecha, ...etiquetas);
-    gestionP.anyadirGasto(newGasto);
-
-    repintar();
-}
-
-let btnAnyadirGasto = document.getElementById('anyadirgasto');
-btnAnyadirGasto.onclick = nuevoGastoWeb;
-
-let EditarHandle = function()
-{
-    this.handleEvent = function()
-    {
-        let descripcion = prompt("Introduzcir descripción");
-        let valor = parseFloat(prompt("Introduzcir valor"));
-        let fecha = prompt("Introduzcir fecha");
-        let etiquetas = prompt("Introduzcir etiquetas").split(",");
-
-        this.gasto.actualizarDescripcion(descripcion);
-        this.gasto.actualizarValor(valor);
-        this.gasto.actualizarFecha(new Date(fecha));
-        this.gasto.anyadirEtiquetas(...etiquetas);
-        repintar();
-    }
-}
-
-function BorrarHandle()
-{
-    
-        this.handleEvent= function()
-        {
-            gestionP.borrarGasto(this.gasto.id);
-            repintar();
-        }
-}
-function BorrarEtiquetasHandle()
-{
-    
-        this.handleEvent= function() 
-        {
-
-            this.gasto.borrarEtiquetas(this.petiquetas);
-
-            repintar();
-        }
-}
-
-function mostrarDatoEnId(valor, idElemento)
-{
-    if (idElemento != undefined)
-    {
-        let elementoHTML = document.getElementById(idElemento);
-        elementoHTML.innerHTML += " " + valor;
-    }
-}
-
 function mostrarGastoWeb(idElemento, gasto)
 {
     if (idElemento != undefined)
@@ -250,6 +150,106 @@ function nuevoGastoWebFormulario()
 
 document.getElementById("anyadirgasto-formulario").addEventListener("click", nuevoGastoWebFormulario);
 
+function repintar()
+{
+    document.getElementById("presupuesto").innerHTML = "";
+    document.getElementById("gastos-totales").innerHTML = "";
+    document.getElementById("balance-total").innerHTML = "";
+    document.getElementById("listado-gastos-completo").innerHTML = "";
+
+    mostrarDatoEnId(gestionP.mostrarPresupuesto(), "presupuesto");
+    mostrarDatoEnId(gestionP.calcularTotalGastos(), "gastos-totales");
+    mostrarDatoEnId(gestionP.calcularBalance(), "balance-total");
+
+    for(let gasto of gestionP.listarGastos())
+    {
+        mostrarGastoWeb("listado-gastos-completo", gasto);
+    }
+}
+
+function actualizarPresupuestoWeb()
+{
+    let presupuesto = prompt("Introduzcir presupuesto");
+
+    if(presupuesto != undefined)
+    {
+        presupuesto = parseFloat(presupuesto);
+        gestionP.actualizarPresupuesto(presupuesto);
+        repintar();
+    }
+
+    else
+    {
+        alert("El valor introducido no es valido");
+    }
+}
+
+let btnActualizarPresupuesto = document.getElementById('actualizarpresupuesto');
+btnActualizarPresupuesto.onclick = actualizarPresupuestoWeb;
+
+function nuevoGastoWeb()
+{
+    let descripcion = prompt("Introduzcir descripción");
+    let valor = parseFloat(prompt("Introduzcir valor"));
+    let fecha = prompt("Introduzcir fecha");
+    let etiquetas = prompt("Introduzcir etiquetas").split(',');
+
+    let newGasto = new gestionP.CrearGasto(descripcion, valor, fecha, ...etiquetas);
+    gestionP.anyadirGasto(newGasto);
+
+    repintar();
+}
+
+let btnAnyadirGasto = document.getElementById('anyadirgasto');
+btnAnyadirGasto.onclick = nuevoGastoWeb;
+
+function mostrarDatoEnId(valor, idElemento)
+{
+    if (idElemento != undefined)
+    {
+        let elementoHTML = document.getElementById(idElemento);
+        elementoHTML.innerHTML += " " + valor;
+    }
+}
+
+let EditarHandle = function()
+{
+    this.handleEvent = function()
+    {
+        let descripcion = prompt("Introduzcir descripción");
+        let valor = parseFloat(prompt("Introduzcir valor"));
+        let fecha = prompt("Introduzcir fecha");
+        let etiquetas = prompt("Introduzcir etiquetas").split(",");
+
+        this.gasto.actualizarDescripcion(descripcion);
+        this.gasto.actualizarValor(valor);
+        this.gasto.actualizarFecha(new Date(fecha));
+        this.gasto.anyadirEtiquetas(...etiquetas);
+        repintar();
+    }
+}
+
+function BorrarHandle()
+{
+    
+        this.handleEvent= function()
+        {
+            gestionP.borrarGasto(this.gasto.id);
+            repintar();
+        }
+}
+function BorrarEtiquetasHandle()
+{
+    
+        this.handleEvent= function() 
+        {
+
+            this.gasto.borrarEtiquetas(this.petiquetas);
+
+            repintar();
+        }
+}
+
 let CancelarGastoFormulario = function()
 {
     this.eventHandle = function(event)
@@ -336,14 +336,16 @@ function AnyadirGastoFormulario()
         let fecha = new Date(formulario.elements.fecha.value);
         let etiquetas = formulario.elements.etiquetas.value;
 
-        gestionP.anyadirGasto(new gestionP.CrearGasto(descricpion, valor, fecha, etiquetas));
+        gestionP.anyadirGasto(new gestionP.CrearGasto(descricpion, valor, fecha, ...etiquetas));
         repintar();
-
-        document.getElementById("anyadirgasto-formulario").removeAttribute("disabled");
     }
 }
 
+actualizarpresupuesto.addEventListener("click",actualizarPresupuestoWeb);
+anyadirgasto.addEventListener("click",nuevoGastoWeb);
 
+let anyadirgastoForm = document.getElementById("anyadirgasto-formulario");
+anyadirgastoForm.addEventListener('click', nuevoGastoWebFormulario);
 
 export{
     mostrarDatoEnId,
