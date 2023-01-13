@@ -273,7 +273,7 @@ function filtrarGastosWeb(){
     this.handleEvent = function(event){
         event.preventDefault();
 
-        let descripcion = document.getElementById("formulario-filtrado-descripcion").value;
+        let descripcion = document.getElementById("formulario-filtrado-descripcion").vgitalue;
         let valorMin = parseFloat(document.getElementById("formulario-filtrado-valor-minimo").value);
         let valorMax = parseFloat(document.getElementById("formulario-filtrado-valor-maximo").value);
         let fechaDesde =  document.getElementById("formulario-filtrado-fecha-desde").value;
@@ -304,6 +304,25 @@ function filtrarGastosWeb(){
 
 };
 
+function guardarGastosWeb()
+{
+    localStorage.setItem('GestorGastosDWEC', JSON.stringify(gestionPresupuesto.listarGastos()))
+}
+
+function cargarGastosWeb()
+{
+    let storage = JSON.parse(localStorage.getItem('GestorGastosDWEC'));
+
+    if(storage != null){
+        gestionPresupuesto.cargarGastos(storage);
+    }
+    else{
+        gestionPresupuesto.cargarGastos([])
+    }
+
+    repintar();
+}
+
 
 let botonActualizarPresupuesto = document.getElementById('actualizarpresupuesto');
 botonActualizarPresupuesto.addEventListener('click', function () { actualizarPresupuestoWeb() });
@@ -316,6 +335,12 @@ botonNuevoGasto.addEventListener('click', function () { nuevoGastoWebFormulario(
 
 let botonFiltrar = document.getElementById('formulario-filtrado');
 botonFiltrar.addEventListener('submit', new filtrarGastosWeb());
+
+let botonGuardarGastos = document.getElementById('guardar-gastos');
+botonGuardarGastos.addEventListener('click',  guardarGastosWeb);
+
+let botonCargarGastos = document.getElementById('cargar-gastos');
+botonCargarGastos.addEventListener('click', cargarGastosWeb);
 
 
 export {
