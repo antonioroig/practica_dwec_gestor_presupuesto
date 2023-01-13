@@ -422,6 +422,31 @@ function filtrarGastosWeb()
 
         }
 
+        descricpion = filtrar.descricpionGasto;
+
+        valorMinimo = filtrar.valorMinimo;
+
+        valorMaximo = filtrar.valorMaximo;
+
+        fechaDesde = filtrar.fechaDesde;
+
+        fechaHasta = filtrar.fechaHasta;
+
+        etiquetas = filtrar.etiquetas;
+
+        document.getElementById("listado-gastos-completo").innerHTML = "";
+
+        let gastosWebFiltrados;
+
+        gesPresupuesto.filtrarGastos(filtrar) = gastosWebFiltrados;
+
+        for(let gasto of gastosWebFiltrados)
+        {
+
+            
+
+        }
+
     }
 
 }
