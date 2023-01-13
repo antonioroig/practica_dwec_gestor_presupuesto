@@ -396,7 +396,7 @@ function EnviarHandle()
 function filtrarGastosWeb()
 {
 
-    this.handleEvent(event)
+    this.handleEvent = function(event)
     {
 
         event.preventDefault();
@@ -443,13 +443,14 @@ function filtrarGastosWeb()
         for(let gasto of gastosWebFiltrados)
         {
 
-            mostrarGastoWeb("lsitado-gastos-completoo", gasto);
+            mostrarGastoWeb("lsitado-gastos-completo", gasto);
 
         }
 
     }
 
 }
+
 
 function EditarHandleFormulario()
 {
@@ -506,7 +507,14 @@ anyadirgasto.addEventListener("click", nuevoGastoWeb);
 
 
 let addGastoForm = document.getElementById("anyadirgasto-formulario");
+
 addGastoForm.addEventListener("click", nuevoGastoWebFormulario);
+
+
+let btnEnviar = document.getElementById("formulario-filtrado");
+
+btnEnviar.addEventListener("submit", new filtrarGastosWeb());
+
 
 export{
 
