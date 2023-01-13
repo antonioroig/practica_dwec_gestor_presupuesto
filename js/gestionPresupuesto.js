@@ -371,9 +371,11 @@ return tot;
 }
 
 
-function filtrarGastosWeb()
+function transformarListadoEtiquetas(etiq)
 {
-    
+    let etiqueta =  etiq;
+    let filt = etiqueta.match(/[0-9a-z]+/gi)
+    return filt;
 }
 
 
@@ -390,5 +392,6 @@ export   {
     calcularTotalGastos,
     calcularBalance,
     filtrarGastos,
-    agruparGastos
+    agruparGastos,
+    transformarListadoEtiquetas
 }
