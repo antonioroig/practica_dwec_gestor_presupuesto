@@ -292,7 +292,7 @@ function CancelarHandleFormulario()
 }
 function EditarHandleFormulario()
 {
-    this.handleEvent = function(gasto)
+    this.handleEvent = function(event)
     {
         let pFormulario = document.getElementById("formulario-template").content.cloneNode(true);;
         var form = pFormulario.querySelector("form");
@@ -300,37 +300,29 @@ function EditarHandleFormulario()
         let divControlesPrincipales = document.getElementById("controlesprincipales")
         divControlesPrincipales.appendChild(form);
        
-        let botonEditarForm = gasto.currentTarget;
+        let botonEditarForm = event.currentTarget;
         botonEditarForm.appendChild(form);
-        form.elements.descripcion.value  = this.gasto.descripcion;
-        form.elements.valor.value = this.gasto.valor;
-        form.elements.fecha.value = new Date(this.gasto.fecha).toISOString().substr(0,10);
-        form.elements.etiquetas.value = this.gasto.etiquetas;
+        form.elements.descripcion.value  = this.event.descripcion;
+        form.elements.valor.value = this.event.valor;
+        form.elements.fecha.value = new Date(this.event.fecha).toISOString().substr(0,10);
+        form.elements.etiquetas.value = this.event.etiquetas;
 
         
         let EditarFormHandle1 = new EnviarHandle();
-        EditarFormHandle1.gasto = this.gasto;
+        EditarFormHandle1.event = this.event;
         form.addEventListener('submit', EditarFormHandle1);
 
 
         botonEditarForm.setAttribute("disabled", "");
 
         let Cancelar = form.querySelector("button.cancelar");
-        let cancelarObj = new CancelarHandleEditarForulario();
+        let cancelarObj = new CancelarHandleFormulario();
         cancelarObj.form = form;
         cancelarObj.botonEditarForm = this.botonEditarForm;
         cancelarObj.form = form;
         Cancelar.addEventListener("click", cancelarObj);
 
     }
-}
-function CancelarHandleEditarForulario(){
-    this.handleEvent = function (event)
-    {
-        this.form.remove();
-        this.botonEditarForm.removeAttribute("disabled");
-    }
-    
 }
 
 export   {  
