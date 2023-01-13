@@ -401,6 +401,18 @@ function filtrarGastosWeb()
 
         event.preventDefault();
 
+        let descricpion = document.getElementById("formulario-filtrado-descripcion").value;
+
+        let valorMinimo = document.getElementById("formulario-filtrado-valor-minimo").value;
+
+        let valorMaximo = document.getElementById("formulario-filtrado-valor-minimo").value;
+
+        let fechaDesde = document.getElementById("").value;
+
+        let fechaHasta = document.getElementById("").value;
+
+        let etiquetas = document.getElementById("").value;
+
     }
 
 }
