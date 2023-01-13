@@ -53,8 +53,10 @@ function nuevoGastoWeb()
 let btnAnyadirGasto = document.getElementById('anyadirgasto');
 btnAnyadirGasto.onclick = nuevoGastoWeb;
 
-let EditarHandle = function(){
-    this.handleEvent = function(){
+let EditarHandle = function()
+{
+    this.handleEvent = function()
+    {
         let descripcion = prompt("Introduzcir descripción");
         let valor = parseFloat(prompt("Introduzcir valor"));
         let fecha = prompt("Introduzcir fecha");
@@ -270,13 +272,18 @@ let CancelarCrearGastoFormulario = function(boton)
 
 let EditarHandleFormulario = function()
 {
-    this.eventHandle = function()
+    this.eventHandle = function(event)
     {
         let plantillaForm = document.getElementById("formulario-template").content.cloneNode(true);
+        
         let formulario = plantillaForm.querySelector("form");
 
-        this.gastoHtml.appendchild(formulario);
-        this.editBoton.setAttribute('disabled', "");
+        let controlesForm = document.getElementById("control-principal");
+        controlesForm.append(form);
+
+        let btonEditarF = event.currentTarget;
+        btonEditarF.after(form);
+        btonEditarF.disabled = true;
 
         formulario.elements.descripcion.value = this.gasto.descripcion;
         formulario.elements.valor.value = this.gasto.valor;
@@ -288,6 +295,7 @@ let EditarHandleFormulario = function()
         formulario.addEventListener("submit", form);
 
         let cancelBoton = formulario.querySelector("button.cancelar");
+
         let cancelForm = new CancelarCrearGastoFormulario(this.editBoton);
         cancelBoton.addEventListener('click', cancelForm);
     }
@@ -298,16 +306,25 @@ let EditarGastoHandle = function()
     this.eventHandle = function(event)
     {
         event.preventDefault();
-        let form = document.forms[0];
+        let form = event.currentTarget;
 
-        this.gasto.descricpion = form.elements.descricpion.value;
-        this.gasto.valor = Number(form.elements.valor.value);
-        this.gasto.fecha = new Date(form.elements.fecha.value);
-        this.gasto.etiquetas = form.elements.etiquetas.value.split(",");
+        let descripcion = form.elements.descricpion.value;
+        this.gasto.actualizarDescripcion(descripcion);
 
+        let fecha = form.elements.fecha.value;
+        this.gasto.actualizarFecha(fecha);
+
+        let valor = form.elements.valor.value;
+        this.gasto.actualizarValor(valor);
+
+        let etiqueta = form.elements.etiquetas.value;
+        this.gasto.anyadirEtiquetas(etiqueta);
+        
         repintar();
     }
 }
+
+
 
 function AnyadirGastoFormulario()
 {
@@ -327,6 +344,8 @@ function AnyadirGastoFormulario()
         document.getElementById("anyadirgasto-formulario").removeAttribute("disabled");
     }
 }
+
+
 
 export{
     mostrarDatoEnId,
