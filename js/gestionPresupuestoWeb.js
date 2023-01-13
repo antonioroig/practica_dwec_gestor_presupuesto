@@ -230,24 +230,22 @@ function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo)
 
 function nuevoGastoWebFormulario()
 {
-    let plantillaFormulario = document.getElementById("formulario-template").content.cloneNode(true);
+    let plantillaForm = document.getElementById("formulario-template").content.cloneNode(true);;
+    var form = plantillaForm.querySelector("form");
 
-    let formulario = plantillaFormulario.querySelector("form");
-
-    let divControles = document.getElementById("controlesprincipales");
-    divControles.append(formulario);
-
-    let anyadirForm = new AnyadirGastoFormulario();
-    formulario.addEventListener("submit", anyadirForm);
+    let formControles = document.getElementById("controlesprincipales");
+    formControles.appendChild(form);
     
-    let btnAnyadirGastoForm = document.getElementById("anyadirgasto-formulario");
-    btnAnyadirGastoForm.setAttribute("disabled", "");
-    
-    let cancelarForm = new CancelarGastoFormulario();
-    cancelarForm.formulario = formulario;
+    let btnAnyadirGasto = document.getElementById("anyadirgasto-formulario");
+    btnAnyadirGasto.disabled = true;
 
-    let btnCancelarForm = formulario.querySelector("button.cancelar");
-    btnCancelarForm.addEventListener("click", cancelarForm);
+    let btnEnviar = new AnyadirGastoFormulario();
+    form.addEventListener("submit", btnEnviar);
+
+    let btnCancelar = formControles.querySelector("button.cancelar");
+    let cancelar = new CancelarGastoFormulario();
+    cancelar.btnAnyadirGasto = btnAnyadirGasto;
+    btnCancelar.addEventListener("click", cancelar);
 }
 
 document.getElementById("anyadirgasto-formulario").addEventListener("click", nuevoGastoWebFormulario);
