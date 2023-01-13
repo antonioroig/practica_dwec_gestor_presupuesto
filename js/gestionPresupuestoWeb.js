@@ -443,7 +443,7 @@ function filtrarGastosWeb()
         for(let gasto of gastosWebFiltrados)
         {
 
-            
+            mostrarGastoWeb("lsitado-gastos-completoo", gasto);
 
         }
 
@@ -523,7 +523,8 @@ export{
     btnCancelarHandle,
     enviarFormHandle,
     EditarHandleFormulario,
-    EnviarHandle
+    EnviarHandle,
+    filtrarGastosWeb
 
 
 }
