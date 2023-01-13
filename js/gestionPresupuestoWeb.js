@@ -374,12 +374,36 @@ function EditarHandleFormulario()
     }
 }
 // --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
-// ACTIVIDAD 7
+// ACTIVIDAD 8
 function guardarGastosWeb()
 {
     localStorage.GestorGastosDWEC=JSON.stringify(gestionPresupuesto.listarGastos());
 }
 
+function CargarGastosWeb()
+{
+    this.handleEvent = function()
+    {
+        let cargarGastos = JSON.parse(localStorage.getItem('GestorGastosDWEC'));
+
+        if((cargarGastos != null) && (cargarGastos.length >=0 ))
+            gestionPresupuesto.cargarGastos(cargarGastos);
+        
+        repintar();
+    }
+}
+
+function cargarGastosWeb()
+{
+    let cargarGastos = JSON.parse(localStorage.getItem('GestorGastosDWEC'));
+
+    if((cargarGastos != null) && (cargarGastos.length >= 0))
+        gestionPresupuesto.cargarGastos(cargarGastos)
+    else 
+        gestionPresupuesto.cargarGastos([]);
+    
+    repintar();
+}
 
 
 // * * * * BUTTONS * * * * 
@@ -405,6 +429,8 @@ form.addEventListener('submit', FormularioHandler);
 let btnGuardarGasto = document.getElementById('guardar-gastos');
 btnGuardarGasto.onclick = guardarGastosWeb;
 
+let btnCargarGasto = document.getElementById('cargar-gastos');
+btnCargarGasto.onclick = cargarGastosWeb;
 
 // npx cypress open -- PARA HACER TEST GRÁFICO
 // npm run test --> pasa todos los tests
@@ -428,6 +454,8 @@ export   {
     FiltrarGastosWeb,
     // Actividad 8
     guardarGastosWeb,
+    CargarGastosWeb,
+    cargarGastosWeb,
 
 }
 
