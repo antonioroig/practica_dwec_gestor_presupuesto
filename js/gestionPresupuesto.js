@@ -393,7 +393,7 @@ function agruparGastos(periodos = 'mes', etiquetas, fechaDesde, fechaHasta){
 function transformarListadoEtiquetas(etiquetaHas)
 {
 
-    let etiquetasTrans = etiquetaHas.match(/[a-z0-9] + /gi);
+    let etiquetasTrans = etiquetaHas.match(/[a-z0-9]+/gi);
 
     return etiquetasTrans;
 
