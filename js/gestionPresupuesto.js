@@ -311,10 +311,15 @@ function agruparGastos(periodo = 'mes', etiquetas, fechaD, fechaH)
         {
             acu[fecha] += gasto.valor;
         }
-        return acu
+        return acu;
     },{});
 
-    return arrayAgrupado 
+    return arrayAgrupado;
+}
+
+function transformarListadoEtiquetas(etiquetasTiene){
+    let etiquetasTransf = etiquetasTiene.match(/[a-z0-9]+/gi);
+    return etiquetasTransf;
 }
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
@@ -330,5 +335,6 @@ export   {
     calcularTotalGastos,
     calcularBalance,
     filtrarGastos,
-    agruparGastos
+    agruparGastos,
+    transformarListadoEtiquetas
 }
