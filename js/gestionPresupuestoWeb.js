@@ -352,6 +352,9 @@ function filtrarGastosWeb(){
     }
 }
 
+let botonSubmit = document.getElementById('formulario-filtrado');
+botonSubmit.addEventListener('submit', new filtrarGastosWeb());
+
 
   export{
     mostrarDatoEnId,
