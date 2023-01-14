@@ -204,6 +204,43 @@ let BorrarEtiquetasHandle = function(){
       repintar();
   }
 }
+
+function nuevoGastoWebformulario (){
+  //Crear una copia del formulario web definido en la plantilla HTML. El código a utilizar es el siguiente
+  let plantillaFormulario = document.getElementById("formulario-template").content.cloneNode(true);
+
+  //Acceder al elemento <form> dentro de ese fragmento de documento. Para ello podemos utilizar por ejemplo
+  var formulario = plantillaFormulario.querySelector("form");
+    
+  let controlesdiv = document.getElementById('controlesprincipales');
+  controlesdiv.append(formulario);
+
+  document.getElementById('anyadirgasto-formulario').setAttribute('disabled',' ');
+
+  let enviarFor = new EnviarHandleFormulario();
+  formulario.addEventListener("submit");
+
+
+
+}
+
+let EnviarHandleFormulario = function(event) {
+  event.preventDefault();
+  let formulario = event.currentTarget;
+  let descripcion = formulario.elements.descripcion.value;
+  let valor = parseFloat(formulario.elements.valor.value);
+  let fecha = new Date(formulario.elements.fecha.value);
+  let etiquetas = formulario.elements.etiquetas.value.split(',');
+  let nuevoGasto = new gestionPresu.CrearGasto(descripcion, valor, fecha, ...etiquetas);
+  gestionPresu.anyadirGasto(nuevoGasto);
+  document.getElementById('anyadirgasto-formulario').removeAttribute('disabled');
+  repintar();
+}
+
+function EditarHandleFormulario(){
+
+}
+
 export{
   mostrarDatoEnId,
   mostrarGastoWeb,
@@ -213,6 +250,7 @@ export{
   nuevoGastoWeb,
   EditarHandle,
   BorrarHandle,
-  BorrarEtiquetasHandle
+  BorrarEtiquetasHandle,
+  nuevoGastoWebformulario
 }
 //Texto de prueba para la resolución del problema de git basch
