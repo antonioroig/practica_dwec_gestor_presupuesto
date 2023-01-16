@@ -343,16 +343,16 @@ function cargarGastosWeb(){
     this.handleEvent = function(event){
         event.preventDefault();
         if(localStorage.getItem("GestorGastosDWEC")){
-            cargarGastos(localStorage.getItem("GestorGastosDWEC"))
+            gestionPresupuesto.cargarGastos(JSON.parse(localStorage.getItem("GestorGastosDWEC")));
         }else{
-            cargarGastos([]);
+            gestionPresupuesto.cargarGastos([]);
         }
         repintarWeb();
     }
 }
 
 let botonCargarGasto = document.getElementById('cargar-gastos');
-botonCargarGasto.onclick = cargarGastosWeb;
+botonCargarGasto.addEventListener("click", new cargarGastosWeb());
 
 export{
     mostrarDatoEnId,
