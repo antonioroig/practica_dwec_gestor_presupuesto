@@ -319,6 +319,11 @@ function filtrarGastosWeb(){
     }
 }
 
+function guardarGastosWeb(){
+    let gastos = gestion.listarGastos();
+    
+}
+
 let formularioFiltrado = new filtrarGastosWeb();
 document.getElementById("formulario-filtrado").addEventListener("submit", formularioFiltrado);
 
