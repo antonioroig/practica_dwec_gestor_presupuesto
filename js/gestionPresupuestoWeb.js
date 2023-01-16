@@ -341,7 +341,22 @@ function guardarGastosWeb(){
 let btnGuardarGastos = document.getElementById("guardar-gastos");
 btnGuardarGastos.addEventListener('click', new guardarGastosWeb());
 
+function cargarGastosWeb(){
+    this.handleEvent= function(event){
+        event.preventDefault();
+        if(localStorage.getItem("GestorGastosDWEC")){
+            gestionPresupuesto.cargarGastos(JSON.parse(localStorage.getItem("GestorGastosDWEC")));
+        }else{
+            gestionPresupuesto.cargarGastos([]);
+        }
+        
 
+        repintar();
+    }
+}
+
+let btnCargarGastos = document.getElementById("cargar-gastos");
+btnCargarGastos.addEventListener('click', new cargarGastosWeb());
 
 export{
     mostrarDatoEnId,
