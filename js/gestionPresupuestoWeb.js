@@ -344,13 +344,7 @@ formulario.addEventListener('submit', form);
 function guardarGastosWeb(){
     this.handleEvent = function(event){
         event.preventDefault();
-        let gastosJson = [];
-        listarGastos().forEach(gasto => {
-            gasto = JSON.stringify(gasto)
-            gastosJson.push(gasto);
-        })
-        localStorage.setItem("GestorGastosDWEC", gastosJson);
-        //alert(localStorage.getItem("GestorGastosDWEC"))
+        localStorage.setItem("GestorGastosDWEC", JSON.stringify(listarGastos()));
     }
 }
 let btnGuardarGasto = document.getElementById("guardar-gastos");
@@ -360,7 +354,7 @@ function cargarGastosWeb(){
     this.handleEvent = function(event){
         event.preventDefault();
         if(localStorage.getItem("GestorGastosDWEC")){
-            cargarGastos(localStorage.getItem("GestorGastosDWEC"))
+            cargarGastos(JSON.parse(localStorage.getItem("GestorGastosDWEC")))
         }else{
             cargarGastos([]);
         }
