@@ -331,16 +331,16 @@ let formularioFilt = new filtrarGastosWeb();
 document.getElementById("formulario-filtrado").addEventListener("submit", formularioFilt);
 
 function guardarGastosWeb(){
-    
-    localStorage.GestorGastosDWEC = ges.listarGastos();
-    
+    localStorage.GestorGastosDWEC = JSON.stringify(ges.listarGastos());
 }
 
-document.getElementById("guardar-gastos").addEventListener("submit", guardarGastosWeb);
+let btnGuardarGastoWeb = document.getElementById("guardar-gastos")
+btnGuardarGastoWeb.onclick = guardarGastosWeb;
 
 function cargarGastosWeb(){
-
+    
 }
+document.getElementById("cargar-gastos").addEventListener("submit", cargarGastosWeb);
 
 
 //NO MODIFICAR.
