@@ -209,10 +209,7 @@ function transformarListadoEtiquetas(arrayEtiquetas){
     return arraySeparado;
 }
 
-let btncargarGasto = document.getElementById("cargar-gastos");
-btncargarGasto.addEventListener('click',new cargarGastosWeb());
-
-function cargarGastos(arrayGastos){
+function cargarGastos(gastosAlmacenamiento){
     // gastosAlmacenamiento es un array de objetos "planos"
     // No tienen acceso a los métodos creados con "CrearGasto":
     // "anyadirEtiquetas", "actualizarValor",...
