@@ -301,13 +301,28 @@ formulario.addEventListener('submit', form);
 
 function guardarGastosWeb(){
     this.handleEvent= function(){
-        localStorage.setItem("GestorGastosDWEC", JSON.stringify(gestionPre.listarGastos()))
+        localStorage.GestorGastosDWEC = JSON.stringify(gestionPre.listarGastos())
     }
    
 }
 let botonGuardar = document.getElementById("guardar-gastos")
 botonGuardar.addEventListener('click', new guardarGastosWeb())
 
+function cargarGastosWeb(){
+    this.handleEvent= function(){
+        
+        if(localStorage.GestorGastosDWEC != null)
+        {
+            gestionPre.cargarGastos(JSON.parse(localStorage.GestorGastosDWEC))
+        }else{
+              localStorage.GestorGastosDWEC = []
+        }
+        repintar()
+    }
+}
+
+let botonCargar = document.getElementById("cargar-gastos")
+botonCargar.addEventListener('click', new cargarGastosWeb())
 
 export {
     mostrarDatoEnId,
