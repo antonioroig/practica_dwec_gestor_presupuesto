@@ -306,7 +306,7 @@ let filtrarGastoWeb = function(){
         event.preventDefault();
         
         let descripcionContiene = this.formulario.elements["formulario-filtrado-descripcion"].value;
-        let valorMinimo = this.formulario.elements["formulario-filtrado-valor-minimo"].value;
+        let valorMinimo = Number(this.formulario.elements["formulario-filtrado-valor-minimo"].value);
         let valorMaximo = this.formulario.elements["formulario-filtrado-valor-maximo"].value;
         let fechaDesde = this.formulario.elements["formulario-filtrado-fecha-desde"].value;
         let fechaHasta = this.formulario.elements["formulario-filtrado-fecha-hasta"].value;
