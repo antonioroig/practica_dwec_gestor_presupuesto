@@ -298,6 +298,17 @@ let formulario = divFormulario.querySelector("form");
 let form = new filtrarGastosWeb();
 form.formulario = formulario;
 formulario.addEventListener('submit', form);
+
+function guardarGastosWeb(){
+    this.handleEvent= function(){
+        localStorage.setItem("GestorGastosDWEC", JSON.stringify(gestionPre.listarGastos()))
+    }
+   
+}
+let botonGuardar = document.getElementById("guardar-gastos")
+botonGuardar.addEventListener('click', new guardarGastosWeb())
+
+
 export {
     mostrarDatoEnId,
     mostrarGastoWeb,
