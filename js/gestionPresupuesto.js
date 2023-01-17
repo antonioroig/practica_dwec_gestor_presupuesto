@@ -181,30 +181,31 @@ function filtrarGastos({fechaDesde,fechaHasta,valorMin,valorMax,descripcionConti
         let add = true;
 
         if (fechaDesde)
-            {
-                if(gasto.fecha < Date.parse(fechaDesde)){
-                    add = false;
-                }
-            }
-            if (fechaHasta)
-            {
-                if(gasto.fecha > Date.parse(fechaHasta)){
-                    add = false;
-                }
-            }
-            if (valorMinimo)
         {
-            if (gasto.valor < valorMinimo)
+            if(gasto.fecha < Date.parse(fechaDesde)){
+                add = false;
+            }
+        }
+        if (fechaHasta)
+        {
+            if(gasto.fecha > Date.parse(fechaHasta)){
+                add = false;
+            }
+        }
+
+        if (valorMin)
+        {
+            if (gasto.valor < valorMin)
             {
-                anyade = false;
+                add = false;
             }
         }
         
-        if (valorMaximo)
+        if (valorMax)
         {
-            if (gasto.valor > valorMaximo)
+            if (gasto.valor > valorMax)
             {
-                anyade = false;
+                add = false;
             }
         }
 
@@ -212,7 +213,7 @@ function filtrarGastos({fechaDesde,fechaHasta,valorMin,valorMax,descripcionConti
         {
             if (!(gasto.descripcion.toUpperCase()).includes(descripcionContiene.toUpperCase()))
             {
-                anyade = false;
+                add = false;
             }
         }
 
@@ -232,12 +233,14 @@ function filtrarGastos({fechaDesde,fechaHasta,valorMin,valorMax,descripcionConti
             }
             if (existe === false)
             {
-                anyade = false;
+                add = false;
             }
         }
 
-        return anyade;
+        return add;
     });
+
+    return arrayFiltro;
 
 }
 
