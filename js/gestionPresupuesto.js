@@ -190,6 +190,54 @@ function filtrarGastos({fechaDesde,fechaHasta,valorMin,valorMax,descripcionConti
                     add = false;
                 }
             }
+        if (valorMin)
+        {
+            if (gasto.valor < valorMin)
+            {
+                add = false;
+            }
+        }
+        
+        if (valorMax)
+        {
+            if (gasto.valor > valorMax)
+            {
+                add = false;
+            }
+        }
+
+        if (descripcionContiene)
+        {
+            if (!(gasto.descripcion.toUpperCase()).includes(descripcionContiene.toUpperCase()))
+            {
+                add = false;
+            }
+        }
+
+        if (etiquetasTiene)
+        {
+            let existe = false;
+
+            for (let i = 0; i < etiquetasTiene.length; i++)
+            {
+                for (let j = 0; j < gasto.etiquetas.length; j++)
+                {
+                    if (etiquetasTiene[i] === gasto.etiquetas[j])
+                    {
+                        existe = true;
+                    }
+                }
+            }
+            if (existe === false)
+            {
+                add = false;
+            }
+        }
+
+        return add;
+    });
+
+    return arrayFiltro;
 }
 
 function agruparGastos(periodo = "mes", etiquetas, fechaDesde, fechaHasta = Date.now()){
