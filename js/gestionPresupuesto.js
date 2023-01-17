@@ -378,18 +378,7 @@ function transformarListadoEtiquetas(etiq)
     return filt;
 }
 
-function filtrarGastosWeb()
-{
 
-    function handleEvent(filt)
-    {
-        filt.preventDefault()
-        {
-            
-        }
-    }
-
-}
 
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
