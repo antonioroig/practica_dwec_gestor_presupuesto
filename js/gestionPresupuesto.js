@@ -174,8 +174,10 @@ function calcularBalance() {
     return presupuesto - calcularTotalGastos();
 }
 
-function filtrarGastos({fechaDesde,fechaHasta,valorMin,valorMax,descripcionContiene,etiquetasTiene}){
-    let arrayFiltro = gastos.filter(function(gasto){
+function filtrarGastos({fechaDesde,fechaHasta,valorMin,valorMax,descripcionContiene,etiquetasTiene})
+{
+    let arrayFiltro = gastos.filter(function(gasto)
+    {
         let add = true;
 
         if (fechaDesde)
@@ -190,6 +192,53 @@ function filtrarGastos({fechaDesde,fechaHasta,valorMin,valorMax,descripcionConti
                     add = false;
                 }
             }
+            if (valorMinimo)
+        {
+            if (gasto.valor < valorMinimo)
+            {
+                anyade = false;
+            }
+        }
+        
+        if (valorMaximo)
+        {
+            if (gasto.valor > valorMaximo)
+            {
+                anyade = false;
+            }
+        }
+
+        if (descripcionContiene)
+        {
+            if (!(gasto.descripcion.toUpperCase()).includes(descripcionContiene.toUpperCase()))
+            {
+                anyade = false;
+            }
+        }
+
+        if (etiquetasTiene)
+        {
+            let existe = false;
+
+            for (let i = 0; i < etiquetasTiene.length; i++)
+            {
+                for (let j = 0; j < gasto.etiquetas.length; j++)
+                {
+                    if (etiquetasTiene[i] === gasto.etiquetas[j])
+                    {
+                        existe = true;
+                    }
+                }
+            }
+            if (existe === false)
+            {
+                anyade = false;
+            }
+        }
+
+        return anyade;
+    });
+
 }
 
 function agruparGastos(periodo = "mes", etiquetas, fechaDesde, fechaHasta = Date.now()){
