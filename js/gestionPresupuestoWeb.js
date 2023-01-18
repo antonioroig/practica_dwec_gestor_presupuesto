@@ -348,14 +348,25 @@ function filtrarGastosWeb()
         let filtrado ={};
 
         filtrado.descripcionContiene = desc;
-        filtrado.valorMinimo = valorMin;
-        filtrado.valorMaximo = valorMax;
+        if(!isNaN(valorMin))
+        {
+            filtrado.valorMinimo = valorMin;
+        }
+        if(!isNaN(valorMax))
+        {
+            filtrado.valorMaximo = valorMax;
+        }
         filtrado.fechaDesde = fechaIni;
         filtrado.fechaHasta = fechaFin;
+
         filtrado.etiquetasTiene = gestionPresupuesto.transformarListadoEtiquetas(etiquetas);
+
+        
         
         document.getElementById("listado-gastos-completo").innerHTML = "";
         let filtroGasto = gestionPresupuesto.filtrarGastos(filtrado);
+
+        console.log(filtroGasto);
 
         for(let gasto of filtroGasto)
             {

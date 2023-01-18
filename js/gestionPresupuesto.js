@@ -319,7 +319,7 @@ function transformarListadoEtiquetas(etiquetasTiene)
 
     if(etiquetasTiene.length > 0)
     {
-         etiquetas = etiquetasTiene.split(/\s*[,;.:\s]+\s*/);
+          letetiquetas = etiquetasTiene.split(/\s*[,;.:\s]+\s*/);
     }
 
     return etiquetas;
