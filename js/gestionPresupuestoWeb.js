@@ -310,16 +310,31 @@ function EnviarHandleFormulario(){
 function guardarGastosWeb(){
     this.handleEvent = function(event){
         event.preventDefault();
+        
+        localStorage.setItem('GestorGastosDWEC',JSON.stringify(gestionPresupuesto.listarGastos()));
     }
 };
+let botonGuardar = document.getElementById('guardar-gastos');
+botonGuardar.addEventListener('click', new guardarGastosWeb());
 
 function cargarGastosWeb(){
     this.handleEvent = function(event){
         event.preventDefault();
 
+        if(localStorage.getItem('GestorGastosDWEC') != null)
+        {
+            gestionPresupuesto.cargarGastos(JSON.parse(localStorage.getItem('GestorGastosDWEC')));
+        }
+        else
+        {
+            gestionPresupuesto.cargarGastos([]);
+        }
+
         repintar();
     }
 };
+let botonCargar = document.getElementById('cargar-gastos');
+botonCargar.addEventListener('click', new cargarGastosWeb());
 
 export{
     mostrarDatoEnId,
