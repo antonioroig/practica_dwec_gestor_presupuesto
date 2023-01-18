@@ -59,23 +59,24 @@ function mostrarGastoWeb(idElemento, gasto)
     let botonBorrar = document.createElement('button');
     botonBorrar.type = 'button';
     botonBorrar.className = 'gasto-borrar';
-    botonBorrar.textContent = 'Borrrar';
-
-    let botonBorrarAPI = document.createElement('button');
-    botonBorrar.type = 'button';
-    botonBorrar.className = 'gasto-borrar-api';
-    botonBorrar.textContent = 'Borrrar (API)';
-
-    let borrarAPI = new borrarApiHandle (gasto);
-    borrarAPI.gasto = gasto;
-    botonBorrarAPI.addEventListener('click', borrarAPI);
-    divGasto.append(botonBorrarAPI);
+    botonBorrar.textContent = 'Borrar';
 
     let borrar = new BorrarHandle(gasto);
     borrar.gasto = gasto;
     botonBorrar.addEventListener('click', borrar);
     divGasto.append(botonBorrar);
 
+    let botonBorrarAPI = document.createElement('button');
+    botonBorrarAPI.type = 'button';
+    botonBorrarAPI.className = 'gasto-borrar-api';
+    botonBorrarAPI.id = 'gasto-borrar-api';
+    botonBorrarAPI.textContent = 'Borrar (API)';
+
+    let borrarAPI = new borrarApiHandle (gasto);
+    borrarAPI.gasto = gasto;
+    botonBorrarAPI.addEventListener('click', borrarAPI);
+    divGasto.append(botonBorrarAPI);
+    
     let botonEditarForm = document.createElement('button');
     botonEditarForm.type = 'button';
     botonEditarForm.className = 'gasto-editar-formulario';
@@ -197,13 +198,14 @@ function BorrarEtiquestasHandle() {
 function borrarApiHandle(){
     this.handleEvent = function (event) {
         let usuario = document.getElementById('nombre_usuario').value;
-        let url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario}`;
+        let url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario}/${this.gasto.gastoId}`;
 
         if(usuario != "")
         {
             fetch(url, {method: 'DELETE'})
                 .then(response => response.json())
                 .then(datos => {
+                    console.log(datos);
                     if(!datos.errorMessage){
                         cargarGastosApi();
                     }
@@ -247,7 +249,7 @@ function enviarGastoApi(event){
                 .then(response => {
                     if(response.ok)
                     {
-                        console.log('gasto guardado')
+                        console.log('gasto guardado');
                         cargarGastosApi;
                     }
                     else console.log('error al cargar el gasto');
@@ -330,8 +332,8 @@ function actualizarGastoApiHandle(){
                 .then(response => {
                     if(response.ok)
                     {
-                        console.log('gasto guardado')
-                        cargarGastosApi;
+                        console.log('gasto guardado');
+                        cargarGastosApi();
                     }
                     else console.log('error al cargar el gasto');
                 })
