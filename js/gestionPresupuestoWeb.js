@@ -89,6 +89,19 @@ function mostrarGastoWeb(gasto,idElemento)
     gastoDiv.appendChild(botonBorrar);
 
   /*------------------------------------------------- */
+ 
+ 
+      let btnEditarFor = document.createElement('button');
+    btnEditarFor.type="button";
+    btnEditarFor.textContent="Editar (formulario)";
+    btnEditarFor.className="gasto-editar-formulario";
+    
+      let btnEditarForHandle = new EditarHandleFormulario(gasto);
+      btnEditarForHandle.gasto = gasto;
+      btnEditarFor.addEventListener('click',btnEditarForHandle);
+      gastoDiv.append(btnEditarFor);
+ 
+ 
 
 }
 
@@ -218,7 +231,11 @@ function nuevoGastoWebformulario (){
   document.getElementById('anyadirgasto-formulario').setAttribute('disabled',' ');
 
   let enviarFor = new EnviarHandleFormulario();
-  formulario.addEventListener("submit");
+  formulario.addEventListener("submit",enviarFor);
+
+  let btnCancelarHandel = new btnCancelarHandle();
+  let  btnCancelar = formulario.querySelector("button.cancelar")
+  btnCancelar.addEventListener("click",btnCancelarHandel);
 
 
 
@@ -238,8 +255,26 @@ let EnviarHandleFormulario = function(event) {
 }
 
 function EditarHandleFormulario(){
+  this.handleEvent = function (event)
+  {
+
+  }
 
 }
+
+function btnCancelarHandle(){
+  this.handleEvent = function(event)
+  {
+      
+    event.preventDefault();
+      event.currentTarget.parentNode.remove();
+      document.getElementById("anyadirgasto-formulario").removeAttribute("disabled");
+      repintar();
+
+
+  }
+}
+
 
 export{
   mostrarDatoEnId,
@@ -251,6 +286,8 @@ export{
   EditarHandle,
   BorrarHandle,
   BorrarEtiquetasHandle,
-  nuevoGastoWebformulario
+  nuevoGastoWebformulario,
+  btnCancelarHandle,
+  EnviarHandleFormulario
 }
 //Texto de prueba para la resolución del problema de git basch
