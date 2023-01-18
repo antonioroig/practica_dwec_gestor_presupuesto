@@ -393,62 +393,55 @@ function EnviarHandle()
 
 }
 
-function filtrarGastosWeb()
-{
-
+function filtrarGastosWeb(){
+  
     this.handleEvent = function(event)
-    {
-
-        event.preventDefault();
-
-        let descricpion = document.getElementById("formulario-filtrado-descripcion").value;
-
-        let valorMinimo = parseFloat(document.getElementById("formulario-filtrado-valor-minimo").value);
-
-        let valorMaximo = parseFloat(document.getElementById("formulario-filtrado-valor-minimo").value);
-
-        let fechaDesde = document.getElementById("formulario-filtrado-fecha-desde").value;
-
-        let fechaHasta = document.getElementById("formulario-filtrado-fecha-hasta").value;
-
-        let etiquetas = document.getElementById("formulario-filtrado-etiquetas-tiene").value;
-
-        let filtrar = {};
-
-        if(0 < etiquetas.length)
-        {
-
-            gesPresupuesto.transformarListadoEtiquetas(etiquetas) = filtrar.etiquetasHas;
-
-        }
-
-        descricpion = filtrar.descricpionGasto;
-
-        valorMinimo = filtrar.valorMinimo;
-
-        valorMaximo = filtrar.valorMaximo;
-
-        fechaDesde = filtrar.fechaDesde;
-
-        fechaHasta = filtrar.fechaHasta;
-
-        etiquetas = filtrar.etiquetas;
-
-        document.getElementById("listado-gastos-completo").innerHTML = "";
-
-        
-        let gastosWebFiltrados = gesPresupuesto.filtrarGastos(filtrar);
-
-        for(let gasto of gastosWebFiltrados)
-        {
-
-            mostrarGastoWeb("lsitado-gastos-completo",gasto);
-
-        }
-
-    }
-
-}
+      {
+          event.preventDefault() 
+    
+          let descripcion = document.getElementById("formulario-filtrado-descripcion").value;
+    
+          let valorMinimo = parseFloat(document.getElementById("formulario-filtrado-valor-minimo").value);
+    
+          let valorMaximo = parseFloat(document.getElementById("formulario-filtrado-valor-maximo").value);
+    
+          let fechaDesde =  document.getElementById("formulario-filtrado-fecha-desde").value;
+    
+          let fechaHasta =  document.getElementById("formulario-filtrado-fecha-hasta").value;
+    
+          let etiquetas = document.getElementById("formulario-filtrado-etiquetas-tiene").value;
+    
+          let filtrar ={};
+  
+          if(0 < etiquetas.length)
+          {
+          
+            filtrar.etiquetasTiene = gesPresupuesto.transformarListadoEtiquetas(etiquetas);
+          
+          }
+          
+          filtrar.descripcionContiene = descripcion;
+          
+          filtrar.valorMinimo = valorMinimo;
+          
+          filtrar.valorMaximo = valorMaximo;
+          
+          filtrar.fechaDesde = fechaDesde;
+          
+          filtrar.fechaHasta = fechaHasta;
+          
+          filtrar.etiquetas = etiquetas;
+  
+          document.getElementById("listado-gastos-completo").innerHTML = "";
+          
+          
+          let gastosFiltrados = gesPresupuesto.filtrarGastos(filtrar);
+  
+          for(let gasto of gastosFiltrados){
+              mostrarGastoWeb("listado-gastos-completo",gasto);
+          };
+      }
+  }
 
 
 function EditarHandleFormulario()
