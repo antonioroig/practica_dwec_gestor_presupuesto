@@ -403,20 +403,10 @@ function filtrarGastosWeb()
         let valMax = document.getElementById("formulario-filtrado-valor-maximo");
         let fecDes = document.getElementById("formulario-filtrado-fecha-desde");
         let fecHasta = document.getElementById("formulario-filtrado-fecha-hasta");
-        let obj = {desc, etiq, valMin, valMax, fecDes, fecHasta};
-
-        if(obj != null)
-        {
-            SubmitHandle();
-        }
+        let obj = {};
         
 
     }
-
-
-        
-
-
    
 }
 
