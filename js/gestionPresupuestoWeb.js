@@ -421,7 +421,7 @@ function filtrarGastosWeb()
 
         for(let gas of gF)
         {
-            mostrarGastoWeb("listado-gastos-completo", gasto);
+            mostrarGastoWeb("listado-gastos-completo", gas);
         }
 
     }
