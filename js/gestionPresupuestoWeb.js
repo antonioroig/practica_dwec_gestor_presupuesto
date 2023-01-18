@@ -359,7 +359,6 @@ function cargarGastosApi(){
         event.preventDefault();
 
         let nombreUsuario = document.getElementById("nombre_usuario").value;
-
         let url =  `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${nombreUsuario}`;
 
         fetch(url, {method: 'GET'})
@@ -379,8 +378,7 @@ function BorrarGastosApi(){
         event.preventDefault();
 
         let nombreUsuario = document.getElementById("nombre_usuario").value;
-
-        let url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${nombreUsuario}/${this.gasto.gastoId}`;
+        let url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${nombreUsuario}/${this.gasto.id}`;
 
        try {
         await fetch(url, {method: 'DELETE'});
@@ -415,6 +413,30 @@ function EnviarGastosApi(){
 
 };
 
+function EditarHandleApi(){
+    this.handleEvent = async function(event){
+        event.preventDefault();
+        let nombreUsuario = document.getElementById("nombre_usuario").value;
+        let url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${nombreUsuario}/${this.gasto.id}`;
+
+        let gasto ={
+            "descripcion": this.gasto.descripcion,
+            "valor": this.gasto.valor,
+            "fecha": this.gasto.fecha,
+            "etiquetas": this.gasto.etiquetas,
+        };
+
+        try {
+            await fetch(url, {method: 'PUT', body: JSON.stringify(gasto)});
+            cargarGastosApi();
+        } catch(error){
+            console.error(error);
+        }
+
+    }
+
+};
+
 
 
 //Botones para añadir al html
@@ -443,7 +465,10 @@ let botonBorrarApi = document.getElementById('borrar-gastos-api');
 botonBorrarApi.addEventListener('click', BorrarGastosApi());
 
 let botonEnviarApi = document.getElementById('enviar-gastos-api');
-+botonEnviarApi.addEventListener('click', EnviarGastosApi());
+botonEnviarApi.addEventListener('click', EnviarGastosApi());
+
+let botonEditarApi = document.getElementById('editar-gastos-api');
+botonEditarApi.addEventListener('click', EditarHandleApi());
 
 
 export {
@@ -466,5 +491,6 @@ export {
     cargarGastosWeb,
     cargarGastosApi,
     BorrarGastosApi,
-    EnviarGastosApi
+    EnviarGastosApi,
+    EditarHandleApi
 }
