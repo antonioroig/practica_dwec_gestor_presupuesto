@@ -397,14 +397,32 @@ function filtrarGastosWeb()
 
         filt.preventDefault();
 
-        let desc = document.getElementById("formulario-filtrado-descripcion");
-        let etiq = document.getElementById("formulario-filtrado-etiquetas-tiene");
-        let valMin = document.getElementById("formulario-filtrado-valor-minimo");
-        let valMax = document.getElementById("formulario-filtrado-valor-maximo");
-        let fecDes = document.getElementById("formulario-filtrado-fecha-desde");
-        let fecHasta = document.getElementById("formulario-filtrado-fecha-hasta");
+        let desc = document.getElementById("formulario-filtrado-descripcion").value;
+        let etiq = document.getElementById("formulario-filtrado-etiquetas-tiene").value;
+        let valMin = document.getElementById("formulario-filtrado-valor-minimo").value;
+        let valMax = document.getElementById("formulario-filtrado-valor-maximo").value;
+        let fecDes = document.getElementById("formulario-filtrado-fecha-desde").value;
+        let fecHasta = document.getElementById("formulario-filtrado-fecha-hasta").value;
         let obj = {};
         
+        obj.desccripcion = desc;
+        obj.valMini = valMin;
+        obj.valMaxi = valMax;
+        obj.fechHas = fecHasta;
+        obj.fechaDesde = fecDes;
+        
+        if(etiq.length)
+        {
+            obj.etiquetas = gp.transformarListadoEtiquetas(etiq);
+        }
+
+        document.getElementById("listado-gastos-completo").innerHTML = "";
+        let gF = gp.filtrarGastos(obj);
+
+        for(let gas of gF)
+        {
+            mostrarGastoWeb("listado-gastos-completo", gasto);
+        }
 
     }
    
