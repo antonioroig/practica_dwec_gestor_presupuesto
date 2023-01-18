@@ -174,7 +174,7 @@ function calcularBalance() {
     return presupuesto - calcularTotalGastos();
 }
 
-function filtrarGastos({fechaDesde,fechaHasta,valorMin,valorMax,descripcionContiene,etiquetasTiene}){
+function filtrarGastos({fechaDesde,fechaHasta,valorMinimo,valorMaximo,descripcionContiene,etiquetasTiene}){
     let arrayFiltro = gastos.filter(function(gasto){
         let add = true;
 
@@ -190,17 +190,17 @@ function filtrarGastos({fechaDesde,fechaHasta,valorMin,valorMax,descripcionConti
                     add = false;
                 }
             }
-        if (valorMin)
+        if (valorMinimo)
         {
-            if (gasto.valor < valorMin)
+            if (gasto.valor < valorMinimo)
             {
                 add = false;
             }
         }
         
-        if (valorMax)
+        if (valorMaximo)
         {
-            if (gasto.valor > valorMax)
+            if (gasto.valor > valorMaximo)
             {
                 add = false;
             }
@@ -253,12 +253,12 @@ function agruparGastos(periodo = "mes", etiquetas, fechaDesde, fechaHasta = Date
 
     return subGastos.reduce(function(sum, gasto)
     {
-        if (typeof sum[gasto.obtenerPeriodoAgrupacion(periodos)]!='number')
+        if (typeof sum[gasto.obtenerPeriodoAgrupacion(periodo)]!='number')
         {
-            sum[gasto.obtenerPeriodoAgrupacion(periodos)] = 0;
+            sum[gasto.obtenerPeriodoAgrupacion(periodo)] = 0;
         }
 
-        sum[gasto.obtenerPeriodoAgrupacion(periodos)] += gasto.valor;
+        sum[gasto.obtenerPeriodoAgrupacion(periodo)] += gasto.valor;
 
         return sum;
     },{});
