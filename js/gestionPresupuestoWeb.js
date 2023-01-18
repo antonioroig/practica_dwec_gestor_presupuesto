@@ -496,7 +496,14 @@ function EditarHandleFormulario()
 function guardarGastosWeb()
 {
 
+    this.handleEvent = function(event)
+    {
 
+        event.preventDefault();
+
+        localStorage.setItem('GestorGastosDWEC',)
+
+    }
 
 }
 
@@ -504,7 +511,7 @@ function guardarGastosWeb()
 function cargarGastosWeb()
 {
 
-    
+
 
 }
 
