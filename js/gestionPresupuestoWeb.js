@@ -493,6 +493,21 @@ function EditarHandleFormulario()
 
 }
 
+function guardarGastosWeb()
+{
+
+
+
+}
+
+
+function cargarGastosWeb()
+{
+
+    
+
+}
+
 actualizarpresupuesto.addEventListener("click", actualizarPresupuestoWeb);
 
 anyadirgasto.addEventListener("click", nuevoGastoWeb);
