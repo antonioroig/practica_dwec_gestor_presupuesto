@@ -264,13 +264,13 @@ function CancelarEditarHandleFormulario(){
 function filtrarGastosWeb(){
     this.handleEvent = function (event){
         event.preventDefault();
-
-        let descripcionContiene =  this.formulario.elements["formulario-filtrado-descripcion"].value;
-        let valorMinimo = (this.formulario.elements["formulario-filtrado-valor-minimo"].value);
-        let valorMaximo = (this.formulario.elements["formulario-filtrado-valor-maximo"].value);
-        let fechaDesde = (this.formulario.elements["formulario-filtrado-fecha-desde"].value);
-        let fechaHasta =(this.formulario.elements["formulario-filtrado-fecha-hasta"].value);
-        let etiquetasTiene = this.formulario.elements["formulario-filtrado-etiquetas-tiene"].value;
+        let formulario = event.currentTarget;
+        let descripcionContiene =  formulario.elements["formulario-filtrado-descripcion"].value;
+        let valorMinimo = parseFloat(formulario.elements["formulario-filtrado-valor-minimo"].value);
+        let valorMaximo = parseFloat(formulario.elements["formulario-filtrado-valor-maximo"].value);
+        let fechaDesde = formulario.elements["formulario-filtrado-fecha-desde"].value;
+        let fechaHasta = formulario.elements["formulario-filtrado-fecha-hasta"].value;
+        let etiquetasTiene = formulario.elements["formulario-filtrado-etiquetas-tiene"].value;
 
         if(etiquetasTiene){
             etiquetasTiene = gestionPresupuesto.transformarListadoEtiquetas(etiquetasTiene);
@@ -278,7 +278,7 @@ function filtrarGastosWeb(){
 
         document.getElementById("listado-gastos-completo").innerHTML = "";
 
-        let filtrar = gestionPresupuesto.filtrarGastos({descripcionContiene, valorMinimo, valorMaximo, fechaDesde, fechaHasta, etiquetasTiene});
+        let filtrar = gestionPresupuesto.filtrarGastos({fechaDesde, fechaHasta, valorMinimo, valorMaximo, descripcionContiene, etiquetasTiene});
 
         filtrar.forEach(gastoFinal => {
             mostrarGastoWeb("listado-gastos-completo", gastoFinal);
@@ -286,10 +286,8 @@ function filtrarGastosWeb(){
     }
 }
 
-let formulario = document.getElementById("formulario-filtrado");
 let filtrarResultados = new filtrarGastosWeb();
-filtrarResultados.formulario = formulario;
-formulario.addEventListener('submit', filtrarResultados);
+document.getElementById("formulario-filtrado").addEventListener('submit', filtrarResultados);
 
 export{
     mostrarDatoEnId,
