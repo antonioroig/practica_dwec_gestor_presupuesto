@@ -501,7 +501,7 @@ function guardarGastosWeb()
 
         event.preventDefault();
 
-        localStorage.setItem('GestorGastosDWEC',)
+        localStorage.setItem('GestorGastosDWEC',JSON.stringify(gesPresupuesto.listarGastos()));
 
     }
 
@@ -511,7 +511,19 @@ function guardarGastosWeb()
 function cargarGastosWeb()
 {
 
+    this.handleEvent = function(event)
+    {
 
+        event.preventDefault();
+
+        if(localStorage.getItem('GestorGastosDWEC') != null)
+        {
+
+            
+
+        }
+
+    }
 
 }
 
@@ -546,7 +558,7 @@ export{
     enviarFormHandle,
     EditarHandleFormulario,
     EnviarHandle,
-    filtrarGastosWeb
-
+    filtrarGastosWeb,
+    guardarGastosWeb,
 
 }
