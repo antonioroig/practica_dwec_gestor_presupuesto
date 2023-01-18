@@ -62,7 +62,7 @@ function mostrarGastoWeb(idElemento, gasto)
         spanEtiqueta.addEventListener('click', borrarEtiquetas);
     }
 
-    divGasto.appendChild(divEtiquetas);
+    divGasto.append(divEtiquetas);
 
     let botonEditar = document.createElement('button');
     botonEditar.type = 'button';
@@ -72,7 +72,7 @@ function mostrarGastoWeb(idElemento, gasto)
     let editar = new EditarHandle(gasto);
     editar.gasto = gasto;
     botonEditar.addEventListener('click', editar);
-    divGasto.appendChild(botonEditar);
+    divGasto.append(botonEditar);
 
     let botonEliminar = document.createElement('button');
     botonEliminar.type = 'button';
@@ -82,7 +82,7 @@ function mostrarGastoWeb(idElemento, gasto)
     let borrar = new BorrarHandle(gasto);
     borrar.gasto = gasto;
     botonEliminar.addEventListener('click', borrar);
-    divGasto.appendChild(botonEliminar);
+    divGasto.append(botonEliminar);
 
     let botonEditarForm = document.createElement('button');
     botonEditarForm.type = 'button';
@@ -93,7 +93,7 @@ function mostrarGastoWeb(idElemento, gasto)
     editarFormulario.gasto = gasto;
 
     botonEditarForm.addEventListener('click', editarFormulario);
-    divGasto.appendChild(botonEditarForm);
+    divGasto.append(botonEditarForm);
 
 
 }
@@ -336,27 +336,24 @@ function filtrarGastosWeb()
     this.handleEvent = function(event)
     {
         event.preventDefault();
-        
-        let desc = document.getElementById("formulario-filtrado-descripcion").value;
-        let valorMin = parseFloat(document.getElementById("formulario-filtrado-valor-minimo").value);
-        let valorMax = parseFloat(document.getElementById("formulario-filtrado-valor-maximo").value);
-        let fechaIni = document.getElementById("formulario-filtrado-fecha-desde").value;
-        let fechaFin = document.getElementById("formulario-filtrado-fecha-hasta").value;
-        let etiquetas = document.getElementById("formulario-filtrado-etiquetas-tiene").value;
-        let filtrado ={};
 
-        if(etiquetas.length > 0)
-        {
-            filtrado.etiquetasTiene = gestionPresupuesto.transformarListadoEtiquetas(etiquetas);
-        }
+        let form = event.currentTarget;
+        
+        let desc = form.elements["formulario-filtrado-descripcion"].value;
+        let valorMin = parseFloat(form.elements["formulario-filtrado-valor-minimo"].value);
+        let valorMax = parseFloat(form.elements["formulario-filtrado-valor-maximo"].value);
+        let fechaIni = form.elements["formulario-filtrado-fecha-desde"].value;
+        let fechaFin = form.elements["formulario-filtrado-fecha-hasta"].value;
+        let etiquetas = form.elements["formulario-filtrado-etiquetas-tiene"].value;
+        let filtrado ={};
 
         filtrado.descripcionContiene = desc;
         filtrado.valorMinimo = valorMin;
         filtrado.valorMaximo = valorMax;
         filtrado.fechaDesde = fechaIni;
         filtrado.fechaHasta = fechaFin;
-        filtrado.etiquetas = etiquetas;
-
+        filtrado.etiquetasTiene = gestionPresupuesto.transformarListadoEtiquetas(etiquetas);
+        
         document.getElementById("listado-gastos-completo").innerHTML = "";
         let filtroGasto = gestionPresupuesto.filtrarGastos(filtrado);
 
