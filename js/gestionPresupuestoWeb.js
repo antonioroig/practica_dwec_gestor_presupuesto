@@ -389,6 +389,37 @@ function SubmitHandle()
 }
 
 
+function filtrarGastosWeb()
+{
+
+   
+    handleEvent = function(filt){
+
+        filt.preventDefault();
+
+        let desc = document.getElementById("formulario-filtrado-descripcion");
+        let etiq = document.getElementById("formulario-filtrado-etiquetas-tiene");
+        let valMin = document.getElementById("formulario-filtrado-valor-minimo");
+        let valMax = document.getElementById("formulario-filtrado-valor-maximo");
+        let fecDes = document.getElementById("formulario-filtrado-fecha-desde");
+        let fecHasta = document.getElementById("formulario-filtrado-fecha-hasta");
+        let obj = {desc, etiq, valMin, valMax, fecDes, fecHasta};
+
+        if(obj != null)
+        {
+            SubmitHandle();
+        }
+        
+
+    }
+
+
+        
+
+
+   
+}
+
 
 
 
@@ -410,5 +441,6 @@ CancelarFormularioHandle,
 BorrarEtiquetasHandle,
 EditarHandleformulario,
 SubmitHandleForm,
-SubmitHandle
+SubmitHandle,
+filtrarGastosWeb
 }
