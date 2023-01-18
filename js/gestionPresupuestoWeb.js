@@ -61,6 +61,16 @@ function mostrarGastoWeb(idElemento, gasto)
     botonBorrar.className = 'gasto-borrar';
     botonBorrar.textContent = 'Borrrar';
 
+    let botonBorrarAPI = document.createElement('button');
+    botonBorrar.type = 'button';
+    botonBorrar.className = 'gasto-borrar-api';
+    botonBorrar.textContent = 'Borrrar (API)';
+
+    let borrarAPI = new borrarApiHandle (gasto);
+    borrarAPI.gasto = gasto;
+    botonBorrarAPI.addEventListener('click', borrarAPI);
+    divGasto.append(botonBorrarAPI);
+
     let borrar = new BorrarHandle(gasto);
     borrar.gasto = gasto;
     botonBorrar.addEventListener('click', borrar);
@@ -145,6 +155,9 @@ function nuevoGastoWebFormulario(){
         let enviar = new EnviarHandleFormulario();
         formulario.addEventListener('submit',enviar);
 
+        let enviarAPI = formulario.querySelector('button.gasto-enviar-api');
+        enviarAPI.addEventListener('click', enviarGastoApi);
+
 };
 
 function EditarHandle() {
@@ -181,6 +194,69 @@ function BorrarEtiquestasHandle() {
     }
 }
 
+function borrarApiHandle(){
+    this.handleEvent = function (event) {
+        let usuario = document.getElementById('nombre_usuario').value;
+        let url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario}`;
+
+        if(usuario != "")
+        {
+            fetch(url, {method: 'DELETE'})
+                .then(response => response.json())
+                .then(datos => {
+                    if(!datos.errorMessage){
+                        cargarGastosApi();
+                    }
+                    else console.log(datos.errorMessage);
+                })
+        }
+        else console.log('usuario incorrecto')
+    }
+};
+
+function enviarGastoApi(event){
+        let usuario = document.getElementById('nombre_usuario').value;
+        let url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario}`;
+
+        
+        let formulario = event.currentTarget.form;
+        let descripcion = formulario.elements.descripcion.value;
+        let valor = parseFloat(formulario.elements.valor.value);
+        let fecha = formulario.elements.fecha.value;
+        let etiquetas = (formulario.elements.etiquetas.value).split(',');
+
+        let gastoapi = {
+            descripcion: descripcion,
+            valor: valor,
+            fecha: fecha,
+            etiquetas: etiquetas
+        }
+
+        console.log(gastoapi);
+
+        if(usuario != "")
+        {
+            fetch(url, {
+                method: 'POST',
+                body: JSON.stringify(gastoapi),
+                headers:{
+                    'Content-type':'application/json'
+                }
+
+        })
+                .then(response => {
+                    if(response.ok)
+                    {
+                        console.log('gasto guardado')
+                        cargarGastosApi;
+                    }
+                    else console.log('error al cargar el gasto');
+                })
+        }
+        else console.log('usuario incorrecto')
+    }
+
+
 function EditarHandleFormulario(){
     this.handleEvent = function(event){
 
@@ -210,6 +286,57 @@ function EditarHandleFormulario(){
 
         botonFormulario.setAttribute('disabled', "");
 
+        let editarFormApi = formulario.querySelector('button.gasto-enviar-api');
+        let eventEditarGastoApi = new actualizarGastoApiHandle();
+        eventEditarGastoApi.gasto = this.gasto;
+        eventEditarGastoApi.formulario = formulario;
+        editarFormApi.addEventListener('click', eventEditarGastoApi);
+
+    }
+}
+
+function actualizarGastoApiHandle(){
+    this.handleEvent = function(event){
+        let usuario = document.getElementById('nombre_usuario').value;
+        let url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario}`;
+
+        event.preventDefault();
+
+        let formulario = event.currentTarget;
+        let descripcion = formulario.elements.descripcion.value;
+        let valor = parseFloat(formulario.elements.valor.value);
+        let fecha = formulario.elements.fecha.value;
+        let etiquetas = (formulario.elements.etiquetas.value).split(',');
+
+        let gastoapi = {
+            descripcion: descripcion,
+            valor: valor,
+            fecha: fecha,
+            etiquetas: etiquetas
+        }
+
+        console.log(gastoapi);
+
+        if(usuario != "")
+        {
+            fetch(url, {
+                method: 'PUT',
+                body: JSON.stringify(gastoapi),
+                headers:{
+                    'Content-type':'application/json'
+                }
+
+        })
+                .then(response => {
+                    if(response.ok)
+                    {
+                        console.log('gasto guardado')
+                        cargarGastosApi;
+                    }
+                    else console.log('error al cargar el gasto');
+                })
+        }
+        else console.log('usuario incorrecto')
     }
 }
 
@@ -323,6 +450,24 @@ function cargarGastosWeb()
     repintar();
 }
 
+function cargarGastosApi(){
+    let usuario = document.getElementById('nombre_usuario').value
+    let url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario}`;
+    console.log(usuario);
+    console.log(url);
+    fetch(url, {method: 'GET'})
+        .then(response => response.json())
+        .then((result) => {
+            let resultado = result;
+            if(resultado != "")
+            {
+                gestionPresupuesto.cargarGastos(resultado);
+                repintar();
+            }
+            else console.log("Gastos Vacios")
+        });
+};
+
 
 let botonActualizarPresupuesto = document.getElementById('actualizarpresupuesto');
 botonActualizarPresupuesto.addEventListener('click', function () { actualizarPresupuestoWeb() });
@@ -341,6 +486,9 @@ botonGuardarGastos.addEventListener('click',  guardarGastosWeb);
 
 let botonCargarGastos = document.getElementById('cargar-gastos');
 botonCargarGastos.addEventListener('click', cargarGastosWeb);
+
+let botonCargarGastosApi = document.getElementById('cargar-gastos-api');
+botonCargarGastosApi.addEventListener('click', cargarGastosApi);
 
 
 export {
