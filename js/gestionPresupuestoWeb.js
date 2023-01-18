@@ -250,7 +250,7 @@ function enviarGastoApi(event){
                     if(response.ok)
                     {
                         console.log('gasto guardado');
-                        cargarGastosApi;
+                        cargarGastosApi();
                     }
                     else console.log('error al cargar el gasto');
                 })
@@ -300,11 +300,9 @@ function EditarHandleFormulario(){
 function actualizarGastoApiHandle(){
     this.handleEvent = function(event){
         let usuario = document.getElementById('nombre_usuario').value;
-        let url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario}`;
+        let url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario}/${this.gasto.gastoId}`;
 
-        event.preventDefault();
-
-        let formulario = event.currentTarget;
+        let formulario = event.currentTarget.form;
         let descripcion = formulario.elements.descripcion.value;
         let valor = parseFloat(formulario.elements.valor.value);
         let fecha = formulario.elements.fecha.value;
