@@ -64,6 +64,8 @@ function mostrarGastoWeb(idElemento,gasto){
     borrarBut.addEventListener("click", borrarNuevo);
     divGastos.append(borrarBut);
 
+    //Botón de borrar API
+
     let editarHandleForm = document.createElement('button');
     editarHandleForm.className = 'gasto-editar-formulario';
     editarHandleForm.type = 'button';
@@ -299,8 +301,6 @@ function guardarGastosWeb(){
     };
 };
 
-
-
 function cargarGastosWeb(){
     this.handleEvent = function(event){
         event.preventDefault();
@@ -315,6 +315,22 @@ function cargarGastosWeb(){
         repintar();
     };
 }
+
+function cargarGastosApi(){
+    this.handleEvent = function(event){
+        event.preventDefault();
+        let user = document.getElementById('nombre_usuario').value;
+        let url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${user}`;
+
+        fetch(url)
+        .then(response => response.json())
+        .then(mis_gastos =>{
+            gestionPresupuesto.cargarGastos(mis_gastos);
+            repintar();
+        })
+        .catch(error => console.log(error));
+    };
+};
 
 //He puesto aquí los botones todos juntos porque luego no los encuentro.
 //Botones
@@ -342,5 +358,6 @@ export{
     EnviarHandleFormulario,
     filtrarGastosWeb,
     guardarGastosWeb,
-    cargarGastosWeb
+    cargarGastosWeb,
+    cargarGastosApi
 };
