@@ -287,19 +287,19 @@ function filtrarGastosWeb ()
 {
     this.handleEvent = function(event){
         event.preventDefault();
-
-        let descripcion = document.getElementById("formulario-filtrado-descripcion").value;
-        let min_valor = parseFloat(document.getElementById("formulario-filtrado-valor-minimo").value);
-        let max_valor= parseFloat(document.getElementById("formulario-filtrado-valor-maximo").value);
-        let fechaDesde = document.getElementById("formulario-filtrado-fecha-desde").value;
-        let fechaHasta = document.getElementById("formulario-filtrado-fecha-hasta").value;
-        let etiquetas = document.getElementById("formulario-filtrado-etiquetas-tiene").value;
+        let formulario = event.currentTarget;
+        let descripcion = formulario.elements["formulario-filtrado-descripcion"].value;
+        let min_valor = parseFloat(formulario.elements["formulario-filtrado-valor-minimo"].value);
+        let max_valor= parseFloat(formulario.elements["formulario-filtrado-valor-maximo"].value);
+        let fechaDesde = formulario.elements["formulario-filtrado-fecha-desde"].value;
+        let fechaHasta = formulario.elements["formulario-filtrado-fecha-hasta"].value;
+        let etiquetas = formulario.elements["formulario-filtrado-etiquetas-tiene"].value;
         let gasto_filtrado = {};
 
         if(etiquetas.lenght > 0)
         {
             gasto_filtrado.etiquetasTiene = pres.transformarListadoEtiquetas(etiquetas)
-        };
+        }
     
 
         gasto_filtrado.descripcionContiene = descripcion;
@@ -309,14 +309,14 @@ function filtrarGastosWeb ()
         gasto_filtrado.fechaHasta = fechaHasta;
         gasto_filtrado.etiquetas = etiquetas;
 
-        document.getElementById("lsitado-gasto-completo").innerHTML="";
+        document.getElementById("listado-gastos-completo").innerHTML="";
 
         let filtrados = pres.filtrarGastos(gasto_filtrado);
 
         for(let gasto of filtrados)
         {
-            mostrarGastoWeb("listado-gasto-completo",gasto);
-        }
+            mostrarGastoWeb("listado-gastos-completo",gasto);
+        };
     }
 }
 let btnEnviar = document.getElementById("formulario-filtrado");

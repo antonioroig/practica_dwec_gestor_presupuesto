@@ -255,9 +255,9 @@ function filtrarGastos({
             }
         
             return anyade;
-        })
+        });
     
-    
+       
     return arrayFiltrado;
   
 }
