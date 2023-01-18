@@ -307,6 +307,20 @@ function EnviarHandleFormulario(){
     }
 }
 
+function guardarGastosWeb(){
+    this.handleEvent = function(event){
+        event.preventDefault();
+    }
+};
+
+function cargarGastosWeb(){
+    this.handleEvent = function(event){
+        event.preventDefault();
+
+        repintar();
+    }
+};
+
 export{
     mostrarDatoEnId,
     mostrarGastoWeb,
@@ -315,5 +329,7 @@ export{
     actualizarPresupuestoWeb,
     nuevoGastoWeb,
     nuevoGastoWebFormulario,
-    filtrarGastosWeb
+    filtrarGastosWeb,
+    guardarGastosWeb,
+    cargarGastosWeb
 }
