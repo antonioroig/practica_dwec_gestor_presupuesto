@@ -374,6 +374,49 @@ function cargarGastosApi(){
     }
 }
 
+function BorrarGastosApi(){
+    this.handleEvent =  async function(event){
+        event.preventDefault();
+
+        let nombreUsuario = document.getElementById("nombre_usuario").value;
+
+        let url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${nombreUsuario}/${this.gasto.gastoId}`;
+
+       try {
+        await fetch(url, {method: 'DELETE'});
+        cargarGastosApi();
+       } catch(error){
+        console.error(error);
+       }
+    }
+};
+
+function EnviarGastosApi(){
+    this.handleEvent = async function(event){
+        event.preventDefault();
+
+        let nombreUsuario = document.getElementById("nombre_usuario").value;
+        let url =  `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${nombreUsuario}`;
+
+        let gasto = {
+            "descripcion": this.gasto.descripcion,
+            "valor": this.gasto.valor,
+            "fecha": this.gasto.fecha,
+            "etiquetas": this.gasto.etiquetas,
+        }
+
+        try {
+            await fetch(url, {method: 'POST', body: JSON.stringify(gasto)});
+            cargarGastosApi();
+        } catch(error){
+            console.error(error);
+        }
+    }
+
+};
+
+
+
 //Botones para añadir al html
 let botonActualizar = document.getElementById('actualizarpresupuesto');
 botonActualizar.addEventListener('click',actualizarPresupuestoWeb);
@@ -396,6 +439,12 @@ botonCargar.addEventListener('click', new cargarGastosWeb());
 let botonCargarApi = document.getElementById('cargar-gastos-api');
 botonCargarApi.addEventListener('click', cargarGastosApi());
 
+let botonBorrarApi = document.getElementById('borrar-gastos-api');
+botonBorrarApi.addEventListener('click', BorrarGastosApi());
+
+let botonEnviarApi = document.getElementById('enviar-gastos-api');
++botonEnviarApi.addEventListener('click', EnviarGastosApi());
+
 
 export {
     mostrarDatoEnId,
@@ -415,5 +464,7 @@ export {
     filtrarGastosWeb,
     guardarGastosWeb,
     cargarGastosWeb,
-    cargarGastosApi
+    cargarGastosApi,
+    BorrarGastosApi,
+    EnviarGastosApi
 }
