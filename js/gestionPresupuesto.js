@@ -255,9 +255,9 @@ function filtrarGastos({
             }
         
             return anyade;
-        })
+        });
     
-    
+       
     return arrayFiltrado;
   
 }
@@ -279,7 +279,12 @@ function agruparGastos(periodo='mes',etiquetas,fechaDesde,fechaHasta)
     },{})
     return arrayFilt;
 }
-console.log(agruparGastos('anyo'));
+
+function transformarListadoEtiquetas (etiquetasTiene)
+{
+    let transformar_etiquetas = etiquetasTiene.match(/[a-z0-9]+/gi);
+    return transformar_etiquetas;
+}
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
 // Las funciones y objetos deben tener los nombres que se indican en el enunciado
@@ -294,6 +299,7 @@ export   {
     calcularTotalGastos,
     calcularBalance,
     filtrarGastos,
-    agruparGastos
+    agruparGastos,
+    transformarListadoEtiquetas
 }
 

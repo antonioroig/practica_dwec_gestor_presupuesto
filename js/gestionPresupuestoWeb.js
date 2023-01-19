@@ -36,7 +36,7 @@ function mostrarGastoWeb(idElemento,gasto)
  {
     let span = document.createElement('span');
     span.className = "gasto-etiquetas-etiqueta";
-    span.textContent = etiqueta;
+    span.textContent = " " + etiqueta;
     etiquetas_gasto.append(span);
 
     let etiquetas_borradas = new BorrarEtiquetasHandle();
@@ -71,7 +71,7 @@ function mostrarGastoWeb(idElemento,gasto)
  let btnEditarForm = document.createElement('button');
  
  btnEditarForm.type = "button";
- btnEditar.className = 'gasto-editar-formulario';
+ btnEditarForm.className = 'gasto-editar-formulario';
 
  btnEditarForm.textContent = 'Editar(formulario)';
 
@@ -101,6 +101,7 @@ function repintar()
     mostrarDatoEnId(pres.mostrarPresupuesto(),'presupuesto');
     mostrarDatoEnId(pres.calcularTotalGastos(),'gastos-totales');
     mostrarDatoEnId(pres.calcularBalance(),'balance-total');
+<<<<<<< HEAD
     document.getElementById("listado-gastos-completo").innerHTML = '';
     for(let gasto of pres.listarGastos())
     {
@@ -108,6 +109,17 @@ function repintar()
     }
     
 };
+=======
+    document.getElementById('listado-gastos-completo').innerHTML = '';
+    // for(let gasto_completo of pres.listarGastos())
+    // {
+    //     mostrarGastoWeb('listado-gastos-completo',gasto_completo);
+    // }
+     pres.listarGastos().forEach(gasto =>{
+        mostrarGastoWeb("listado-gastos-completo", gasto);
+     });
+}
+>>>>>>> ccdeeada501f4ef56f788d8517978cacd6becb8e
 
 function actualizarPresupuestoWeb()
 {
@@ -141,12 +153,20 @@ function EditarHandle()
 {
     this.handleEvent = function (event) 
     {
+<<<<<<< HEAD
         
         let new_descripcion = prompt('Introduce la nueva descripcion:');
         let new_valor = parseFloat(prompt('Introduce el nuevo valor del gasto:'));
         let new_fecha = Date.parse(prompt('Introduce la nueva fecha en formato yyyy/mm/dd'));
         let new_etiquetas = prompt('Introduce las estiquetas nuevas de este gasto separadas por ,');
          new_etiquetas.split(',');
+=======
+        let new_descripcion = prompt('Introduce la nueva descripcion:', this.gasto.descripcion);
+        let new_valor = parseFloat(prompt('Introduce el nuevo valor del gasto:', this.gasto.valor));
+        let new_fecha = Date.parse(prompt('Introduce la nueva fecha en formato yyyy/mm/dd', this.gasto.fecha));
+        let new_etiqueta = prompt('Introduce las estiquetas nuevas de este gasto separadas por ,', this.gasto.etiquetas.join(', '));
+        let new_etiquetas = new_etiqueta.split(',');
+>>>>>>> ccdeeada501f4ef56f788d8517978cacd6becb8e
 
         this.gasto.actualizarDescripcion(new_descripcion);
         this.gasto.actualizarValor(new_valor);
@@ -280,7 +300,49 @@ function EnviarHandle()
         let new_etiquetas = formulario.elements.etiquetas.value;
         this.gasto.anyadirEtiquetas(...new_etiquetas);
 
-        repintar();
+       repintar();
     }
-};
-export{mostrarDatoEnId,mostrarGastoWeb,mostrarGastosAgrupadosWeb,repintar,actualizarPresupuestoWeb,nuevoGastoWeb,EditarHandle,BorrarHandle,BorrarEtiquetasHandle,EnviarHandle,EditarHandleFormulario,EnviarHandleFormulario,CancelarHandleFormulario,nuevoGastoWebFormulario}
+
+
+
+}
+function filtrarGastosWeb () 
+{
+    this.handleEvent = function(event){
+        event.preventDefault();
+        let formulario = event.currentTarget;
+        let descripcion = formulario.elements["formulario-filtrado-descripcion"].value;
+        let min_valor = parseFloat(formulario.elements["formulario-filtrado-valor-minimo"].value);
+        let max_valor= parseFloat(formulario.elements["formulario-filtrado-valor-maximo"].value);
+        let fechaDesde = formulario.elements["formulario-filtrado-fecha-desde"].value;
+        let fechaHasta = formulario.elements["formulario-filtrado-fecha-hasta"].value;
+        let etiquetas = formulario.elements["formulario-filtrado-etiquetas-tiene"].value;
+        let gasto_filtrado = {};
+
+        if(etiquetas.lenght > 0)
+        {
+            gasto_filtrado.etiquetasTiene = pres.transformarListadoEtiquetas(etiquetas)
+        }
+    
+
+        gasto_filtrado.descripcionContiene = descripcion;
+        gasto_filtrado.valorMinimo = min_valor;
+        gasto_filtrado.valorMaximo = max_valor;
+        gasto_filtrado.fechaDesde = fechaDesde;
+        gasto_filtrado.fechaHasta = fechaHasta;
+        gasto_filtrado.etiquetas = etiquetas;
+
+        document.getElementById("listado-gastos-completo").innerHTML="";
+
+        let filtrados = pres.filtrarGastos(gasto_filtrado);
+
+        for(let gasto of filtrados)
+        {
+            mostrarGastoWeb("listado-gastos-completo",gasto);
+        };
+    }
+}
+let btnEnviar = document.getElementById("formulario-filtrado");
+btnEnviar.addEventListener('submit', new filtrarGastosWeb());
+export{mostrarDatoEnId,mostrarGastoWeb,mostrarGastosAgrupadosWeb,repintar,actualizarPresupuestoWeb,nuevoGastoWeb,EditarHandle,BorrarHandle,BorrarEtiquetasHandle,EnviarHandle,EditarHandleFormulario,EnviarHandleFormulario,CancelarHandleFormulario,nuevoGastoWebFormulario,filtrarGastosWeb}
+
