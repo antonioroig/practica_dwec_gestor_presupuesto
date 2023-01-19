@@ -83,10 +83,16 @@ function mostrarGastoWeb(idElemento,gasto){
     botonEditarForm.addEventListener('click',editarForm);
     divGasto.append(botonEditarForm);
 
-    let BorrarApi = document.createElement('button');
-    BorrarApi.type = 'button';
-    BorrarApi.className = 'gasto-borrar-api';
-    BorrarApi.textContent = 'Borrar (API)';
+    //Boton borrar api
+    let  botonBorrarApi = document.createElement('button');
+    botonBorrarApi.type = 'button';
+    botonBorrarApi.className = 'gasto-borrar-api';
+    botonBorrarApi.textContent = 'Borrar (API)';
+
+    let apiBorrar = new BorrarGastosApi(gasto);
+    apiBorrar.gasto = gasto;
+    botonBorrarApi.addEventListener('click',apiBorrar);
+    divGasto.append( botonBorrarApi);
      
 };
 
@@ -161,6 +167,10 @@ function nuevoGastoWebFormulario(){
         //Boton enviar formulario
         let enviar = new EnviarHandleFormulario();
         formulario.addEventListener('submit',enviar);
+
+        //Boton enviar Api
+        let enviarApi = new EnviarGastosApi();
+        formulario.addEventListener('submit',enviarApi);
 
 };
 
@@ -378,7 +388,7 @@ function BorrarGastosApi(){
         event.preventDefault();
 
         let nombreUsuario = document.getElementById("nombre_usuario").value;
-        let url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${nombreUsuario}/${this.gasto.id}`;
+        let url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${nombreUsuario}/${this.gasto.gastoId}`;
 
        try {
         await fetch(url, {method: 'DELETE'});
@@ -390,7 +400,7 @@ function BorrarGastosApi(){
 };
 
 function EnviarGastosApi(){
-    this.handleEvent = async function(event){
+    this.handleEvent = function(event){
         event.preventDefault();
 
         let nombreUsuario = document.getElementById("nombre_usuario").value;
@@ -398,13 +408,13 @@ function EnviarGastosApi(){
 
         let gasto = {
             "descripcion": this.gasto.descripcion,
-            "valor": this.gasto.valor,
+            "valor": parseFloat(this.gasto.valor),
             "fecha": this.gasto.fecha,
-            "etiquetas": this.gasto.etiquetas,
+            "etiquetas": this.gasto.etiquetas.split(','),
         }
 
         try {
-            await fetch(url, {method: 'POST', body: JSON.stringify(gasto)});
+            fetch(url, {method: 'POST', body: JSON.stringify(gasto), headers: {'Content-type': 'application/json; charset=utf-8'}});
             cargarGastosApi();
         } catch(error){
             console.error(error);
@@ -414,20 +424,20 @@ function EnviarGastosApi(){
 };
 
 function EditarHandleApi(){
-    this.handleEvent = async function(event){
+    this.handleEvent = function(event){
         event.preventDefault();
         let nombreUsuario = document.getElementById("nombre_usuario").value;
-        let url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${nombreUsuario}/${this.gasto.id}`;
+        let url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${nombreUsuario}/${this.gasto.gastoId}`;
 
         let gasto ={
             "descripcion": this.gasto.descripcion,
-            "valor": this.gasto.valor,
+            "valor": parseFloat(this.gasto.valor),
             "fecha": this.gasto.fecha,
-            "etiquetas": this.gasto.etiquetas,
+            "etiquetas": this.gasto.etiquetas.split(','),
         };
 
         try {
-            await fetch(url, {method: 'PUT', body: JSON.stringify(gasto)});
+             fetch(url, {method: 'PUT', body: JSON.stringify(gasto), headers: {'Content-type': 'application/json; charset=utf-8'}});
             cargarGastosApi();
         } catch(error){
             console.error(error);
@@ -459,16 +469,8 @@ let botonCargar = document.getElementById('cargar-gastos');
 botonCargar.addEventListener('click', new cargarGastosWeb());
 
 let botonCargarApi = document.getElementById('cargar-gastos-api');
-botonCargarApi.addEventListener('click', cargarGastosApi());
+botonCargarApi.addEventListener('click', new cargarGastosApi());
 
-let botonBorrarApi = document.getElementById('borrar-gastos-api');
-botonBorrarApi.addEventListener('click', BorrarGastosApi());
-
-let botonEnviarApi = document.getElementById('enviar-gastos-api');
-botonEnviarApi.addEventListener('click', EnviarGastosApi());
-
-let botonEditarApi = document.getElementById('editar-gastos-api');
-botonEditarApi.addEventListener('click', EditarHandleApi());
 
 
 export {
