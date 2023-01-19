@@ -291,7 +291,7 @@ function EditarHandleFormulario(){
         let plantillaFormulario = document.getElementById('formulario-template').content.cloneNode(true);;
         var formulario = plantillaFormulario.querySelector('form');
     
-        this.append(formulario);
+        this.divGasto.append(formulario);
 
         formulario.elements.descripcion.value=this.gasto.descripcion;
         formulario.elements.valor.value=this.gasto.valor;
