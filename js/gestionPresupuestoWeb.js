@@ -170,7 +170,7 @@ function nuevoGastoWebFormulario(){
 
         //Boton enviar Api
         let enviarApi = new EnviarGastosApi();
-        formulario.addEventListener('submit',enviarApi);
+        formulario.addEventListener('click',enviarApi);
 
 };
 
@@ -243,6 +243,12 @@ function EditarHandleFormulario(){
 
         //Desabilitar boton
         botonFormulario.setAttribute('disabled', "");
+
+        //boton editar api
+        let editarApi = new EditarHandleApi();
+        editarApi.gasto = this.gasto;
+        formulario.addEventListener('click',editarApi);
+
 
     }
 }
