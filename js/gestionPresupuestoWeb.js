@@ -527,6 +527,11 @@ function cargarGastosWeb()
 
 }
 
+let btnGuardar = document.getElementById('guardar-gastos');
+
+btnGuardar.addEventListener("click", new guardarGastosWeb);
+
+
 actualizarpresupuesto.addEventListener("click", actualizarPresupuestoWeb);
 
 anyadirgasto.addEventListener("click", nuevoGastoWeb);
