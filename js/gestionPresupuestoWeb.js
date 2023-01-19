@@ -264,7 +264,7 @@ document.getElementById("anyadirgasto-formulario").addEventListener("click", nue
 let EditarGastoHandle=function(){
     this.handleEvent = function(event) {
         event.preventDefault();
-        let form = document.forms[0];
+        let form = document.forms[1];
         this.gasto.descripcion = form.elements.descripcion.value;
         this.gasto.valor = Number(form.elements.valor.value);
         this.gasto.fecha = new Date(form.elements.fecha.value);
