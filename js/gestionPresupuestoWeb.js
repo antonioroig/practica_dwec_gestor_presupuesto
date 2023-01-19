@@ -230,7 +230,7 @@ function EditarHandleFormulario(){
 
         //Botón Editar Api
         let editarAPI = new EditarGastosApi();
-        editarAPI.gasto = gasto;
+        editarAPI.gasto = this.gasto;
         formulario.addEventListener("click", editarAPI);
     }
 };
@@ -356,7 +356,7 @@ function borrarGastosApi(){
     this.handleEvent = function(event){
         event.preventDefault();
         let user = document.getElementById('nombre_usuario').value;
-        let url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${user}/${this.gasto.id}`;
+        let url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${user}/${this.gasto.gastoId}`;
         
         if(user == null || user == ""){
             alert("El nombre de usuario está vacío");
@@ -377,11 +377,58 @@ function EnviarGastosApi(){
 
         let form = event.currentTarget;
         let des = form.elements.descripcion.value;
-        let val = form.elements.valor.value;
+        let val = parseFloat(form.elements.valor.value);
         let fec = form.elements.fecha.value;
-        let eti = form.elements.etiquetas.value;
+        let eti = form.elements.etiquetas.value.split(',');
 
-        
+        let miObjGasto = {
+            descripcion: des,
+            valor: val,
+            fecha: fec,
+            etiquetas: eti
+        }
+        if(user == null || user == ""){
+            alert("El nombre de usuario está vacío");
+        }
+        try{
+            fetch (url, {method: 'POST',
+            body: JSON.stringify(miObjGasto),
+            headers: {'Content-Type': 'application/json; charset=utf-8'}});
+            cargarGastosApi();
+        }
+        catch{(error => console.log(error))};
+    }
+};
+
+function EditarGastosApi(){
+    this.handleEvent = function(event){
+        event.preventDefault();
+        let user = document.getElementById('nombre_usuario').value;
+        let url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${user}/${this.gasto.gastoId}`;
+
+        let form = event.currentTarget;
+        let des = form.elements.descripcion.value;
+        let val = parseFloat(form.elements.valor.value);
+        let fec = form.elements.fecha.value;
+        let eti = form.elements.etiquetas.value.split(',');
+
+        let miObjGasto = {
+            descripcion: des,
+            valor: val,
+            fecha: fec,
+            etiquetas: eti
+        }
+
+        if(user == null || user == ""){
+            alert("El nombre de usuario está vacío");
+        }
+        try{
+            fetch(url, {method: 'PUT',
+            body: JSON.stringify(miObjGasto),
+            headers: {'Content-Type': 'application/json; charset=utf-8'}});
+            cargarGastosApi();
+        }
+        catch{(error => console.log(error))}
     }
 };
 
@@ -414,5 +461,6 @@ export{
     guardarGastosWeb,
     cargarGastosWeb,
     cargarGastosApi,
-    borrarGastosApi
+    borrarGastosApi,
+    EnviarGastosApi
 };
