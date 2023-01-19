@@ -21,3 +21,31 @@ gestionPresupuesto.anyadirGasto(gasto6);
 gestionPresupuestoWeb.mostrarDatoEnId(gestionPresupuesto.calcularTotalGastos(), "gastos-totales");
 gestionPresupuestoWeb.mostrarDatoEnId(gestionPresupuesto.calcularBalance(), "balance-total");
 
+for (let gasto of gestionPresupuesto.listarGastos())
+{
+    gestionPresupuestoWeb.mostrarGastoWeb("listado-gastos-completo", gasto);
+} 
+
+for (let gasto of gestionPresupuesto.filtrarGastos({fechaDesde: "2021-09-01", fechaHasta: "2021-09-30"}))
+{
+    gestionPresupuestoWeb.mostrarGastoWeb("listado-gastos-filtrado-1", gasto);
+}
+
+for (let gasto of gestionPresupuesto.filtrarGastos({valorMinimo: 50}))
+{
+    gestionPresupuestoWeb.mostrarGastoWeb("listado-gastos-filtrado-2", gasto);
+}
+
+for (let gasto of gestionPresupuesto.filtrarGastos({valorMinimo: 200, etiquetasTiene: ["seguros"]}))
+{
+    gestionPresupuestoWeb.mostrarGastoWeb("listado-gastos-filtrado-3", gasto);
+}
+
+for (let gasto of gestionPresupuesto.filtrarGastos({etiquetasTiene: ["comida", "transporte"], valorMaximo: 50}))
+{
+    gestionPresupuestoWeb.mostrarGastoWeb("listado-gastos-filtrado-4", gasto);
+}
+
+gestionPresupuestoWeb.mostrarGastosAgrupadosWeb(gestionPresupuesto.agruparGastos("dia"),"día" ,"agrupacion-dia");
+gestionPresupuestoWeb.mostrarGastosAgrupadosWeb(gestionPresupuesto.agruparGastos("mes"),"mes" , "agrupacion-mes");
+gestionPresupuestoWeb.mostrarGastosAgrupadosWeb(gestionPresupuesto.agruparGastos("anyo"),"año" ,"agrupacion-anyo");
