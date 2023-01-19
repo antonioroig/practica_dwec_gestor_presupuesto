@@ -320,7 +320,6 @@ function EditarHandleFormulario()
         cancelarForm.form = form;
         let botonCancelar = form.querySelector('button.cancelar');
         botonCancelar.addEventListener('click', cancelarForm);                                                      
-
     };
 }
 function CancelarHandleEditarFormulario(){
