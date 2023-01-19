@@ -393,27 +393,30 @@ function filtrarGastosWeb()
 {
 
    
-    handleEvent = function(filt){
+   this.handleEvent = function(filt){
 
         filt.preventDefault();
 
         let desc = document.getElementById("formulario-filtrado-descripcion").value;
         let etiq = document.getElementById("formulario-filtrado-etiquetas-tiene").value;
-        let valMin = document.getElementById("formulario-filtrado-valor-minimo").value;
-        let valMax = document.getElementById("formulario-filtrado-valor-maximo").value;
+       
+        let valMax = parseFloat(document.getElementById("formulario-filtrado-valor-maximo").value);
+        let valMin = parseFloat(document.getElementById("formulario-filtrado-valor-minimo").value);
         let fecDes = document.getElementById("formulario-filtrado-fecha-desde").value;
         let fecHasta = document.getElementById("formulario-filtrado-fecha-hasta").value;
+        
         let obj = {};
         
-        obj.desccripcion = desc;
-        obj.valMini = valMin;
-        obj.valMaxi = valMax;
-        obj.fechHas = fecHasta;
+        obj.descripcionContiene = desc;
+        
+        obj.valorMaximo = valMax;
+        obj.valorMinimo = valMin;
+        obj.fechaHasta = fecHasta;
         obj.fechaDesde = fecDes;
         
-        if(etiq.length)
+        if(etiq.length > 0)
         {
-            obj.etiquetas = gp.transformarListadoEtiquetas(etiq);
+            obj.etiquetasTiene = gp.transformarListadoEtiquetas(etiq);
         }
 
         document.getElementById("listado-gastos-completo").innerHTML = "";
@@ -427,6 +430,9 @@ function filtrarGastosWeb()
     }
    
 }
+
+let botEnviar = document.getElementById("formulario-filtrado");
+botEnviar.addEventListener('submit', new filtrarGastosWeb());
 
 
 
