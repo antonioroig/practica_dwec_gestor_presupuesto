@@ -323,8 +323,21 @@ function guardarGastosWeb(){
     localStorage.GestorGastosDWEC=JSON.stringify(gestion.listarGastos());
 }
 
+function cargarGastosWeb(){
+    let cargarGastos = JSON.parse(localStorage.getItem("GestorGastosDWEC"));
+    if(cargarGastos != null && cargarGastos.length >= 0){
+        gestion.cargarGastos(cargarGastos);
+    }else{
+        gestion.cargarGastos([]);
+    }
+    repintar();
+}
+
 let btnGuardarGastosWeb = document.getElementById("guardar-gastos");
 btnGuardarGastosWeb.onclick = guardarGastosWeb;
+
+let btnCargarGastos = document.getElementById("cargar-gastos");
+btnCargarGastos.onclick = cargarGastosWeb;
 
 let formularioFiltrado = new filtrarGastosWeb();
 document.getElementById("formulario-filtrado").addEventListener("submit", formularioFiltrado);
