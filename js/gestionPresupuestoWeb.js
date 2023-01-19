@@ -530,6 +530,8 @@ function cargarGastosWeb()
 
         }
 
+        repintar();
+
     }
 
 }
