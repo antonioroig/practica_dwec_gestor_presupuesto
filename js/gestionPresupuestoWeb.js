@@ -435,7 +435,13 @@ let botEnviar = document.getElementById("formulario-filtrado");
 botEnviar.addEventListener('submit', new filtrarGastosWeb());
 
 
-
+function guardarGastosWeb()
+{
+    this.handleEvent = function(guardar)
+    {
+        
+    }
+}
 
 
 
