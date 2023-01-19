@@ -70,6 +70,11 @@ function mostrarGastoWeb(idElemento,gasto){
     borrarAPI.type = 'button';
     borrarAPI.textContent = 'Borrar (API)';
 
+    let borrarHandleAPI = new BorrarHandleAPI(gasto);
+    borrarHandleAPI.gasto = gasto;
+    borrarAPI.addEventListener("click", borrarHandleAPI);
+    divGastos.append(borrarAPI);
+
 
     let editarHandleForm = document.createElement('button');
     editarHandleForm.className = 'gasto-editar-formulario';
@@ -188,8 +193,11 @@ function nuevoGastoWebFormulario(){
     butCancel.addEventListener("click", cancel); 
 
     let enviadorForm = new EnviarHandleFormulario();
-
     formulario.addEventListener("submit", enviadorForm);
+
+    //Botón enviar Api
+    let enviarAPI = new EnviarGastosApi();
+    formulario.addEventListener("click", enviarAPI);
 };
 
 function EditarHandleFormulario(){
@@ -219,7 +227,11 @@ function EditarHandleFormulario(){
         formulario.addEventListener("submit", enviador);
 
         editForm.setAttribute("disabled", "");
-        
+
+        //Botón Editar Api
+        let editarAPI = new EditarGastosApi();
+        editarAPI.gasto = gasto;
+        formulario.addEventListener("click", editarAPI);
     }
 };
 function CancelarHandleFormulario(){
@@ -319,7 +331,7 @@ function cargarGastosWeb(){
         }
         repintar();
     };
-}
+};
 
 function cargarGastosApi(){
     this.handleEvent = function(event){
@@ -327,11 +339,14 @@ function cargarGastosApi(){
         let user = document.getElementById('nombre_usuario').value;
         let url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${user}`;
 
+        if(user == null || user == ""){
+            alert("Debes introducir un nombre de usuario");
+        }
         fetch(url)
         .then(response => response.json())
         .then(mis_gastos =>{
-            gestionPresupuesto.cargarGastos(mis_gastos);
-            repintar();
+        gestionPresupuesto.cargarGastos(mis_gastos);
+        repintar();
         })
         .catch(error => console.log(error));
     };
@@ -342,15 +357,33 @@ function borrarGastosApi(){
         event.preventDefault();
         let user = document.getElementById('nombre_usuario').value;
         let url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${user}/${this.gasto.id}`;
-
+        
+        if(user == null || user == ""){
+            alert("El nombre de usuario está vacío");
+        }
         try{
             fetch(url, {method: 'DELETE'})
-            
+            cargarGastosApi();
         }
         catch{(error => console.log(error))};
     };
 };
 
+function EnviarGastosApi(){
+    this.handleEvent = function(event){
+        event.preventDefault();
+        let user = document.getElementById('nombre_usuario').value;
+        let url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${user}`;
+
+        let form = event.currentTarget;
+        let des = form.elements.descripcion.value;
+        let val = form.elements.valor.value;
+        let fec = form.elements.fecha.value;
+        let eti = form.elements.etiquetas.value;
+
+        
+    }
+};
 
 //He puesto aquí los botones todos juntos porque luego no los encuentro.
 //Botones
@@ -360,7 +393,7 @@ document.getElementById("anyadirgasto-formulario").addEventListener("click",nuev
 document.getElementById("formulario-filtrado").addEventListener("submit", new filtrarGastosWeb());
 document.getElementById("guardar-gastos").addEventListener("click", new guardarGastosWeb());
 document.getElementById("cargar-gastos").addEventListener("click", new cargarGastosWeb());
-document.getElementById("cargar-gastos-api").addEventListener("click", cargarGastosApi);
+document.getElementById("cargar-gastos-api").addEventListener("click", new cargarGastosApi());
 
 export{
     mostrarDatoEnId,
