@@ -310,9 +310,7 @@ function filtrarGastosWeb(){
 
         let filtrar = gestionPresupuesto.filtrarGastos(gasto);
 
-        filtrar.forEach(gastoFinal => {
-            mostrarGastoWeb("listado-gastos-completo", gastoFinal);
-        });
+        mostrarGastoWeb("listado-gastos-completo", filtrar);
         
     }
 }
