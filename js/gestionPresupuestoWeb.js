@@ -101,20 +101,20 @@ function repintar()
     mostrarDatoEnId(pres.mostrarPresupuesto(),'presupuesto');
     mostrarDatoEnId(pres.calcularTotalGastos(),'gastos-totales');
     mostrarDatoEnId(pres.calcularBalance(),'balance-total');
-    document.getElementById('listado-gastos-completo').innerHTML = '';
-    for(let gasto_completo of pres.listarGastos())
+    document.getElementById("listado-gastos-completo").innerHTML = '';
+    for(let gasto of pres.listarGastos())
     {
-        mostrarGastoWeb('listado-gastos-completo',gasto_completo);
+        mostrarGastoWeb('listado-gastos-completo', gasto);
     }
     
-}
+};
 
 function actualizarPresupuestoWeb()
 {
     let presupuesto = parseInt(prompt('Introduce el presupuesto actualizado'));
     pres.actualizarPresupuesto(presupuesto);
     repintar();
-}
+};
 
 let botonActualizar = document.getElementById('actualizarpresupuesto');
 botonActualizar.addEventListener('click',actualizarPresupuestoWeb);
@@ -132,7 +132,7 @@ function nuevoGastoWeb()
     pres.anyadirGasto(gasto_nuevo);
 
     repintar();
-}
+};
 
 let botonAñadirGasto = document.getElementById('anyadirgasto');
 botonAñadirGasto.addEventListener('click',nuevoGastoWeb);
@@ -141,22 +141,23 @@ function EditarHandle()
 {
     this.handleEvent = function (event) 
     {
+        
         let new_descripcion = prompt('Introduce la nueva descripcion:');
         let new_valor = parseFloat(prompt('Introduce el nuevo valor del gasto:'));
         let new_fecha = Date.parse(prompt('Introduce la nueva fecha en formato yyyy/mm/dd'));
         let new_etiquetas = prompt('Introduce las estiquetas nuevas de este gasto separadas por ,');
-        new_etiquetas = new_etiquetas.split(',');
+         new_etiquetas.split(',');
 
         this.gasto.actualizarDescripcion(new_descripcion);
         this.gasto.actualizarValor(new_valor);
         this.gasto.actualizarFecha(new_fecha);
-        this.gasto.anyadirEtiquetas(...new_etiquetas);
+        this.gasto.anyadirEtiquetas(new_etiquetas);
 
         repintar();
 
     }
 
-}
+};
 function BorrarHandle()
 {
     this.handleEvent = function (event) 
@@ -164,15 +165,16 @@ function BorrarHandle()
         pres.borrarGasto(this.gasto.id);
         repintar();
     }
-}
+};
 function BorrarEtiquetasHandle()
 {
     this.handleEvent = function (event) 
     {
+        
         this.gasto.borrarEtiquetas(this.etiquetas);
         repintar();
     }
-}
+};
 function nuevoGastoWebFormulario()
 {
     let plantillaFormulario = document.getElementById("formulario-template").content.cloneNode(true);
@@ -190,7 +192,7 @@ function nuevoGastoWebFormulario()
 
     let enviar = new EnviarHandleFormulario();
     formulario.addEventListener('submit', enviar);
-}
+};
 
 let botonFormulario = document.getElementById('anyadirgasto-formulario');
 botonFormulario.addEventListener('click', nuevoGastoWebFormulario);
@@ -215,7 +217,7 @@ function EnviarHandleFormulario()
 
         document.getElementById('anyadirgasto-formulario').removeAttribute("disabled");
     } 
-}
+};
 function CancelarHandleFormulario()
 {
     this.handleEvent = function (event)
@@ -225,7 +227,7 @@ function CancelarHandleFormulario()
         document.getElementById('anyadirgasto-formulario').removeAttribute("disabled");
         repintar();
     }
-}
+};
 
 function EditarHandleFormulario()
 {
@@ -258,7 +260,7 @@ function EditarHandleFormulario()
 
         btnFormulario.setAttribute('disabled', "");
     }
-}
+};
 function EnviarHandle()
 {
     this.handleEvent = function (event)
@@ -280,5 +282,5 @@ function EnviarHandle()
 
         repintar();
     }
-}
+};
 export{mostrarDatoEnId,mostrarGastoWeb,mostrarGastosAgrupadosWeb,repintar,actualizarPresupuestoWeb,nuevoGastoWeb,EditarHandle,BorrarHandle,BorrarEtiquetasHandle,EnviarHandle,EditarHandleFormulario,EnviarHandleFormulario,CancelarHandleFormulario,nuevoGastoWebFormulario}
