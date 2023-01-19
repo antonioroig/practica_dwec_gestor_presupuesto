@@ -338,9 +338,17 @@ let btnGuardarGastoWeb = document.getElementById('guardar-gastos');
 btnGuardarGastoWeb.onclick = guardarGastosWeb;
 
 function cargarGastosWeb(){
+    let cargarG = JSON.parse(localStorage.getItem("GestorGastosDWEC"));
+    if((cargarG != null) && (cargarG.length >= 0)){
+        ges.cargarGastos(cargarG);
+    }
+    else{
+       ges.cargarGastos([]); 
+    }
+    repintar();
 }
-
-document.getElementById("cargar-gastos").addEventListener("submit", cargarGastosWeb);
+let btnCargarGastoWeb = document.getElementById('cargar-gastos');
+btnCargarGastoWeb.onclick = cargarGastosWeb;
 
 
 //NO MODIFICAR.
