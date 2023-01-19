@@ -70,6 +70,7 @@ function mostrarGastoWeb(gasto, idElemento)
         etiq.addEventListener("click", borrarEtiqueta);
         gastEtiq.appendChild(etiq);
     }
+    padre.appendChild(gastEtiq);
   
    /* gasto.etiquetas.forEach(etiqueta => {
         let borrarEtiqueta = new BorrarEtiquetasHandle();
@@ -123,7 +124,7 @@ function mostrarGastoWeb(gasto, idElemento)
     editarFormEvent.boton=botonEditarForm;
     botonEditarForm.addEventListener('click',editarFormEvent);
     
-    padre.appendChild(gastEtiq);
+    
     padre.appendChild(botonEditarForm);
     elem.appendChild(padre);
 }
