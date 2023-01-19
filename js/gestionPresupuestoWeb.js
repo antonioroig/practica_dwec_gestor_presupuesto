@@ -11,6 +11,7 @@ function mostrarDatoEnId(idElemento, valor)
 function mostrarGastoWeb(idElemento,gastos)
 {
     let element = document.getElementById(idElemento);
+    
     gastos.forEach(gasto => {
         let gastoDiv = document.createElement('div');
         gastoDiv.className = 'gasto';
@@ -73,6 +74,7 @@ function mostrarGastoWeb(idElemento,gastos)
     
         element.appendChild(gastoDiv); 
         });
+    
 }
 
 function mostrarGastosAgrupadosWeb(idElemento,agrup,periodo)
@@ -265,24 +267,53 @@ function filtrarGastosWeb(){
     this.handleEvent = function (event){
         event.preventDefault();
         let formulario = event.currentTarget;
+
         let descripcionContiene =  formulario.elements["formulario-filtrado-descripcion"].value;
         let valorMinimo = parseFloat(formulario.elements["formulario-filtrado-valor-minimo"].value);
         let valorMaximo = parseFloat(formulario.elements["formulario-filtrado-valor-maximo"].value);
-        let fechaDesde = formulario.elements["formulario-filtrado-fecha-desde"].value;
-        let fechaHasta = formulario.elements["formulario-filtrado-fecha-hasta"].value;
+        let fechaDesde = (formulario.elements["formulario-filtrado-fecha-desde"].value);
+        let fechaHasta = (formulario.elements["formulario-filtrado-fecha-hasta"].value);
         let etiquetasTiene = formulario.elements["formulario-filtrado-etiquetas-tiene"].value;
 
-        if(etiquetasTiene){
-            etiquetasTiene = gestionPresupuesto.transformarListadoEtiquetas(etiquetasTiene);
+        console.log(descripcionContiene);
+        console.log(valorMinimo);
+        console.log(valorMaximo);
+        console.log(fechaDesde);
+        console.log(fechaHasta);
+        console.log(etiquetasTiene);
+        let gasto = {};
+        
+        if(fechaDesde != ""){
+            gasto.fechaDesde = fechaDesde;
         }
+        if(fechaHasta != ""){
+            gasto.fechaHasta = fechaHasta;
+        }
+        if(!isNaN(valorMinimo)){
+            gasto.valorMinimo = valorMinimo;
+        }
+        if(!isNaN(valorMaximo)){
+            gasto.valorMaximo = valorMaximo;
+        }
+        if(descripcionContiene != "")
+        {
+            gasto.descripcionContiene = descripcionContiene;
+        }
+        if(etiquetasTiene.length > 0){
+            etiquetasTiene = gestionPresupuesto.transformarListadoEtiquetas(etiquetasTiene);
+            gasto.etiquetasTiene = etiquetasTiene;
+        }
+
+        console.log(gasto);
 
         document.getElementById("listado-gastos-completo").innerHTML = "";
 
-        let filtrar = gestionPresupuesto.filtrarGastos({fechaDesde, fechaHasta, valorMinimo, valorMaximo, descripcionContiene, etiquetasTiene});
+        let filtrar = gestionPresupuesto.filtrarGastos(gasto);
 
         filtrar.forEach(gastoFinal => {
             mostrarGastoWeb("listado-gastos-completo", gastoFinal);
         });
+        
     }
 }
 
