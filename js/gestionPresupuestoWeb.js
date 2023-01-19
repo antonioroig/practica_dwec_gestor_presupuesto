@@ -337,6 +337,36 @@ function EnviarHandleEditarFormulario(){
     }
 }
 
+// Práctica Regexp
+function filtrarGastoWeb(){
+    this.handleEvent = function(event) 
+    {
+        event.preventDefault();
+        let formulario = event.currentTarget;
+        let descripcion1 = formulario.elements["formulario-filtrado-descripcion"].value;
+        let valorMinimo1 = parseFloat(formulario.elements["formulario-filtrado-valor-minimo"].value);
+        let valorMaximo1 = parseFloat(formulario.elements["formulario-filtrado-valor-maximo"].value);
+        let fechaDesde1 = formulario.elements["formulario-filtrado-fecha-desde"].value;
+        let fechaHasta1 = formulario.elements["formulario-filtrado-fecha-hasta"].value;
+        let etiqueta = formulario.elements["formulario-filtrado-etiquetas-tiene"].value;
+        
+        if (etiqueta !== undefined) {
+            etiqueta = gestionPresupuesto.transformarListadoEtiquetas(etiqueta);
+        }
+        let filtrado = ({fechaDesde : fechaDesde1, fechaHasta : fechaHasta1, valorMinimo : valorMinimo1, valorMaximo : valorMaximo1, descripcionTiene : descripcion1, etiquetasTiene : etiqueta});
+        let formularioFiltrado = gestionPresupuesto.filtrarGastos(filtrado);
+        document.getElementById("listado-gastos-completo").innerHTML = " ";
+        for (let gastoForm of formularioFiltrado) {
+            mostrarGastoWeb("listado-gastos-completo", gastoForm);
+        }
+    }
+}
+
+let erFiltrar = new filtrarGastoWeb();
+let formulario = document.getElementById("formulario-filtrado");
+formulario.addEventListener("submit", erFiltrar);
+
+
 export {
     mostrarDatoEnId,
     mostrarGastoWeb,
