@@ -358,7 +358,27 @@ let btnGuardarGastosWeb = document.getElementById("guardar-gastos");
 btnGuardarGastosWeb.onclick = guardarGastosWeb;
 
 
+/////////////////////////////////////////////////////// cargarGastosWeb ////////////////////////////////////////////////////////
 
+function cargarGastosWeb() {
+
+    let gastosAlmacenados = JSON.parse(localStorage.getItem("GestorGastosDWEC"));
+
+    if(gastosAlmacenados === null)
+    {
+        gestionpr.cargarGastos(gastosAlmacenados = []);
+    }
+    else 
+    {
+        gestionpr.cargarGastos(gastosAlmacenados);
+
+    }
+    repintar();
+}
+
+
+let btnCargarGastosWeb = document.getElementById("cargar-gastos");
+btnCargarGastosWeb.onclick = cargarGastosWeb;
 
 
   let s = document.getElementById('actualizarpresupuesto')
