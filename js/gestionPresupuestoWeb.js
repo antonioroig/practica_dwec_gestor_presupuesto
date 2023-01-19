@@ -519,7 +519,7 @@ function cargarGastosWeb()
         if(localStorage.getItem('GestorGastosDWEC') != null)
         {
 
-            gesPresupuesto.cargarGastos();
+            gesPresupuesto.cargarGastos(JSON.parse(localStorage.getItem('GestorGastosDWEC')));
 
         }
 
