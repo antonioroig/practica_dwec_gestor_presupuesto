@@ -174,10 +174,15 @@ function calcularBalance() {
     return presupuesto - calcularTotalGastos();
 }
 
+<<<<<<< HEAD
 function filtrarGastos({fechaDesde,fechaHasta,valorMin,valorMax,descripcionContiene,etiquetasTiene})
 {
     let arrayFiltro = gastos.filter(function(gasto)
     {
+=======
+function filtrarGastos({fechaDesde,fechaHasta,valorMinimo,valorMaximo,descripcionContiene,etiquetasTiene}){
+    let arrayFiltro = gastos.filter(function(gasto){
+>>>>>>> 11ad378e6d567bba8d92e12b65a8bdcea9169d86
         let add = true;
 
         if (fechaDesde)
@@ -235,13 +240,61 @@ function filtrarGastos({fechaDesde,fechaHasta,valorMin,valorMax,descripcionConti
             {
                 add = false;
             }
+<<<<<<< HEAD
+=======
+        if (valorMinimo)
+        {
+            if (gasto.valor < valorMinimo)
+            {
+                add = false;
+            }
+        }
+        
+        if (valorMaximo)
+        {
+            if (gasto.valor > valorMaximo)
+            {
+                add = false;
+            }
+        }
+
+        if (descripcionContiene)
+        {
+            if (!(gasto.descripcion.toUpperCase()).includes(descripcionContiene.toUpperCase()))
+            {
+                add = false;
+            }
+        }
+
+        if (etiquetasTiene)
+        {
+            let existe = false;
+
+            for (let i = 0; i < etiquetasTiene.length; i++)
+            {
+                for (let j = 0; j < gasto.etiquetas.length; j++)
+                {
+                    if (etiquetasTiene[i] === gasto.etiquetas[j])
+                    {
+                        existe = true;
+                    }
+                }
+            }
+            if (existe === false)
+            {
+                add = false;
+            }
+>>>>>>> 11ad378e6d567bba8d92e12b65a8bdcea9169d86
         }
 
         return add;
     });
 
     return arrayFiltro;
+<<<<<<< HEAD
 
+=======
+>>>>>>> 11ad378e6d567bba8d92e12b65a8bdcea9169d86
 }
 
 function agruparGastos(periodo = "mes", etiquetas, fechaDesde, fechaHasta = Date.now()){
@@ -257,12 +310,12 @@ function agruparGastos(periodo = "mes", etiquetas, fechaDesde, fechaHasta = Date
 
     return subGastos.reduce(function(sum, gasto)
     {
-        if (typeof sum[gasto.obtenerPeriodoAgrupacion(periodos)]!='number')
+        if (typeof sum[gasto.obtenerPeriodoAgrupacion(periodo)]!='number')
         {
-            sum[gasto.obtenerPeriodoAgrupacion(periodos)] = 0;
+            sum[gasto.obtenerPeriodoAgrupacion(periodo)] = 0;
         }
 
-        sum[gasto.obtenerPeriodoAgrupacion(periodos)] += gasto.valor;
+        sum[gasto.obtenerPeriodoAgrupacion(periodo)] += gasto.valor;
 
         return sum;
     },{});
