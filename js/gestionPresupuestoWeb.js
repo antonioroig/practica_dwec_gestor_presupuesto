@@ -519,7 +519,14 @@ function cargarGastosWeb()
         if(localStorage.getItem('GestorGastosDWEC') != null)
         {
 
-            
+            gesPresupuesto.cargarGastos();
+
+        }
+
+        else
+        {
+
+            gesPresupuesto.cargarGastos([]);
 
         }
 
@@ -530,6 +537,11 @@ function cargarGastosWeb()
 let btnGuardar = document.getElementById('guardar-gastos');
 
 btnGuardar.addEventListener("click", new guardarGastosWeb);
+
+
+let btnCargar = document.getElementById('cargar-gastos');
+
+btnCargar.addEventListener("click", new cargarGastosWeb);
 
 
 actualizarpresupuesto.addEventListener("click", actualizarPresupuestoWeb);
