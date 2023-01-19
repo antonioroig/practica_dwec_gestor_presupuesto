@@ -301,7 +301,8 @@ formulario.addEventListener('submit', form);
 
 function guardarGastosWeb(){
     this.handleEvent= function(){
-        localStorage.GestorGastosDWEC = JSON.stringify(gestionPre.listarGastos())
+        //localStorage.GestorGastosDWEC = JSON.stringify(gestionPre.listarGastos())
+        localStorage.GestorGastosDWEC =JSON.stringify(gestionPre.listarGastos())
     }
    
 }
@@ -315,7 +316,7 @@ function cargarGastosWeb(){
         {
             gestionPre.cargarGastos(JSON.parse(localStorage.GestorGastosDWEC))
         }else{
-              localStorage.GestorGastosDWEC = []
+             gestionPre.cargarGastos([])
         }
         repintar()
     }
