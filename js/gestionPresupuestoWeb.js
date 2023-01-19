@@ -320,9 +320,11 @@ function filtrarGastosWeb(){
 }
 
 function guardarGastosWeb(){
-    let gastos = gestion.listarGastos();
-    
+    localStorage.GestorGastosDWEC=JSON.stringify(gestion.listarGastos());
 }
+
+let btnGuardarGastosWeb = document.getElementById("guardar-gastos");
+btnGuardarGastosWeb.onclick = guardarGastosWeb;
 
 let formularioFiltrado = new filtrarGastosWeb();
 document.getElementById("formulario-filtrado").addEventListener("submit", formularioFiltrado);
