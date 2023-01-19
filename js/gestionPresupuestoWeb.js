@@ -248,22 +248,41 @@ function filtrarGastosWeb(){
         event.preventDefault();
         let FormularioFiltrado = event.currentTarget;
         let Etiquetas = FormularioFiltrado.elements["formulario-filtrado-etiquetas-tiene"].value;
-        if(Etiquetas)
-        {
-            Etiquetas = gestionPresupuesto.transformarListadoEtiquetas(Etiquetas);
-        }
         let ValMinimo = parseFloat(FormularioFiltrado.elements["formulario-filtrado-valor-minimo"].value);
         let ValMaximo = parseFloat(FormularioFiltrado.elements["formulario-filtrado-valor-maximo"].value);
         let FechDesde = FormularioFiltrado.elements["formulario-filtrado-fecha-desde"].value;
         let FechHasta = FormularioFiltrado.elements["formulario-filtrado-fecha-hasta"].value;
         let Descripcion = FormularioFiltrado.elements["formulario-filtrado-descripcion"].value;
-        let Filtrado = gestionPresupuesto.filtrarGastos({fechaDesde:FechDesde,fechaHasta:FechHasta,valorMaximo:ValMaximo,valorMinimo:ValMinimo,descripcionContiene:Descripcion,etiquetasTiene:Etiquetas});
+        let Filtro = [];
+        if(Etiquetas.length > 0)
+        {
+            Filtro.etiquetasTiene = gestionPresupuesto.transformarListadoEtiquetas(Etiquetas);
+        }
+        if(!isNaN(ValMinimo))
+        {
+            Filtro.valorMinimo = ValMinimo;
+        }
+        if(!isNaN(ValMaximo))
+        {
+            Filtro.valorMaximo = ValMaximo;
+        }
+        if(FechDesde != "")
+        {
+            Filtro.fechaDesde = FechDesde;
+        }
+        if(FechHasta != "")
+        {
+            Filtro.fechaHasta = FechHasta;
+        }
+        if(Descripcion != "")
+        {
+            Filtro.descripcionContiene = Descripcion;
+        }
+        let Filtrado = gestionPresupuesto.filtrarGastos(Filtro);
         
         mostrarDatoEnId("listado-gastos-completo", "");
 
-        Filtrado.forEach(gasto => {
-            mostrarGastoWeb("listado-gastos-completo",gasto)
-        });
+        mostrarGastoWeb("listado-gastos-completo",Filtrado)
     }
 }
 
