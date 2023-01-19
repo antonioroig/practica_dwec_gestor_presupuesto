@@ -267,5 +267,5 @@ export   {
     filtrarGastos,
     agruparGastos,
     transformarListadoEtiquetas,
-    cargarGastos
+    cargarGastos    
 }
