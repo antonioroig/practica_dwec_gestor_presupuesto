@@ -347,6 +347,17 @@ function filtrarGastosWeb()
 }
 
 
+/////////////////////////////////////////////////////// guardarGastosWeb ////////////////////////////////////////////////////////
+
+
+function guardarGastosWeb(){
+    localStorage.GestorGastosDWEC=JSON.stringify(gestionpr.listarGastos());
+}
+
+let btnGuardarGastosWeb = document.getElementById("guardar-gastos");
+btnGuardarGastosWeb.onclick = guardarGastosWeb;
+
+
 
 
 
