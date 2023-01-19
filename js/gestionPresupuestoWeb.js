@@ -347,7 +347,11 @@ function filtrarGastosWeb()
         let etiquetas = form.elements["formulario-filtrado-etiquetas-tiene"].value;
         let filtrado ={};
 
-        filtrado.descripcionContiene = desc;
+        if(desc != "")
+        {
+            filtrado.descripcionContiene = desc;
+        }
+        
         if(!isNaN(valorMin))
         {
             filtrado.valorMinimo = valorMin;
@@ -356,21 +360,31 @@ function filtrarGastosWeb()
         {
             filtrado.valorMaximo = valorMax;
         }
-        filtrado.fechaDesde = fechaIni;
-        filtrado.fechaHasta = fechaFin;
-
-        filtrado.etiquetasTiene = gestionPresupuesto.transformarListadoEtiquetas(etiquetas);
-
+        if(fechaIni != ""){
+            filtrado.fechaDesde = fechaIni;
+        }
         
+        if(fechaFin != ""){
+            filtrado.fechaHasta = fechaFin;
+        }
+
+        if(etiquetas.length > 0)
+        {
+            filtrado.etiquetasTiene = gestionPresupuesto.transformarListadoEtiquetas(etiquetas);
+        }
+        
+
+        console.log(filtrado);
         
         document.getElementById("listado-gastos-completo").innerHTML = "";
         let filtroGasto = gestionPresupuesto.filtrarGastos(filtrado);
 
-        console.log(filtroGasto);
+       console.log(filtroGasto);
 
         for(let gasto of filtroGasto)
             {
                 mostrarGastoWeb("listado-gastos-completo",gasto);
+                console.log(gasto);
             }
     }
 }

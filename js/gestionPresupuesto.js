@@ -315,12 +315,8 @@ function agruparGastos(periodo="mes",etiquetas,fechaDesde,fechaHasta)
 
 function transformarListadoEtiquetas(etiquetasTiene)
 {
-    let etiquetas = [];
-
-    if(etiquetasTiene.length > 0)
-    {
-          letetiquetas = etiquetasTiene.split(/\s*[,;.:\s]+\s*/);
-    }
+    
+    let etiquetas = etiquetasTiene.split(/\s*[,;.:\s]+\s*/);
 
     return etiquetas;
 }
