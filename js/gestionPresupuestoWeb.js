@@ -50,19 +50,22 @@ function mostrarGastoWeb(idElemento, gasto)
             let divGastoEtiquetasEtiqueta = document.createElement('span');
             divGastoEtiquetasEtiqueta.className = "gasto-etiquetas-etiqueta";
             divGastoEtiquetasEtiqueta.textContent = gasto.etiquetas[i];
+        }
+
     }
 }
 
+function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo)
+{
+    let elemento = document.getElementById(idElemento);
+    let agrupDIV = document.createElement('div');
+    agrupDIV.className = 'agrupacion';
 
+    let agrupTit = document.createElement('h1');
+    agrupTit.innerHTML = 'Gastos agrupados por ' + periodo;
+    agrupDIV.appendChild(agrupTit);
 
-
-
-
-
-
-
-
-
+}
 
 
 export{
