@@ -331,15 +331,15 @@ let formularioFilt = new filtrarGastosWeb();
 document.getElementById("formulario-filtrado").addEventListener("submit", formularioFilt);
 
 function guardarGastosWeb(){
-    localStorage.GestorGastosDWEC = JSON.stringify(ges.listarGastos());
+    localStorage.GestorGastosDWEC=JSON.stringify(ges.listarGastos());
 }
 
-let btnGuardarGastoWeb = document.getElementById("guardar-gastos")
+let btnGuardarGastoWeb = document.getElementById('guardar-gastos');
 btnGuardarGastoWeb.onclick = guardarGastosWeb;
 
 function cargarGastosWeb(){
-    
 }
+
 document.getElementById("cargar-gastos").addEventListener("submit", cargarGastosWeb);
 
 
@@ -354,5 +354,7 @@ export   {
     EditarHandle,
     BorrarHandle,
     nuevoGastoWebFormulario,
-    filtrarGastosWeb
+    filtrarGastosWeb,
+    guardarGastosWeb,
+    cargarGastosWeb
 }
