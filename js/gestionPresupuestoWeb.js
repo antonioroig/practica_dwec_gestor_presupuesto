@@ -335,6 +335,9 @@ function CancelarHandleEditarFormulario(){
         repintar();
     };
 }
+function filtrarGastosWeb(){
+    
+}
 export   {  
     mostrarDatoEnId,
     mostrarGastoWeb,
