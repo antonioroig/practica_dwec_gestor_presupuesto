@@ -350,7 +350,13 @@ function cargarGastosWeb(){
 let btnCargarGastoWeb = document.getElementById('cargar-gastos');
 btnCargarGastoWeb.onclick = cargarGastosWeb;
 
+function cargarGastosApi(){
+    let usuario = document.getElementById("nombre_usuario");
+    
 
+}
+let btnCargarGastoApi = document.getElementById('cargar-gastos-api');
+btnCargarGastoApi.onclick = cargarGastosApi;
 //NO MODIFICAR.
 export   {
     mostrarDatoEnId,
@@ -364,5 +370,6 @@ export   {
     nuevoGastoWebFormulario,
     filtrarGastosWeb,
     guardarGastosWeb,
-    cargarGastosWeb
+    cargarGastosWeb,
+    cargarGastosApi
 }
