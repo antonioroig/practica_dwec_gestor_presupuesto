@@ -365,17 +365,17 @@ function filtrarGastosWeb(){
 
     if (!isNaN(valorMin))  objFiltrado.valorMinimo = valorMin;
     if(!isNaN(valorMax))  objFiltrado.valorMaximo = valorMax;
-    if(descripcion != "")  objFiltrado.descripcion = valorMax;
-    if(fechaDesde != "")  objFiltrado.fechaDesde = fechaDesde;
-    if(fechaHasta != "") objFiltrado.fechaHasta = fechaHasta;
+    if(descripcion !== "")  objFiltrado.descripcion = valorMax;
+    if(fechaDesde !== "")  objFiltrado.fechaDesde = fechaDesde;
+    if(fechaHasta !== "") objFiltrado.fechaHasta = fechaHasta;
     
     let arrayEtiquetas;
-    if(etiquetas != undefined){
+    if(etiquetas !== ""){
       arrayEtiquetas = gp.transformarListadoEtiquetas(etiquetas);
     }
     let filtrado = gp.filtrarGastos();
 
-    if(filtrado != ""){
+    if(filtrado !== ""){
       filtrado.forEach((element) =>{
         mostrarGastoWeb(element, "listado-gastos-completo");
       })
