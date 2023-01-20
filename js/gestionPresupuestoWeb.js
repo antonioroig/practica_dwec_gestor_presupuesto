@@ -70,7 +70,7 @@ function mostrarGastoWeb(idElemento,gasto){
     borrarAPI.type = 'button';
     borrarAPI.textContent = 'Borrar (API)';
 
-    let borrarHandleAPI = new BorrarHandleAPI(gasto);
+    let borrarHandleAPI = new BorrarGastosApi(gasto);
     borrarHandleAPI.gasto = gasto;
     borrarAPI.addEventListener("click", borrarHandleAPI);
     divGastos.append(borrarAPI);
@@ -137,7 +137,6 @@ function actualizarPresupuestoWeb(){
     repintar();
 };
 
-
 function nuevoGastoWeb(){
     let descripcion = prompt("Introduce una descripción:");
     let valor = parseFloat(prompt("Introduce un valor:"));
@@ -196,8 +195,8 @@ function nuevoGastoWebFormulario(){
     formulario.addEventListener("submit", enviadorForm);
 
     //Botón enviar Api
-    let enviarAPI = new EnviarGastosApi();
-    formulario.addEventListener("click", enviarAPI);
+    let enviarAPI = formulario.querySelector('button.gasto-enviar-api');
+    enviarAPI.addEventListener("click", enviarGastosApi);
 };
 
 function EditarHandleFormulario(){
@@ -334,25 +333,26 @@ function cargarGastosWeb(){
 };
 
 function cargarGastosApi(){
-    this.handleEvent = function(event){
-        event.preventDefault();
+    
+       
         let user = document.getElementById('nombre_usuario').value;
         let url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${user}`;
 
         if(user == null || user == ""){
             alert("Debes introducir un nombre de usuario");
         }
-        fetch(url)
+        fetch(url, {method: 'GET'})
         .then(response => response.json())
         .then(mis_gastos =>{
         gestionPresupuesto.cargarGastos(mis_gastos);
+        console.log(mis_gastos);
         repintar();
         })
         .catch(error => console.log(error));
-    };
+    ;
 };
 
-function borrarGastosApi(){
+function BorrarGastosApi(){
     this.handleEvent = function(event){
         event.preventDefault();
         let user = document.getElementById('nombre_usuario').value;
@@ -363,41 +363,45 @@ function borrarGastosApi(){
         }
         try{
             fetch(url, {method: 'DELETE'})
-            cargarGastosApi();
+            .then(response => response.json())
+            .then(mis_datos => {
+                console.log(mis_datos);
+                console.log("Gasto borrado");
+            cargarGastosApi()});
         }
         catch{(error => console.log(error))};
     };
 };
 
-function EnviarGastosApi(){
-    this.handleEvent = function(event){
-        event.preventDefault();
-        let user = document.getElementById('nombre_usuario').value;
-        let url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${user}`;
+function enviarGastosApi(e){
+    let user = document.getElementById('nombre_usuario').value;
+    let url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${user}`;
+    console.log(url);
 
-        let form = event.currentTarget;
-        let des = form.elements.descripcion.value;
-        let val = parseFloat(form.elements.valor.value);
-        let fec = form.elements.fecha.value;
-        let eti = form.elements.etiquetas.value.split(',');
+    let form = e.currentTarget.form;
+    let des = form.elements.descripcion.value;
+    let val = parseFloat(form.elements.valor.value);
+    let fec = form.elements.fecha.value;
+    let eti = (form.elements.etiquetas.value).split(',');
 
-        let miObjGasto = {
-            descripcion: des,
-            valor: val,
-            fecha: fec,
-            etiquetas: eti
-        }
-        if(user == null || user == ""){
-            alert("El nombre de usuario está vacío");
-        }
-        try{
-            fetch (url, {method: 'POST',
-            body: JSON.stringify(miObjGasto),
-            headers: {'Content-Type': 'application/json; charset=utf-8'}});
-            cargarGastosApi();
-        }
-        catch{(error => console.log(error))};
+    let miObjGasto = {
+        descripcion: des,
+        valor: val,
+        fecha: fec,
+        etiquetas: eti
     }
+    if(user == null || user == ""){
+        alert("El nombre de usuario está vacío");
+    }
+    try{
+        fetch (url, {method: 'POST',
+        body: JSON.stringify(miObjGasto),
+        headers: {'Content-Type': 'application/json; charset=utf-8'}});
+        console.log(miObjGasto);
+        cargarGastosApi();
+    }
+    catch{(error => console.log(error))};
+    
 };
 
 function EditarGastosApi(){
@@ -440,7 +444,7 @@ document.getElementById("anyadirgasto-formulario").addEventListener("click",nuev
 document.getElementById("formulario-filtrado").addEventListener("submit", new filtrarGastosWeb());
 document.getElementById("guardar-gastos").addEventListener("click", new guardarGastosWeb());
 document.getElementById("cargar-gastos").addEventListener("click", new cargarGastosWeb());
-document.getElementById("cargar-gastos-api").addEventListener("click", new cargarGastosApi());
+document.getElementById("cargar-gastos-api").addEventListener("click", cargarGastosApi);
 
 export{
     mostrarDatoEnId,
@@ -461,6 +465,7 @@ export{
     guardarGastosWeb,
     cargarGastosWeb,
     cargarGastosApi,
-    borrarGastosApi,
-    EnviarGastosApi
+    BorrarGastosApi,
+    enviarGastosApi,
+    EditarGastosApi
 };
