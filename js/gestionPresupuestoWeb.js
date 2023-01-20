@@ -346,6 +346,11 @@ function filtrarGastosWeb(){
         let desde = form.elements["formulario-filtrado-fecha-desde"].value;
         let hasta = form.elements["formulario-filtrado-fecha-hasta"].value;
         let etiquetas = form.elements["formulario-filtrado-etiquetas-tiene"].value;
+        if (etiquetas != undefined) {
+            etiquetas = exGp.transformarListadoEtiquetas(etiquetas);
+        }
+        
+
     }
 }
 export   {  
