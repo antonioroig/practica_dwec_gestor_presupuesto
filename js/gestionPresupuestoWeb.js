@@ -349,7 +349,11 @@ function filtrarGastosWeb(){
         if (etiquetas != undefined) {
             etiquetas = exGp.transformarListadoEtiquetas(etiquetas);
         }
-        
+        let gestionFiltrado = exGp.filtrarGastos({fechaDesde : desde, fechaHasta : hasta, valorMinimo : minimo, valorMaximo : maximo, descripcionContiene : descripcion, etiquetasTiene : etiquetas});
+        document.getElementById("listado-gastos-completo").innerHTML = " ";
+        for (let aux of gestionFiltrado) {
+            mostrarGastoWeb("listado-gastos-completo", aux);
+        }
 
     }
 }
