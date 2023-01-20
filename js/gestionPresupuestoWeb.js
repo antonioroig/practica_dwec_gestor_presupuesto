@@ -341,7 +341,27 @@ function filtrarGastosWeb ()
         };
     }
 }
+
 let btnEnviar = document.getElementById("formulario-filtrado");
 btnEnviar.addEventListener('submit', new filtrarGastosWeb());
-export{mostrarDatoEnId,mostrarGastoWeb,mostrarGastosAgrupadosWeb,repintar,actualizarPresupuestoWeb,nuevoGastoWeb,EditarHandle,BorrarHandle,BorrarEtiquetasHandle,EnviarHandle,EditarHandleFormulario,EnviarHandleFormulario,CancelarHandleFormulario,nuevoGastoWebFormulario,filtrarGastosWeb}
+
+function guardarGastosWeb()
+{
+    localStorage.GestorGastosDEWC=JSON.stringify(pres.listarGastos());
+}
+
+function cargarGastosWeb()
+{
+    let cargar = JSON.parse(localStorage.getItem("GestorDatosDEWC"));
+    if(cargar == null)
+    {
+        pres.cargarGastos([]);
+    }
+    else
+    {
+        pres.cargarGastos(cargar);
+    }
+    repintar();
+}
+export{mostrarDatoEnId,mostrarGastoWeb,mostrarGastosAgrupadosWeb,repintar,actualizarPresupuestoWeb,nuevoGastoWeb,EditarHandle,BorrarHandle,BorrarEtiquetasHandle,EnviarHandle,EditarHandleFormulario,EnviarHandleFormulario,CancelarHandleFormulario,nuevoGastoWebFormulario,filtrarGastosWeb,cargarGastosWeb,guardarGastosWeb}
 
