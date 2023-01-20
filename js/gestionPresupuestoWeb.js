@@ -245,8 +245,8 @@ function nuevoGastoWebFormulario(){
         formulario.addEventListener('submit',enviar);
 
         //Boton enviar Api
-        let enviarApi = formulario.querySelector("button.enviar-api");
-        formulario.addEventListener('click', new enviarApi());
+        let enviarApi = formulario.querySelector("button.gasto-enviar-api");
+        enviarApi.addEventListener('click', new EnviarGastosApi());
 
 };
 
@@ -446,7 +446,7 @@ function cargarGastosWeb(){
 
 };  
 
-function cargarGastosApi(e){
+function cargarGastosApi(){
     this.handleEvent = function(event){
     
 
@@ -473,8 +473,12 @@ function BorrarGastosApi(){
         let url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${nombreUsuario}/${this.gasto.gastoId}`;
 
        try {
-        await fetch(url, {method: 'DELETE'});
+       let nuevaRespuesta =  await fetch(url, {method: 'DELETE'});
+       if(nuevaRespuesta.ok){
         cargarGastosApi();
+       }
+       else{}
+       console.log('se ha borrado el gasto');
        } catch(error){
         console.log(error);
        }
@@ -489,7 +493,7 @@ function EnviarGastosApi(){
         let url =  `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${nombreUsuario}`;
         console.log(url);
 
-        let formulario = document.getElementById("#controlesprincipales form");
+        let formulario = document.querySelector("#controlesprincipales form");
         let descripcion = formulario.elements.descripcion.value;
         let valor = parseFloat(formulario.elements.valor.value);
         let fecha = formulario.elements.fecha.value;
