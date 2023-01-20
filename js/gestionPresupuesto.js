@@ -254,10 +254,8 @@ function agruparGastos(periodo = "mes", etiquetas, fechaDesde, fechaHasta) {
 
 function transformarListadoEtiquetas(arrayEtiquetas) 
 {
-    let regexp = /\s*[,\s.:;]+\s*/;
-    let arraySinSeparar = arrayEtiquetas.replace(regexp, ',');
-    let arraySeparado = arraySinSeparar.split(',');
-    return arraySeparado;
+    let transformado = arrayEtiquetas.match(/[a-z0-9]+/gi);
+    return transformado;
 }
 
 
@@ -267,7 +265,6 @@ function transformarListadoEtiquetas(arrayEtiquetas)
 export   {
     mostrarPresupuesto,
     actualizarPresupuesto,
-    CrearGasto,
     listarGastos,
     anyadirGasto,
     borrarGasto,
@@ -275,5 +272,6 @@ export   {
     calcularBalance,
     filtrarGastos,
     agruparGastos,
-    transformarListadoEtiquetas
+    transformarListadoEtiquetas,
+    CrearGasto
 }
