@@ -227,7 +227,7 @@ function EditarHandleFormulario(){
 
         editForm.setAttribute("disabled", "");
 
-        //Botón Editar Api
+        //Botón Editar Api/////////////////////////////////////////////////////////////////
         let editarAPI = new EditarGastosApi();
         editarAPI.gasto = this.gasto;
         formulario.addEventListener("click", editarAPI);
@@ -393,12 +393,22 @@ function enviarGastosApi(e){
     if(user == null || user == ""){
         alert("El nombre de usuario está vacío");
     }
+
     try{
-        fetch (url, {method: 'POST',
-        body: JSON.stringify(miObjGasto),
-        headers: {'Content-Type': 'application/json; charset=utf-8'}});
-        console.log(miObjGasto);
-        cargarGastosApi();
+        fetch (url, {
+            method: 'POST',
+            body: JSON.stringify(miObjGasto),
+            headers: {'Content-Type': 'application/json; charset=utf-8'}
+        })
+            .then(response => {
+                if(response.ok)
+                {
+                    console.log('gasto guardado');
+                    cargarGastosApi();
+                }
+                else console.log('error al cargar el gasto');
+            })
+    
     }
     catch{(error => console.log(error))};
     
@@ -429,8 +439,14 @@ function EditarGastosApi(){
         try{
             fetch(url, {method: 'PUT',
             body: JSON.stringify(miObjGasto),
-            headers: {'Content-Type': 'application/json; charset=utf-8'}});
-            cargarGastosApi();
+            headers: {'Content-Type': 'application/json; charset=utf-8'}})
+            .then(response => {
+                if(response.ok)
+                {
+                    console.log('gasto guardado');
+                    cargarGastosApi();
+                }
+            })
         }
         catch{(error => console.log(error))}
     }
