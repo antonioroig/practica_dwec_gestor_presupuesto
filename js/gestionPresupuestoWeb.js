@@ -357,35 +357,20 @@ function filtrarGastosWeb(){
     let descripcion = form.elements["formulario-filtrado-descripcion"].value;
     let valorMin = parseFloat(form.elements["formulario-filtrado-valor-minimo"].value);
     let valorMax = parseFloat(form.elements["formulario-filtrado-valor-maximo"].value);
-    let fechaDesde = form.elements["formulario-filtrado-fecha-desde"].value;
-    let fechaHasta = form.elements["formulario-filtrado-fecha-hasta"].value;
+    let fechaDesde = new Date(form.elements["formulario-filtrado-fecha-desde"].value);
+    let fechaHasta = new Date(form.elements["formulario-filtrado-fecha-hasta"].value);
     let etiquetas = form.elements["formulario-filtrado-etiquetas-tiene"].value;
 
-    let objFiltrado = {};
-
-    if (!isNaN(valorMin))  objFiltrado.valorMinimo = valorMin;
-    if(!isNaN(valorMax))  objFiltrado.valorMaximo = valorMax;
-    if(descripcion !== "")  objFiltrado.descripcion = valorMax;
-    if(fechaDesde !== "")  objFiltrado.fechaDesde = fechaDesde;
-    if(fechaHasta !== "") objFiltrado.fechaHasta = fechaHasta;
-    
-    let arrayEtiquetas;
-    if(etiquetas !== ""){
-      arrayEtiquetas = gp.transformarListadoEtiquetas(etiquetas);
+    if(etiquetas !== undefined){
+      etiquetas = gp.transformarListadoEtiquetas(etiquetas);
     }
-    let filtrado = gp.filtrarGastos();
-
-    if(filtrado !== ""){
-      filtrado.forEach((element) =>{
-        mostrarGastoWeb(element, "listado-gastos-completo");
-      })
-    }else{
-      let gastos = gp.listarGastos ();
-      gastos.forEach((element)=>{
-        mostrarGastoWeb(element, "listado-gastos-completo");
-      })
+    let filtrado;
+    filtrado = gp.filtrarGastos({fechaDesde: fechaDesde, fechaHasta:fechaHasta, valorMinimo: valorMin, valorMaximo:valorMax,descripcionContiene:descripcion, etiquetasTiene:etiquetas});
+    document.getElementById("listado-gastos-completo").innerHTML = " ";
+    for(let gasto of filtrado ){
+      mostrarGastoWeb(gasto, "listado-gastos-completo");
     }
-  }
+  };
 }
 
 export    {
