@@ -245,8 +245,8 @@ function nuevoGastoWebFormulario(){
         formulario.addEventListener('submit',enviar);
 
         //Boton enviar Api
-        let enviarApi = new EnviarGastosApi();
-        formulario.addEventListener('click',enviarApi);
+        let enviarApi = formulario.querySelector("button.enviar-api");
+        formulario.addEventListener('click', new enviarApi());
 
 };
 
@@ -446,17 +446,18 @@ function cargarGastosWeb(){
 
 };  
 
-function cargarGastosApi(){
+function cargarGastosApi(e){
     this.handleEvent = function(event){
-        event.preventDefault();
+    
 
         let nombreUsuario = document.getElementById("nombre_usuario").value;
         let url =  `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${nombreUsuario}`;
 
         fetch(url, {method: 'GET'})
             .then(response => response.json())
-            .then(gastos =>{
-                cargarGastos(gastos);
+            .then(function(gastos)
+            {
+                gestionPresupuesto.cargarGastos(gastos);
             repintar();
         })
         .catch(error => {
@@ -467,7 +468,6 @@ function cargarGastosApi(){
 
 function BorrarGastosApi(){
     this.handleEvent =  async function(event){
-        event.preventDefault();
 
         let nombreUsuario = document.getElementById("nombre_usuario").value;
         let url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${nombreUsuario}/${this.gasto.gastoId}`;
@@ -483,14 +483,13 @@ function BorrarGastosApi(){
 
 function EnviarGastosApi(){
     this.handleEvent = function(event){
-        event.preventDefault();
 
         let nombreUsuario = document.getElementById("nombre_usuario").value;
         console.log(nombreUsuario);
         let url =  `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${nombreUsuario}`;
         console.log(url);
 
-        let formulario = event.currentTarget;
+        let formulario = document.getElementById("#controlesprincipales form");
         let descripcion = formulario.elements.descripcion.value;
         let valor = parseFloat(formulario.elements.valor.value);
         let fecha = formulario.elements.fecha.value;
@@ -515,11 +514,11 @@ function EnviarGastosApi(){
 
 function EditarHandleApi(){
     this.handleEvent = function(event){
-        event.preventDefault();
+
         let nombreUsuario = document.getElementById("nombre_usuario").value;
         let url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${nombreUsuario}/${this.gasto.gastoId}`;
 
-        let formulario = event.currentTarget;
+        let formulario = event.currentTarget.formulario;
         let descripcion = formulario.elements.descripcion.value;
         let valor = parseFloat(formulario.elements.valor.value);
         let fecha = formulario.elements.fecha.value;
