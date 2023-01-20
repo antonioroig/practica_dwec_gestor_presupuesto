@@ -336,7 +336,17 @@ function CancelarHandleEditarFormulario(){
     };
 }
 function filtrarGastosWeb(){
-    
+    this.handleEvent = function(event) 
+    {
+        event.preventDefault();
+        let form = event.currentTarget;
+        let descripcion = form.elements["formulario-filtrado-descripcion"].value;
+        let minimo = parseFloat(form.elements["formulario-filtrado-valor-minimo"].value);
+        let maximo = parseFloat(form.elements["formulario-filtrado-valor-maximo"].value);
+        let desde = form.elements["formulario-filtrado-fecha-desde"].value;
+        let hasta = form.elements["formulario-filtrado-fecha-hasta"].value;
+        let etiquetas = form.elements["formulario-filtrado-etiquetas-tiene"].value;
+    }
 }
 export   {  
     mostrarDatoEnId,
