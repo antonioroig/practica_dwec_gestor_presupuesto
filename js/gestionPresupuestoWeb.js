@@ -347,21 +347,28 @@ btnEnviar.addEventListener('submit', new filtrarGastosWeb());
 
 function guardarGastosWeb()
 {
-    localStorage.GestorGastosDEWC=JSON.stringify(pres.listarGastos());
+    localStorage.GestorGastosDWEC=JSON.stringify(pres.listarGastos());
 }
 
 function cargarGastosWeb()
 {
-    let cargar = JSON.parse(localStorage.getItem("GestorDatosDEWC"));
-    if(cargar == null)
+    let cargar = JSON.parse(localStorage.getItem("GestorGastosDWEC"));
+    if(cargar != null)
     {
-        pres.cargarGastos([]);
+        pres.cargarGastos(JSON.parse(localStorage.getItem('GestorGastosDWEC')))
     }
     else
     {
-        pres.cargarGastos(cargar);
+        pres.cargarGastos([]);
     }
     repintar();
 }
+
+let btnGuardarGasto = document.getElementById("guardar-gastos");
+btnGuardarGasto.onclick = guardarGastosWeb;
+
+let btnCargarGasto = document.getElementById("cargar-gastos");
+btnCargarGasto.onclick = cargarGastosWeb;
+
 export{mostrarDatoEnId,mostrarGastoWeb,mostrarGastosAgrupadosWeb,repintar,actualizarPresupuestoWeb,nuevoGastoWeb,EditarHandle,BorrarHandle,BorrarEtiquetasHandle,EnviarHandle,EditarHandleFormulario,EnviarHandleFormulario,CancelarHandleFormulario,nuevoGastoWebFormulario,filtrarGastosWeb,cargarGastosWeb,guardarGastosWeb}
 
