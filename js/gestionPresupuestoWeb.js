@@ -344,6 +344,33 @@ function nuevoGastoWebFormulario() {
 let bt_anyadir_gastoForm = document.getElementById("anyadirgasto-formulario");
 bt_anyadir_gastoForm.addEventListener("click", nuevoGastoWebFormulario);
 
+function filtrarGastosWeb() {
+    this.handleEvent = function (event) {
+        event.preventDefault();
+        let des = document.getElementById("formulario-filtrado-descripcion");
+        let valormin = document.getElementById("formulario-filtrado-valor-minimo");
+        valormin = Number(valormin);
+        let valormax = document.getElementById("formulario-filtrado-valor-maximo");
+        valormax = Number(valormax);
+        let fechadesde = document.getElementById("formulario-filtrado-fecha-desde");
+        let fechahasta = document.getElementById("formulario-filtrado-fecha-hasta");
+        let etis = document.getElementById("formulario-filtrado-etiquetas-tiene");
+        etis = gestionPresupuesto.transformarListadoEtiquetas(etis);
+
+        let arrayfil = gestionPresupuesto.filtrarGastos({fechaDesde: fechadesde, fechaHasta: fechahasta, valorMinimo: valormin,
+                                                        valorMaximo: valormax, descripcionContiene: des, etiquetasTiene: etis});
+        for (let i = 0; i < arrayfil.length; i++) {
+            mostrarGastoWeb("listado-gastos-completo", arrayfil[i]);
+        }
+    }   
+}
+
+let filtrarform = document.getElementById("formulario-filtrado");
+let objFiltrar = new filtrarGastosWeb();
+filtrarform.addEventListener("submit", objFiltrar);
+
+
+
 export   {
     mostrarDatoEnId,
     mostrarGastoWeb,
