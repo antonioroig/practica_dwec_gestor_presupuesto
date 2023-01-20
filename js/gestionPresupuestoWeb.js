@@ -439,9 +439,38 @@ function guardarGastosWeb()
 {
     this.handleEvent = function(guardar)
     {
+        guardar.preventDefault();
         
+        localStorage.setItem('GestorGastosDWEC', JSON.stringify(gp.listarGastos()));
     }
 }
+
+
+let botGuar = document.getElementById('guardar-gastos');
+botGuar.addEventListener('click', new guardarGastosWeb());
+
+
+function cargarGastosWeb()
+    {
+        this.handleEvent = function(cargar)
+        {
+            cargar.preventDefault();
+
+            if( localStorage.getItem('GestorGastosDWEC') !== null)
+            {
+               gp.cargarGastos(JSON.parse(localStorage.getItem('GestorGastosDWEC')));
+            }
+            else
+            {
+                gp.cargarGastos([]);
+            }
+
+            repintar();
+        }
+    }
+
+    let botCar = document.getElementById('cargar-gastos');
+    botCar.addEventListener('click', new cargarGastosWeb());
 
 
 
@@ -462,5 +491,7 @@ BorrarEtiquetasHandle,
 EditarHandleformulario,
 SubmitHandleForm,
 SubmitHandle,
-filtrarGastosWeb
+filtrarGastosWeb,
+guardarGastosWeb,
+cargarGastosWeb
 }
