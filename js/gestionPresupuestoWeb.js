@@ -325,6 +325,30 @@ anyadirgasto.addEventListener("click",nuevoGastoWeb);
 let anyadirgastoForm = document.getElementById("anyadirgasto-formulario");
 anyadirgastoForm.addEventListener('click', nuevoGastoWebFormulario);
 
+let filtrarGastosWeb = function ()
+{
+    this.handleEvent = function(evento)
+    {
+        evento.preventDefault();
+
+        let valorMinimo = this.form.elements["formulario-filtrado-valor-minimo"].value;
+        let valorMaximo = this.form.elements["formulario-filtrado-valor-maximo"].value;
+        let fechaDesde = this.form.elements["formulario-filtrado-fecha-desde"].value;
+        let fechaHasta = this.form.elements["formulario-filtrado-fecha-hasta"].value;
+        let descripcionContiene = this.form.elements["formulario-filtrado-descripcion"].value;
+        let etiquetasTiene = this.forrm.elements["formulario-filtrado-etiquetas-tiene"].value;
+
+        document.getElementById("listado-gastos-completo").innerHTML = "";
+
+        let filtro = gestionP.filtrarGastos({valorMinimo, valorMaximo, fechaDesde, fechaHasta, 
+            descripcionContiene, etiquetasTiene});
+
+        filtro.forEach(gasto => 
+            {
+                mostrarGastoWeb (gasto, "listado-gastos-completo");
+            });
+    } 
+}
 
 export{
     mostrarDatoEnId,
