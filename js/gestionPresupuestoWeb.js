@@ -361,15 +361,30 @@ function filtrarGastosWeb(){
     let fechaHasta = form.elements["formulario-filtrado-fecha-hasta"].value;
     let etiquetas = form.elements["formulario-filtrado-etiquetas-tiene"].value;
 
+    let objFiltrado = {};
+
+    if (!isNaN(valorMin))  objFiltrado.valorMinimo = valorMin;
+    if(!isNaN(valorMax))  objFiltrado.valorMaximo = valorMax;
+    if(descripcion != "")  objFiltrado.descripcion = valorMax;
+    if(fechaDesde != "")  objFiltrado.fechaDesde = fechaDesde;
+    if(fechaHasta != "") objFiltrado.fechaHasta = fechaHasta;
+    
     let arrayEtiquetas;
     if(etiquetas != undefined){
       arrayEtiquetas = gp.transformarListadoEtiquetas(etiquetas);
     }
-    let filtrado = gp.filtrarGastos({descripcion,valorMin,valorMax,fechaDesde, fechaHasta,arrayEtiquetas});
-    
-    filtrado.forEach((element) =>{
-      mostrarGastoWeb(element, "listado-gastos-completo");
-    })
+    let filtrado = gp.filtrarGastos();
+
+    if(filtrado != ""){
+      filtrado.forEach((element) =>{
+        mostrarGastoWeb(element, "listado-gastos-completo");
+      })
+    }else{
+      let gastos = gp.listarGastos ();
+      gastos.forEach((element)=>{
+        mostrarGastoWeb(element, "listado-gastos-completo");
+      })
+    }
   }
 }
 
