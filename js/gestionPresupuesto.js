@@ -273,6 +273,7 @@ function filtrarGastos({fechaDesde,
 
         return anyade;
     });
+
     return ret;
 }
 
@@ -344,6 +345,17 @@ function calcularBalance()
     return presupuesto - calcularTotalGastos();
 }
 
+function transformarListadoEtiquetas (etiqContiene)
+{
+    let filtrado = /\s*[,\s.:;]+\s*/;
+
+    let filtroSinSeparacion = etiqContiene.replace(filtrado, ',');
+
+    let filtroSeparado = filtroSinSeparacion.split(',');
+
+    return filtroSeparado;
+}
+
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
 // Las funciones y objetos deben tener los nombres que se indican en el enunciado
 // Si al obtener el código de una práctica se genera un conflicto, por favor incluye todo el código que aparece aquí debajo
@@ -357,5 +369,6 @@ export   {
     calcularTotalGastos,
     calcularBalance,
     filtrarGastos,
-    agruparGastos
+    agruparGastos,
+    transformarListadoEtiquetas
 }
