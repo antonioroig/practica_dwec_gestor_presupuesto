@@ -3,6 +3,8 @@ import * as exGp from './gestionPresupuesto.js';
 document.getElementById("actualizarpresupuesto").addEventListener("click", actualizarPresupuestoWeb);
 document.getElementById("anyadirgasto").addEventListener("click", nuevoGastoWeb);
 document.getElementById("anyadirgasto-formulario").addEventListener("click", nuevoGastoWebFormulario);
+let filtrarGasWeb = new filtrarGastosWeb();
+document.getElementById("formulario-filtrado").addEventListener("submit", filtrarGasWeb);
 /*
 let btnActualizarpres = document.getElementById("actualizarpresupuesto");
 btnActualizarpres.onclick = actualizarPresupuestoWeb;
@@ -343,20 +345,22 @@ function filtrarGastosWeb(){
         let descripcion = form.elements["formulario-filtrado-descripcion"].value;
         let minimo = parseFloat(form.elements["formulario-filtrado-valor-minimo"].value);
         let maximo = parseFloat(form.elements["formulario-filtrado-valor-maximo"].value);
-        let desde = form.elements["formulario-filtrado-fecha-desde"].value;
-        let hasta = form.elements["formulario-filtrado-fecha-hasta"].value;
-        let etiquetas = form.elements["formulario-filtrado-etiquetas-tiene"].value;
-        if (etiquetas != undefined) {
+        let desde = new Date(form.elements["formulario-filtrado-fecha-desde"].value);
+        let hasta = new Date(form.elements["formulario-filtrado-fecha-hasta"].value);
+        let etiquetas = (form.elements["formulario-filtrado-etiquetas-tiene"].value);
+        if (etiquetas !== undefined) {
             etiquetas = exGp.transformarListadoEtiquetas(etiquetas);
         }
         let gestionFiltrado = exGp.filtrarGastos({fechaDesde : desde, fechaHasta : hasta, valorMinimo : minimo, valorMaximo : maximo, descripcionContiene : descripcion, etiquetasTiene : etiquetas});
         document.getElementById("listado-gastos-completo").innerHTML = " ";
-        for (let aux of gestionFiltrado) {
-            mostrarGastoWeb("listado-gastos-completo", aux);
+        for (let aux of gestionFiltrado){
+            mostrarGastoWeb(aux, "listado-gastos-completo");
         }
 
-    }
+    };
+
 }
+
 export   {  
     mostrarDatoEnId,
     mostrarGastoWeb,
