@@ -5,7 +5,7 @@ import * as gestionPresupuesto from './gestionPresupuesto.js';
 function mostrarDatoEnId(idElemento, valor)
 {
     let elem = document.getElementById(idElemento);
-    elem.innerHTML += valor;
+    elem.innerHTML = valor;
 }
 
 function mostrarGastoWeb(idElemento, gasto)
@@ -16,7 +16,7 @@ function mostrarGastoWeb(idElemento, gasto)
 
     divGasto.className = 'gasto';
 
-    elem.appendChild(divGasto);
+    elem.append(divGasto);
 
     let divDescripcion = document.createElement('div');
 
@@ -24,15 +24,15 @@ function mostrarGastoWeb(idElemento, gasto)
 
     divDescripcion.textContent = gasto.descripcion;
 
-    divGasto.appendChild(divDescripcion);
+    divGasto.append(divDescripcion);
 
     let divFecha = document.createElement('div');
 
     divFecha.className = 'gasto-fecha';
 
-    divFecha.textContent = gasto.fecha;
+    divFecha.textContent = new Date(gasto.fecha).toLocaleDateString();
 
-    divGasto.appendChild(divFecha);
+    divGasto.append(divFecha);
 
     let divValor = document.createElement('div');
 
@@ -40,7 +40,7 @@ function mostrarGastoWeb(idElemento, gasto)
 
     divValor.textContent = gasto.valor;
 
-    divGasto.appendChild(divValor);
+    divGasto.append(divValor);
 
     let divEtiquetas = document.createElement('div');
 
@@ -54,7 +54,7 @@ function mostrarGastoWeb(idElemento, gasto)
         
         spanEtiqueta.textContent = " " + etiqueta;
 
-        divEtiquetas.appendChild(spanEtiqueta);
+        divEtiquetas.append(spanEtiqueta);
 
         let borrarEtiquetas = new BorrarEtiquetasHandle();
         borrarEtiquetas.gasto = gasto;
@@ -71,13 +71,14 @@ function mostrarGastoWeb(idElemento, gasto)
 
     let editar = new EditarHandle(gasto);
     editar.gasto = gasto;
+
     botonEditar.addEventListener('click', editar);
     divGasto.append(botonEditar);
 
     let botonEliminar = document.createElement('button');
     botonEliminar.type = 'button';
     botonEliminar.className = 'gasto-borrar';
-    botonEditar.textContent = 'Borrar';
+    botonEliminar.textContent = 'Borrar';
 
     let borrar = new BorrarHandle(gasto);
     borrar.gasto = gasto;
@@ -95,7 +96,10 @@ function mostrarGastoWeb(idElemento, gasto)
     botonEditarForm.addEventListener('click', editarFormulario);
     divGasto.append(botonEditarForm);
 
-
+    let botonBorrarAPI = document.createElement('button');
+    botonBorrarAPI.className = 'gasto-borrar-api';
+    botonBorrarAPI.type = 'button';
+    botonBorrarAPI.textContent = 'Borrar (API)';
 }
 
 function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo)
@@ -110,26 +114,26 @@ function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo)
 
     titulo.textContent = `Gastos agrupados por ${periodo}`;
 
-    divAgrupacion.appendChild(titulo);
+    divAgrupacion.append(titulo);
 
     for(let propiedad of Object.keys(agrup))
     {
         let divDato = document.createElement('div');
         divDato.className = 'agrupacion-dato';
-        divAgrupacion.appendChild(divDato);
+        divAgrupacion.append(divDato);
 
         let spanClave = document.createElement('span');
         spanClave.className = 'agrupacion-dato-clave';
         spanClave.textContent += `${propiedad}`;
-        divDato.appendChild(spanClave);
+        divDato.append(spanClave);
 
         let spanValor = document.createElement('span');
         spanValor.className = 'agrupacion-dato-valor';
         spanValor.textContent += ` ${propiedad.valueOf()}`;
-        divDato.appendChild(spanValor);
+        divDato.append(spanValor);
     }
 
-    elem.appendChild(divAgrupacion);
+    elem.append(divAgrupacion);
 }
 
 function repintar()
@@ -427,6 +431,26 @@ botonGuardar.addEventListener("click", new guardarGastosWeb());
 let botonCargar = document.getElementById("cargar-gastos");
 botonCargar.addEventListener("click", new cargarGastosWeb());
 
+function cargarGastosApi()
+{
+    let usuario = document.getElementById("nombre_usuario").value;
+    let url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario}`;
+
+    if(usuario == null || usuario == "")
+    {
+        alert('Introduce un nombre de usuario')
+    }
+
+    fetch(url, {method: 'GET'})
+        .then(response => response.json())
+        .then(mis_gastos =>
+            {
+                gestionPresupuesto.cargarGastos(mis_gastos);
+                console.log(mis_gastos);
+                repintar();
+            })
+        .catch(error => console.log(error));
+}
 
 export {
     mostrarDatoEnId,
