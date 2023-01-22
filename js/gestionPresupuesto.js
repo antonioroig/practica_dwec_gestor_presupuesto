@@ -218,6 +218,7 @@ function calcularTotalGastos(){
 }
 
 
+
 function calcularBalance(){
     let totalGasto= calcularTotalGastos();
     let balance = presupuesto - totalGasto;
