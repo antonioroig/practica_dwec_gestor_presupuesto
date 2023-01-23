@@ -333,6 +333,11 @@ function cargarGastosWeb(){
     repintar();
 }
 
+function cargarGastosApi(){
+    let usuario = document.getElementById("controlesprincipales");
+    
+}
+
 let btnGuardarGastosWeb = document.getElementById("guardar-gastos");
 btnGuardarGastosWeb.onclick = guardarGastosWeb;
 
