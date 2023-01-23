@@ -15,6 +15,7 @@ function mostrarDatoEnId(valor, idElemento){
     }    
 }
 
+// Modificación de la función mostrarGastoWeb en la Actividad 9
 function mostrarGastoWeb(idElemento, gasto){
     
     if(idElemento !== undefined){
@@ -51,12 +52,26 @@ function mostrarGastoWeb(idElemento, gasto){
             spanEtiqueta.className = 'gasto-etiquetas-etiqueta';
             spanEtiqueta.textContent = contenidoEtiqueta + ' ';
             
-            // HANDLE BORRAR ETIQUETA - - - - - - - - - - - - - - - - - - -
+            // HANDLE BORRAR ETIQUETA - - - - - - - - - - - - - - - - -
             let borrarEtiquetas = new BorrarEtiquetasHandle();
             borrarEtiquetas.gasto = gasto;
             borrarEtiquetas.etiqueta = gasto.etiquetas[i];
             spanEtiqueta.addEventListener('click', borrarEtiquetas);
-            divEtiquetas.append(spanEtiqueta);   
+            divEtiquetas.append(spanEtiqueta); 
+            
+            // Actividad 9 -- -- -- -- -- -- -- -- -- -- -- -- -- --
+
+            // gasto-borrar-api -- Manejador de eventos de los botones .gasto-borrar-api
+            let btnBorrarApi = document.createElement("button");
+            btnBorrarApi.className = "gasto-borrar-api";
+            btnBorrarApi.type = "button";
+            btnBorrarApi.textContent = "Borrar (API)";
+
+            // HANDLE BORRAR API - - - - - - - - - - - - - - - - - - -
+            let borrarApi = new BorrarApiHandle();
+            borrarApi.gasto = gasto;
+            btnBorrarApi.addEventListener("click", borrarApi);
+            divGasto.append(btnBorrarApi);        
         }
 
         divGasto.append(divEtiquetas);
@@ -431,6 +446,27 @@ async function cargarGastosApi()
     }
 }
 
+// HANDLE BorrarApi 
+function BorrarApiHandle()
+{
+    this.handleEvent = async function()
+    {
+        if (this.gasto.hasOwnProperty("gastoId"))
+        {
+            let nombre_usuario = document.getElementById("nombre_usuario").value;
+            let gastoApi = await fetch("https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/" + nombre_usuario + "/" + this.gasto.gastoId, {method:'DELETE'});
+
+            (gastoApi.ok) ? cargarGastosApi() : alert("Error: " + gastoApi.status);
+        }
+        
+        else
+        {
+            alert("Gasto no encontrado en la API.")
+        }
+    }
+}
+
+
 // * * * * BUTTONS * * * * 
 
 // BUTTONES ACTIVIDAD 5
@@ -488,7 +524,7 @@ export   {
     cargarGastosWeb,
     // Actividad 9
     cargarGastosApi,
-    
+
 
 }
 
