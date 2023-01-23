@@ -372,6 +372,35 @@ function filtrarGastosWeb(){
     }
   };
 }
+// Práctica 8
+let objGuardarGastos = new guardarGastosWeb();
+let btnGuardarGastos = document.getElementById("guardar-gastos");
+btnGuardarGastos.addEventListener("click", objGuardarGastos);
+
+function guardarGastosWeb(){
+  this.handleEvent = function(){
+    let gastos = gp.listarGastos();
+    localStorage.GestorGastosDWEC = JSON.stringify(gastos);
+  }
+}
+
+// Check
+let objCargarGastos = new cargarGastosWeb();
+let btnCargarGastos = document.getElementById("cargar-gastos");
+btnCargarGastos.addEventListener("click", objCargarGastos);
+
+function cargarGastosWeb(){
+
+    this.handleEvent = function(){
+      if (localStorage.GestorGastosDWEC != null) 
+        gp.cargarGastos(JSON.parse(localStorage.GestorGastosDWEC));
+      else 
+        gp.cargarGastos([]);
+
+        repintar(); 
+    }
+
+}
 
 export    {
 
