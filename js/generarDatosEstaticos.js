@@ -1,4 +1,4 @@
-//generarDatosEstaticos.js
+//generarDatosEstaticos.js//
 import * as gesP from "./gestionPresupuesto.js";
 import * as gesPW from "./gestionPresupuestoWeb.js";
 
