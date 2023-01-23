@@ -176,7 +176,7 @@ function BorrarHandle(){
     }
 }
 
-let BorrarEtiquetasHandle = function(){
+function BorrarEtiquetasHandle(){
     this.handleEvent = function() {
         
         this.gasto.borrarEtiquetas(this.etiqueta);
@@ -184,6 +184,17 @@ let BorrarEtiquetasHandle = function(){
         repintar();
     }
 }
+
+function nuevoGastoWebFormulario(){
+    this.handleEvent = function() {
+        
+        this.gasto.borrarEtiquetas(this.etiqueta);
+        
+        repintar();
+    }
+}
+
+funtiopn
 
 export{
     mostrarDatoEnId,
