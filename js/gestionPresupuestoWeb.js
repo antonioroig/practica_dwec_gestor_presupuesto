@@ -354,7 +354,7 @@ function filtrarGastoWeb(){
             etiqueta = gestionPresupuesto.transformarListadoEtiquetas(etiqueta);
         }
         // Creo el objeto para pasarle el objeto entero a filtrarGastos.
-        let filtrado = ({fechaDesde : fechaDesde1, fechaHasta : fechaHasta1, valorMinimo : valorMinimo1, valorMaximo : valorMaximo1, descripcionTiene : descripcion1, etiquetasTiene : etiqueta});
+        let filtrado = ({fechaDesde : fechaDesde1, fechaHasta : fechaHasta1, valorMinimo : valorMinimo1, valorMaximo : valorMaximo1, descripcionContiene : descripcion1, etiquetasTiene : etiqueta});
         let formularioFiltrado = gestionPresupuesto.filtrarGastos(filtrado); // almaceno el objeto filtrado en otro objeto
         document.getElementById("listado-gastos-completo").innerHTML="";
         for (let gastoForm of formularioFiltrado) {
