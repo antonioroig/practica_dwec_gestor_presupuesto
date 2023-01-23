@@ -371,7 +371,7 @@ formulario.addEventListener("submit", erFiltrar);
 
 function guardarGastosWeb()
 {
-    this.handleEvent = function(event) 
+    this.handleEvent = function() 
     {
         let listarGastos = gestionPresupuesto.listarGastos();
         localStorage.GestorGastosDWEC = JSON.stringify(listarGastos);
@@ -380,8 +380,23 @@ function guardarGastosWeb()
 
 let listar = new guardarGastosWeb();
 let listarForm = document.getElementById("guardar-gastos");
-listarForm.addEventListener("submit", listar);
+listarForm.addEventListener("click", listar);
 
+function cargarGastosWeb() 
+{
+    this.handleEvent = function() 
+    {
+        if (localStorage.GestorGastosDWEC == null) 
+            gestionPresupuesto.cargarGastos([]);
+        else 
+            gestionPresupuesto.cargarGastos(JSON.parse(localStorage.GestorGastosDWEC));
+        repintar();    
+    }
+}
+
+let cargar = new cargarGastosWeb();
+let cargarForm = document.getElementById("cargar-gastos");
+cargarForm.addEventListener("click", cargar);
 
 export {
     mostrarDatoEnId,
