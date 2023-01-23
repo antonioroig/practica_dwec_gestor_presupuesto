@@ -295,7 +295,7 @@ let BorrarEtiquetasHandle = function(){
 }
 // Practica 6
 
-function nuevoGastoWebFormulario(){ // Check
+function nuevoGastoWebFormulario(){ 
   let btnAnyadirGastoForm = document.getElementById("anyadirgasto-formulario");
   btnAnyadirGastoForm.setAttribute('disabled', '');
 
@@ -310,14 +310,14 @@ function nuevoGastoWebFormulario(){ // Check
   let objEnviar = new eventoSubmit();
   formulario.addEventListener('submit',objEnviar);
 
-  // MANEJADOR DE EVENTO CANCELAR - CHECK
+  // MANEJADOR DE EVENTO CANCELAR 
   let btnCancelar = formulario.querySelector("button.cancelar");
   let objCancelar = new eventoCancelar();
   btnCancelar.addEventListener('click', objCancelar);
   
 }
 
-// Función constructora -- Check
+// Función constructora 
 function EditarHandleFormulario() {
   this.handleEvent = function (e){
 
@@ -373,7 +373,7 @@ function enviarHandle()
     }
 }
 
-// Objeto manejador de eventos- SUBMIT -- Check
+// Objeto manejador de eventos- SUBMIT 
 let eventoSubmit = function (){
 
   this.handleEvent = function(e){
@@ -397,7 +397,7 @@ let eventoSubmit = function (){
   }
 }
 
-// Objeto manejador de eventos- CANCELAR -- Check
+// Objeto manejador de eventos- CANCELAR 
 let eventoCancelar = function() {
 
   this.handleEvent = function (event){
@@ -454,7 +454,6 @@ function guardarGastosWeb(){
   }
 }
 
-// Check
 let objCargarGastos = new cargarGastosWeb();
 let btnCargarGastos = document.getElementById("cargar-gastos");
 btnCargarGastos.addEventListener("click", objCargarGastos);
@@ -470,6 +469,17 @@ function cargarGastosWeb(){
         repintar(); 
     }
 
+}
+
+// Práctica 9
+let objCargarApi = new cargarGastosApi();
+let btnCargarGastosApi = document.getElementById("cargar-gastos-api");
+btnCargarGastosApi.addEventListener("click", objCargarApi);
+
+function cargarGastosApi(){
+  this.handleEvent = function(){
+
+  }
 }
 
 export    {
