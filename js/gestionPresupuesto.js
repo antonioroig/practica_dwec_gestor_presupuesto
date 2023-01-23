@@ -258,7 +258,7 @@ function transformarListadoEtiquetas(arrayEtiquetas)
     return transformado;
 }
 
-function cargarGastosWeb(gastosAlmacenamiento)
+function cargarGastos(gastosAlmacenamiento)
 {
 // gastosAlmacenamiento es un array de objetos "planos"
     // No tienen acceso a los métodos creados con "CrearGasto":
@@ -300,6 +300,6 @@ export   {
     filtrarGastos,
     agruparGastos,
     transformarListadoEtiquetas,
-    cargarGastosWeb,
+    cargarGastos,
     CrearGasto
 }

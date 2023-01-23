@@ -367,6 +367,21 @@ let erFiltrar = new filtrarGastoWeb();
 let formulario = document.getElementById("formulario-filtrado");
 formulario.addEventListener("submit", erFiltrar);
 
+// Práctica almacenamiento
+
+function guardarGastosWeb()
+{
+    this.handleEvent = function(event) 
+    {
+        let listarGastos = gestionPresupuesto.listarGastos();
+        localStorage.GestorGastosDWEC = JSON.stringify(listarGastos);
+    }
+}
+
+let listar = new guardarGastosWeb();
+let listarForm = document.getElementById("guardar-gastos");
+listarForm.addEventListener("submit", listar);
+
 
 export {
     mostrarDatoEnId,
