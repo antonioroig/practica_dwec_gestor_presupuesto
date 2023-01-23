@@ -311,6 +311,14 @@ function btnCancelarHandle(){
  
 }
 
+function filtrarGatosWeb()
+{
+      this.handleEvent() = function(event)
+      {
+        let formu = event.preventDefault();
+        
+      }
+}
 
 export{
  mostrarDatoEnId,
@@ -325,6 +333,7 @@ export{
  nuevoGastoWebformulario,
  btnCancelarHandle,
  EnviarHandleFormulario,
- EditarHandleFormulario
+ EditarHandleFormulario,
+ filtrarGatosWeb
 }
 //Texto de prueba para la resolución del problema de git basch
