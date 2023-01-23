@@ -7,6 +7,9 @@ let filtrarGasWeb = new filtrarGastosWeb();
 document.getElementById("formulario-filtrado").addEventListener("submit", filtrarGasWeb);
 let guardar = new guardarGastosWeb();
 document.getElementById("guardar-gastos").addEventListener('click', guardar);
+let cargarGastosW = new cargarGastoWeb();
+document.getElementById("cargar-gastos").addEventListener('click', cargarGastosW);
+
 /*
 let btnActualizarpres = document.getElementById("actualizarpresupuesto");
 btnActualizarpres.onclick = actualizarPresupuestoWeb;
