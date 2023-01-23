@@ -369,7 +369,7 @@ function guardarGastosWeb(){
     {
         let listarGastos = exGp.listarGastos();
         localStorage.GestorGastosDWEC = JSON.stringify(listarGastos);
-    }
+    }; 
 }
 function cargarGastoWeb(){
     this.handleEvent = function(event) 
@@ -379,7 +379,7 @@ function cargarGastoWeb(){
         else 
             exGp.cargarGastos(JSON.parse(localStorage.GestorGastosDWEC));
         repintar();    
-    }
+    };
 }
 export   {  
     mostrarDatoEnId,
