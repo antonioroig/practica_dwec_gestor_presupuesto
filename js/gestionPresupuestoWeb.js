@@ -374,10 +374,11 @@ function EditarHandleFormulario()
     }
 }
 // --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
-// ACTIVIDAD 7
+// ACTIVIDAD 8
 function guardarGastosWeb()
 {
-    localStorage.GestorGastosDWEC=JSON.stringify(gestionPresupuesto.listarGastos());
+    localStorage.GestorGastosDWEC=JSON.stringify(gestionPresupuesto.listarGastos()); // almacenamiento de localstorage denominada GestorGastosDWEC --> solo string
+    // stringfy --> convierte a JSON string
 }
 
 
