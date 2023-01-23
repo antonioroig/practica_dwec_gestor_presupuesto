@@ -5,6 +5,8 @@ document.getElementById("anyadirgasto").addEventListener("click", nuevoGastoWeb)
 document.getElementById("anyadirgasto-formulario").addEventListener("click", nuevoGastoWebFormulario);
 let filtrarGasWeb = new filtrarGastosWeb();
 document.getElementById("formulario-filtrado").addEventListener("submit", filtrarGasWeb);
+let guardar = new guardarGastosWeb();
+document.getElementById("guardar-gastos").addEventListener('click', guardar);
 /*
 let btnActualizarpres = document.getElementById("actualizarpresupuesto");
 btnActualizarpres.onclick = actualizarPresupuestoWeb;
@@ -359,14 +361,23 @@ function filtrarGastosWeb(){
     };
 
 }
-function guardarGastoWeb(){
+function guardarGastosWeb(){
     this.handleEvent = function(event) 
     {
         let listarGastos = exGp.listarGastos();
         localStorage.GestorGastosDWEC = JSON.stringify(listarGastos);
     }
 }
-
+function cargarGastoWeb(){
+    this.handleEvent = function(event) 
+    {
+        if (localStorage.GestorGastosDWEC == null) 
+            exGp.cargarGastos([]);
+        else 
+            exGp.cargarGastos(JSON.parse(localStorage.GestorGastosDWEC));
+        repintar();    
+    }
+}
 export   {  
     mostrarDatoEnId,
     mostrarGastoWeb,
