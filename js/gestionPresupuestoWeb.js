@@ -406,6 +406,30 @@ function cargarGastosWeb()
     repintar();
 }
 
+// --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+// ACTIVIDAD 9
+
+//cargarGastosApi
+async function cargarGastosApi()
+{
+    let nombre_usuario = document.getElementById("nombre_usuario").value;
+    // Se encargará de obtener mediante fetch el listado de gastos a través de la API de servidor.
+    let gastoApi = await fetch("https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/" + nombre_usuario);
+
+    if (gastoApi.ok)
+    {
+        let json = await gastoApi.json(); 
+        gestionPresupuesto.cargarGastos(json); // Una vez obtenida la lista de gastos de la API deberá llamar a la función cargarGastos del paquete js/gestionPresupuesto.js
+        
+        console.log(json);
+        repintar(); //  llamar a la función repintar
+    }
+    
+    else
+    {
+        alert("Error: " + gastoApi.status);
+    }
+}
 
 // * * * * BUTTONS * * * * 
 
@@ -433,6 +457,11 @@ btnGuardarGasto.onclick = guardarGastosWeb;
 let btnCargarGasto = document.getElementById('cargar-gastos');
 btnCargarGasto.onclick = cargarGastosWeb;
 
+// Actividad 9
+let btnCargarApi = document.getElementById("cargar-gastos-api");
+btnCargarApi.onclick = cargarGastosApi;
+
+
 // npx cypress open -- PARA HACER TEST GRÁFICO
 // npm run test --> pasa todos los tests
 // EXPORT
@@ -457,6 +486,9 @@ export   {
     guardarGastosWeb,
     CargarGastosWeb,
     cargarGastosWeb,
+    // Actividad 9
+    cargarGastosApi,
+    
 
 }
 
