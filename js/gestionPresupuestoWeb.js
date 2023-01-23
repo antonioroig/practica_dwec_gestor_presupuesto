@@ -337,6 +337,37 @@ function nuevoGastoWebFormulario()
         document.getElementById('controlesprincipales').removeChild(formulario);
         repintar();
     });
+
+    // Actividad 9 Manejador de eventos del botón .gasto-enviar-api dentro de nuevoGastoWebFormulario
+    formulario.querySelector("button.gasto-enviar-api").addEventListener("click",this.handleEvent= async function()
+    {
+        let desc = formulario.elements.descripcion;
+        let valor = formulario.elements.valor;
+        let fecha = formulario.elements.fecha;
+        let etiquetas = formulario.elements.etiquetas;
+
+        etiquetas = etiquetas.value.split(",");
+
+        let gasto = new gestionPresupuesto.CrearGasto(desc.value, parseFloat(valor.value), fecha.value, ...etiquetas);
+        let nombre_usuario = document.getElementById("nombre_usuario").value;
+
+        let nuevoGastoApi = await fetch("https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/" + nombre_usuario, {method:'POST',headers:
+        {
+            'Content-Type': 'application/json;charset=utf-8'
+        },
+        body:JSON.stringify(gasto)});
+
+        if (nuevoGastoApi.ok)
+        {
+            document.getElementById("anyadirgasto-formulario").disabled = false;
+            document.getElementById("controlesprincipales").removeChild(formulario);
+            cargarGastosApi();
+        }
+        else
+            alert("Error: " + nuevoGastoApi.status);
+            
+        
+    });
 }
 // HUNDLE evento 
 function EditarHandleFormulario()
