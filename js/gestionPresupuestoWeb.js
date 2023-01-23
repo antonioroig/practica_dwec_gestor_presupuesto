@@ -57,21 +57,7 @@ function mostrarGastoWeb(idElemento, gasto){
             borrarEtiquetas.gasto = gasto;
             borrarEtiquetas.etiqueta = gasto.etiquetas[i];
             spanEtiqueta.addEventListener('click', borrarEtiquetas);
-            divEtiquetas.append(spanEtiqueta); 
-            
-            // Actividad 9 -- -- -- -- -- -- -- -- -- -- -- -- -- --
-
-            // gasto-borrar-api -- Manejador de eventos de los botones .gasto-borrar-api
-            let btnBorrarApi = document.createElement("button");
-            btnBorrarApi.className = "gasto-borrar-api";
-            btnBorrarApi.type = "button";
-            btnBorrarApi.textContent = "Borrar (API)";
-
-            // HANDLE BORRAR API - - - - - - - - - - - - - - - - - - -
-            let borrarApi = new BorrarApiHandle();
-            borrarApi.gasto = gasto;
-            btnBorrarApi.addEventListener("click", borrarApi);
-            divGasto.append(btnBorrarApi);        
+            divEtiquetas.append(spanEtiqueta);   
         }
 
         divGasto.append(divEtiquetas);
@@ -103,6 +89,19 @@ function mostrarGastoWeb(idElemento, gasto){
             btnBorrar.addEventListener('click', borrarHandle); // addEventListener nos permite utilizar un objeto como manejador de eventos.
             divGasto.append(btnBorrar);
             
+            // Actividad 9 -- -- -- -- -- -- -- -- -- -- -- -- -- --
+
+            // gasto-borrar-api -- Manejador de eventos de los botones .gasto-borrar-api
+            let btnBorrarApi = document.createElement("button");
+            btnBorrarApi.className = "gasto-borrar-api";
+            btnBorrarApi.type = "button";
+            btnBorrarApi.textContent = "Borrar (API)";
+
+            // HANDLE BORRAR API - - - - - - - - - - - - - - - - - - -
+            let borrarApi = new BorrarApiHandle();
+            borrarApi.gasto = gasto;
+            btnBorrarApi.addEventListener("click", borrarApi);
+            divGasto.append(btnBorrarApi);      
 
             // HANDLE - editar formulario gasto  - - - - - - - - - - - - - - - - - - - -
 
@@ -370,6 +369,7 @@ function nuevoGastoWebFormulario()
     });
 }
 // HUNDLE evento 
+// MODIFICADO Actividad 9 - Manejador de eventos del botón .gasto-enviar-api dentro de EditarHandleFormulario
 function EditarHandleFormulario()
 {    
     this.handleEvent = function()
@@ -416,6 +416,41 @@ function EditarHandleFormulario()
             btnEditarGasto.disabled = false;
             divGastoForm.removeChild(formulario);
             repintar();
+        });
+
+        // Actividad 9 - Manejador de eventos del botón .gasto-enviar-api dentro de EditarHandleFormulario
+        formulario.querySelector("button.gasto-enviar-api").addEventListener("click", this.handleEvent = async function()
+        {
+            gasto.actualizarDescripcion(formulario.elements.descripcion.value);
+            gasto.actualizarValor(parseFloat(formulario.elements.valor.value));
+            gasto.actualizarFecha(formulario.elements.fecha.value);
+
+            let etiquetasForm = formulario.elements.etiquetas;
+            etiquetasForm = etiquetasForm.value.split(",");
+
+            gasto.borrarEtiquetas(...gasto.etiquetas);
+            gasto.anyadirEtiquetas(...etiquetasForm);
+
+            btnEditarGasto.disabled = false;
+
+            divGastoForm.removeChild(formulario);
+
+            let nombre_usuario = document.getElementById("nombre_usuario").value;
+            let gastoApi = await fetch("https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/" + nombre_usuario + "/" + gasto.gastoId, {method:'PUT',headers:
+            {
+                'Content-Type': 'application/json;charset=utf-8'
+            },            
+            body:JSON.stringify(gasto)});
+
+            if (gastoApi.ok)
+            {
+                cargarGastosApi();
+            }
+            
+            else
+            {
+                alert("Error: "+ gastoApi.status);
+            }
         });
     }
 }
@@ -553,8 +588,11 @@ export   {
     guardarGastosWeb,
     CargarGastosWeb,
     cargarGastosWeb,
-    // Actividad 9
+    // Actividad 9 Una vez completada la petición, se deberá llamar a la función cargarGastosApi para actualizar la lista en la página.
     cargarGastosApi,
+    BorrarApiHandle,
+
+    
 
 
 }
