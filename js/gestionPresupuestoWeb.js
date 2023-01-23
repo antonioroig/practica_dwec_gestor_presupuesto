@@ -359,6 +359,13 @@ function filtrarGastosWeb(){
     };
 
 }
+function guardarGastoWeb(){
+    this.handleEvent = function(event) 
+    {
+        let listarGastos = exGp.listarGastos();
+        localStorage.GestorGastosDWEC = JSON.stringify(listarGastos);
+    }
+}
 
 export   {  
     mostrarDatoEnId,
