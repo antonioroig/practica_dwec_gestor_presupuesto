@@ -330,10 +330,11 @@ function agruparGastos(periodo = "mes" , etiquetas, fechaDesde, fechaHasta) //Pa
     return reducido;
 }
 
-function transformarListadoEtiquetas(...etiquetas)
-{
-    
 
+function transformarListadoEtiquetas(etiquetas) {
+
+    let arrayetiquetas = etiquetas.match(/[a-z0-9]+/gi);
+    return arrayetiquetas;
 }
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
 // Las funciones y objetos deben tener los nombres que se indican en el enunciado

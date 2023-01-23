@@ -316,7 +316,7 @@ function filtrarGatosWeb()
       this.handleEvent() = function(event)
       {
         let formu = event.preventDefault();
-        
+        document.getElementById("filtrar-gastos");
       }
 }
 
