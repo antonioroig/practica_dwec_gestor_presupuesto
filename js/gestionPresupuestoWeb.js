@@ -98,7 +98,7 @@ function mostrarGastoWeb(idElemento, gasto){
             btnEditarForm.addEventListener('click', gastoEditarForm);
             divGasto.appendChild(btnEditarForm);
         
-        //Creamos el nuevo botno de editar con formulario
+        //Creamos el nuevo botno de borrar con api
         let btnborrarApi = document.createElement('button');
             btnborrarApi.type = 'button';
             btnborrarApi.className = 'gasto-borrar-api';
@@ -107,7 +107,6 @@ function mostrarGastoWeb(idElemento, gasto){
         //Le añadimos al boton el evento creado con handle    
         let gastoborrarapi = new BorrarHandleApi();
             gastoborrarapi.gasto = gasto;
-            gastoborrarapi.divGasto = divGasto;
             gastoborrarapi.btnEditarForm = btnborrarApi;
             btnborrarApi.addEventListener('click', gastoborrarapi);
             divGasto.appendChild(btnborrarApi);
@@ -248,15 +247,21 @@ document.getElementById("anyadirgasto-formulario").addEventListener("click", nue
 
 function EnviarApiHandle(){
     this.handleEvent = async function(event){
-        let response = await fetch("https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/" + nombreUsuario.innerText, {
-            method: 'POST',
-            body: JSON.stringify(this.formulario)
-          });
-        if(response.ok){
-            cargarGastosApi();
-        } else {
-          alert("Error-HTTP: " + response.status);
-        }
+
+        let user = document.getElementById('nombre_usuario').value;
+        let url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/sergiocobos`;
+    
+        let descripcion = this.formulario.elements.descripcion.value;
+        let valor = Number(this.formulario.elements.valor.value);
+        let fecha = new Date (this.formulario.elements.fecha.value);
+        let etiquetas = this.formulario.elements.etiquetas.value;
+        let gasto = new CrearGasto(descripcion,valor,fecha,...etiquetas);
+        console.log(JSON.stringify(gasto))
+
+        fetch(url, {method: 'POST', body: JSON.stringify(gasto)})
+        .then(response => response.json())
+        .then(cargarGastos())
+        .catch(error => console.log(error));
     }
 }
 function AnyadirHandleFormulario(){
@@ -340,16 +345,13 @@ function CancelarGastoHandle(){
 
 function BorrarHandleApi(){
     this.handleEvent = async function (event){
-        let nombreUsuario = document.getElementById("nombre-usuario");
-        let response = await fetch("https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/" + nombreUsuario.innerText + "/" + this.gasto.id,{
-            method: 'DELETE'
-        });
-        if (response.ok) { // si el HTTP-status es 200-299
-            cargarGastos(JSON.parse(await response.json()));
-            cargarGastosApi();
-        } else {
-          alert("Error-HTTP: " + response.status);
-        }
+        event.preventDefault();
+        //let nombreUsuario = document.getElementById("nombre-usuario");
+        let url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/sergiocobos/`  + this.gasto.id;
+
+        fetch(url, {method: 'DELETE'})
+            .then(cargarGastosApi())
+            .catch(error => console.log(error));
     }
 }
 
@@ -409,22 +411,30 @@ function cargarGastosWeb(){
 let btncargarGasto = document.getElementById("cargar-gastos");
 btncargarGasto.addEventListener('click',new cargarGastosWeb());
 
-function cargarGastosApi(){
+let btncargarGastoApi = document.getElementById("cargar-gastos-api");
+btncargarGastoApi.addEventListener('click',new cargarGastosApiHandle());
+
+function cargarGastosApiHandle(){
     this.handleEvent = async function(event){
-        let nombreUsuario = document.getElementById("nombre-usuario");
-        let response = await fetch("https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/" + nombreUsuario.innerText,{
-            method: 'GET'
-        });
-        if (response.ok) { // si el HTTP-status es 200-299
-            cargarGastos(JSON.parse(await response.json()));
-        } else {
-          alert("Error-HTTP: " + response.status);
-        }
-        repintar()
+        event.preventDefault();
+        cargarGastosApi();
     }
 }
-let btncargarGastoApi = document.getElementById("cargar-gastos-api");
-btncargarGastoApi.addEventListener('click',new cargarGastosApi());
+function cargarGastosApi(){
+    let user = document.getElementById('nombre_usuario').value;
+    let url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/sergiocobos`;
+
+    fetch(url, {method: 'GET'})
+    .then(response => response.json())
+    .then(mis_gastos =>{
+
+        cargarGastos(mis_gastos);
+        console.log(mis_gastos);
+        repintar();
+
+    })
+    .catch(error => console.log(error));
+}
 export{
     mostrarDatoEnId,
     mostrarGastoWeb,
