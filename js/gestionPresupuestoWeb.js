@@ -356,7 +356,6 @@ function filtrarGastosWeb(){
         for (let aux of gestionFiltrado){
             mostrarGastoWeb(aux, "listado-gastos-completo");
         }
-
     };
 
 }
