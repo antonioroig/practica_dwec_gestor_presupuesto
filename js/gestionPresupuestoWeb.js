@@ -53,6 +53,14 @@ function mostrarGastoWeb(idElemento, gastos)
         let borrargasto = new BorrarHandle();
         borrargasto.gasto = gasto;
         BUTTONborrar.addEventListener('click',borrargasto);
+
+        let BUTTONborrarAPI = document.createElement('button');
+        BUTTONborrar.className = 'gasto-borrar-api';
+        BUTTONborrar.innerHTML = "Borrar (API)";
+        BUTTONborrar.type = 'button';
+        let borrargastoAPI = new BorrarAPIHandle();
+        borrargastoAPI.gasto = gasto;
+        BUTTONborrarAPI.addEventListener('click',borrargastoAPI);
         
         let BUTTONeditarformulario = document.createElement('button');
         BUTTONeditarformulario.type = 'button';
