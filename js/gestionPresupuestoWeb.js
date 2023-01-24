@@ -187,6 +187,14 @@ function repintar(){
         mostrarGastoWeb("listado-gastos-completo", element);
     }
     
+    let gastosPorDia = gestionPresupuesto.agruparGastos("dia");
+    mostrarGastosAgrupadosWeb("agrupacion-dia",gastosPorDia,"día");
+
+    let gastosPorMes = gestionPresupuesto.agruparGastos("mes");
+    mostrarGastosAgrupadosWeb("agrupacion-mes",gastosPorMes,"mes");
+
+    let gastosPorAnyo = gestionPresupuesto.agruparGastos("anyo");
+    mostrarGastosAgrupadosWeb("agrupacion-anyo",gastosPorAnyo,"año");
 };
 
 function actualizarPresupuestoWeb(){
