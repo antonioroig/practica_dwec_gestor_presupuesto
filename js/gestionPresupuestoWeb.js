@@ -227,10 +227,10 @@ function EditarHandleFormulario(){
 
         editForm.setAttribute("disabled", "");
 
-        //Botón Editar Api/////////////////////////////////////////////////////////////////
+        //Botón Editar Api
         let editarAPI = new EditarGastosApi();
         editarAPI.gasto = this.gasto;
-        formulario.addEventListener("click", editarAPI);
+        formulario.querySelector('button.gasto-enviar-api').addEventListener("click", editarAPI);
     }
 };
 function CancelarHandleFormulario(){
@@ -332,24 +332,21 @@ function cargarGastosWeb(){
     };
 };
 
-function cargarGastosApi(){
-    
-       
-        let user = document.getElementById('nombre_usuario').value;
-        let url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${user}`;
+function cargarGastosApi(){ 
+    let user = document.getElementById('nombre_usuario').value;
+    let url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${user}`;
 
-        if(user == null || user == ""){
-            alert("Debes introducir un nombre de usuario");
-        }
-        fetch(url, {method: 'GET'})
+    if(user == null || user == ""){
+        alert("Debes introducir un nombre de usuario");
+    }
+    fetch(url, {method: 'GET'})
         .then(response => response.json())
         .then(mis_gastos =>{
         gestionPresupuesto.cargarGastos(mis_gastos);
         console.log(mis_gastos);
         repintar();
-        })
-        .catch(error => console.log(error));
-    ;
+    })
+    .catch(error => console.log(error));
 };
 
 function BorrarGastosApi(){
@@ -410,8 +407,7 @@ function enviarGastosApi(e){
             })
     
     }
-    catch{(error => console.log(error))};
-    
+    catch{(error => console.log(error))}; 
 };
 
 function EditarGastosApi(){
@@ -420,7 +416,7 @@ function EditarGastosApi(){
         let user = document.getElementById('nombre_usuario').value;
         let url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${user}/${this.gasto.gastoId}`;
 
-        let form = event.currentTarget;
+        let form = event.currentTarget.form;
         let des = form.elements.descripcion.value;
         let val = parseFloat(form.elements.valor.value);
         let fec = form.elements.fecha.value;
