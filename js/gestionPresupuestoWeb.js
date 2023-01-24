@@ -180,8 +180,8 @@ function nuevoGastoWeb()
 
 function EditarHandle()
 {
-    
-        this.handleEvent= function() {
+        this.handleEvent= function() 
+        {
             let descripcion = prompt("introduce una descripcion");
             let valorSTR = prompt("introduce un valor para el gasto");
             let valor = parseFloat(valorSTR);
@@ -218,6 +218,7 @@ function BorrarEtiquetasHandle()
             repintar();
         }
 }
+
 function nuevoGastoWebFormulario()
 {
     let plantillaForm = document.getElementById("formulario-template").content.cloneNode(true);;
@@ -330,6 +331,7 @@ let filtrarGastosWeb = function ()
     this.handleEvent = function(evento)
     {
         evento.preventDefault();
+        let form = evento.currentTarget;
 
         let valorMinimo = this.form.elements["formulario-filtrado-valor-minimo"].value;
         let valorMaximo = this.form.elements["formulario-filtrado-valor-maximo"].value;
@@ -338,17 +340,24 @@ let filtrarGastosWeb = function ()
         let descripcionContiene = this.form.elements["formulario-filtrado-descripcion"].value;
         let etiquetasTiene = this.forrm.elements["formulario-filtrado-etiquetas-tiene"].value;
 
+        if (etiquetasTiene)
+        {
+            etiquetasTiene = gestionP.transformarListadoEtiquetas(etiquetasTiene);
+        }
+
         document.getElementById("listado-gastos-completo").innerHTML = "";
 
         let filtro = gestionP.filtrarGastos({valorMinimo, valorMaximo, fechaDesde, fechaHasta, 
             descripcionContiene, etiquetasTiene});
 
         filtro.forEach(gasto => 
-            {
-                mostrarGastoWeb (gasto, "listado-gastos-completo");
-            });
+        {
+            mostrarGastoWeb ("listado-gastos-completo", gasto);
+        });
     } 
 }
+
+
 
 export{
     mostrarDatoEnId,
@@ -362,3 +371,4 @@ export{
     BorrarEtiquetasHandle,
     nuevoGastoWebFormulario
 }
+
