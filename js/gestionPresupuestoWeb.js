@@ -331,14 +331,13 @@ let filtrarGastosWeb = function ()
     this.handleEvent = function(evento)
     {
         evento.preventDefault();
-        let form = evento.currentTarget;
 
         let valorMinimo = this.form.elements["formulario-filtrado-valor-minimo"].value;
         let valorMaximo = this.form.elements["formulario-filtrado-valor-maximo"].value;
         let fechaDesde = this.form.elements["formulario-filtrado-fecha-desde"].value;
         let fechaHasta = this.form.elements["formulario-filtrado-fecha-hasta"].value;
         let descripcionContiene = this.form.elements["formulario-filtrado-descripcion"].value;
-        let etiquetasTiene = this.forrm.elements["formulario-filtrado-etiquetas-tiene"].value;
+        let etiquetasTiene = this.form.elements["formulario-filtrado-etiquetas-tiene"].value;
 
         if (etiquetasTiene)
         {
@@ -357,7 +356,11 @@ let filtrarGastosWeb = function ()
     } 
 }
 
+let formFiltrado = document.getElementById("formulario-filtrado");
 
+let formFiltradoRes = new filtrarGastosWeb();
+formFiltradoRes.form = formFiltrado;
+formFiltrado.addEventListener('submit', formFiltradoRes);
 
 export{
     mostrarDatoEnId,
