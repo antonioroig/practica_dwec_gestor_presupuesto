@@ -207,7 +207,7 @@ etiquetasTiene}) {
 
         let anyadir = true;
 
-        if (fechaDesde) {         
+        if (fechaDesde && fechaDesde != "") {         
             if (Date.parse(fechaDesde)) {
                 let fechaPass = new Date (fechaDesde);
                 let fechaVal = new Date (ObjGasto.fecha);
@@ -219,7 +219,7 @@ etiquetasTiene}) {
             }                 
         }
         
-        if (fechaHasta) {
+        if (fechaHasta && fechaHasta != "") {
             if (Date.parse(fechaHasta)) {
                 let fechaPass = new Date (fechaHasta);
                 let fechaVal = new Date (ObjGasto.fecha);
@@ -231,19 +231,19 @@ etiquetasTiene}) {
             }
         }
 
-        if (valorMinimo) {
+        if (valorMinimo && valorMinimo != "") {
             if (ObjGasto.valor < valorMinimo) {
                 anyadir = false
             }
         }
 
-        if (valorMaximo) {
+        if (valorMaximo && valorMaximo != "") {
             if (ObjGasto.valor > valorMaximo) {
                 anyadir = false
             }
         }
 
-        if (descripcionContiene) {
+        if (descripcionContiene && descripcionContiene != "") {
             let Objdes = ObjGasto.descripcion.toLowerCase();
             let desCon = descripcionContiene.toLowerCase();
             if (!Objdes.includes(desCon)) {
@@ -251,7 +251,7 @@ etiquetasTiene}) {
             } 
         }
 
-        if (etiquetasTiene) {
+        if (etiquetasTiene && etiquetasTiene != "") {
             let val = 0;
             for (let i = 0; i < ObjGasto.etiquetas.length; i++) {
                 let etiObj = ObjGasto.etiquetas[i].toLowerCase();
@@ -295,8 +295,8 @@ function agruparGastos(periodo = "mes", etiquetas, fechaDesde, fechaHasta) {
     },{});
 }
 
-function transformarListadoEtiquetas(etis) {
-    let array = etis.split(/[~,.:;\s*   ]/);
+function transformarListadoEtiquetas(etiquetas) {
+    let array = etiquetas.split(/\s*[~,.:;\s]+\s*/);
     return array;
 }
 

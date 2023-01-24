@@ -347,18 +347,21 @@ bt_anyadir_gastoForm.addEventListener("click", nuevoGastoWebFormulario);
 function filtrarGastosWeb() {
     this.handleEvent = function (event) {
         event.preventDefault();
-        let des = document.getElementById("formulario-filtrado-descripcion");
-        let valormin = document.getElementById("formulario-filtrado-valor-minimo");
+        let des = this.form.elements["formulario-filtrado-descripcion"].value;
+        let valormin = this.form.elements["formulario-filtrado-valor-minimo"].value;
         valormin = Number(valormin);
-        let valormax = document.getElementById("formulario-filtrado-valor-maximo");
+        let valormax = this.form.elements["formulario-filtrado-valor-maximo"].value;
         valormax = Number(valormax);
-        let fechadesde = document.getElementById("formulario-filtrado-fecha-desde");
-        let fechahasta = document.getElementById("formulario-filtrado-fecha-hasta");
-        let etis = document.getElementById("formulario-filtrado-etiquetas-tiene");
+        let fechadesde = this.form.elements["formulario-filtrado-fecha-desde"].value;
+        let fechahasta = this.form.elements["formulario-filtrado-fecha-hasta"].value;
+        let etis = this.form.elements["formulario-filtrado-etiquetas-tiene"].value;
         etis = gestionPresupuesto.transformarListadoEtiquetas(etis);
 
         let arrayfil = gestionPresupuesto.filtrarGastos({fechaDesde: fechadesde, fechaHasta: fechahasta, valorMinimo: valormin,
                                                         valorMaximo: valormax, descripcionContiene: des, etiquetasTiene: etis});
+                                  
+        document.getElementById("listado-gastos-completo").innerHTML = "";
+                                                        
         for (let i = 0; i < arrayfil.length; i++) {
             mostrarGastoWeb("listado-gastos-completo", arrayfil[i]);
         }
@@ -367,6 +370,7 @@ function filtrarGastosWeb() {
 
 let filtrarform = document.getElementById("formulario-filtrado");
 let objFiltrar = new filtrarGastosWeb();
+objFiltrar.form = filtrarform;
 filtrarform.addEventListener("submit", objFiltrar);
 
 
@@ -374,5 +378,6 @@ filtrarform.addEventListener("submit", objFiltrar);
 export   {
     mostrarDatoEnId,
     mostrarGastoWeb,
-    mostrarGastosAgrupadosWeb
+    mostrarGastosAgrupadosWeb,
+    filtrarGastosWeb
 }
