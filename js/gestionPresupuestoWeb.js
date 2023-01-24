@@ -23,8 +23,6 @@ function mostrarGastoWeb(idElemento, gasto)
         {
             let divGastoDescripcion = document.createElement("div");
             divGastoDescripcion.className = "gasto-descripcion";
-
-            
             divGastoDescripcion.innerHTML += gasto.descripcion;
             divGasto.appendChild(divGastoDescripcion);
         }
