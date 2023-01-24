@@ -370,5 +370,23 @@ btnGuardarGasto.onclick = guardarGastosWeb;
 let btnCargarGasto = document.getElementById("cargar-gastos");
 btnCargarGasto.onclick = cargarGastosWeb;
 
-export{mostrarDatoEnId,mostrarGastoWeb,mostrarGastosAgrupadosWeb,repintar,actualizarPresupuestoWeb,nuevoGastoWeb,EditarHandle,BorrarHandle,BorrarEtiquetasHandle,EnviarHandle,EditarHandleFormulario,EnviarHandleFormulario,CancelarHandleFormulario,nuevoGastoWebFormulario,filtrarGastosWeb,cargarGastosWeb,guardarGastosWeb}
+function cargarGastosApi()
+{
+    this.handleEvent() = function(event)
+    {
+        event.preventDefault();
+        let usuario_nombre = document.getElementById('nombre_usuario').value;
+        let url = `https://mi-api.com/gastos/${usuario_nombre}`;
+        fetch(url,{method:'GET'})
+        .then(response => response.json())
+        .then(gastos => 
+        {
+            pres.cargarGastos(gastos);
+            repintar();
+        })
+        .catch(error => console.log(error));
+    }
+}
+
+export{mostrarDatoEnId,mostrarGastoWeb,mostrarGastosAgrupadosWeb,repintar,actualizarPresupuestoWeb,nuevoGastoWeb,EditarHandle,BorrarHandle,BorrarEtiquetasHandle,EnviarHandle,EditarHandleFormulario,EnviarHandleFormulario,CancelarHandleFormulario,nuevoGastoWebFormulario,filtrarGastosWeb,cargarGastosWeb,guardarGastosWeb, cargarGastosApi}
 
