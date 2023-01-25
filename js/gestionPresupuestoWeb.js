@@ -438,11 +438,11 @@ function cargarGastosApi()
 
     if(usuario == null || usuario == "")
     {
-        alert('Introduce un nombre de usuario')
+        alert('Introduce un nombre de usuario.')
     }
 
     fetch(url, {method: 'GET'})
-        .then(response => response.json())
+        .then(respuesta => respuesta.json())
         .then(mis_gastos =>
             {
                 gestionPresupuesto.cargarGastos(mis_gastos);
@@ -469,5 +469,6 @@ export {
     nuevoGastoWebFormulario,
     filtrarGastosWeb,
     guardarGastosWeb,
-    cargarGastosWeb
+    cargarGastosWeb,
+    cargarGastosApi
 }
