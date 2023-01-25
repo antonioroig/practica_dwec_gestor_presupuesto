@@ -80,6 +80,11 @@ function mostrarGastoWeb(idElemento,gasto)
 
  btnEditarForm.addEventListener('click',editarFormulario);
  div.append(btnEditarForm);
+
+ let api_borrar = document.createElement('button');
+ api_borrar.type='button';
+ api_borrar.className ='gasto-borrar-api';
+ api_borrar.textContent = 'Borrar(Api)';
 };
 function mostrarGastosAgrupadosWeb(idElemento,agrup,periodo)
 {
@@ -376,17 +381,20 @@ function cargarGastosApi()
     {
         event.preventDefault();
         let usuario_nombre = document.getElementById('nombre_usuario').value;
-        let url = `https://mi-api.com/gastos/${usuario_nombre}`;
+        let url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario_nombre}`;
         fetch(url,{method:'GET'})
         .then(response => response.json())
         .then(gastos => 
         {
             pres.cargarGastos(gastos);
+            console.log(gastos)
             repintar();
         })
         .catch(error => console.log(error));
     }
 }
-
+let btnCargarApi = document.getElementById('cargar-gastos-api');
+btnCargarApi.addEventListener('click', new cargarGastosApi());
+  
 export{mostrarDatoEnId,mostrarGastoWeb,mostrarGastosAgrupadosWeb,repintar,actualizarPresupuestoWeb,nuevoGastoWeb,EditarHandle,BorrarHandle,BorrarEtiquetasHandle,EnviarHandle,EditarHandleFormulario,EnviarHandleFormulario,CancelarHandleFormulario,nuevoGastoWebFormulario,filtrarGastosWeb,cargarGastosWeb,guardarGastosWeb, cargarGastosApi}
 
