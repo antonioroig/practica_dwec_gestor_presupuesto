@@ -345,6 +345,19 @@ function cargarGastosWeb(){
 let cargarGastos = new cargarGastosWeb();
 document.getElementById("cargar-gastos").addEventListener('click', cargarGastos);
 
+function cargarGastosApi(){
+    this.handleEvent = function(){
+        let URL ="";
+        let user = (document.getElementById("nombre_usuario")).value;
+        URL = "" ;
+        gestionPresupuesto.cargarGastos(arrayGastos);
+        repintar();
+    }
+}
+
+let cargarGastosApi = new cargarGastosApi();
+document.getElementById("cargar-gastos-api").addEventListener('click', cargarGastosApi);
+
 export{
     mostrarDatoEnId,
     mostrarGastoWeb,
