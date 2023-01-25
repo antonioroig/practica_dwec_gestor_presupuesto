@@ -320,6 +320,15 @@ let Cargar = new cargarGastosWeb();
 let BUTTONcargar = document.getElementById("cargar-gastos");
 BUTTONcargar.addEventListener("click",Cargar);
 
+function cargarGastosApi(){
+    this.handleEvent = function(event) {
+        let URL = "https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/";
+        let usuario = toString((document.getElementById("nombre_usuario")).value);
+        URL = URL + usuario;
+        let datos = fetch(url, [options])
+    }
+}
+
 // const getDatos = () =>{
 //     return new Promise((resolve,reject) => {
 //         reject(new Error('No existen los datos'));
