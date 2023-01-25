@@ -53,14 +53,6 @@ function mostrarGastoWeb(idElemento, gastos)
         let borrargasto = new BorrarHandle();
         borrargasto.gasto = gasto;
         BUTTONborrar.addEventListener('click',borrargasto);
-
-        let BUTTONborrarAPI = document.createElement('button');
-        BUTTONborrar.className = 'gasto-borrar-api';
-        BUTTONborrar.innerHTML = "Borrar (API)";
-        BUTTONborrar.type = 'button';
-        let borrargastoAPI = new BorrarAPIHandle();
-        borrargastoAPI.gasto = gasto;
-        BUTTONborrarAPI.addEventListener('click',borrargastoAPI);
         
         let BUTTONeditarformulario = document.createElement('button');
         BUTTONeditarformulario.type = 'button';
@@ -327,6 +319,15 @@ function cargarGastosWeb(){
 let Cargar = new cargarGastosWeb();
 let BUTTONcargar = document.getElementById("cargar-gastos");
 BUTTONcargar.addEventListener("click",Cargar);
+
+// const getDatos = () =>{
+//     return new Promise((resolve,reject) => {
+//         reject(new Error('No existen los datos'));
+//         setTimeout(()=> {resolve(datos)},500);
+//     }
+// }
+
+// async function
 
 export{
     mostrarDatoEnId,
