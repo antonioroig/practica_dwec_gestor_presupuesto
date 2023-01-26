@@ -362,6 +362,31 @@ let formFiltradoRes = new filtrarGastosWeb();
 formFiltradoRes.form = formFiltrado;
 formFiltrado.addEventListener('submit', formFiltradoRes);
 
+function guardarGastosWeb()
+{
+    let guardarGasto = gestionP.listarGastos();
+    localStorage.GestorGastosDWEC = JSON.stringify(guardarGasto);
+} 
+
+let guardarListado = document.getElementById("guardar-gastos");
+guardarListado.addEventListener("click", guardarGastosWeb);
+
+function cargarGastosWeb()
+{
+    if (localStorage.GestorGastosDWEC == null)
+    {
+        gestionP.cargarGastos([]);
+    }
+    else
+    {
+        gestionP.cargarGastos(JSON.parse(localStorage.GestorGastosDWEC));
+    }
+    repintar();
+}
+
+let cargarFormulario = document.getElementById("cargar-gastos");
+cargarFormulario.addEventListener("click", cargarGastosWeb)
+
 export{
     mostrarDatoEnId,
     mostrarGastoWeb,
@@ -372,6 +397,8 @@ export{
     EditarHandle,
     BorrarHandle,
     BorrarEtiquetasHandle,
-    nuevoGastoWebFormulario
+    nuevoGastoWebFormulario,
+    guardarGastosWeb,
+    cargarGastosWeb
 }
 
