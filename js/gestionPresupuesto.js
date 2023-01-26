@@ -23,17 +23,23 @@ function mostrarPresupuesto() {
     return `Tu presupuesto actual es de ${presupuesto} €`;
 }
 // revisar
-function CrearGasto(Descripcion,Valor) {
-    this.descripcion = Descripcion;
+function CrearGasto(descripcion,valor,fecha=Date.now(),...etiquetas) {
+    this.descripcion = descripcion;
+    this.etiquetas=String(descripcion);
 
-    if(Valor > 0 && ! isNaN(Valor)){
+    if(valor >= 0 && ! isNaN(valor)){
 
-        this.valor = Valor;
+        this.valor = valor;
 
     }else{
         this.valor = 0;
     };
-
+    if((typeof fecha==="string")&&(!isNAN(Date.parse(fecha)))){
+        this.fecha=Date.parse(fecha);
+    }
+    else{
+        this.fecha=Date.now();
+    }
     
 
     this.mostrarGasto = function (){
