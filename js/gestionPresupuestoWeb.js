@@ -386,7 +386,28 @@ botonGuardar.addEventListener('click', new guardarGastosWeb());
 let botonCargar = document.getElementById('cargar-gastos');
 botonCargar.addEventListener('click', new cargarGastosWeb());
 
-  export{
+
+function cargarGastosApi(){
+    this.handleEvent = function(event){
+      event.preventDefault();
+      let usuario = document.getElementById("nombre_usuario").value;
+
+      let promise = fetch(`https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario}`)
+
+      .then (response => response.json())
+
+      .then (response => {presupuesto.cargarGastos(response);
+        repintar();
+      });
+    }
+}
+
+    
+    let bntCargarApi = document.getElementById('cargar-gastos-api');
+    bntCargarApi.addEventListener('click', new cargarGastosApi());
+    
+
+export{
     mostrarDatoEnId,
     mostrarGastoWeb,
     mostrarGastosAgrupadosWeb,
@@ -403,6 +424,7 @@ botonCargar.addEventListener('click', new cargarGastosWeb());
     EditarHandleFormulario,
     filtrarGastosWeb,
     guardarGastosWeb,
-    cargarGastosWeb
+    cargarGastosWeb,
+    cargarGastosApi
   }
 
