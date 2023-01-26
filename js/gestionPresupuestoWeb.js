@@ -375,6 +375,14 @@ function cargarGastosWeb()
 }
 let btnCargarGasto = document.getElementById('cargar-gastos');
 btnCargarGasto.onclick = cargarGastosWeb;
+async function cargarGastosApi()
+{
+    let usuario = document.getElementById("nombre_usuario");
+    const resPost = await fetch(`https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario}`);
+    const post = await resPost.json();
+    gesP.cargarGastos(post)
+    repintar();
+}
 
 export{
     mostrarDatoEnId,
@@ -389,6 +397,7 @@ export{
     nuevoGastoWebFormulario,
     filtrarGastosWeb,
     guardarGastosWeb,
-    cargarGastosWeb
+    cargarGastosWeb,
+    cargarGastosApi
 }
 
