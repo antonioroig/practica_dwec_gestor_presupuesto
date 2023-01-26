@@ -72,6 +72,27 @@ function CrearGasto(descripcion,valor,fecha=Date.now(),...etiquetas) {
             this.fecha=Date.parse(nuevaFecha);
         }
     }
+    this.anyadirEtiquetas = function(...arrEtiquetas){
+        let arrayEtiquetas=[...new Set([...this.etiquetas,...arrEtiquetas])];
+        this.etiquetas=arrayEtiquetas;
+    }
+    this.borrarEtiquetas = function(...arrEtiquetas){
+        if(arrEtiquetas.length>0){
+            let a=0;
+            let b=0;
+            while(a<arrEtiquetas.length){
+                if(arrEtiquetas[a]===this.etiquetas[b]){
+                        this.etiquetas.splice(b,1);
+                        b=0;
+                }
+                b++;
+                if(b>this.etiquetas.length){
+                    b=0;
+                    a++;
+                }
+            }
+        }
+    }
 }
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
