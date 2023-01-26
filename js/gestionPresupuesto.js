@@ -33,7 +33,7 @@ function CrearGasto(descripcion,valor,fecha=Date.now(),...etiquetas) {
 
     }else{
         this.valor = 0;
-    };
+    }
     if((typeof fecha==="string")&&(!isNAN(Date.parse(fecha)))){
         this.fecha=Date.parse(fecha);
     }
@@ -44,11 +44,11 @@ function CrearGasto(descripcion,valor,fecha=Date.now(),...etiquetas) {
 
     this.mostrarGasto = function (){
         return `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €`;
-    };
+    }
 
     this.actualizarDescripcion = function(cadena){
         this.descripcion = cadena;
-    };
+    }
 
     this.actualizarValor = function(valorActualizado){
         if(valorActualizado >= 0){
@@ -56,8 +56,8 @@ function CrearGasto(descripcion,valor,fecha=Date.now(),...etiquetas) {
         }
         else{
             console.log(`El valor introducido es negativo, no ha podido ser cambiado`)
-        };
-    };
+        }
+    }
 }
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
