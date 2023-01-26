@@ -333,8 +333,13 @@ function cargarGastosWeb(){
     repintar();
 }
 
-function cargarGastosApi(){
-    let usuario = document.getElementById("controlesprincipales");
+async function cargarGastosApi(){
+
+        let usuario = document.getElementById("nombre_usuario");
+        let rePost = await fetch(`https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario}`);
+        let post = rePost.json();
+        gestion.cargarGastos(post);
+        repintar();
     
 }
 
