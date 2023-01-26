@@ -350,10 +350,13 @@ function cargarGastosWeb(){
 let btnCargarGastoWeb = document.getElementById('cargar-gastos');
 btnCargarGastoWeb.onclick = cargarGastosWeb;
 
-function cargarGastosApi(){
-    let usuario = document.getElementById("nombre_usuario");
-    
 
+async function  cargarGastosApi(){
+    let usuario = document.getElementById("nombre_usuario");
+    const resPost = await fetch(`https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario}`);
+    const post = await resPost.json();
+    ges.cargarGastos(post);
+    repintar();
 }
 let btnCargarGastoApi = document.getElementById('cargar-gastos-api');
 btnCargarGastoApi.onclick = cargarGastosApi;
