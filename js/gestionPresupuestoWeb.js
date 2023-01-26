@@ -124,6 +124,90 @@ function mostrarGastoWeb(idElemento, gasto){
 
 function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo){
 
+
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - ACTIVIDAD 10
+    let divP =  document.getElementById(idElemento);
+    divP.innerHTML = '';
+
+    let txt  =  '<div class="agrupacion">' +
+                '<h1>Gastos agrupados por '+ periodo + '</h1>';
+
+    for (let i in agrup)
+    {
+        txt +=  '<div class= "agrupacion-dato">' +
+                '<span class= "agrupacion-dato-clave">' + i + '</span>' +
+                '<span class= "agrupacion-dato-valor">' + ' ' + agrup[i] + '</span>' +
+                '</div>';
+    }
+
+    txt += '</div>';
+    divP.innerHTML += txt;
+
+    // Estilos
+    divP.style.width = "33%";
+    divP.style.display = "inline-block";
+    // Crear elemento <canvas> necesario para crear la gráfica
+    // https://www.chartjs.org/docs/latest/getting-started/
+    let chart = document.createElement("canvas");
+    // Variable para indicar a la gráfica el período temporal del eje X
+    // En función de la variable "periodo" se creará la variable "unit" (anyo -> year; mes -> month; dia -> day)
+    let unit = "";
+    switch (periodo) {
+    case "anyo":
+        unit = "year";
+        break;
+    case "mes":
+        unit = "month";
+        break;
+    case "dia":
+    default:
+        unit = "day";
+        break;
+    }
+
+    // Creación de la gráfica
+    // La función "Chart" está disponible porque hemos incluido las etiquetas <script> correspondientes en el fichero HTML
+    const myChart = new Chart(chart.getContext("2d"), {
+        // Tipo de gráfica: barras. Puedes cambiar el tipo si quieres hacer pruebas: https://www.chartjs.org/docs/latest/charts/line.html
+        type: 'line',
+        data: {
+            datasets: [
+                {
+                    // Título de la gráfica
+                    label: `Gastos por ${periodo}`,
+                    // Color de fondo
+                    backgroundColor: "#FD1300",
+                    // Datos de la gráfica
+                    // "agrup" contiene los datos a representar. Es uno de los parámetros de la función "mostrarGastosAgrupadosWeb".
+                    data: agrup
+                }
+            ],
+        },
+        options: {
+            scales: {
+                x: {
+                    // El eje X es de tipo temporal
+                    type: 'time',
+                    time: {
+                        // Indicamos la unidad correspondiente en función de si utilizamos días, meses o años
+                        unit: unit
+                    }
+                },
+                y: {
+                    // Para que el eje Y empieza en 0
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+    // Añadimos la gráfica a la capa
+    divP.append(chart);
+
+
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - ACTIVIDAD 10 // FIN
+
+    
+    /*
     // id = elemento
     let elemento = document.getElementById(idElemento);
 
@@ -160,7 +244,7 @@ function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo){
 
     elemento.append(divAgrup);   
 
-    return elemento;   
+    return elemento; */  
 }
         /* 
         <div class="agrupacion-dato">
