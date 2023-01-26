@@ -110,6 +110,17 @@ function mostrarGastoWeb(idElemento, gasto){
             gastoborrarapi.btnEditarForm = btnborrarApi;
             btnborrarApi.addEventListener('click', gastoborrarapi);
             divGasto.appendChild(btnborrarApi);
+                    
+        let btnEditarApi = document.createElement('button');
+        btnEditarApi.type = 'button';
+        btnEditarApi.className = 'gasto-editar-api';
+        btnEditarApi.textContent = 'Editar(API)';
+        
+        let gastoEditarApi = new EditarHandle();
+        gastoEditarApi.gasto = gasto;
+        btnEditarApi.addEventListener('click', gastoEditarApi);
+        divGasto.appendChild(btnEditarApi);
+
     }
 }
 function mostrarGastosAgrupadosWeb(agrup, periodo, idElemento){
@@ -235,32 +246,32 @@ let nuevoGastoWebFormulario = function() {
     cancelarForm.formulario = formulario;
     cancelarForm.boton = btnAnyadirGastoForm;
     btnCancelar.addEventListener('click', cancelarForm);
-    
+
     let btnEnviar = formulario.querySelector("button.gasto-enviar-api");
     let enviarApi = new EnviarApiHandle();
     enviarApi.formulario = formulario;
     enviarApi.boton = btnEnviar;
     btnEnviar.addEventListener('click', enviarApi);
-
 }
 document.getElementById("anyadirgasto-formulario").addEventListener("click", nuevoGastoWebFormulario)
 
 function EnviarApiHandle(){
-    this.handleEvent = async function(event){
+    this.handleEvent = function(event){
 
         let user = document.getElementById('nombre_usuario').value;
-        let url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/sergiocobos`;
-    
         let descripcion = this.formulario.elements.descripcion.value;
         let valor = Number(this.formulario.elements.valor.value);
         let fecha = new Date (this.formulario.elements.fecha.value);
         let etiquetas = this.formulario.elements.etiquetas.value;
-        let gasto = new CrearGasto(descripcion,valor,fecha,...etiquetas);
-        console.log(JSON.stringify(gasto))
+        let url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/sergiocobos`;
+    
+        console.log(JSON.stringify(new CrearGasto(descripcion,valor,fecha,...etiquetas)))
 
-        fetch(url, {method: 'POST', body: JSON.stringify(gasto)})
+        fetch(url, {method: 'POST', body: JSON.stringify(new CrearGasto(descripcion,valor,fecha,...etiquetas))})
         .then(response => response.json())
-        .then(cargarGastos())
+        .then(data => {
+            cargarGastosApi(data);
+        })
         .catch(error => console.log(error));
     }
 }
@@ -315,6 +326,12 @@ function EditarHandleformulario(){
         cancelarForm.formulario = formulario;
         cancelarForm.boton = this.btnEditarForm
         btnCancelar.addEventListener('click', cancelarForm);
+            
+        let btnEnviar = formulario.querySelector("button.gasto-enviar-api");
+        let enviarApi = new EnviarApiHandle();
+        enviarApi.formulario = formulario;
+        enviarApi.boton = btnEnviar;
+        btnEnviar.addEventListener('click', enviarApi);
     }
 } 
 
@@ -426,12 +443,10 @@ function cargarGastosApi(){
 
     fetch(url, {method: 'GET'})
     .then(response => response.json())
-    .then(mis_gastos =>{
-
-        cargarGastos(mis_gastos);
-        console.log(mis_gastos);
+    .then(data =>{
+        cargarGastos(data);
+        console.log(data);
         repintar();
-
     })
     .catch(error => console.log(error));
 }
