@@ -322,12 +322,28 @@ BUTTONcargar.addEventListener("click",Cargar);
 
 function cargarGastosApi(){
     this.handleEvent = function(event) {
-        let URL = "https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/";
-        let usuario = toString((document.getElementById("nombre_usuario")).value);
-        URL = URL + usuario;
-        let datos = fetch(url, [options])
+        let usuario = (document.getElementById("nombre_usuario")).value;
+        let URL = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario}`;
+        console.log(URL);
+        fetch(URL,{method: "GET"})
+            .then(solucion => solucion.json())
+            .then((datos)  => {
+                if(datos != "")
+                {
+                    gestionPresupuesto.cargarGastos(datos);
+                    repintar();
+                }
+                else
+                {
+                    console.log("No hay gastos")
+                }
+            })
     }
 }
+
+let CargarApi = new cargarGastosApi();
+let BUTTONcargarapi = document.getElementById("cargar-gastos-api");
+BUTTONcargarapi.addEventListener("click",CargarApi);
 
 // const getDatos = () =>{
 //     return new Promise((resolve,reject) => {
