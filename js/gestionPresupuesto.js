@@ -34,7 +34,7 @@ function CrearGasto(descripcion,valor,fecha=Date.now(),...etiquetas) {
     }else{
         this.valor = 0;
     }
-    if((typeof fecha==="string")&&(!isNAN(Date.parse(fecha)))){
+    if((typeof fecha==="string")&&(!isNaN(Date.parse(fecha)))){
         this.fecha=Date.parse(fecha);
     }
     else{
@@ -56,6 +56,20 @@ function CrearGasto(descripcion,valor,fecha=Date.now(),...etiquetas) {
         }
         else{
             console.log(`El valor introducido es negativo, no ha podido ser cambiado`)
+        }
+    }
+    this.mostrarGastoCompleto = function(){
+        let fechaMostar=new Date(this.fecha);
+        let cadenaDevolver = `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €.\n
+        Fecha: ${date.toLocaleString()}.\n
+        Etiquetas: \n`;
+        for(let i=0;i<etiquetas.length;i++){
+            cadenaDevolver += `- `+etiquetas[i] + `\n`;
+        }
+    }
+    this.actualizarFecha=function(nuevaFecha){
+        if((typeof nuevaFecha === "string") && (!isNaN(Date.parse(nuevaFecha)))){
+            this.fecha=Date.parse(nuevaFecha);
         }
     }
 }
