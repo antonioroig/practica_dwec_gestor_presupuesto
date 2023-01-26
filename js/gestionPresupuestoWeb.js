@@ -354,10 +354,15 @@ function cargarGastosWeb(){
 let botonCargarGasto = document.getElementById('cargar-gastos');
 botonCargarGasto.addEventListener("click", new cargarGastosWeb());
 
+function cargarGastoApi(){
+    
+}
+
 export{
     mostrarDatoEnId,
     mostrarGastoWeb,
     mostrarGastosAgrupadosWeb,
     guardarGastosWeb,
-    cargarGastosWeb
+    cargarGastosWeb,
+    cargarGastoApi
 }
