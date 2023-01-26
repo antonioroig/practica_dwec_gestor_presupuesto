@@ -60,6 +60,15 @@ function mostrarGastoWeb(idElemento,gastos)
         BorrarGasto.gasto = gasto;
         gastoButtonBorrar.addEventListener('click',BorrarGasto);
         gastoDiv.appendChild(gastoButtonBorrar);
+
+        let gastoButtonBorrarApi = document.createElement('button');
+        gastoButtonBorrarApi.type ='button';
+        gastoButtonBorrarApi.className = 'gasto-borrar-api';
+        gastoButtonBorrarApi.innerHTML = 'Borrar gasto (API)';
+        let BorrarGastoApi = new BorrarApi();
+        BorrarGastoApi.gasto = gasto;
+        gastoButtonBorrar.addEventListener('click',BorrarGastoApi);
+        gastoDiv.appendChild(gastoButtonBorrarApi);
         
         let gastoButtonEditarForm = document.createElement('button');
         gastoButtonEditarForm.type = 'button';
@@ -347,16 +356,43 @@ document.getElementById("cargar-gastos").addEventListener('click', cargarGastos)
 
 function cargarGastosApi(){
     this.handleEvent = function(){
-        let URL ="";
         let user = (document.getElementById("nombre_usuario")).value;
-        URL = "" ;
-        gestionPresupuesto.cargarGastos(arrayGastos);
-        repintar();
+        let url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${user}`;
+        console.log(user);
+        console.log(url);
+        fetch(url, {method: 'GET'})
+            .then(res => res.json())
+            .then((datos) => {
+                if(datos != "")
+                {
+                    gestionPresupuesto.cargarGastos(datos);
+                    repintar();
+                }
+                else console.log("No hay gastos")
+            });
     }
 }
 
-let cargarGastosApi = new cargarGastosApi();
-document.getElementById("cargar-gastos-api").addEventListener('click', cargarGastosApi);
+let BcargarGastosApi = new cargarGastosApi();
+document.getElementById("cargar-gastos-api").addEventListener('click', BcargarGastosApi);
+
+function BorrarApi (){
+    this.handleEvent = function(){
+        let url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${user}`;
+        console.log(user);
+        console.log(url);
+        fetch(url, {method: 'GET'})
+            .then(res => res.json())
+            .then((datos) => {
+                if(datos != "")
+                {
+                    gestionPresupuesto.cargarGastos(datos);
+                    repintar();
+                }
+                else console.log("No hay gastos")
+            });
+    }
+}
 
 export{
     mostrarDatoEnId,
