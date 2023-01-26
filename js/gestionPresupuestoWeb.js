@@ -354,9 +354,23 @@ function cargarGastosWeb(){
 let botonCargarGasto = document.getElementById('cargar-gastos');
 botonCargarGasto.addEventListener("click", new cargarGastosWeb());
 
-function cargarGastoApi(){
+let cargarGastoApi = function(){
+    this.handleEvent = async function(evento){
+        evento.preventDefault();
+        let nombre = document.getElementById("nombre_usuario").value;
+        let gastoApi = await fetch(`https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${nombre}`);
     
+        let json = await gastoApi.json();
+        console.log(json)
+        gestionPresupuesto.cargarGastos(json);
+        
+        console.log(json);
+        repintarWeb();
+    }
 }
+
+let botonCargarGastoApi = document.getElementById('cargar-gastos-api');
+botonCargarGastoApi.addEventListener("click", new cargarGastoApi());
 
 export{
     mostrarDatoEnId,
