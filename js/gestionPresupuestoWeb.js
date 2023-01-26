@@ -104,6 +104,14 @@ function mostrarGastoWeb(gasto, idElemento){
     btnEditarForm.addEventListener('click',editarForm);
     divGasto.appendChild(btnEditarForm);
 
+    // Boton borrar.api
+    let btnBorrarApi = document.createElement('button');
+    btnBorrarApi.type = 'button';
+    btnBorrarApi.className = 'gasto-borrar-api';
+    btnBorrarApi.textContent = 'Borrar (API)';
+
+    // Crear evento asociado al boton
+
     elemento.append(divGasto); 
 }
 
@@ -477,8 +485,13 @@ let btnCargarGastosApi = document.getElementById("cargar-gastos-api");
 btnCargarGastosApi.addEventListener("click", objCargarApi);
 
 function cargarGastosApi(){
-  this.handleEvent = function(){
+  this.handleEvent = async function(){
+    // Poner la URL correspondiente /URL/{miUsuario}
+    let URL = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario}`;
 
+    // Si no ponemos opciones, se ejecuta una acción GET
+    gp.cargarGastos(res);
+    repintar();
   }
 }
 
