@@ -151,6 +151,53 @@ function calcularTotalGastos(){
 function calcularBalance(){
     return presupuesto - calcularTotalGastos();
 }
+function filtrarGastos(fechaDesde,fechaHasta,valorMinimo,valorMaximo,descripcionContiene,etiquetasTiene){
+    let arrayDevolver=gastos.filter(function(gasto){
+        let anyadir=true;
+        let esta=false;
+        if (fechaDesde!=undefined){
+            if(isNaN(Date.parse(fechaDesde))||Date.parse(fechaDesde)>gasto.fecha){
+                anyadir=false;
+            }
+        }
+        if(fechaHasta!=undefined){
+            if(isNaN(Date.parse(fechaHasta))||Date.parse(fechaHasta)<gasto.fecha){
+                anyadir=false;
+            }
+        }
+        if(valorMinimo!=undefined){
+            if(isNaN(valorMinimo)||valorMinimo>gasto.valor){
+                anyadir=false;
+            }
+        }
+        if(valorMaximo!=undefined){
+            if(isNaN(valorMinimo)||valorMinimo<gasto.valor){
+                anyadir=false;
+            }
+        }
+        if(descripcionContiene!=undefined){
+            gasto.descripcion.toUpperCase();
+            descripcionContiene.toUpperCase();
+            if(gasto.descripcion.indexOf(descripcionContiene)=== -1){
+                anyadir=false;
+            }
+        }
+        if(etiquetasTiene!=undefined){
+            for(let i=0;i<gasto.etiquetas.length;i++){
+                for(let j=0;etiquetasTiene.length;j++){
+                    if(gasto.etiquetas[i]===etiquetasTiene[j]){
+                        esta=true;
+                    }
+                }
+            }
+            if(esta===false){
+                anyadir=false;
+            }
+        }
+        return anyadir;
+    });
+    return arrayDevolver;
+}
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
 // Las funciones y objetos deben tener los nombres que se indican en el enunciado
