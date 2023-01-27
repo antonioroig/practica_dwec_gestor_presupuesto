@@ -449,7 +449,7 @@ function nuevoGastoWebFormulario()
         let gasto = new gestionPresupuesto.CrearGasto(desc.value, parseFloat(valor.value), fecha.value, ...etiquetas);
         let nombre_usuario = document.getElementById("nombre_usuario").value;
 
-        let nuevoGastoApi = await fetch("https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/" + nombre_usuario, {method:'POST',headers:
+        let nuevoGastoApi = await fetch(`https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${nombre_usuario}`, {method:'POST',headers:
         {
             'Content-Type': 'application/json;charset=utf-8'
         },
@@ -533,7 +533,7 @@ function EditarHandleFormulario()
             divGastoForm.removeChild(formulario);
 
             let nombre_usuario = document.getElementById("nombre_usuario").value;
-            let gastoApi = await fetch("https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/" + nombre_usuario + "/" + gasto.gastoId, {method:'PUT',headers:
+            let gastoApi = await fetch(`https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${nombre_usuario}` + "/" + gasto.gastoId, {method:'PUT',headers:
             {
                 'Content-Type': 'application/json;charset=utf-8'
             },            
@@ -544,7 +544,7 @@ function EditarHandleFormulario()
                 cargarGastosApi();
             }
             else
-                alert("Error: "+ gastoApi.status);
+                alert("Error: "+ gastoApi.status); // comprobar errores
              
             
         });
@@ -591,7 +591,7 @@ async function cargarGastosApi()
 {
     let nombre_usuario = document.getElementById("nombre_usuario").value;
     // Se encargará de obtener mediante fetch el listado de gastos a través de la API de servidor.
-    let gastoApi = await fetch("https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/" + nombre_usuario);
+    let gastoApi = await fetch(`https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${nombre_usuario}`);
 
     if (gastoApi.ok)
     {
@@ -602,7 +602,7 @@ async function cargarGastosApi()
         repintar(); //  llamar a la función repintar
     } 
     else
-        alert("Error: " + gastoApi.status);
+        alert("Error: " + gastoApi.status); // comprobar errores
 }
 
 // HANDLE BorrarApi  gasto-borrar-api
@@ -613,7 +613,7 @@ function BorrarApiHandle()
         if (this.gasto.hasOwnProperty("gastoId"))
         {
             let nombre_usuario = document.getElementById("nombre_usuario").value;
-            let gastoApi = await fetch("https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/" + nombre_usuario + "/" + this.gasto.gastoId, {method:'DELETE'});
+            let gastoApi = await fetch(`https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${nombre_usuario}` + "/" + this.gasto.gastoId, {method:'DELETE'});
             // comprobar errores
             (gastoApi.ok) ? cargarGastosApi() : alert("Error: " + gastoApi.status);
         }
