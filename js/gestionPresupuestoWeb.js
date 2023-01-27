@@ -102,6 +102,11 @@ function mostrarGastoWeb(gasto, idElemento){
 
 function mostrarGastosAgrupadosWeb( agrup, periodo, idElemento){
     if(idElemento!=null){
+        // Puedes reutilizarlo, por supuesto. Si lo haces, recuerda cambiar también el nombre de la variable en el siguiente bloque de código
+        var divP = document.getElementById(idElemento);
+        // Borrar el contenido de la capa para que no se duplique el contenido al repintar
+        divP.innerHTML = "";
+
         var divAgrupacion = document.createElement("div");
         divAgrupacion.classList="agrupacion";
         
@@ -133,7 +138,65 @@ function mostrarGastosAgrupadosWeb( agrup, periodo, idElemento){
         var elemento = document.getElementById(idElemento);
         elemento.appendChild(divAgrupacion);
 
-        
+        // Estilos
+        divP.style.width = "33%";
+        divP.style.display = "inline-block";
+        // Crear elemento <canvas> necesario para crear la gráfica
+        // https://www.chartjs.org/docs/latest/getting-started/
+        let chart = document.createElement("canvas");
+        // Variable para indicar a la gráfica el período temporal del eje X
+        // En función de la variable "periodo" se creará la variable "unit" (anyo -> year; mes -> month; dia -> day)
+        let unit = "";
+        switch (periodo) {
+        case "anyo":
+            unit = "year";
+            break;
+        case "mes":
+            unit = "month";
+            break;
+        case "dia":
+        default:
+            unit = "day";
+            break;
+        }
+
+        // Creación de la gráfica
+        // La función "Chart" está disponible porque hemos incluido las etiquetas <script> correspondientes en el fichero HTML
+        const myChart = new Chart(chart.getContext("2d"), {
+            // Tipo de gráfica: barras. Puedes cambiar el tipo si quieres hacer pruebas: https://www.chartjs.org/docs/latest/charts/line.html
+            type: 'bar',
+            data: {
+                datasets: [
+                    {
+                        // Título de la gráfica
+                        label: `Gastos por ${periodo}`,
+                        // Color de fondo
+                        backgroundColor: "#555555",
+                        // Datos de la gráfica
+                        // "agrup" contiene los datos a representar. Es uno de los parámetros de la función "mostrarGastosAgrupadosWeb".
+                        data: agrup
+                    }
+                ],
+            },
+            options: {
+                scales: {
+                    x: {
+                        // El eje X es de tipo temporal
+                        type: 'time',
+                        time: {
+                            // Indicamos la unidad correspondiente en función de si utilizamos días, meses o años
+                            unit: unit
+                        }
+                    },
+                    y: {
+                        // Para que el eje Y empieza en 0
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+        // Añadimos la gráfica a la capa
+        divP.append(chart);
     }
 }
 
@@ -159,6 +222,12 @@ function repintar(){
     gestionPresupuesto.listarGastos().forEach(gasto =>{
         mostrarGastoWeb(gasto, "listado-gastos-completo");
     });
+
+    mostrarGastosAgrupadosWeb(agruparGastos("dia"), "día", "agrupacion-dia");
+
+    mostrarGastosAgrupadosWeb(agruparGastos("mes"), "mes", "agrupacion-mes");
+
+    mostrarGastosAgrupadosWeb(agruparGastos("anyo"), "año", "agrupacion-anyo");
 }
 
 
@@ -228,6 +297,7 @@ let BorrarApiHandle = function(){
             .then(response => response.json())
             .then(data => {
                 console.log(data);
+                gestionPresupuesto.borrarGasto(this.gasto.gastoId);
                 cargarGastosApi();
             })
             .catch(err => console.log(err));
@@ -285,10 +355,14 @@ let nuevoGastoWebFormulario = function(){
     
     //btnNuevoGastoApi.addEventListener('click', new nuevoGastoApiHandle());
 
-    let btnNuevoGastoApi = document.getElementById("gasto-enviar-api");
-    var objetoBorrarApi = new nuevoGastoApiHandle();
+    
+    let btnNuevoGastoApi = document.createElement("button");
+    btnNuevoGastoApi.id="gasto-enviar-api";
+    formulario.appendChild(btnNuevoGastoApi);
+    btnNuevoGastoApi.innerHTML="Enviar (API)"
+    var objetoNuevoApi = new nuevoGastoApiHandle();
 
-    btnNuevoGastoApi.addEventListener("click", objetoBorrarApi);
+    btnNuevoGastoApi.addEventListener("click", objetoNuevoApi);
 
     let btnAnyadirGastoForm = document.getElementById("anyadirgasto-formulario");
     btnAnyadirGastoForm.setAttribute('disabled', "");
@@ -309,15 +383,16 @@ function nuevoGastoApiHandle(){
             descripcion :form.elements.descripcion.value, 
             valor:form.elements.valor.value, 
             fecha:form.elements.fecha.value, 
-            etiquetas:form.elements.etiquetas.value,
+            etiquetas: form.elements.etiquetas.value.split(","),
             usuario:nombreUsuario
         }
         
-        fetch('https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/'+nombreUsuario, {method: 'Post', body: JSON.stringify(nuevoGasto)})
+        fetch('https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/'+nombreUsuario, {method: 'Post',headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(nuevoGasto)})
             .then(response => response.json())
             .then(data => {
                 console.log(data);
-                gestionPresupuesto.cargarGastos(data);
+                //gestionPresupuesto.anyadirGasto(nuevoGasto);
+                cargarGastosApi();
             })
             .catch(err => console.log(err));
 
@@ -345,15 +420,15 @@ function editarGastoApiHandle(){
         event.preventDefault();
         var nombreUsuario = document.getElementById("nombre_usuario").value;
 
-        let form = document.forms[0];
+        let form = document.forms[1];
 
         var nuevoGasto = new gestionPresupuesto.CrearGasto(form.elements.descripcion.value, Number(form.elements.valor.value), new Date(form.elements.fecha.value), form.elements.etiquetas.value.split(","));
         
-        fetch('https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/'+nombreUsuario+"/"+this.gasto.gastoId, {method: 'Put', body: JSON.stringify(nuevoGasto)})
+        fetch('https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/'+nombreUsuario+"/"+this.gasto.gastoId, {method: 'Put',headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(nuevoGasto)})
             .then(response => response.json())
             .then(data => {
                 console.log(data);
-                gestionPresupuesto.cargarGastos(data);
+                cargarGastosApi();
             })
             .catch(err => console.log(err));
 
@@ -372,7 +447,10 @@ let EditarHandleformulario = function(){
 
         this.botonEditar.setAttribute('disabled', "");
 
-        let btnEditarGastoApi = document.getElementById("gasto-editar-api");
+        let btnEditarGastoApi = document.createElement("button");
+        btnEditarGastoApi.id="gasto-editar-api";
+        btnEditarGastoApi.innerHTML="Editar (API)"
+        formulario.appendChild(btnEditarGastoApi)
         var objetoEditarApi = new editarGastoApiHandle();
         objetoEditarApi.gasto = this.gasto;
 
@@ -394,7 +472,7 @@ let EditarHandleformulario = function(){
         
     }
 }
-
+let filtros=0;
 let filtrarGastoWeb = function(){
     this.handleEvent = function(event) {
         event.preventDefault();
@@ -412,10 +490,15 @@ let filtrarGastoWeb = function(){
         document.getElementById("listado-gastos-completo").innerHTML="";
         
         var filtrados = gestionPresupuesto.filtrarGastos({fechaDesde, fechaHasta, valorMaximo, valorMinimo, descripcionContiene, etiquetasTiene})
-        
+        filtros++;
+        let h3NFiltros = document.createElement("h2");
+        h3NFiltros.innerHTML="Filtro "+filtros;
+        document.getElementById("listado-gastos-completo").appendChild(h3NFiltros);
         filtrados.forEach(gasto=>{
             mostrarGastoWeb(gasto, "listado-gastos-completo");
         });
+        let brNFiltros = document.createElement("hr");
+        document.getElementById("listado-gastos-completo").appendChild(brNFiltros);
     }
 }
 
@@ -452,10 +535,17 @@ function cargarGastosWeb(){
 let btnCargarGastos = document.getElementById("cargar-gastos");
 btnCargarGastos.addEventListener('click', new cargarGastosWeb());
 
-function cargarGastosApi(){
+function cargarGastosApiHandle(){
     this.handleEvent= function(event){
         event.preventDefault();
-        var nombreUsuario = document.getElementById("nombre_usuario").value;
+        cargarGastosApi()
+
+        
+    }
+}
+
+function cargarGastosApi(){
+    var nombreUsuario = document.getElementById("nombre_usuario").value;
         fetch('https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/'+nombreUsuario, {method: 'Get'})
             .then(response => response.json())
             .then(data => {
@@ -464,13 +554,10 @@ function cargarGastosApi(){
                 repintar();
             })
             .catch(err => console.log(err));
-
-        
-    }
 }
 
 let btnCargarGastosApi = document.getElementById("cargar-gastos-api");
-btnCargarGastosApi.addEventListener('click', new cargarGastosApi());
+btnCargarGastosApi.addEventListener('click', new cargarGastosApiHandle());
 
 
 export{
