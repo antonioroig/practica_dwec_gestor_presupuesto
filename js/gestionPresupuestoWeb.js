@@ -71,6 +71,14 @@ function mostrarGastoWeb(idElemento, gasto){
 
         divGastoEtiqueta.addEventListener("click", handleBorrarEtiqueta);
 
+        let botonBorrarApi = document.createElement("button");
+        botonBorrarApi.className = "gasto-borrar-api";
+        botonBorrarApi.type = "button";
+        botonBorrarApi.textContent = "Borrar (API)";
+        divGasto.append(botonBorrarApi);
+
+
+
         let botonEditarForm = document.createElement("button");
         botonEditarForm.className = "gasto-editar-formulario";
         botonEditarForm.id = "gasto-editar-formulario";
@@ -340,8 +348,21 @@ async function cargarGastosApi(){
         let post = rePost.json();
         gestion.cargarGastos(post);
         repintar();
-    
 }
+
+ function BorrarHandleApi(){
+    this.handleEvent = async function(event){
+        try{
+            let usuario = document.getElementById("nombre_usuario");
+            let gastoId = document.getElementById("nombre_usuario");
+            const resPost = await fetch(`https://jsonplaceholder.typicode.com/posts/${usuario}/${}`)    
+            console.log(usuario);
+          }
+          catch(error){
+            console.log(error);
+            }
+    }
+ }
 
 let btnGuardarGastosWeb = document.getElementById("guardar-gastos");
 btnGuardarGastosWeb.onclick = guardarGastosWeb;
@@ -366,5 +387,7 @@ export	{
     repintar,
     actualizarPresupuestoWeb,
     nuevoGastoWeb,
-    nuevoGastoWebFormulario
+    nuevoGastoWebFormulario,
+    cargarGastosWeb,
+    cargarGastosApi
 }
