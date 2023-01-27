@@ -272,10 +272,25 @@ function repintar(){
 
     document.getElementById('listado-gastos-completo').innerHTML = '';
 
+    
     let gastosListados = gestionPresupuesto.listarGastos();
     for(let i = 0; i < gastosListados.length; i++){
         mostrarGastoWeb('listado-gastos-completo', gastosListados[i]);
     }
+    
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+    /* Modifica la función repintar para que actualice los datos de las capas div#agrupacion-dia, div#agrupacion-mes y div#agrupacion-anyo 
+    mediante las funciones agruparGastos y mostrarGastosAgrupadosWeb */
+
+
+    document.getElementById('agrupacion-dia').innerHTML='';
+    mostrarGastosAgrupadosWeb('agrupacion-dia', gestionPresupuesto.agruparGastos('dia'), 'día');
+
+    document.getElementById('agrupacion-mes').innerHTML='';
+    mostrarGastosAgrupadosWeb('agrupacion-mes', gestionPresupuesto.agruparGastos('mes'), 'mes');
+
+    document.getElementById('agrupacion-anyo').innerHTML='';
+    mostrarGastosAgrupadosWeb('agrupacion-anyo', gestionPresupuesto.agruparGastos('anyo'), 'año');
 }
 
 // actualizarPresupuestoWeb
@@ -444,12 +459,10 @@ function nuevoGastoWebFormulario()
         {
             document.getElementById("anyadirgasto-formulario").disabled = false;
             document.getElementById("controlesprincipales").removeChild(formulario);
-            cargarGastosApi();
+            cargarGastosApi(); // Una vez completada la petición, se deberá llamar a la función cargarGastosApi para actualizar la lista en la página.
         }
-        else
-            alert("Error: " + nuevoGastoApi.status);
-            
-        
+        else 
+            alert("Error: " + nuevoGastoApi.status);  // Si hay error
     });
 }
 // HUNDLE evento 
@@ -530,11 +543,10 @@ function EditarHandleFormulario()
             {
                 cargarGastosApi();
             }
-            
             else
-            {
                 alert("Error: "+ gastoApi.status);
-            }
+             
+            
         });
     }
 }
@@ -564,7 +576,7 @@ function cargarGastosWeb()
     let cargarGastos = JSON.parse(localStorage.getItem('GestorGastosDWEC'));
 
     if((cargarGastos != null) && (cargarGastos.length >= 0))
-        gestionPresupuesto.cargarGastos(cargarGastos)
+        gestionPresupuesto.cargarGastos(cargarGastos);
     else 
         gestionPresupuesto.cargarGastos([]);
     
@@ -588,15 +600,12 @@ async function cargarGastosApi()
         
         console.log(json);
         repintar(); //  llamar a la función repintar
-    }
-    
+    } 
     else
-    {
         alert("Error: " + gastoApi.status);
-    }
 }
 
-// HANDLE BorrarApi 
+// HANDLE BorrarApi  gasto-borrar-api
 function BorrarApiHandle()
 {
     this.handleEvent = async function()
@@ -605,13 +614,12 @@ function BorrarApiHandle()
         {
             let nombre_usuario = document.getElementById("nombre_usuario").value;
             let gastoApi = await fetch("https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/" + nombre_usuario + "/" + this.gasto.gastoId, {method:'DELETE'});
-
+            // comprobar errores
             (gastoApi.ok) ? cargarGastosApi() : alert("Error: " + gastoApi.status);
         }
-        
         else
         {
-            alert("Gasto no encontrado en la API.")
+            alert("Gasto no encontrado en la API.") // Si no encontramos gasto 
         }
     }
 }
@@ -656,7 +664,7 @@ export   {
     mostrarGastoWeb,
     mostrarGastosAgrupadosWeb,
     // - - - - - - -
-    repintar,
+    repintar, // modificado en Actividad 10
     actualizarPresupuestoWeb,
     nuevoGastoWeb,
     // actividad 5
