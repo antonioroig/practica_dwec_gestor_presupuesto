@@ -73,6 +73,16 @@ function mostrarGastoWeb(idElemento,gasto){
 
     divEtiquetas.addEventListener('click' , handleBorrarEtiq);
 
+    let btnBorrarApi = document.createElement("button");
+    btnBorrarApi.className = "gasto-borrar-api";
+    btnBorrarApi.type = "button";
+    btnBorrarApi.innerHTML = "Borrar (API)";
+
+    let handleBorrarGastosApi = new BorrarHandleGastosApi();
+    handleBorrarGastosApi.gasto = gasto;
+    btnBorrarApi.addEventListener('click' , handleBorrarGastosApi);
+    divGasto.append(btnBorrarApi);
+
     let btnEditarFormulario = document.createElement("button");
     btnEditarFormulario.className = "gasto-editar-formulario";
     btnEditarFormulario.id = "gasto-editar-formulario";
@@ -89,6 +99,20 @@ function mostrarGastoWeb(idElemento,gasto){
     
     return id;
     
+}
+
+async function BorrarHandleGastosApi(){
+    this.handleEvent =  async function(){
+    let usuario = document.getElementById("nombre_usuario");
+    try{
+        const resPost = await fetch(`https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario}/${this.gasto.id}`, { method: 'DELETE'})
+        console.log(resPost);
+        ges.cargarGastosApi();  
+      }
+    catch(error){
+        console.log(error);
+        }
+    }   
 }
 
 function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo){
