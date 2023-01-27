@@ -194,7 +194,7 @@ function nuevoGastoWebFormulario(){
     }
 }
 
-funtiopn
+
 
 export{
     mostrarDatoEnId,
