@@ -9,6 +9,7 @@ let guardar = new guardarGastosWeb();
 document.getElementById("guardar-gastos").addEventListener('click', guardar);
 let cargarGastosW = new cargarGastoWeb();
 document.getElementById("cargar-gastos").addEventListener('click', cargarGastosW);
+document.getElementById("cargar-gastos-api").addEventListener('click', CargarGastosApi);
 
 /*
 let btnActualizarpres = document.getElementById("actualizarpresupuesto");
@@ -381,6 +382,11 @@ function cargarGastoWeb(){
         repintar();    
     };
 }
+function CargarGastosApi(){
+    let usuario = document.getElementById('nombre_usuario').value;
+   
+}
+
 export   {  
     mostrarDatoEnId,
     mostrarGastoWeb,
