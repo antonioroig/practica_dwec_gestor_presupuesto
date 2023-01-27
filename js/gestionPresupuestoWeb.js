@@ -348,8 +348,9 @@ function filtrarGastosWeb() {
      }
   }  
 }
-let objFiltrado = new filtrarGastosWeb();
-document.getElementById("formulario-filtrado").addEventListener("submit", objFiltrado );
+
+
+document.getElementById("formulario-filtrado").addEventListener("submit", new filtrarGastosWeb());
 
 export{
  mostrarDatoEnId,
