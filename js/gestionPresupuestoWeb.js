@@ -301,7 +301,6 @@ let BorrarEtiquetasHandle = function(){
       repintar();
     }
 }
-// Practica 6
 
 function nuevoGastoWebFormulario(){ 
   let btnAnyadirGastoForm = document.getElementById("anyadirgasto-formulario");
@@ -332,7 +331,6 @@ function EditarHandleFormulario() {
     let gasto = this.gasto;
     let divGasto = this.div;
     
-    // Tomamos el template del documento
     let plantillaFormulario = document.getElementById("formulario-template").content.cloneNode(true);
     let formulario = plantillaFormulario.querySelector("form");
     
@@ -420,7 +418,6 @@ let eventoCancelar = function() {
   }
 }
 
-// Práctica 7
 let formfiltrado = document.getElementById("formulario-filtrado");
 let filtrado = new filtrarGastosWeb();
 formfiltrado.addEventListener("submit", filtrado);
@@ -450,7 +447,7 @@ function filtrarGastosWeb(){
     }
   };
 }
-// Práctica 8
+
 let objGuardarGastos = new guardarGastosWeb();
 let btnGuardarGastos = document.getElementById("guardar-gastos");
 btnGuardarGastos.addEventListener("click", objGuardarGastos);
@@ -486,12 +483,24 @@ btnCargarGastosApi.addEventListener("click", objCargarApi);
 
 function cargarGastosApi(){
   this.handleEvent = async function(){
+
     // Poner la URL correspondiente /URL/{miUsuario}
     let URL = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario}`;
+    let datos = await fetch(URL);
 
     // Si no ponemos opciones, se ejecuta una acción GET
-    gp.cargarGastos(res);
+    gp.cargarGastos(datos);
     repintar();
+  }
+}
+// Revisar añadir botoncon onclick/addeventListener
+/* let btnGastoApi = document.getElementById("gasto-borrar-api");
+btnGastoApi.onclick = */
+let cargarGastosApi = function (){
+  this.handleEvent = function (){
+
+    let URL = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario}`;
+    
   }
 }
 
