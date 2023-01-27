@@ -75,6 +75,10 @@ function mostrarGastoWeb(idElemento, gasto){
         botonBorrarApi.className = "gasto-borrar-api";
         botonBorrarApi.type = "button";
         botonBorrarApi.textContent = "Borrar (API)";
+
+        let handleBorrarApi = new BorrarHandleApi();
+        handleBorrarApi.gasto = gasto;
+        handleBorrarApi.addEventListener("click",handleBorrarApi);
         divGasto.append(botonBorrarApi);
 
 
@@ -212,6 +216,12 @@ function nuevoGastoWebFormulario(){
    let cancelar = new botonCancelarHandle();
    cancelar.buttonAnyadir = botonAnyadir;
    botonCancelar.addEventListener('click', cancelar);
+
+   let botonEvianApi = formulario.getElementById("gasto-enviar-api");
+   let Enviar = new EnviarHandleApi();
+   botonEvianApi.addEventListener("click", Enviar);
+
+   
 }
 
 function SubmitHandle(){
@@ -351,18 +361,35 @@ async function cargarGastosApi(){
 }
 
  function BorrarHandleApi(){
-    this.handleEvent = async function(event){
+    this.handleEvent = async function(){
         try{
             let usuario = document.getElementById("nombre_usuario");
-            let gastoId = document.getElementById("nombre_usuario");
-            const resPost = await fetch(`https://jsonplaceholder.typicode.com/posts/${usuario}/${}`)    
-            console.log(usuario);
+            let repost = await fetch(`https://jsonplaceholder.typicode.com/posts/${usuario}/${this.gasto.id}` , { method: 'DELETE' });
+            let post = repost.json();
+            console.log(post);
+            gestion.cargarGastosApi();   
           }
           catch(error){
             console.log(error);
             }
     }
  }
+
+ function EnviarHandleApi(){
+    this.handleEvent = async function(){
+        try{
+            let usuario = document.getElementById("nombre_usuario");
+            let repost = await fetch(`https://jsonplaceholder.typicode.com/posts/${usuario}` , { method: 'POST' });
+            let post = repost.json();
+            console.log(post);
+            gestion.cargarGastosApi();   
+          }
+          catch(error){
+            console.log(error);
+            }
+    }
+ }
+
 
 let btnGuardarGastosWeb = document.getElementById("guardar-gastos");
 btnGuardarGastosWeb.onclick = guardarGastosWeb;
