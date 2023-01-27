@@ -65,7 +65,7 @@ function mostrarGastoWeb(gasto,idElemento)
  botonEditar.type = "button";
  botonEditar.textContent = "Editar";
  botonEditar.className = "gasto-editar";
-//Crear un nuevo objeto a partir de la función constructora EditarHandle.
+//Crear un nuevo objeto a partir de la función letructora EditarHandle.
  let editar = new EditarHandle();
  editar.gasto = gasto;//Establecer la propiedad gasto del objeto creado al objeto gasto (recuerda que el objeto gasto es un parámetro pasado a la función mostrarGastoWeb)
  //Añadir el objeto recién creado como objeto manejador del evento click al botón Editar recién creado.
@@ -180,7 +180,7 @@ document.getElementById("anyadirgasto").addEventListener("click",nuevoGastoWeb);
 
 function EditarHandle(){
 
- this.handleEvent = function(event)
+ this.handleEvent = function(evento)
  {
 
      let descripcion = prompt("Introduce una descripción:");
@@ -216,8 +216,8 @@ function nuevoGastoWebformulario(){
  //Crear una copia del formulario web definido en la plantilla HTML. El código a utilizar es el siguiente
  let plantillaFormulario = document.getElementById("formulario-template").content.cloneNode(true);
 
- //Acceder al elemento <form> dentro de ese fragmento de documento. Para ello podemos utilizar por ejemplo
- var formulario = plantillaFormulario.querySelector("form");
+ //Acceder al elemento <formulario> dentro de ese fragmento de documento. Para ello podemos utilizar por ejemplo
+ var formulario = plantillaFormulario.querySelector("formulario");
    
  let controlesdiv = document.getElementById('controlesprincipales');
  controlesdiv.appendChild(plantillaFormulario);
@@ -240,9 +240,9 @@ document.getElementById("anyadirgasto-formulario").addEventListener("click",nuev
 
 
 function EnviarHandleFormulario(){
- this.handleEvent = function(event){
-     event.preventDefault();
-     let formulario = event.currentTarget;
+ this.handleEvent = function(evento){
+     evento.preventDefault();
+     let formulario = evento.currentTarget;
      let descripción = formulario.elements.descripcion.value;
      let valor = parseFloat(formulario.elements.valor.value);
      let fecha = new Date(formulario.elements.fecha.value);
@@ -258,16 +258,16 @@ function EnviarHandleFormulario(){
 
 function EditarHandleFormulario()
 {
-   this.handleEvent = function (event)
+   this.handleEvent = function (evento)
    {
-       event.preventDefault();
+       evento.preventDefault();
        let plantilla = document.getElementById('formulario-template').content.cloneNode(true);
-       let formulario = plantilla.querySelector('form');
+       let formulario = plantilla.querySelector('formulario');
 
        let controles = document.getElementById('controlesprincipales');
        controles.append(formulario);
 
-       let btnformu = event.currentTarget;
+       let btnformu = evento.currentTarget;
        btnformu.append(formulario);
 
        formulario.elements.descripcion.value = this.gasto.descripcion;
@@ -290,8 +290,8 @@ function EditarHandleFormulario()
 
 
 function EnviarFormulario(){
- this.handleEvent = function(event){
-     let formu = event.currentTarget;
+ this.handleEvent = function(evento){
+     let formu = evento.currentTarget;
      this.gasto.actualizarDescripcion(formu.elements.descripcion.value);
      this.gasto.actualizarValor(parseFloat(formu.elements.valor.value));
      this.gasto.actualizarFecha(formu.elements.fecha.value);
@@ -301,24 +301,55 @@ function EnviarFormulario(){
  }
 }
 function btnCancelarHandle(){
- this.handleEvent = function(event)
+ this.handleEvent = function(evento)
  {
-   event.preventDefault();
-     event.currentTarget.parentNode.remove();
+   evento.preventDefault();
+     evento.currentTarget.parentNode.remove();
      document.getElementById("anyadirgasto-formulario").removeAttribute("disabled");
      repintar();
  }
  
 }
 
-function filtrarGatosWeb()
-{
-      this.handleEvent() = function(event)
-      {
-        let formu = event.preventDefault();
-        document.getElementById("filtrar-gastos");
+
+
+
+
+function filtrarGastosWeb() {
+
+  this.handleEvent = function (evento) 
+  {
+    
+      evento.preventDefault();
+      let form = evento.currentTarget;
+      let descripcion = form.elements["formulario-filtrado-descripcion"].value;
+      let valorMinimo= Number(form.elements["formulario-filtrado-valor-minimo"].value);
+      let valorMaximo = Number(form.elements["formulario-filtrado-valor-maximo"].value);
+      let fechaDesde = new Date (form.elements["formulario-filtrado-fecha-desde"].value);
+      let fechaHasta = new Date (form.elements["formulario-filtrado-fecha-hasta"].value);
+      let etiquetas = form.elements["formulario-filtrado-etiquetas-tiene"].value;
+      if(etiquetas != undefined){
+        etiquetas = gestionPresu.transformarListadoEtiquetas(etiquetas);
       }
+      
+      
+      let arrayfil = gestionPresu.filtrarGastos({fechaDesde: fechaDesde, fechaHasta: fechaHasta, valorMinimo: valorMinimo,
+                                                      valorMaximo: valorMaximo, descripcionContiene: descripcion, etiquetasTiene: etiquetas});
+                               
+      document.getElementById("listado-gastos-completo").innerHTML = "";
+     /*                                                
+      arrayfil.forEach(gasto => mostrarGastoWeb( gasto,"listado-gastos-completo"));
+      */
+
+     for (let gasto of arrayfil) {
+      
+      mostrarGastoWeb(gasto,"listado-gastos-completo");
+      
+     }
+  }  
 }
+let objFiltrado = new filtrarGastosWeb();
+document.getElementById("formulario-filtrado").addEventListener("submit", objFiltrado );
 
 export{
  mostrarDatoEnId,
@@ -334,6 +365,6 @@ export{
  btnCancelarHandle,
  EnviarHandleFormulario,
  EditarHandleFormulario,
- filtrarGatosWeb
+ filtrarGastosWeb
 }
 //Texto de prueba para la resolución del problema de git basch
