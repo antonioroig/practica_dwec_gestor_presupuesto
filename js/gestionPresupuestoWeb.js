@@ -349,9 +349,9 @@ function filtrarGastosWeb() {
   }  
 }
 
-
+/*
 document.getElementById("formulario-filtrado").addEventListener("submit", new filtrarGastosWeb());
-
+*/
 export{
  mostrarDatoEnId,
  mostrarGastoWeb,
