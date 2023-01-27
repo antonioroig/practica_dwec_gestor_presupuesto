@@ -65,6 +65,17 @@ function mostrarGastoWeb(idElemento, gasto) {
     botonBorrar.addEventListener('click', borrar);
     divContenedor.appendChild(botonBorrar);
 
+    let botonBorrarApi = document.createElement('button');
+    botonBorrarApi.type = 'button';
+    botonBorrarApi.className = 'gasto-borrar';
+    botonBorrarApi.textContent = 'Borrar (API)';
+
+    let borrarApi = new BorrarApiHandle();
+    borrarApi.gasto = gasto;
+    botonBorrarApi.addEventListener('click', borrarApi);
+    divContenedor.appendChild(botonBorrarApi);
+
+
     let botonEditarForm = document.createElement('button');
     botonEditarForm.className = 'gasto-editar-formulario';
     botonEditarForm.type = 'button';
@@ -325,6 +336,58 @@ function cargarGastosWeb(){
 let botonCargar = document.getElementById("cargar-gastos")
 botonCargar.addEventListener('click', new cargarGastosWeb())
 
+function BorrarApiHandle(){
+    this.handleEvent = function(){
+        let nombreUsuario = document.querySelector("#nombre_usuario").value
+        fetch(`https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${nombreUsuario}/${this.gasto.gastoId}` ,{
+            method: 'DELETE'
+        })  
+        .then(response => {
+            if (response.ok) {
+              console.log('Recurso eliminado');
+            }
+           cargarGastoApi()
+          })
+          .catch(error => {
+            console.log('Error al eliminar el recurso: ' + error);
+          });
+        
+    }
+}
+function EnviarApiHandleFormulario(){
+    this.handleEvent = function(event){
+        event.preventDefault();
+        let formulario = document.forms[0];
+        let descripcion = formulario.elements.descripcion.value;
+        let  valor = parseFloat(formulario.elements.valor.value);
+        let fecha = new Date(formulario.elements.fecha.value);
+        let etiquetas = toString(formulario.elements.etiquetas.value).split(',');
+        let nuevoGasto = new gestionPre.CrearGasto(descripcion, valor, fecha, ...etiquetas);
+        gestionPre.anyadirGasto(nuevoGasto);
+        document.getElementById("anyadirgasto-formulario").removeAttribute("disabled");
+
+        repintar();
+    }
+}
+function cargarGastosApiHandle() {
+    this.handleEvent = function(){
+        cargarGastoApi()
+    }
+}
+function cargarGastoApi() {
+    let nombreUsuario = document.querySelector("#nombre_usuario").value
+        fetch(`https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${nombreUsuario}`)
+        .then(response => response.json())
+        .then(data => {
+         gestionPre.cargarGastos(data);
+         console.log(data)
+         repintar();
+          // aquí puedes trabajar con los datos obtenidos
+        })
+        .catch(error => console.error(error));
+}
+let botonCargarApi = document.getElementById("cargar-gastos-api")
+botonCargarApi.addEventListener('click', new cargarGastosApiHandle())
 export {
     mostrarDatoEnId,
     mostrarGastoWeb,
