@@ -496,12 +496,9 @@ function cargarGastosApi(){
 // Revisar añadir botoncon onclick/addeventListener
 /* let btnGastoApi = document.getElementById("gasto-borrar-api");
 btnGastoApi.onclick = */
-let cargarGastosApi = function (){
-  this.handleEvent = function (){
 
-    let URL = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario}`;
-    
-  }
+let borrarGastosApi = function (){
+  
 }
 
 export    {
