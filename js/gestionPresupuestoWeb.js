@@ -217,7 +217,7 @@ function nuevoGastoWebformulario(){
  let plantillaFormulario = document.getElementById("formulario-template").content.cloneNode(true);
 
  //Acceder al elemento <formulario> dentro de ese fragmento de documento. Para ello podemos utilizar por ejemplo
- var formulario = plantillaFormulario.querySelector("formulario");
+ var formulario = plantillaFormulario.querySelector("form");
    
  let controlesdiv = document.getElementById('controlesprincipales');
  controlesdiv.appendChild(plantillaFormulario);
@@ -262,7 +262,7 @@ function EditarHandleFormulario()
    {
        evento.preventDefault();
        let plantilla = document.getElementById('formulario-template').content.cloneNode(true);
-       let formulario = plantilla.querySelector('formulario');
+       let formulario = plantilla.querySelector('form');
 
        let controles = document.getElementById('controlesprincipales');
        controles.append(formulario);
@@ -349,9 +349,9 @@ function filtrarGastosWeb() {
   }  
 }
 
-/*
+
 document.getElementById("formulario-filtrado").addEventListener("submit", new filtrarGastosWeb());
-*/
+
 export{
  mostrarDatoEnId,
  mostrarGastoWeb,
