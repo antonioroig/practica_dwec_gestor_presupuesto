@@ -206,7 +206,7 @@ function NuevoGastoHandle(){
     }
 }
 
-function NuevoGastoHandle(){
+function CancelarGastoHandle(){
     this.handleEvent = function(event) {
         event.preventDefault()
        
