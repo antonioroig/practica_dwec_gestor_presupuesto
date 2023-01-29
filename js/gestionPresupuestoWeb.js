@@ -209,7 +209,7 @@ function NuevoGastoHandle(){
             form.elements.descripcion.value,
             Number(form.elements.valor.value),
             new Date(form.elements.fecha.value),
-            form.elements.etiquetas.value
+            form.elements.etiquetas.value.split(",")
         )
         gp.anyadirGasto(nuevoGasto)
 
@@ -234,7 +234,7 @@ function EditarHandleFormulario(){
     
     let plantillaFormulario = document.getElementById("formulario-template").content.cloneNode(true);
     let formulario = plantillaFormulario.querySelector("form")
-    this.gastoD.appendChild(plantillaFormulario)
+    
     this.btnEditar.setAttribute('disabled', "")
 
     formulario.elements.descripcion.value = this.gasto.descripcion;
@@ -248,7 +248,7 @@ function EditarHandleFormulario(){
 
     let cancelar = formulario.querySelector("button.cancelar")
     cancelar.addEventListener("click", new CancelarGastoHandle(this.btnEditar))
-    
+    this.gastoD.appendChild(plantillaFormulario)
     }
 }
 function EditarGastoHandleFormulario(){ 
@@ -259,9 +259,9 @@ function EditarGastoHandleFormulario(){
         this.gasto.descripcion = form.elements.descripcion.value
         this.gasto.valor = Number(form.elements.valor.value)
         this.gasto.fecha = new Date(form.elements.fecha.value)
-        this.gasto.etiquetas = form.elements.etiquetas.value
+        this.gasto.etiquetas = form.elements.etiquetas.value.split(",")
         
-        repintar();
+        repintar()
     }
 }
 
