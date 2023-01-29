@@ -5,7 +5,7 @@ import * as gestionPresupuesto from './gestionPresupuesto.js';
 function mostrarDatoEnId(idElemento,valor){
     let id = document.getElementById(idElemento);
     id.innerHTML += "" + valor; 
-}
+};
 
 function mostrarGastoWeb(idElemento,gasto){
     let id = document.getElementById(idElemento);
@@ -80,7 +80,7 @@ function mostrarGastoWeb(idElemento,gasto){
 
     btnEditarForm.addEventListener('click',EditarForm);
     divGasto.append(btnEditarForm);
-}
+};
 
 function mostrarGastosAgrupadosWeb(idElemento,agrup,periodo){
     let idAll = document.getElementById(idElemento);
@@ -93,7 +93,7 @@ function mostrarGastosAgrupadosWeb(idElemento,agrup,periodo){
 
     divAgrupado += '</div>';
     idAll.innerHTML = divAgrupado;
-}
+};
 
 function repintar(){
     document.getElementById('presupuesto').innerHTML = '';
@@ -110,7 +110,7 @@ function repintar(){
     gestionPresupuesto.listarGastos().forEach(gasto =>{
         mostrarGastoWeb("listado-gastos-completo", gasto);
     });
-}
+};
 
 function actualizarPresupuestoWeb(){
     let presupuesto = prompt('Introduce un presupuesto',1500);
@@ -119,7 +119,7 @@ function actualizarPresupuestoWeb(){
         gestionPresupuesto.actualizarPresupuesto(presupuesto);
         repintar();
     };
-}
+};
 //boton actualizar presupuesto
 let btnActualizarPresupestoWeb = document.getElementById('actualizarpresupuesto');
 btnActualizarPresupestoWeb.addEventListener('click', actualizarPresupuestoWeb);
@@ -133,7 +133,7 @@ function nuevoGastoWeb(){
     let newGasto = new gestionPresupuesto.CrearGasto(newDesc,newValor,newFecha,arrayNEtiquetas);
     gestionPresupuesto.anyadirGasto(newGasto);
     repintar();
-}
+};
 //boton anyadir gasto
 let btnNuevoGasto = document.getElementById('anyadirgasto');
 btnNuevoGasto.addEventListener('click', nuevoGastoWeb);
@@ -153,7 +153,7 @@ function nuevoGastoWebFormulario(){
 
     let enviar = new EnviarHandleFormulario();
     formulario.addEventListener('submit',enviar);
-}
+};
 //boton anyadir formulario
 let btnAnyadirGasto = document.getElementById('anyadirgasto-formulario');
 btnAnyadirGasto.addEventListener('click',nuevoGastoWebFormulario);
@@ -208,7 +208,7 @@ function EditarHandle(){
 
         repintar();
     };
-}
+};
 
 function BorrarHandle(){
     this.handleEvent = function(event) {
@@ -216,14 +216,14 @@ function BorrarHandle(){
         gestionPresupuesto.borrarGasto(idGasto); 
         repintar();
     }
-}
+};
 
 function BorrarEtiquetasHandle(){
     this.handleEvent = function(event) {
         this.gasto.borrarEtiquetas(this.etiquetas);
         repintar();
     }
-}
+};
 
 function EditarHandleFormulario(){
     this.handleEvent = function(event){
@@ -253,7 +253,7 @@ function EditarHandleFormulario(){
 
         btnFormulario.setAttribute('disabled', "");
     }
-}
+};
 
 function CancelarHandleFormulario(){
     this.handleEvent = function(event){
@@ -264,7 +264,7 @@ function CancelarHandleFormulario(){
 
         repintar();
     }
-}
+};
 
 function EnviarHandle(){
     this.handleEvent = function(event){
@@ -286,7 +286,7 @@ function EnviarHandle(){
 
         repintar();
     }
-}
+};
 
 function EnviarHandleFormulario(){
     this.handleEvent = function(event){
@@ -305,7 +305,7 @@ function EnviarHandleFormulario(){
 
         document.getElementById("anyadirgasto-formulario").removeAttribute("disabled");
     }
-}
+};
 
 function guardarGastosWeb(){
     this.handleEvent = function(event){
@@ -314,6 +314,7 @@ function guardarGastosWeb(){
         localStorage.setItem('GestorGastosDWEC',JSON.stringify(gestionPresupuesto.listarGastos()));
     }
 };
+//Boton Guardar Gasto
 let botonGuardar = document.getElementById('guardar-gastos');
 botonGuardar.addEventListener('click', new guardarGastosWeb());
 
@@ -333,16 +334,80 @@ function cargarGastosWeb(){
         repintar();
     }
 };
+//Boton Cargar Gasto
 let botonCargar = document.getElementById('cargar-gastos');
 botonCargar.addEventListener('click', new cargarGastosWeb());
 
-function cargarGastosApi(){
+async function cargarGastosApi(){
     this.handleEvent = function(event){
-        event.preventDefault();
 
-        
+        let username = document.getElementById("nombre_usuario").value;
 
-        repintar();
+        let url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${username}`;
+
+        fetch(url, {method: 'GET'})
+            .then(response => response.json())
+            .then(function(gastos)
+            {
+                gestionPresupuesto.cargarGastos(gastos);
+                repintar();
+            })
+        .catch(error => {
+            console.error(error);
+        });
+    }
+};
+//Boton Cargar API
+let botonCargarApi = document.getElementById('cargar-gastos-api');
+botonCargarApi.addEventListener('click', cargarGastosApi);
+
+function borrarGastosApi(){
+    this.handleEvent = async function(event){
+        let username = document.getElementById("nombre_usuario").value;
+        let url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${username}/${this.gasto.gastoId}`;
+        try {
+            let resp = await fetch(url, {method: 'DELETE'});
+            if(resp.ok)
+            {
+                cargarGastosApi();
+                console.log('Se ha borrado el gasto');
+            }
+        } 
+        catch (error) {
+            console.log(error);
+        };
+    }
+};
+
+function enviarGastosApi(){
+    this.handleEvent = function(event){
+        let username = document.getElementById("nombre_usuario").value;
+        let url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${username}/${this.gasto.gastoId}`;
+
+        let formulario = document.querySelector('#controlesprincipales form');
+        let desc = formulario.elements.descripcion.value;
+        let valor = parseFloat(formulario.elements.valor.value);
+        let fecha = formulario.elements.fecha.value;
+        let etiquetas = formulario.elements.etiquetas.value.split(',');
+
+        let gasto = {
+            descripcion: desc,
+            valor: valor,
+            fecha: fecha,
+            etiquetas: etiquetas,
+        }
+
+        fetch(url, {method: 'POST', body: JSON.stringify(gasto), headers: {'Content-type': 'application/json; charset=utf-8'}})
+            .then(function(resp){
+                if(resp.ok){
+                    console.log('se ha creado el gasto')  
+                    cargarGastosApi();
+                }
+                else{
+                    console.log('error');
+                }   
+            })
+            .catch(err => alert(err));
     }
 };
 
@@ -357,5 +422,7 @@ export{
     filtrarGastosWeb,
     guardarGastosWeb,
     cargarGastosWeb,
-    cargarGastosApi
+    cargarGastosApi,
+    borrarGastosApi,
+    enviarGastosApi
 }
