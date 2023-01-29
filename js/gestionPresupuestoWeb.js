@@ -185,7 +185,7 @@ function BorrarEtiquetasHandle(){
     }
 }
 
-function nuevoGastoWebFormulario(){
+function agregarGastoHandle(){
     this.handleEvent = function() {
         
         this.gasto.borrarEtiquetas(this.etiqueta);
@@ -194,6 +194,11 @@ function nuevoGastoWebFormulario(){
     }
 }
 
+function nuevoGastoWebFormulario(){
+
+    
+
+}
  
 
 export{
