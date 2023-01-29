@@ -136,7 +136,7 @@ function nuevoGastoWeb(){
     let desc = prompt("Dame la descripcion del nuevo gasto: ", "Descripcion");
     let val = prompt("Dame el valor del nuevo gasto: ", 100);
     val = parseFloat(val, 10)
-    let fecha = prompt("Dame la fecha del nuevo gasto: ", "2022-09-22");
+    let fecha = prompt("Dame la fecha del nuevo gasto: ", "2023-02-01");
     let etiquetas = prompt("Dame las etiquetas del nuevo gasto separadas por comas: ", "et1,et2,et3");
 
     let arrayEtiquetas = etiquetas.split(",");
@@ -185,10 +185,9 @@ function BorrarEtiquetasHandle(){
     }
 }
 
-function agregarGastoHandle(){
-    this.handleEvent = function() {
-        
-        this.gasto.borrarEtiquetas(this.etiqueta);
+function NuevoGastoHandle(){
+    this.handleEvent = function(evento) {
+        event.preventDefault()
         
         repintar();
     }
@@ -196,10 +195,13 @@ function agregarGastoHandle(){
 
 function nuevoGastoWebFormulario(){
 
-    
+    let plantillaFormulario = document.getElementById("formulario-template").content.cloneNode(true);
+    var formulario = plantillaFormulario.querySelector("form");
 
+    formulario.addEventListener("submit", new NuevoGastoHandle())
 }
- 
+
+document.getElementById("anyadirgasto-formulario").addEventListener("click", nuevoGastoWebFormulario);
 
 export{
     mostrarDatoEnId,
