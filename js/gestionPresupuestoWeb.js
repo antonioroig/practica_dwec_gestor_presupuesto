@@ -206,23 +206,29 @@ function NuevoGastoHandle(){
     }
 }
 
-function CancelarGastoHandle(){
+function CancelarGastoHandle(boton){ 
     this.handleEvent = function(event) {
-        event.preventDefault()
-       
-
+        
+        document.forms[0].remove();
+        boton.removeAttribute("disabled");
     }
 }
 
 function nuevoGastoWebFormulario(){
-
+    
     let plantillaFormulario = document.getElementById("formulario-template").content.cloneNode(true);
-    var formulario = plantillaFormulario.querySelector("form");
-
-    document.getElementById("controlesprincipales").appendChild(formulario);
+    var formulario = plantillaFormulario.querySelector("form")
 
     formulario.addEventListener("submit", new NuevoGastoHandle())
-}
+
+    let anyadirGastoform = document.getElementById("anyadirgasto-formulario")
+    anyadirGastoform.setAttribute("disabled", "");
+    
+    let calcelar = formulario.querySelector("button.cancelar")
+    calcelar.addEventListener("click", new CancelarGastoHandle(anyadirGastoform))
+
+    document.getElementById("controlesprincipales").appendChild(formulario);
+} 
 
 document.getElementById("anyadirgasto-formulario").addEventListener("click", nuevoGastoWebFormulario);
 
