@@ -360,6 +360,17 @@ function guardarGastosWeb(){
 document.getElementById("guardar-gastos").addEventListener("click", new guardarGastosWeb());
 
 
+function cargarGastosWeb(){
+
+this.handleEvent = function(){
+  let gastosGuardados = localStorage.getItem("GestorGastosDWEC");
+  gestionPresu.cargarGastos(gastosGuardados ? JSON.parse(gastosGuardados) : []);
+  repintar();
+}
+}
+document.getElementById("cargar-gastos").addEventListener("click", new cargarGastosWeb() );
+
+
 export{
  mostrarDatoEnId,
  mostrarGastoWeb,
