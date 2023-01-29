@@ -186,10 +186,31 @@ function BorrarEtiquetasHandle(){
 }
 
 function NuevoGastoHandle(){
-    this.handleEvent = function(evento) {
+    this.handleEvent = function(event) {
         event.preventDefault()
+        const form = event.currentTarget;
         
+        let nuevoGasto = new gp.CrearGasto(
+            form.elements.descripcion.value,
+            Number(form.elements.valor.value),
+            new Date(form.elements.fecha.value),
+            form.elements.etiquetas.value
+        )
+        gp.anyadirGasto(nuevoGasto)
+
         repintar();
+
+        let btnAnyadirGasto = document.getElementById("anyadirgasto-formulario")
+        btnAnyadirGasto.removeAttribute("disabled")
+
+    }
+}
+
+function NuevoGastoHandle(){
+    this.handleEvent = function(event) {
+        event.preventDefault()
+       
+
     }
 }
 
@@ -197,6 +218,8 @@ function nuevoGastoWebFormulario(){
 
     let plantillaFormulario = document.getElementById("formulario-template").content.cloneNode(true);
     var formulario = plantillaFormulario.querySelector("form");
+
+    document.getElementById("controlesprincipales").appendChild(formulario);
 
     formulario.addEventListener("submit", new NuevoGastoHandle())
 }
