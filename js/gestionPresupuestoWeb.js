@@ -349,8 +349,16 @@ function filtrarGastosWeb() {
   }  
 }
 
-
 document.getElementById("formulario-filtrado").addEventListener("submit", new filtrarGastosWeb());
+
+function guardarGastosWeb(){
+  this.handleEvent = function(){
+      localStorage.setItem("GestorGastosDWEC", JSON.stringify(gestionPresu.listarGastos()));
+  }
+}
+
+document.getElementById("guardar-gastos").addEventListener("click", new guardarGastosWeb());
+
 
 export{
  mostrarDatoEnId,
@@ -366,6 +374,7 @@ export{
  btnCancelarHandle,
  EnviarHandleFormulario,
  EditarHandleFormulario,
- filtrarGastosWeb
+ filtrarGastosWeb,
+ guardarGastosWeb
 }
 //Texto de prueba para la resolución del problema de git basch
