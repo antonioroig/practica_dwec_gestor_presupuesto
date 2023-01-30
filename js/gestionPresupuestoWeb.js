@@ -286,18 +286,19 @@ document.getElementById("anyadirgasto-formulario").addEventListener("click", nue
 
 let filtrarGastosWeb1 = document.getElementById("filtrar-gastos")
 let filtrarGastosWeb2 = filtrarGastosWeb1.querySelector("form")
-
+filtrarGastosWeb2.addEventListener("submit", filtrarGastosWeb());
 
 function filtrarGastosWeb(){
     this.handleEvent = function(event) {
         event.preventDefault()
-        
+        const form = event.currentTarget;
+        let a = form.elements
 
         repintar()
     }
 }
 
-filtrarGastosWeb2.addEventListener("submit", filtrarGastosWeb());
+
 
 export{
     mostrarDatoEnId,
