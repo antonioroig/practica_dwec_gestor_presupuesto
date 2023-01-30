@@ -17,7 +17,7 @@ import{
     filtrarGastos,
     agruparGastos,
 } from './gestionPresupuesto.js';
-
+/*
 actualizarPresupuesto(1500);
 mostrarDatoEnId(mostrarPresupuesto(), "presupuesto");
 
@@ -65,4 +65,4 @@ mostrarGastosAgrupadosWeb(agruparGastos("dia"), "día", "agrupacion-dia");
 mostrarGastosAgrupadosWeb(agruparGastos("mes"), "mes", "agrupacion-mes");
 
 mostrarGastosAgrupadosWeb(agruparGastos("anyo"), "año", "agrupacion-anyo");
-
+*/

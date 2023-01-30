@@ -252,6 +252,7 @@ function cargarGastos(gastosAlmacenamiento) {
         // Añadimos el gasto rehidratado a "gastos"
         gastos.push(gastoRehidratado)
     }
+
 }
     
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.

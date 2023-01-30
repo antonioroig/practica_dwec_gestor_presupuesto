@@ -20,10 +20,12 @@ function mostrarDatoEnId(valor, idElemento){
     }
 }
 function mostrarGastoWeb(idElemento, gasto){
-
+    const h2 = document.createElement("h2");
+    const text = document.createTextNode("GASTO " );
+    h2.appendChild(text);
     if(idElemento != null){
         let elemento = document.getElementById(idElemento);
-        
+        elemento.appendChild(h2)
         let divGasto = document.createElement("div");
             divGasto.className = "gasto";
             elemento.appendChild(divGasto);
@@ -31,28 +33,29 @@ function mostrarGastoWeb(idElemento, gasto){
         if(gasto.descripcion){
             let divGastoDescripcion = document.createElement("div");
                 divGastoDescripcion.className = "gasto-descripcion";
-                divGastoDescripcion.innerHTML += gasto.descripcion;
+                divGastoDescripcion.innerHTML += "Descripcion: " + gasto.descripcion;
                 divGasto.appendChild(divGastoDescripcion);
         }
         if(gasto.valor){
             let divGastoFecha = document.createElement("div");
                 divGastoFecha.className = "gasto-fecha";
-                divGastoFecha.innerHTML += gasto.fecha;
+                divGastoFecha.innerHTML += "Fecha: " + gasto.fecha;
                 divGasto.appendChild(divGastoFecha);
         }
         if(gasto.fecha){
             let divGastoValor = document.createElement("div");
                 divGastoValor.className = "gasto-valor";
-                divGastoValor.innerHTML += gasto.valor;
+                divGastoValor.innerHTML += "Valor: " + gasto.valor;
                 divGasto.appendChild(divGastoValor);
         }
         let divGastoEtiquetas = document.createElement("div");
             divGastoEtiquetas.className = "gasto-etiquetas";
             
             gasto.etiquetas.forEach(etiqueta => {
+                let numEti = 1;
                 var spanEtiqueta = document.createElement('span');
                 spanEtiqueta.className="gasto-etiquetas-etiqueta";
-                spanEtiqueta.innerHTML = etiqueta;
+                spanEtiqueta.innerHTML ="Etiqueta " + numEti + ":" + etiqueta +" ";
 
                 let gastoBorrarEtiqueta = new BorrarEtiquetasHandle();
                 gastoBorrarEtiqueta.gasto = gasto;
@@ -436,7 +439,6 @@ function CancelarGastoHandle(){
         this.boton.removeAttribute("disabled");
     }
 }
-let numFiltro = 0;
 function filtrarGastosWeb(){
     this.handleEvent = function(event){
         event.preventDefault();
@@ -455,16 +457,10 @@ function filtrarGastosWeb(){
             etiquetasTiene:etiquetas
         }
         document.getElementById("listado-gastos-completo").innerHTML = "";
-        let h2 = document.createElement("h2");
-        numFiltro++;
-        h2.innerHTML = "FILTRADO " + numFiltro;
         this.formulario.appendChild()
         filtrarGastos(objFilt).forEach(gasto => {
             mostrarGastoWeb("listado-gastos-completo",gasto);
         })
-        let h2 = document.createElement("h2");
-        numFiltro++;
-        h2.innerHTML = "FILTRADO " + numFiltro;
     }
 }
 let divFormulario = document.getElementById("filtrar-gastos")
@@ -509,12 +505,16 @@ function cargarGastosApiHandle(){
 function cargarGastosApi(){
     let user = document.getElementById('nombre_usuario').value;
     let url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/` + user;
+    const myElement = document.getElementById("listado-gastos-completo");
+    while (myElement.firstChild) {
+        myElement.removeChild(myElement.firstChild);
+    }
 
     fetch(url, {method: 'GET'})
     .then(response => response.json())
     .then(data =>{
+        data.sort((a, b) => a.valor.toString().localeCompare(b.valor.toString()));
         cargarGastos(data);
-        console.log(data);
         repintar();
     })
     .catch(error => console.log(error));
@@ -537,7 +537,7 @@ function EnviarApiHandle(){
           }})
             .then(response => response.json())
             .then(data => {
-                cargarGastosApi(data);
+                cargarGastosApi();
         })
         .catch(error => console.log(error));
     }
