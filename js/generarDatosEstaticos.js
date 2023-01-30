@@ -5,6 +5,7 @@ import * as gestionPresupuestoWeb from './gestionPresupuestoWeb.js';
 
 gestionPresupuesto.actualizarPresupuesto(1500); // generamos el presupuesto
 gestionPresupuestoWeb.mostrarDatoEnId(gestionPresupuesto.mostrarPresupuesto(), 'presupuesto'); // mostrar presupuesto 1500€
+
 // Crear los siguientes gastos (función crearGasto): --> Añadir los gastos creados (función anyadirGasto):
 gestionPresupuesto.anyadirGasto(new gestionPresupuesto.CrearGasto("Compra carne", 23.44, "2021-10-06", "casa", "comida"));
 gestionPresupuesto.anyadirGasto(new gestionPresupuesto.CrearGasto("Compra fruta y verdura", 14.25, "2021-09-06", "supermercado", "comida"));
