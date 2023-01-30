@@ -96,9 +96,36 @@ function mostrarGastoWeb(gasto,idElemento)
      btnEditarForHandle.gasto = gasto;
      btnEditarFor.addEventListener('click',btnEditarForHandle);
      gastoDiv.append(btnEditarFor);
+/*********************************************************** */
+    let btnBorrarApi = document.createElement('button');
+    btnBorrarApi.type = 'button';
+    btnBorrarApi.textContent = 'Borrrar Api';
+    btnBorrarApi.className = 'gasto-borrar-api';
 
+   let borrarApi = new BorrarHandleApi();
+   borrarApi.gasto = gasto;
+   btnBorrarApi.addEventListener('click', borrarApi);
+   gastoDiv.appendChild(btnBorrarApi);
 }
 
+
+//Manejador de eventos de los botones .gasto-borrar-api
+let BorrarHandleApi =  function(){
+  this.handleEvent = async function() {
+    let nombreUsuario = document.querySelector('#nombre_usuario').value;
+  //Se encargará de realizar mediante fetch una solicitud DELETE a la URL correspondiente de la API
+    let url =` https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/DELETE/${nombreUsuario}/${this.gasto.id}`;
+  
+  let respuesta = await fetch(url);
+  if (respuesta.ok){
+    //se deberá llamar a la función cargarGastosApi para actualizar la lista en la página.
+   cargarGastosApi();
+  } else  
+  {
+    alert("Error-HTTP: " + response.status);
+  }
+  }
+ }
 
 function mostrarGastosAgrupadosWeb(idElemento,agrup,periodo)
 {
