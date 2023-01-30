@@ -78,7 +78,7 @@ function mostrarGastoWeb(idElemento, gasto){
 
         let handleBorrarApi = new BorrarHandleApi();
         handleBorrarApi.gasto = gasto;
-        handleBorrarApi.addEventListener("click",handleBorrarApi);
+        botonBorrarApi.addEventListener("click",handleBorrarApi);
         divGasto.append(botonBorrarApi);
 
 
@@ -217,11 +217,9 @@ function nuevoGastoWebFormulario(){
    cancelar.buttonAnyadir = botonAnyadir;
    botonCancelar.addEventListener('click', cancelar);
 
-   let botonEvianApi = formulario.getElementById("gasto-enviar-api");
+   let botonEnvianApi = formulario.getElementById("gasto-enviar-api");
    let Enviar = new EnviarHandleApi();
-   botonEvianApi.addEventListener("click", Enviar);
-
-   
+   botonEnvianApi.addEventListener("click", Enviar);
 }
 
 function SubmitHandle(){
@@ -276,6 +274,10 @@ function EditarHandleFormulario(){
         cancelar.buttonAnyadir = botonEdit;
         let botonCancelar = formulario.querySelector("button.cancelar");
         botonCancelar.addEventListener('click', cancelar);
+
+        let botonEditarApi = formulario.getElementById("gasto-editar-api");
+        let Editar = new EditarHandleApi();
+        botonEditarApi.addEventListener("click", Editar);
     }
 }
 
@@ -353,32 +355,28 @@ function cargarGastosWeb(){
 
 async function cargarGastosApi(){
 
-        let usuario = document.getElementById("nombre_usuario");
+        let usuario = document.getElementById("nombre_usuario").value;
         let rePost = await fetch(`https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario}`);
-        let post = rePost.json();
+        let post = await rePost.json();
         gestion.cargarGastos(post);
         repintar();
 }
 
  function BorrarHandleApi(){
     this.handleEvent = async function(){
-        try{
-            let usuario = document.getElementById("nombre_usuario");
+
+            let usuario = document.getElementById("nombre_usuario").value;
             let repost = await fetch(`https://jsonplaceholder.typicode.com/posts/${usuario}/${this.gasto.id}` , { method: 'DELETE' });
-            let post = repost.json();
+            let post = await repost.json();
             console.log(post);
             gestion.cargarGastosApi();   
           }
-          catch(error){
-            console.log(error);
-            }
     }
- }
 
  function EnviarHandleApi(){
     this.handleEvent = async function(){
         try{
-            let usuario = document.getElementById("nombre_usuario");
+            let usuario = document.getElementById("nombre_usuario").value;
             let repost = await fetch(`https://jsonplaceholder.typicode.com/posts/${usuario}` , { method: 'POST' });
             let post = repost.json();
             console.log(post);
@@ -390,6 +388,24 @@ async function cargarGastosApi(){
     }
  }
 
+ 
+ function EditarHandleApi(){
+    this.handleEvent = async function(){
+        try{
+            let usuario = document.getElementById("nombre_usuario").value;
+            let repost = await fetch(`https://jsonplaceholder.typicode.com/posts/${usuario}` , { method: 'PUT' });
+            let post = repost.json();
+            console.log(post);
+            gestion.cargarGastosApi();   
+          }
+          catch(error){
+            console.log(error);
+            }
+    }
+ }
+
+ let btnCargarGastosdApi = document.getElementById("cargar-gastos-api");
+ btnCargarGastosdApi.onclick = cargarGastosApi;
 
 let btnGuardarGastosWeb = document.getElementById("guardar-gastos");
 btnGuardarGastosWeb.onclick = guardarGastosWeb;
