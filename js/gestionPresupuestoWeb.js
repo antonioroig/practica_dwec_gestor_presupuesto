@@ -84,6 +84,17 @@ function mostrarGastoWeb(idElemento, gasto)
         bBorrar.addEventListener("click", BtnBorrarHandle);
         divGasto.append(bBorrar);
         
+        let bBorrarAPI = document.createElement("button");
+        bBorrarAPI.className = "gasto-borrar-api";
+        bBorrarAPI.type = "button";
+        bBorrarAPI.innerHTML = "Borrar (API)";
+
+        let BtnBorrarAPIHandle = new BorrarAPIHandle();
+        BtnBorrarAPIHandle.gasto = gasto;
+        bBorrarAPI.addEventListener("click", BtnBorrarAPIHandle);
+        divGasto.append(bBorrarAPI);
+
+        
         divGastoEtiquetas.addEventListener("click", handleBorrarEtiq);
 
         let btnEditForm = document.createElement("button");
@@ -208,6 +219,21 @@ function BorrarEtiquetasHandle()
             repintar();
         }
 }
+function BorrarAPIHandle(){
+    this.handleEvent = async function(){
+        let usuario = document.getElementById("nombre_usuario").value;
+        try{
+            const resPost = await fetch(`https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario}/${this.gasto.id}`, {method: 'DELETE'});
+            console.log(resPost)
+            gesP.cargarGastosApi();
+        }
+        catch(error){
+            console.log(error);
+        }
+    }
+}
+
+
 function nuevoGastoWebFormulario()
 {
     let plantillaForm = document.getElementById("formulario-template").content.cloneNode(true);;
@@ -377,13 +403,14 @@ let btnCargarGasto = document.getElementById('cargar-gastos');
 btnCargarGasto.onclick = cargarGastosWeb;
 async function cargarGastosApi()
 {
-    let usuario = document.getElementById("nombre_usuario");
+    let usuario = document.getElementById("nombre_usuario").value;
     const resPost = await fetch(`https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario}`);
     const post = await resPost.json();
     gesP.cargarGastos(post)
     repintar();
 }
-
+let btnCargarGastoApi = document.getElementById('cargar-gastos-api');
+btnCargarGastoApi.onclick = cargarGastosApi;
 export{
     mostrarDatoEnId,
     mostrarGastoWeb,
