@@ -169,7 +169,7 @@ function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo){
     // La función "Chart" está disponible porque hemos incluido las etiquetas <script> correspondientes en el fichero HTML
     const myChart = new Chart(chart.getContext("2d"), {
         // Tipo de gráfica: barras. Puedes cambiar el tipo si quieres hacer pruebas: https://www.chartjs.org/docs/latest/charts/line.html
-        type: 'line',
+        type: 'bar', // fue type="line", pero Antonio ha dicho que mejor "bar"
         data: {
             datasets: [
                 {
@@ -240,11 +240,11 @@ function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo){
         divDato.append(spanDatoClave);
         divDato.append(spanDatoValor);
         divAgrup.append(divDato);
-    }
-
+    }*/
+    /* 
     elemento.append(divAgrup);   
 
-    return elemento; */  
+    return elemento; */
 }
         /* 
         <div class="agrupacion-dato">
@@ -279,6 +279,7 @@ function repintar(){
     }
     
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+    // Actividad 10 
     /* Modifica la función repintar para que actualice los datos de las capas div#agrupacion-dia, div#agrupacion-mes y div#agrupacion-anyo 
     mediante las funciones agruparGastos y mostrarGastosAgrupadosWeb */
 
