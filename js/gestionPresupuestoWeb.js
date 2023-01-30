@@ -284,6 +284,21 @@ function nuevoGastoWebFormulario(){
 document.getElementById("anyadirgasto-formulario").addEventListener("click", nuevoGastoWebFormulario);
 
 
+let filtrarGastosWeb1 = document.getElementById("filtrar-gastos")
+let filtrarGastosWeb2 = filtrarGastosWeb1.querySelector("form")
+
+
+function filtrarGastosWeb(){
+    this.handleEvent = function(event) {
+        event.preventDefault()
+        
+
+        repintar()
+    }
+}
+
+filtrarGastosWeb2.addEventListener("submit", filtrarGastosWeb());
+
 export{
     mostrarDatoEnId,
     mostrarGastoWeb,
