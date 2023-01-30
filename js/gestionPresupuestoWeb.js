@@ -80,7 +80,7 @@ function mostrarGastoWeb(idElemento,gasto){
 
     let handleBorrarGastosApi = new BorrarHandleGastosApi();
     handleBorrarGastosApi.gasto = gasto;
-    btnBorrarApi.addEventListener('click' , handleBorrarGastosApi);
+    btnBorrarApi.addEventListener('click',handleBorrarGastosApi);
     divGasto.append(btnBorrarApi);
 
     let btnEditarFormulario = document.createElement("button");
@@ -101,18 +101,13 @@ function mostrarGastoWeb(idElemento,gasto){
     
 }
 
-async function BorrarHandleGastosApi(){
+function BorrarHandleGastosApi(){
     this.handleEvent =  async function(){
-    let usuario = document.getElementById("nombre_usuario");
-    try{
-        const resPost = await fetch(`https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario}/${this.gasto.id}`, { method: 'DELETE'})
+    let usuario = document.getElementById("nombre_usuario").value;
+        const resPost = await fetch(`https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario}/${this.gasto.id}`,{ method: 'DELETE',})
         console.log(resPost);
-        ges.cargarGastosApi();  
-      }
-    catch(error){
-        console.log(error);
-        }
-    }   
+        cargarGastosApi();
+    } 
 }
 
 function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo){
@@ -218,6 +213,7 @@ function BorrarEtiquetasHandle(){
         repintar();
     }
 }
+
 
 function nuevoGastoWebFormulario(){
     let plantillaFormulario = document.getElementById("formulario-template").content.cloneNode(true);
@@ -376,7 +372,7 @@ btnCargarGastoWeb.onclick = cargarGastosWeb;
 
 
 async function  cargarGastosApi(){
-    let usuario = document.getElementById("nombre_usuario");
+    let usuario = document.getElementById("nombre_usuario").value;
     const resPost = await fetch(`https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario}`);
     const post = await resPost.json();
     ges.cargarGastos(post);
@@ -384,6 +380,7 @@ async function  cargarGastosApi(){
 }
 let btnCargarGastoApi = document.getElementById('cargar-gastos-api');
 btnCargarGastoApi.onclick = cargarGastosApi;
+
 //NO MODIFICAR.
 export   {
     mostrarDatoEnId,
