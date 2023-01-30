@@ -1,5 +1,6 @@
 "use strict";
 
+//import { FetchError } from "node-fetch";
 //import { mostrarPresupuesto } from "./gestionPresupuesto";
 import * as gp from "./gestionPresupuesto.js";
 
@@ -111,6 +112,10 @@ function mostrarGastoWeb(gasto, idElemento){
     btnBorrarApi.textContent = 'Borrar (API)';
 
     // Crear evento asociado al boton
+    let objBorrarApi = new borrarGastoApi();
+    objBorrarApi.gasto = gasto;
+    btnBorrarApi.addEventListener('click',objBorrarApi);
+    divGasto.appendChild(btnBorrarApi);
 
     elemento.append(divGasto); 
 }
@@ -313,7 +318,7 @@ function nuevoGastoWebFormulario(){
    let elemento = document.getElementById("controlesprincipales");
   elemento.appendChild(plantillaFormulario);
   
-  // Con esto suficiente
+  // MANEJADOR DE EVENTO SUBMIT 
   let objEnviar = new eventoSubmit();
   formulario.addEventListener('submit',objEnviar);
 
@@ -322,6 +327,25 @@ function nuevoGastoWebFormulario(){
   let objCancelar = new eventoCancelar();
   btnCancelar.addEventListener('click', objCancelar);
   
+  // MANEJADOR DE EVENTO BORRAR API
+  let btnGastoApi = formulario.querySelector('gasto-enviar-api');
+  let objGastoApi = new gastoApiFormulario;
+  btnGastoApi.addEventListener('click',objGastoApi);
+  
+  
+}
+let gastoApiFormulario = function (){
+  this.handleEvent = function(){
+    let usuario = document.getElementById(`nombre_usuario`).value;
+    let url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario}`;
+
+    Fetch(url, {method: "POST"})
+      .then(data => data.jsno())
+      .then(datos =>
+        cargarGastosApi()
+      )
+
+  }
 }
 
 // Función constructora 
@@ -347,18 +371,39 @@ function EditarHandleFormulario() {
     
     divGasto.appendChild(formulario);
     
+    // MANEJADOR DE EVENTO ENVIAR
     let eventoEnviar = new enviarHandle();
     eventoEnviar.gasto = this.gasto;
     formulario.addEventListener('submit', eventoEnviar);
-    
-    
+        
     // MANEJADOR DE EVENTO CANCELAR
     let btnCancelar = formulario.querySelector("button.cancelar");
     let objCancelar = new eventoCancelar();
     btnCancelar.addEventListener("click", objCancelar);
     btnActivo.setAttribute("disabled", '');
+    
+    // MANEJADOR DE EVENTO ENVIAR API
+    
+    let btnEnviarApi = document.getElementById('gasto-enviar-api');
+    let objGastosApi = new enviarGastoApi();
+    objGastosApi.gasto = this.gasto;
+    btnEnviarApi.addEventListener('click', objGastosApi);
   }
 }
+let enviarGastoApi = function(){
+  this.handleEvent = function(){
+
+    let usuario = document.getElementById(`nombre_usuario`).value;
+    let url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario}/${this.gasto.id}`;
+
+    fetch(url, {method : "PUT"})
+      .then(data => data.jsno())
+      .then(datos => 
+        cargarGastosApi()
+        );
+  }
+}
+
 function enviarHandle()
 {
     this.handleEvent = function(event)
@@ -477,29 +522,56 @@ function cargarGastosWeb(){
 }
 
 // Práctica 9
-let objCargarApi = new cargarGastosApi();
 let btnCargarGastosApi = document.getElementById("cargar-gastos-api");
-btnCargarGastosApi.addEventListener("click", objCargarApi);
-
+btnCargarGastosApi.onclick = cargarGastosApi;
 function cargarGastosApi(){
-  this.handleEvent = async function(){
+  let usuario = document.getElementById(`nombre_usuario`).value;
+  let url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario}`;
+  const options = {
+    method: "GET"
+  }
+  fetch(url, options) 
+  .then(data => { 
+            data.json(); // Convierte los datos en un json
+          
+  })
+  .then(function(gastosAPI)
+  {
 
-    // Poner la URL correspondiente /URL/{miUsuario}
-    let URL = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario}`;
-    let datos = await fetch(URL);
-
-    // Si no ponemos opciones, se ejecuta una acción GET
+      gp.cargarGastos(gastosAPI);
+      repintar();
+  })
+  //.catch(err => alert(err));
+  
+ /*  .then(function(datos){
     gp.cargarGastos(datos);
     repintar();
-  }
-}
-// Revisar añadir botoncon onclick/addeventListener
-/* let btnGastoApi = document.getElementById("gasto-borrar-api");
-btnGastoApi.onclick = */
-
-let borrarGastosApi = function (){
+  })  */
   
+  // let listado = fetch(url,options);
+  // gp.cargarGastos(listado);
+  // repintar();;
+    
+  }
+  
+  let borrarGastoApi = function (){
+    this.handleEvent = function(){
+      
+      let id = this.gasto.id;
+      let usuario = document.getElementById(`nombre_usuario`).value;
+      let url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario}/${id}`;
+     
+    // Fetch delete, necesita el id del elemnto que va a borrar
+    fetch(url, id,{method:'DELETE'})
+      //.then(data => data.json())
+      .then(datos =>{
+        cargarGastosApi();
+      })
+    
+  }
+
 }
+
 
 export    {
 
