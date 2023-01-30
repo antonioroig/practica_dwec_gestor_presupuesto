@@ -460,6 +460,7 @@ function nuevoGastoWebFormulario()
             document.getElementById("anyadirgasto-formulario").disabled = false;
             document.getElementById("controlesprincipales").removeChild(formulario);
             cargarGastosApi(); // Una vez completada la petición, se deberá llamar a la función cargarGastosApi para actualizar la lista en la página.
+            alert("Gasto API Añadido");
         }
         else 
             alert("Error: " + nuevoGastoApi.status);  // Si hay error
@@ -562,7 +563,7 @@ function CargarGastosWeb()
 {
     this.handleEvent = function()
     {
-        let cargarGastos = JSON.parse(localStorage.getItem('GestorGastosDWEC'));
+        let cargarGastos = JSON.parse(localStorage.getItem('GestorGastosDWEC')); // <-- almacenamiento de localstorage denominada GestorGastosDWEC
 
         if((cargarGastos != null) && (cargarGastos.length >=0 ))
             gestionPresupuesto.cargarGastos(cargarGastos);
@@ -593,12 +594,12 @@ async function cargarGastosApi()
     // Se encargará de obtener mediante fetch el listado de gastos a través de la API de servidor.
     let gastoApi = await fetch(`https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${nombre_usuario}`);
 
-    if (gastoApi.ok)
+    if (gastoApi.ok) // (COSAS MIAS) объявление функции ok()
     {
         let json = await gastoApi.json(); 
         gestionPresupuesto.cargarGastos(json); // Una vez obtenida la lista de gastos de la API deberá llamar a la función cargarGastos del paquete js/gestionPresupuesto.js
         
-        console.log(json);
+        console.log(json); // ver en console
         repintar(); //  llamar a la función repintar
     } 
     else
@@ -613,9 +614,9 @@ function BorrarApiHandle()
         if (this.gasto.hasOwnProperty("gastoId"))
         {
             let nombre_usuario = document.getElementById("nombre_usuario").value;
-            let gastoApi = await fetch(`https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${nombre_usuario}` + "/" + this.gasto.gastoId, {method:'DELETE'});
+            let gastoApi = await fetch(`https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${nombre_usuario}` + "/" + this.gasto.gastoId, {method:'DELETE'}); // DELETE --> BORRAR
             // comprobar errores
-            (gastoApi.ok) ? cargarGastosApi() : alert("Error: " + gastoApi.status);
+            (gastoApi.ok) ? cargarGastosApi() && alert("Gasto borrado API.") : alert("Error: " + gastoApi.status);   
         }
         else
         {
