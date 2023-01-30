@@ -384,6 +384,26 @@ function cargarGastoWeb(){
 }
 function CargarGastosApi(){
     let usuario = document.getElementById('nombre_usuario').value;
+    if(usuario != '')
+    {
+        let url =  `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario}`;
+
+        fetch(url, {
+
+            method: "GET",
+        })
+        .then(response => response.json())
+
+        .then(function(gastosAPI)
+        {
+            exGp.cargarGastos(gastosAPI);
+            repintar();
+        })
+        .catch(err => alert(err));
+    }else
+    {
+        alert('Introduzca un usuario');
+    }
    
 }
 

@@ -36,6 +36,7 @@ for (let gasto of  gastosFil)
 gastosFil = exGp.filtrarGastos({valorMinimo:200, etiquetasTiene: ['seguros']}); 
 for (let gasto of  gastosFil)
 {
+    
     exGpweb.mostrarGastoWeb(gasto, "listado-gastos-filtrado-3");
 }
 gastosFil = exGp.filtrarGastos({valorMaximo: 50, etiquetasTiene: ['comida'] ['transporte']});
