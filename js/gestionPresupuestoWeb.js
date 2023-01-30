@@ -39,7 +39,7 @@ function mostrarGastoWeb(idElemento, gasto){
         if(gasto.valor){
             let divGastoFecha = document.createElement("div");
                 divGastoFecha.className = "gasto-fecha";
-                divGastoFecha.innerHTML += "Fecha: " + gasto.fecha;
+                divGastoFecha.innerHTML += "Fecha: " + new Date(gasto.fecha).toLocaleDateString();
                 divGasto.appendChild(divGastoFecha);
         }
         if(gasto.fecha){
@@ -51,19 +51,22 @@ function mostrarGastoWeb(idElemento, gasto){
         let divGastoEtiquetas = document.createElement("div");
             divGastoEtiquetas.className = "gasto-etiquetas";
             
-            gasto.etiquetas.forEach(etiqueta => {
-                let numEti = 1;
-                var spanEtiqueta = document.createElement('span');
-                spanEtiqueta.className="gasto-etiquetas-etiqueta";
-                spanEtiqueta.innerHTML ="Etiqueta " + numEti + ":" + etiqueta +" ";
+            let numEti = 1;
+            if(gasto.etiquetas){
+                gasto.etiquetas.forEach(etiqueta => {
+                    var spanEtiqueta = document.createElement('span');
+                    spanEtiqueta.className = "gasto-etiquetas-etiqueta";
+                    spanEtiqueta.innerHTML = "Etiqueta " + numEti + ": " + etiqueta +" ";
+                    numEti++;
 
-                let gastoBorrarEtiqueta = new BorrarEtiquetasHandle();
-                gastoBorrarEtiqueta.gasto = gasto;
-                gastoBorrarEtiqueta.etiqueta = etiqueta;
-                spanEtiqueta.addEventListener('click', gastoBorrarEtiqueta);
-                
-                divGastoEtiquetas.appendChild(spanEtiqueta);
-            });
+                    let gastoBorrarEtiqueta = new BorrarEtiquetasHandle();
+                    gastoBorrarEtiqueta.gasto = gasto;
+                    gastoBorrarEtiqueta.etiqueta = etiqueta;
+                    spanEtiqueta.addEventListener('click', gastoBorrarEtiqueta);
+                    
+                    divGastoEtiquetas.appendChild(spanEtiqueta);
+                });
+            }
             divGasto.appendChild(divGastoEtiquetas);
 
         
@@ -502,18 +505,21 @@ function cargarGastosApiHandle(){
         cargarGastosApi();
     }
 }
+let order = 0;
+let primeraVez = true;
 function cargarGastosApi(){
     let user = document.getElementById('nombre_usuario').value;
     let url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/` + user;
-    const myElement = document.getElementById("listado-gastos-completo");
-    while (myElement.firstChild) {
-        myElement.removeChild(myElement.firstChild);
-    }
 
     fetch(url, {method: 'GET'})
     .then(response => response.json())
     .then(data =>{
-        data.sort((a, b) => a.valor.toString().localeCompare(b.valor.toString()));
+        data.sort((a, b) => a.orden.toString().localeCompare(b.orden.toString()));
+        if(primeraVez){
+            order = data.length + 1
+            primeraVez = false;
+        }
+        console.log(order)
         cargarGastos(data);
         repintar();
     })
@@ -521,12 +527,19 @@ function cargarGastosApi(){
 }
 function EnviarApiHandle(){
     this.handleEvent = function(event){
-
+        order++;
         let descripcion = this.formulario.elements.descripcion.value;
         let valor = Number(this.formulario.elements.valor.value);
         let fecha = new Date (this.formulario.elements.fecha.value);
         let etiquetas = this.formulario.elements.etiquetas.value;
-        let jsonGasto = JSON.stringify(new CrearGasto(descripcion,valor,fecha,...etiquetas))
+        let nuevoGasto = {
+            descripcion :descripcion, 
+            valor:valor, 
+            fecha:fecha, 
+            etiquetas: etiquetas.split(","),
+            orden:order
+        }
+        let jsonGasto = JSON.stringify(nuevoGasto)
         let user = document.getElementById('nombre_usuario').value;
         let url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/` + user;
     
