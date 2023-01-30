@@ -371,6 +371,30 @@ this.handleEvent = function(){
 document.getElementById("cargar-gastos").addEventListener("click", new cargarGastosWeb() );
 
 
+  //Nueva función cargarGastosApi
+async function cargarGastosApi() 
+{
+  //Se deberá crear la URL correspondiente utilizando el nombre de usuario que se haya introducido en el control input#nombre_usuario
+    let nombreUsuario = document.querySelector('#nombre_usuario').value;
+    //tendrá que hacer una solicitud GET a la URL correspondiente de la API
+    let url = ` https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${nombreUsuario}`;
+    //se encargará de obtener mediante fetch el listado de gastos a través de la API de servidor.
+    let respuesta = await fetch(url);
+    if (respuesta.ok){
+      //Una vez obtenida la lista de gastos de la API
+      let listaGastos = await respuesta.json();
+      //I deberá llamar a la función cargarGastos del paquete js/gestionPresupuesto.js para actualizar el array de gastos.
+      gestionPresu.cargarGastos(listaGastos);
+      repintar();
+    } else  
+    {
+      alert("Error-HTTP: " + response.status);
+    }
+  }
+
+//Esta función se utilizará como manejadora de eventos del evento click del botón cargar-gastos-api.
+document.getElementById("cargar-gastos-api").addEventListener("click", new cargarGastosApi() );
+
 export{
  mostrarDatoEnId,
  mostrarGastoWeb,
