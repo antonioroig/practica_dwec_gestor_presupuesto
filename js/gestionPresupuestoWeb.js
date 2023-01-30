@@ -70,9 +70,23 @@ let mostrarGastoWeb = function(idsento,gasto){
 
         let editarFormNew = new EditarHandleFormulario();
         editarFormNew.gasto = gasto;
-
         botonEditForm.addEventListener('click', editarFormNew);
         divContenedor.append(botonEditForm);
+
+        let botonBorrarApi = document.createElement("button");
+        botonBorrarApi.className = "gasto-borrar-api";
+        botonBorrarApi.type = "button";
+        botonBorrarApi.textContent = "Borrar (API)";
+
+        let handleBorrarApi = new BorrarHandleApi();
+        handleBorrarApi.gasto = gasto;
+        botonBorrarApi.addEventListener("click",handleBorrarApi);
+        divContenedor.append(botonBorrarApi);
+        
+
+
+
+
 
     return sento;
 }
@@ -205,6 +219,10 @@ function nuevoGastoWebFormulario() //PRACTICA 6 La primera parte
     let cancelar = new CancelarFormularioHandle();
     cancelar.botonAnyadir = botonAnyadir;
     botonCancelar.addEventListener('click', cancelar);
+
+    let CrearApiEvento = new PostHandle();
+            CrearApiEvento.formulario = formulario;
+            formulario.querySelector("button[class='gasto-enviar-api']").addEventListener('click', CrearApiEvento);
 }
 
 function EnviarFormularioHandle() //PRACTICA 6 La primera parte 
@@ -377,8 +395,76 @@ function cargarGastosWeb() {
 }
 
 
+/////////////////////////////////////////////////////// cargarGastosApi ////////////////////////////////////////////////////////
+
+    async function cargarGastosApi() 
+    {
+        let usuario = document.getElementById("nombre_usuario").value;
+        let rePost = await fetch(`https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario}`);
+        let post = await rePost.json();
+        gestionpr.cargarGastos(post);
+        repintar();
+        
+    }
+
+/////////////////////////////////////////////////////// BorrarHandleApi ////////////////////////////////////////////////////////
+
+function BorrarHandleApi(){
+    this.handleEvent = async function(){
+        let usuario = document.getElementById('nombre_usuario').value;
+        
+            let url =  `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario}/${this.gasto.gastoId}`;
+            fetch(url, 
+            {  method: "DELETE",
+            })
+            .then(function(response)
+            {
+                if(response.ok)
+                {
+                    cargarGastosApi();
+                }
+                
+            })
+        
+    }
+ }
+/////////////////////////////////////////////////////// EnviarHandleApi ////////////////////////////////////////////////////////
+function PostHandle(){
+    this.handleEvent = async function(){
+        let nameUser = document.getElementById("nombre_usuario").value;
+
+        let gasto = {
+            descripcion: this.formulario.descripcion.value,
+            valor: this.formulario.valor.value,
+            fecha: this.formulario.fecha.value,
+            etiquetas: (typeof this.formulario.etiquetas.value !== "undefined") ? this.formulario.etiquetas.value.split(",") : undefined,
+            id: id
+        }
+
+        let respuesta = await fetch(
+            `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${nameUser}`,{
+              method: 'POST',  
+
+              headers: {
+                'Content-Type': 'application/json;charset=utf-8'
+            },
+
+              body: JSON.stringify(gasto)
+            });
+
+        if(respuesta.ok)
+        {
+            id++;
+        }
+    }
+}
+
+
 let btnCargarGastosWeb = document.getElementById("cargar-gastos");
 btnCargarGastosWeb.onclick = cargarGastosWeb;
+
+let btnCargarGastosWeb2 = document.getElementById("cargar-gastos-api");
+btnCargarGastosWeb2.onclick = cargarGastosApi;
 
 
   let s = document.getElementById('actualizarpresupuesto')
@@ -389,6 +475,8 @@ btnCargarGastosWeb.onclick = cargarGastosWeb;
   
   e.onclick = nuevoGastoWeb;
 
+  
+ 
 
   let anyadirgastoForm = document.getElementById("anyadirgasto-formulario");
   anyadirgastoForm.addEventListener('click', nuevoGastoWebFormulario);
