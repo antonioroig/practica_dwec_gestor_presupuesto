@@ -234,9 +234,8 @@ function filtrarGastos({fechaDesde,fechaHasta,valorMinimo,valorMaximo,descripcio
                 add = false;
             }
         
-
-        return add;
         }
+        return add;
     });
 
     return arrayFiltro;

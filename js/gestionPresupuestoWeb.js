@@ -47,11 +47,14 @@ function mostrarGastoWeb(idElemento, gasto)
         divGastoEtiquetas.className = "gasto-etiquetas";
         
         for(let i = 0; i < gasto.etiquetas.length; i++){
-            let divGastoEtiquetasEtiqueta = document.createElement('span');
-            divGastoEtiquetasEtiqueta.className = "gasto-etiquetas-etiqueta";
-            divGastoEtiquetasEtiqueta.textContent = gasto.etiquetas[i];
+            let spanEtiquetas = document.createElement('span');
+            spanEtiquetas.className= "gasto-etiquetas-etiqueta";
+            spanEtiquetas.textContent = gasto.etiquetas[i] + " ";
+            divGastoEtiquetas.append(spanEtiquetas)
         }
-
+        
+        let salto=document.createElement("br");
+        divGasto.append(divGastoEtiquetas, salto);
     }
 }
 
@@ -82,6 +85,7 @@ function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo)
         datoDIV.appendChild(datoValorSPAN);
         agrupDIV.appendChild(datoDIV);
     }
+    elemento.append(agrupDIV);
 }
 
 export{

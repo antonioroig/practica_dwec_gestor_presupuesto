@@ -47,6 +47,6 @@ for (let gasto of gestionPresupuesto.filtrarGastos({etiquetasTiene: ["comida", "
     gestionPresupuestoWeb.mostrarGastoWeb("listado-gastos-filtrado-4", gasto);
 }
 
-gestionPresupuestoWeb.mostrarGastosAgrupadosWeb(gestionPresupuesto.agruparGastos("dia"),"día" ,"agrupacion-dia");
-gestionPresupuestoWeb.mostrarGastosAgrupadosWeb(gestionPresupuesto.agruparGastos("mes"),"mes" , "agrupacion-mes");
-gestionPresupuestoWeb.mostrarGastosAgrupadosWeb(gestionPresupuesto.agruparGastos("anyo"),"año" ,"agrupacion-anyo");
+gestionPresupuestoWeb.mostrarGastosAgrupadosWeb("agrupacion-dia", gestionPresupuesto.agruparGastos("dia"),"día");
+gestionPresupuestoWeb.mostrarGastosAgrupadosWeb("agrupacion-mes", gestionPresupuesto.agruparGastos("mes"),"mes");
+gestionPresupuestoWeb.mostrarGastosAgrupadosWeb("agrupacion-anyo", gestionPresupuesto.agruparGastos("anyo"),"año");
