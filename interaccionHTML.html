@@ -6,6 +6,29 @@
         <title>
             Hellen Tituaña
         </title>
+        <style>
+          body {
+            font-family: Arial, Helvetica, sans-serif;
+          }
+          h1{
+            text-shadow: 2px 2px gray;
+          }
+          * button {
+            margin: 2px;
+            border-radius: 4px;
+            border: 1px  solid #4b4949;
+            background-color: white;
+          }
+          * button:hover{
+            color: white;
+            background-color: #4b4949;
+          }
+          * input{
+            border-radius: 4px;
+            border: 2px solid #4b4949;
+            margin: 2px;
+          }
+        </style>
     </head>
 
     <body>
@@ -41,7 +64,7 @@
                 <button id="cargar-gastos-api">
                   Cargar gastos (API)
                 </button>
-                <input type="text" id="nombre_usuario">
+                <input type="text" id="nombre_usuario" placeholder="Usuario">
               </div>
             <div id="presupuesto">
               <h1>Presupuesto</h1>
