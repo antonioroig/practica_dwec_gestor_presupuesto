@@ -420,5 +420,21 @@ function EnviarHandleApi()
             .catch(error => console.log(error));
     }
 }
-export{mostrarDatoEnId,mostrarGastoWeb,mostrarGastosAgrupadosWeb,repintar,actualizarPresupuestoWeb,nuevoGastoWeb,EditarHandle,BorrarHandle,BorrarEtiquetasHandle,EnviarHandle,EditarHandleFormulario,EnviarHandleFormulario,CancelarHandleFormulario,nuevoGastoWebFormulario,filtrarGastosWeb,cargarGastosWeb,guardarGastosWeb, cargarGastosApi}
+function BorrarGastosApi()
+{
+    this.handleEvent = function(event)
+    {
+        event.preventDefault();
+        let user = document.getElementById('nombre_usuario').value;
+        let url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/`+ user + "/"+ this.gasto.gastoID;
+
+        fetch(url, {method: 'DELETE'})
+        .then(data =>{
+            borrarGasto(this.gasto.gastoId);
+            cargarGastosApi();
+        })
+        .catch(error => console.log(error));
+    }
+}
+export{mostrarDatoEnId,mostrarGastoWeb,mostrarGastosAgrupadosWeb,repintar,actualizarPresupuestoWeb,nuevoGastoWeb,EditarHandle,BorrarHandle,BorrarEtiquetasHandle,EnviarHandle,EditarHandleFormulario,EnviarHandleFormulario,CancelarHandleFormulario,nuevoGastoWebFormulario,filtrarGastosWeb,cargarGastosWeb,guardarGastosWeb, cargarGastosApi, EnviarHandleApi, BorrarGastosApi}
 
