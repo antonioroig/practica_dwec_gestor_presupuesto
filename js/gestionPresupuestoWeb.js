@@ -64,10 +64,19 @@ function mostrarGastoWeb(idElemento, gastos)
         editargastoformulario.DIVgasto = DIVgasto;
         editargastoformulario.BUTTONeditarformulario = BUTTONeditarformulario;
         BUTTONeditarformulario.addEventListener('click',editargastoformulario);
-        
+
+        let BUTTONborrarapi = document.createElement('button');
+        BUTTONborrarapi.type = 'button';
+        BUTTONborrarapi.className = 'gasto-borrar-api';
+        BUTTONborrarapi.innerHTML = "Borrar (API)";
+        let borrargastoapi = new BorrarAPIHandle();
+        borrargastoapi.gasto = gasto;
+        BUTTONborrarapi.addEventListener('click',borrargastoapi);
+
         DIVgasto.appendChild(BUTTONeditar);
         DIVgasto.appendChild(BUTTONborrar);
         DIVgasto.appendChild(BUTTONeditarformulario);
+        DIVgasto.appendChild(BUTTONborrarapi);
 
         elemento.appendChild(DIVgasto);
     });
@@ -165,7 +174,8 @@ function EditarHandleformulario(){
         this.DIVgasto.append(formulario);
         formulario.elements.descripcion.value = this.gasto.descripcion;
         formulario.elements.valor.value = this.gasto.valor;
-        formulario.elements.fecha.value = this.gasto.fecha;
+        let fecha = new Date (this.gasto.fecha)
+        formulario.elements.fecha.value = fecha.toLocaleString();
         formulario.elements.etiquetas.value = this.gasto.etiquetas;
  
         let EnviarForm = new EnviarEditarHandleformulario();
@@ -195,8 +205,9 @@ function EnviarEditarHandleformulario(){
         event.preventDefault();
         this.gasto.descripcion = this.formulario.elements.descripcion.value;
         this.gasto.valor = parseFloat(this.formulario.elements.valor.value);
-        this.gasto.fecha = new Date (this.formulario.elements.fecha.value);
-        this.gasto.etiquetas = toString(this.formulario.elements.etiquetas.value).split(",");
+        this.gasto.fecha = this.formulario.elements.fecha.value;
+        let array = (this.formulario.elements.etiquetas.value).split(",");
+        this.gasto.etiquetas = array;
         repintar();
     }
 }
@@ -211,6 +222,12 @@ function nuevoGastoWebFormulario(){
     let Cancelar =  new funcionCancelar();
     let BUTTONcancelar = formulario.querySelector("button.cancelar");
     BUTTONcancelar.addEventListener('click',Cancelar);
+    let BUTTONenviarapi = document.createElement('button');
+    BUTTONenviarapi.type = 'button';
+    BUTTONenviarapi.className = 'gasto-enviar-api';
+    BUTTONenviarapi.innerHTML = "Enviar (API)";
+    let enviargastoapi = new EnviarAPIHandle();
+    BUTTONenviarapi.addEventListener('click',enviargastoapi);
     repintar();
 }
 
@@ -324,7 +341,6 @@ function cargarGastosApi(){
     this.handleEvent = function(event) {
         let usuario = (document.getElementById("nombre_usuario")).value;
         let URL = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario}`;
-        console.log(URL);
         fetch(URL,{method: "GET"})
             .then(solucion => solucion.json())
             .then((datos)  => {
@@ -332,6 +348,7 @@ function cargarGastosApi(){
                 {
                     gestionPresupuesto.cargarGastos(datos);
                     repintar();
+                    console.log("Gastos Introducidos Correctamente")
                 }
                 else
                 {
@@ -345,14 +362,33 @@ let CargarApi = new cargarGastosApi();
 let BUTTONcargarapi = document.getElementById("cargar-gastos-api");
 BUTTONcargarapi.addEventListener("click",CargarApi);
 
-// const getDatos = () =>{
-//     return new Promise((resolve,reject) => {
-//         reject(new Error('No existen los datos'));
-//         setTimeout(()=> {resolve(datos)},500);
-//     }
-// }
+function BorrarAPIHandle(){
+    this.handleEvent = function(event) {
+        let id = this.gasto.id;
+        let usuario = (document.getElementById("nombre_usuario")).value;
+        let URL = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario}/${id}`;
+        fetch(URL,{method: "DELETE"})
+            .then((datos)  => {
+                if(datos.ok)
+                {
+                    console.log("Se ha eliminado el gaston de id " + id + " correctamente");
+                }
+                else
+                {
+                    console.log("Error este gasto no se encuentra en la API");
+                }
+                cargarGastosApi();
+            })
+    }
+}
 
-// async function
+function EnviarAPIHandle(){
+    this.handleEvent = function(event){
+        let usuario = (document.getElementById("nombre_usuario")).value;
+        let URL = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario}`;
+        fetch(URL,{method: "POST"})
+    }
+}
 
 export{
     mostrarDatoEnId,
