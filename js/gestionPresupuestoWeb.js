@@ -485,11 +485,7 @@ function borrarGastosApi()
 
             if(respuestaActual.ok)
             {
-                if(usuario == null || usuario == "")
-                {
-                    alert('Introduce un nombre de usuario.')
-                }
-
+                
                 url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario}`;
 
                 fetch(url, {method: 'GET'})
@@ -529,11 +525,6 @@ function enviarGastosApi()
         try
         {
             fetch(url, {method: 'POST', body: JSON.stringify(gasto), headers: {'Content-type': 'application/json; charset=utf-8'}});
-
-            if(usuario == null || usuario == "")
-                {
-                    alert('Introduce un nombre de usuario.')
-                }
 
             fetch(url, {method: 'GET'})
                 .then(respuesta => respuesta.json())
