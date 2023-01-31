@@ -387,7 +387,7 @@ function cargarGastosApi()
         .then(gastos => 
         {
             pres.cargarGastos(gastos);
-            console.log(gastos)
+            console.log(gastos);
             repintar();
         })
         .catch(error => console.log(error));
@@ -396,5 +396,29 @@ function cargarGastosApi()
 let btnCargarApi = document.getElementById('cargar-gastos-api');
 btnCargarApi.addEventListener('click', new cargarGastosApi());
   
+function EnviarHandleApi()
+{
+    this.handleEvent = function(event)
+    {
+        event.preventDefault();
+        let formulario = event.currentTarget;
+        let descripcion = formulario.elements.descripcion.value;
+        let valor = formulario.elements.valor.value;
+        let fecha = formulario.elements.fecha.value;
+        let etiquetas = formulario.elements.etiquetas.value;
+        let jsonGasto = JSON.stringify(new CrearGasto(descripcion,valor,fecha,...etiquetas));
+        let user = document.getElementById('nombre_usuario').value;
+        let url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${user}`;
+
+        console.log(jsonGasto);
+        fetch(url, {method: 'POST', body: jsonGasto, headers: {
+            'Content-Type': 'application/json'
+        }})
+            .then(response => response.json())
+            .then(data => {
+                cargarGastosApi(data);})
+            .catch(error => console.log(error));
+    }
+}
 export{mostrarDatoEnId,mostrarGastoWeb,mostrarGastosAgrupadosWeb,repintar,actualizarPresupuestoWeb,nuevoGastoWeb,EditarHandle,BorrarHandle,BorrarEtiquetasHandle,EnviarHandle,EditarHandleFormulario,EnviarHandleFormulario,CancelarHandleFormulario,nuevoGastoWebFormulario,filtrarGastosWeb,cargarGastosWeb,guardarGastosWeb, cargarGastosApi}
 
