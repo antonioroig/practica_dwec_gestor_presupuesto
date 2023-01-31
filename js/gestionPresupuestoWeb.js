@@ -88,11 +88,10 @@ function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo)
     elemento.append(agrupDIV);
 }
 
-function repintar(idElemento)
+function repintar()
 {
-    let elemento = document.getElementById(idElemento);
-    let presDiv = document.createElement('div');
-    presDiv.className = 'presupuesto';
+    gestionPresupuestoWeb.mostrarDatoEnId('presupuesto', gestionPresupuesto.mostrarPresupuesto());
+
 }
 
 export{
