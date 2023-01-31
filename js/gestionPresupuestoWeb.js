@@ -1,7 +1,7 @@
 'use strict';
 import * as gestionPresupuesto from  "./gestionPresupuesto.js";
 
-function mostrarDatosEnId(idElemento, valor)
+function mostrarDatoEnId(idElemento, valor)
 {
     if(idElemento != undefined)
     {
@@ -85,7 +85,7 @@ function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo)
 }
 
 export{
-    mostrarDatosEnId,
+    mostrarDatoEnId,
     mostrarGastoWeb,
     mostrarGastosAgrupadosWeb,
 }
