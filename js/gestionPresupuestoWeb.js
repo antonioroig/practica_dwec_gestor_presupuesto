@@ -328,6 +328,11 @@ function nuevoGastoWebFormulario(){
   btnCancelar.addEventListener('click', objCancelar);
   
   // MANEJADOR DE EVENTO BORRAR API
+  let btnBorrarApi = formulario.querySelector('button.gasto-borrar-api');
+  let objBorrarApi = new borrarGastoApi();
+    btnBorrarApi.addEventListener('click',objBorrarApi);
+  
+  // OJO
   let btnGastoApi = formulario.querySelector('button.gasto-enviar-api');
   btnGastoApi.addEventListener('click', gastoApiFormulario);
 }
@@ -443,7 +448,7 @@ function EnviarGastoApi (){
       etiquetas: array
   }
     console.log(nObjeto);
-    fetch(url, {
+    fetch(url,{
       method: 'PUT', 
       body: JSON.stringify(nObjeto),
       headers:{
@@ -609,32 +614,37 @@ function cargarGastosApi(){
 
   
 function borrarGastoApi(){
-    this.handleEvent = function(){
-      
-      let id = this.gasto.id;
+    this.handleEvent = function(event){
       let usuario = document.getElementById(`nombre_usuario`).value;
-      let url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario}/${id}`;
+      let url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario}/${this.gasto.id}`;
      
-      fetch(url, {method: 'DELETE'})
+     /*  let form = event.currentTarget.value;
+    let descripcion = form.elements.descripcion.value;
+    let valor = parseFloat(form.elements.valor.value);
+    let fecha = form.elements.fecha.value;
+    let etiquetas = form.elements.etiquetas.value;
+    let array = etiquetas.split(', ');
+
+    let nObjeto = {
+      descripcion: descripcion,
+      fecha: fecha,
+      valor: valor,
+      etiquetas: array
+  }  */
+  alert(nObjeto);
+      fetch(url,{method: 'DELETE'})
             .then(response => response.json())
             .then(datos => {
-                if(!datos.errorMessage)
+              cargarGastosApi();
+              /*   if(!datos.errorMessage)
                 {
-                    cargarGastosApi();
                 } 
                 else 
                 {
                     console.log(datos.errorMessage);
-                }
+                } */
             })
             .catch(err => console.error(err));
-    // Fetch delete, necesita el id del elemnto que va a borrar
-    /* fetch(url, id,{method:'DELETE'})
-      .then(data => data.json())
-      .then(datos =>{
-        cargarGastosApi();
-      })
-      .catch(err => console.error(err)); */
     
   }
 }
