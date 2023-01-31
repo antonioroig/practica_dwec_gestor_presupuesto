@@ -174,15 +174,8 @@ function calcularBalance() {
     return presupuesto - calcularTotalGastos();
 }
 
-<<<<<<< HEAD
-function filtrarGastos({fechaDesde,fechaHasta,valorMin,valorMax,descripcionContiene,etiquetasTiene})
-{
-    let arrayFiltro = gastos.filter(function(gasto)
-    {
-=======
 function filtrarGastos({fechaDesde,fechaHasta,valorMinimo,valorMaximo,descripcionContiene,etiquetasTiene}){
     let arrayFiltro = gastos.filter(function(gasto){
->>>>>>> 11ad378e6d567bba8d92e12b65a8bdcea9169d86
         let add = true;
 
         if (fechaDesde)
@@ -198,50 +191,6 @@ function filtrarGastos({fechaDesde,fechaHasta,valorMinimo,valorMaximo,descripcio
             }
         }
 
-        if (valorMin)
-        {
-            if (gasto.valor < valorMin)
-            {
-                add = false;
-            }
-        }
-        
-        if (valorMax)
-        {
-            if (gasto.valor > valorMax)
-            {
-                add = false;
-            }
-        }
-
-        if (descripcionContiene)
-        {
-            if (!(gasto.descripcion.toUpperCase()).includes(descripcionContiene.toUpperCase()))
-            {
-                add = false;
-            }
-        }
-
-        if (etiquetasTiene)
-        {
-            let existe = false;
-
-            for (let i = 0; i < etiquetasTiene.length; i++)
-            {
-                for (let j = 0; j < gasto.etiquetas.length; j++)
-                {
-                    if (etiquetasTiene[i] === gasto.etiquetas[j])
-                    {
-                        existe = true;
-                    }
-                }
-            }
-            if (existe === false)
-            {
-                add = false;
-            }
-<<<<<<< HEAD
-=======
         if (valorMinimo)
         {
             if (gasto.valor < valorMinimo)
@@ -284,17 +233,12 @@ function filtrarGastos({fechaDesde,fechaHasta,valorMinimo,valorMaximo,descripcio
             {
                 add = false;
             }
->>>>>>> 11ad378e6d567bba8d92e12b65a8bdcea9169d86
-        }
+        
 
         return add;
     });
 
     return arrayFiltro;
-<<<<<<< HEAD
-
-=======
->>>>>>> 11ad378e6d567bba8d92e12b65a8bdcea9169d86
 }
 
 function agruparGastos(periodo = "mes", etiquetas, fechaDesde, fechaHasta = Date.now()){
