@@ -328,24 +328,51 @@ function nuevoGastoWebFormulario(){
   btnCancelar.addEventListener('click', objCancelar);
   
   // MANEJADOR DE EVENTO BORRAR API
-  let btnGastoApi = formulario.querySelector('gasto-enviar-api');
-  let objGastoApi = new gastoApiFormulario;
-  btnGastoApi.addEventListener('click',objGastoApi);
-  
-  
+  let btnGastoApi = formulario.querySelector('button.gasto-enviar-api');
+  btnGastoApi.addEventListener('click', gastoApiFormulario);
 }
-let gastoApiFormulario = function (){
-  this.handleEvent = function(){
-    let usuario = document.getElementById(`nombre_usuario`).value;
+
+function gastoApiFormulario(event){
+  let usuario = document.getElementById(`nombre_usuario`).value;
     let url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario}`;
 
-    Fetch(url, {method: "POST"})
-      .then(data => data.jsno())
-      .then(datos =>
-        cargarGastosApi()
-      )
+    let form = event.currentTarget.form;
+    let descripcion = form.elements.descripcion.value;
+    let valor = parseFloat(form.elements.valor.value);
+    let fecha = form.elements.fecha.value;
+    let etiquetas = form.elements.etiquetas.value;
+    let array = etiquetas.split(', ');
 
+    let nObjeto = {
+      descripcion: descripcion,
+      fecha: fecha,
+      valor: valor,
+      etiquetas: array
   }
+
+  console.log(nObjeto);
+
+      fetch(url, {
+        method: 'POST', 
+        body: JSON.stringify(nObjeto),
+        headers:{
+            'Content-Type': 'application/json'
+        }
+    })
+    .then(response => {
+        
+        if(response.ok)
+        {
+            console.log("Añadido Correctamente");
+            cargarGastosApi();
+        }
+        else
+        {
+            console.log("Añadido Incorrectamente");
+        }
+    })
+    .catch(err => console.error(err));
+    let btnAnyadirGastoForm = document.getElementById("anyadirgasto-formulario").removeAttribute("disabled");
 }
 
 // Función constructora 
@@ -382,25 +409,59 @@ function EditarHandleFormulario() {
     btnCancelar.addEventListener("click", objCancelar);
     btnActivo.setAttribute("disabled", '');
     
-    // MANEJADOR DE EVENTO ENVIAR API
-    
-    let btnEnviarApi = document.getElementById('gasto-enviar-api');
-    let objGastosApi = new enviarGastoApi();
+    // MANEJADOR DE EVENTO ENVIAR API  
+    let btnEnviarApi = formulario.querySelector('button.gasto-enviar-api');
+    let objGastosApi = new EnviarGastoApi();
     objGastosApi.gasto = this.gasto;
     btnEnviarApi.addEventListener('click', objGastosApi);
   }
 }
-let enviarGastoApi = function(){
-  this.handleEvent = function(){
+// MANEJADOR DE EVENTO ENVIAR API
+function EnviarGastoApi (){
+  this.handleEvent = function(event){
 
+    let id = this.gasto.id;
     let usuario = document.getElementById(`nombre_usuario`).value;
-    let url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario}/${this.gasto.id}`;
+    let url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario}/${id}`;
 
-    fetch(url, {method : "PUT"})
+    /* fetch(url, {method : "PUT"})
       .then(data => data.jsno())
       .then(datos => 
         cargarGastosApi()
-        );
+        ); */
+    let form = event.currentTarget.form;
+    let descripcion = form.elements.descripcion.value;
+    let valor = parseFloat(form.elements.valor.value);
+    let fecha = form.elements.fecha.value;
+    let etiquetas = form.elements.etiquetas.value;
+    let array = etiquetas.split(', ');
+
+    let nObjeto = {
+      descripcion: descripcion,
+      fecha: fecha,
+      valor: valor,
+      etiquetas: array
+  }
+    console.log(nObjeto);
+    fetch(url, {
+      method: 'PUT', 
+      body: JSON.stringify(nObjeto),
+      headers:{
+          'Content-Type': 'application/json'
+      }
+  })
+  .then(response => {
+      
+      if(response.ok){
+          console.log("Modificacion correcta");
+          cargarGastosApi();
+      }else{
+          console.log("Modificacion INcorrecta");
+      }
+  })
+  .catch(err => console.error(err));
+  let btnAnyadirGastoForm = document.getElementById("anyadirgasto-formulario");
+        btnAnyadirGastoForm.removeAttribute('disabled');
   }
 }
 
@@ -524,52 +585,58 @@ function cargarGastosWeb(){
 // Práctica 9
 let btnCargarGastosApi = document.getElementById("cargar-gastos-api");
 btnCargarGastosApi.onclick = cargarGastosApi;
+
 function cargarGastosApi(){
+  
   let usuario = document.getElementById(`nombre_usuario`).value;
   let url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario}`;
-  const options = {
-    method: "GET"
-  }
-  fetch(url, options) 
-  .then(data => { 
-            data.json(); // Convierte los datos en un json
-          
-  })
-  .then(function(gastosAPI)
-  {
+ 
+  fetch(url, {
 
-      gp.cargarGastos(gastosAPI);
-      repintar();
-  })
-  //.catch(err => alert(err));
-  
- /*  .then(function(datos){
-    gp.cargarGastos(datos);
+    method: "GET",
+})
+.then(response => response.json())
+
+.then(function(gastosAPI)
+{
+
+    gp.cargarGastos(gastosAPI);
     repintar();
-  })  */
+})
+.catch(err => alert(err));
+
+}
+
   
-  // let listado = fetch(url,options);
-  // gp.cargarGastos(listado);
-  // repintar();;
-    
-  }
-  
-  let borrarGastoApi = function (){
+function borrarGastoApi(){
     this.handleEvent = function(){
       
       let id = this.gasto.id;
       let usuario = document.getElementById(`nombre_usuario`).value;
       let url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario}/${id}`;
      
+      fetch(url, {method: 'DELETE'})
+            .then(response => response.json())
+            .then(datos => {
+                if(!datos.errorMessage)
+                {
+                    cargarGastosApi();
+                } 
+                else 
+                {
+                    console.log(datos.errorMessage);
+                }
+            })
+            .catch(err => console.error(err));
     // Fetch delete, necesita el id del elemnto que va a borrar
-    fetch(url, id,{method:'DELETE'})
-      //.then(data => data.json())
+    /* fetch(url, id,{method:'DELETE'})
+      .then(data => data.json())
       .then(datos =>{
         cargarGastosApi();
       })
+      .catch(err => console.error(err)); */
     
   }
-
 }
 
 
