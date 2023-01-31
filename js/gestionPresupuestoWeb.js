@@ -29,6 +29,7 @@ function mostrarGastoWeb(gasto, idElemento){
 
     let divGasto = document.createElement("div");
     divGasto.classList.add(`gasto`);
+
     // div con descripcion
     let div = document.createElement('div');
     div.classList.add(`gasto-descripcion`);
@@ -232,15 +233,32 @@ divP.append(chart);
 }
 
 function repintar(){
-  
+
+  document.getElementById("presupuesto").innerHTML= '';
+  let titulo = document.createElement('h1');
+  titulo.textContent ="Presupuesto";
+  document.getElementById("presupuesto").appendChild(titulo);
   mostrarDatoEnId(gp.mostrarPresupuesto(), "presupuesto");
+  
+  document.getElementById("gastos-totales").innerHTML= '';
+  let titulo2 = document.createElement('h1');
+  titulo2.textContent ="Gastos totales";
+  document.getElementById("gastos-totales").appendChild(titulo2);
   mostrarDatoEnId(gp.calcularTotalGastos(), "gastos-totales");
+
+  document.getElementById("balance-total").innerHTML= '';
+  let titulo3 = document.createElement('h1');
+  titulo3.textContent ="Balance total";
+  document.getElementById("balance-total").appendChild(titulo3);
   mostrarDatoEnId(gp.calcularBalance(), "balance-total");
 
   
   let actLista = document.getElementById("listado-gastos-completo");
     actLista.innerHTML='';
 
+    let titulo4 = document.createElement('h1');
+    titulo4.textContent ="Listado de Gastos";
+    document.getElementById("listado-gastos-completo").appendChild(titulo4);
     gp.listarGastos().forEach(gasto => {
         mostrarGastoWeb(gasto, "listado-gastos-completo");
     });
@@ -376,7 +394,7 @@ function gastoApiFormulario(event){
             console.log("Añadido Incorrectamente");
         }
     })
-    .catch(err => console.error(err));
+    //.catch(err => console.error(err));
     let btnAnyadirGastoForm = document.getElementById("anyadirgasto-formulario").removeAttribute("disabled");
 }
 
@@ -425,15 +443,10 @@ function EditarHandleFormulario() {
 function EnviarGastoApi (){
   this.handleEvent = function(event){
 
-    let id = this.gasto.id;
+    let id = this.gasto["gastoId"];
     let usuario = document.getElementById(`nombre_usuario`).value;
     let url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario}/${id}`;
 
-    /* fetch(url, {method : "PUT"})
-      .then(data => data.jsno())
-      .then(datos => 
-        cargarGastosApi()
-        ); */
     let form = event.currentTarget.form;
     let descripcion = form.elements.descripcion.value;
     let valor = parseFloat(form.elements.valor.value);
@@ -464,7 +477,8 @@ function EnviarGastoApi (){
           console.log("Modificacion INcorrecta");
       }
   })
-  .catch(err => console.error(err));
+  // .catch(err => console.error(err));
+
   let btnAnyadirGastoForm = document.getElementById("anyadirgasto-formulario");
         btnAnyadirGastoForm.removeAttribute('disabled');
   }
@@ -550,8 +564,8 @@ function filtrarGastosWeb(){
     if(etiquetas !== undefined){
       etiquetas = gp.transformarListadoEtiquetas(etiquetas);
     }
-    let filtrado;
-    filtrado = gp.filtrarGastos({fechaDesde: fechaDesde, fechaHasta:fechaHasta, valorMinimo: valorMin, valorMaximo:valorMax,descripcionContiene:descripcion, etiquetasTiene:etiquetas});
+
+    let filtrado = gp.filtrarGastos({fechaDesde: fechaDesde, fechaHasta:fechaHasta, valorMinimo: valorMin, valorMaximo:valorMax,descripcionContiene:descripcion, etiquetasTiene:etiquetas});
     document.getElementById("listado-gastos-completo").innerHTML = " ";
     for(let gasto of filtrado ){
       mostrarGastoWeb(gasto, "listado-gastos-completo");
@@ -591,8 +605,8 @@ function cargarGastosWeb(){
 let btnCargarGastosApi = document.getElementById("cargar-gastos-api");
 btnCargarGastosApi.onclick = cargarGastosApi;
 
-function cargarGastosApi(){
-  
+function cargarGastosApi(event){
+
   let usuario = document.getElementById(`nombre_usuario`).value;
   let url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario}`;
  
@@ -604,47 +618,27 @@ function cargarGastosApi(){
 
 .then(function(gastosAPI)
 {
-
     gp.cargarGastos(gastosAPI);
     repintar();
 })
-.catch(err => alert(err));
+//.catch(err => alert(err));
 
 }
 
   
 function borrarGastoApi(){
     this.handleEvent = function(event){
-      let usuario = document.getElementById(`nombre_usuario`).value;
-      let url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario}/${this.gasto.id}`;
-     
-     /*  let form = event.currentTarget.value;
-    let descripcion = form.elements.descripcion.value;
-    let valor = parseFloat(form.elements.valor.value);
-    let fecha = form.elements.fecha.value;
-    let etiquetas = form.elements.etiquetas.value;
-    let array = etiquetas.split(', ');
 
-    let nObjeto = {
-      descripcion: descripcion,
-      fecha: fecha,
-      valor: valor,
-      etiquetas: array
-  }  */
-  alert(nObjeto);
+      let id = this.gasto["gastoId"];
+      let usuario = document.getElementById(`nombre_usuario`).value;
+      let url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario}/${id}`;
+            
       fetch(url,{method: 'DELETE'})
             .then(response => response.json())
             .then(datos => {
               cargarGastosApi();
-              /*   if(!datos.errorMessage)
-                {
-                } 
-                else 
-                {
-                    console.log(datos.errorMessage);
-                } */
             })
-            .catch(err => console.error(err));
+            //.catch(err => console.error(err));
     
   }
 }
