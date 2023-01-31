@@ -17,14 +17,14 @@ function mostrarGastoWeb(idElemento, gasto)
         let elemento=document.getElementById(idElemento);
         let divGasto = document.createElement("div");
         divGasto.className="gasto";
-        elemento.appendChild(divGasto);
+        elemento.append(divGasto);
 
         if (gasto.descripcion)
         {
             let divGastoDescripcion = document.createElement("div");
             divGastoDescripcion.className = "gasto-descripcion";
             divGastoDescripcion.innerHTML += gasto.descripcion;
-            divGasto.appendChild(divGastoDescripcion);
+            divGasto.append(divGastoDescripcion);
         }
 
         if(gasto.valor)
@@ -32,7 +32,7 @@ function mostrarGastoWeb(idElemento, gasto)
             let divGastoValor = document.createElement("div");
             divGastoValor.className = "gasto-valor";
             divGastoValor.innerHTML += gasto.valor;
-            divGasto.appendChild(divGastoValor);
+            divGasto.append(divGastoValor);
         }
 
         if (gasto.fecha)
@@ -40,7 +40,7 @@ function mostrarGastoWeb(idElemento, gasto)
             let divGastoFecha = document.createElement("div");
             divGastoFecha.className = "gasto-fecha";
             divGastoFecha.innerHTML += gasto.fecha;
-            divGasto.appendChild(divGastoFecha);  
+            divGasto.append(divGastoFecha);  
         }
 
         let divGastoEtiquetas = document.createElement("div");
@@ -66,7 +66,7 @@ function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo)
 
     let agrupTit = document.createElement('h1');
     agrupTit.innerHTML = 'Gastos agrupados por ' + periodo;
-    agrupDIV.appendChild(agrupTit);
+    agrupDIV.append(agrupTit);
 
     for(let valor of Object.keys(agrup))
     {
@@ -81,15 +81,23 @@ function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo)
         datoValorSPAN.className = 'agrupacion-dato-valor';
         datoValorSPAN.innerHTML += " " + agrup[valor] + " €";
         
-        datoDIV.appendChild(datoClaveSPAN);
-        datoDIV.appendChild(datoValorSPAN);
-        agrupDIV.appendChild(datoDIV);
+        datoDIV.append(datoClaveSPAN);
+        datoDIV.append(datoValorSPAN);
+        agrupDIV.append(datoDIV);
     }
     elemento.append(agrupDIV);
+}
+
+function repintar(idElemento)
+{
+    let elemento = document.getElementById(idElemento);
+    let presDiv = document.createElement('div');
+    presDiv.className = 'presupuesto';
 }
 
 export{
     mostrarDatoEnId,
     mostrarGastoWeb,
     mostrarGastosAgrupadosWeb,
+    repintar
 }
