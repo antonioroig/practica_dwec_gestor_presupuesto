@@ -25,17 +25,20 @@ function mostrarGastoWeb(idElemento, gastos)
         DIVgasto.appendChild(DIVdescripcion);
         DIVgasto.appendChild(DIVfecha);
         DIVgasto.appendChild(DIVvalor);
-        gasto.etiquetas.forEach(etiqueta => {
-            let SPANetiqueta = document.createElement('span');
-            SPANetiqueta.className = 'gasto-etiquetas-etiqueta';
-            SPANetiqueta.innerHTML = " " + etiqueta;
-            DIVetiquetas.appendChild(SPANetiqueta);
-
-            let borraretiqueta = new BorrarEtiquetasHandle();
-            borraretiqueta.gasto = gasto;
-            borraretiqueta.etiquetas = etiqueta;
-            SPANetiqueta.addEventListener('click',borraretiqueta);
-        });
+        if(gasto.etiquetas.length > 0)
+        {
+            gasto.etiquetas.forEach(etiqueta => {
+                let SPANetiqueta = document.createElement('span');
+                SPANetiqueta.className = 'gasto-etiquetas-etiqueta';
+                SPANetiqueta.innerHTML = " " + etiqueta;
+                DIVetiquetas.appendChild(SPANetiqueta);
+    
+                let borraretiqueta = new BorrarEtiquetasHandle();
+                borraretiqueta.gasto = gasto;
+                borraretiqueta.etiquetas = etiqueta;
+                SPANetiqueta.addEventListener('click',borraretiqueta);
+            });
+        }
         DIVgasto.appendChild(DIVetiquetas);
 
         let BUTTONeditar = document.createElement('button');
@@ -189,6 +192,11 @@ function EditarHandleformulario(){
         CancelarForm.formulario = formulario;
         let BUTTONcancelar = formulario.querySelector('button.cancelar');
         BUTTONcancelar.addEventListener('click',CancelarForm);
+        let BUTTONenviarapi = formulario.querySelector("button.gasto-enviar-api");
+        let EnviarAPI = new EnviarAPIHandle();
+        EnviarAPI.formulario = formulario;
+        EnviarAPI.BUTTONenviarapi = BUTTONenviarapi;
+        BUTTONenviarapi.addEventListener('click',EnviarAPI);
     };
 }
 
@@ -222,12 +230,11 @@ function nuevoGastoWebFormulario(){
     let Cancelar =  new funcionCancelar();
     let BUTTONcancelar = formulario.querySelector("button.cancelar");
     BUTTONcancelar.addEventListener('click',Cancelar);
-    let BUTTONenviarapi = document.createElement('button');
-    BUTTONenviarapi.type = 'button';
-    BUTTONenviarapi.className = 'gasto-enviar-api';
-    BUTTONenviarapi.innerHTML = "Enviar (API)";
-    let enviargastoapi = new EnviarAPIHandle();
-    BUTTONenviarapi.addEventListener('click',enviargastoapi);
+    let BUTTONenviarapi = formulario.querySelector("button.gasto-enviar-api");
+    let EnviarAPI = new EnviarAPIHandle();
+    EnviarAPI.formulario = formulario;
+    EnviarAPI.BUTTONenviarapi = BUTTONenviarapi;
+    BUTTONenviarapi.addEventListener('click',EnviarAPI);
     repintar();
 }
 
@@ -347,12 +354,12 @@ function cargarGastosApi(){
                 if(datos != "")
                 {
                     gestionPresupuesto.cargarGastos(datos);
+                    console.log("Gastos Introducidos Correctamente");
                     repintar();
-                    console.log("Gastos Introducidos Correctamente")
                 }
                 else
                 {
-                    console.log("No hay gastos")
+                    console.log("No hay gastos");
                 }
             })
     }
@@ -384,9 +391,27 @@ function BorrarAPIHandle(){
 
 function EnviarAPIHandle(){
     this.handleEvent = function(event){
+        console.log("Entra a la función")
         let usuario = (document.getElementById("nombre_usuario")).value;
         let URL = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario}`;
-        fetch(URL,{method: "POST"})
+        let descripcion = this.formulario.elements.descripcion.value;
+        let valor = parseFloat(this.formulario.elements.valor.value);
+        let fecha = new Date(this.formulario.elements.fecha.value);
+        let etiquetas = this.formulario.elements.etiquetas.value;
+        let Gastos ={
+            descripcion
+        }
+        let JSONgasto = JSON.stringify(new gestionPresupuesto.CrearGasto(descripcion,valor,fecha,etiquetas));
+        console.log(toString(JSONgasto));
+        fetch(URL,{method: "POST", body: JSONgasto,headers: {
+            'Content-Type': 'application/json'
+        }})
+            .then(solucion => solucion.json())
+            .then(data =>{
+                cargarGastosApi();
+                console.log("Funciona");
+            })
+            .catch(error => console.log(error));
     }
 }
 
