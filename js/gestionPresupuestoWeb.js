@@ -317,8 +317,9 @@ function EditarHandleFormulario()
         botonFormulario.setAttribute('disabled',"");
 
         let editarAPI = new editarGastosApi();
+        let botonEnviarAPI = formulario.querySelector('button.gasto-enviar-api');
         editarAPI.gasto = this.gasto;
-        formulario.addEventListener('click', editarAPI);
+        botonEnviarAPI.addEventListener('click', editarAPI);
     }
 }
 
@@ -508,8 +509,13 @@ function enviarGastosApi()
 
         try
         {
-            fetch(url, {method: 'POST', body: JSON.stringify(gasto), headers: {'Content-type': 'application/json; charset=utf-8'}});
-            cargarGastosApi();
+            fetch(url, {method: 'POST', body: JSON.stringify(gasto), headers: {'Content-type': 'application/json; charset=utf-8'}})
+                .then(respuesta => respuesta.json())
+                .then(gastos =>
+                    {
+                        cargarGastosApi(gastos);
+                    })
+                .catch(error => console.log(error));
         }
         catch(error)
         {
@@ -540,7 +546,12 @@ function editarGastosApi()
         try
         {
             fetch(url, {method: 'PUT', body: JSON.stringify(gasto), headers: {'Content-type': 'application/json; charset=utf-8'}})
-            // cargarGastosApi();
+                .then(respuesta => respuesta.json())
+                .then(gastos =>
+                    {
+                        cargarGastosApi(gastos);
+                    })
+                .catch(error => console.log(error))
         }
         catch(error)
         {
