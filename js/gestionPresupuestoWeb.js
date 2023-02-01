@@ -231,6 +231,9 @@
 
       let botonenviar = new EnviarHandleFormulario();
       formulario.addEventListener('submit', botonenviar);
+
+      let botonEnviarApi = formulario.querySelector("button.gasto-enviar-api");
+      botonEnviarApi.addEventListener('click', new EnviarGastosApi());
   }
 
       //boton añadir-gato-fromulario
@@ -429,7 +432,9 @@ function CargarGastosApi(){
       this.handleEvent = function(event){
         event.preventDefault();
         let usuario = document.getElementById("nombre_usuario").value;
-    console.log("dentro de la funcion" + this.gasto.id);
+
+        console.log("dentro de la funcion" + this.gasto.id);
+
         let promise = fetch(`https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario}/${this.gasto.gastoId}`, {method: 'DELETE'} )
         
         .then (response => {
@@ -446,6 +451,46 @@ function CargarGastosApi(){
     
       }
     }   
+
+    function EnviarGastosApi(){
+      this.handleEvent = function(event){
+        event.preventDefault();
+
+        let usuario = document.getElementById("nombre_usuario").value;
+
+        let formulario = document.querySelector('#controlesprincipales form');
+        let descip = formulario.elements.descripcion.value;
+        let valor = parseFloat(formulario.elements.valor.value);
+        let fecha = formulario.elements.fecha.value;
+        let etiquetas = formulario.elements.etiquetas.value.split(',');
+        
+        let GastoApi = {
+          descripcion: descip,
+          valor: valor,
+          fecha: fecha,
+          etiquetas: etiquetas,
+        }
+
+        fetch(`https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario}/`, 
+        {method: 'POST', headers:{'Content-Type': 'application/json;charset=utf-8'}, body: JSON.stringify(GastoApi)})
+        
+        .then ( 
+          function(response)
+          {
+            if(response.ok)
+              {
+                console.log('Se ha creado el gasto');
+                CargarGastosApi();
+              }
+              else
+              {
+                console.log('No se ha creado el gasto')
+              }
+          }
+        )
+        
+      }
+    }
 
 export{
     mostrarDatoEnId,
@@ -466,6 +511,7 @@ export{
     guardarGastosWeb,
     cargarGastosWeb,
     CargarGastosApi,
-    BorrarGastosApi
+    BorrarGastosApi,
+    EnviarGastosApi
   }
 

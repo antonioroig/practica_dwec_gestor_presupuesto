@@ -312,10 +312,7 @@ function agruparGastos(periodo = "mes",etiquetas, fechaDesde,fechaHasta){
             // almacenado y además tiene acceso a los métodos de "CrearGasto"
               
             // Añadimos el gasto rehidratado a "gastos"
-            gastoRehidratado.id = idgasto;
-            idgasto++;
             gastos.push(gastoRehidratado)
-            console.log("ID DE LA APIIII" + gastoRehidratado.gastoId);s
         }
     }
 
