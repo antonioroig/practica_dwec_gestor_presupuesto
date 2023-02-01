@@ -533,7 +533,7 @@ function editarGastosApi()
         let usuario = document.getElementById("nombre_usuario").value;
         let url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario}/${this.gasto.gastoId}`;
 
-        let form = event.currentTarget;
+        let form = event.currentTarget.form;
 
         let gasto = 
         {
