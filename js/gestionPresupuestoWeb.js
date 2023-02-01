@@ -185,14 +185,12 @@ function nuevoGastoWebFormulario(){
 
     let enviarForm = new EnviarHandleFormulario();
     formulario.addEventListener('submit',enviarForm);
-
-    let gastoButtonEnviarApi = document.createElement('button');
-    gastoButtonEnviarApi.type ='button';
-    gastoButtonEnviarApi.className = 'gasto-enviar-api';
-    gastoButtonEnviarApi.innerHTML = 'Enviar gasto (API)';
+    
+    let BEnviarApi = formulario.querySelector("button.gasto-enviar-api");
     let EnviarApi = new EnviarApiHandle();
-    EnviarApi.gasto = gasto;
-    EnviarApi.addEventListener('click',EnviarApi);
+    EnviarApi.formulario = formulario;
+    EnviarApi.boton = BEnviarApi;
+    BEnviarApi.addEventListener('click',EnviarApi);
         
 
     document.getElementById('anyadirgasto-formulario').setAttribute('disabled','');
@@ -251,6 +249,12 @@ function EditarHandleFormulario(){
         formulario.addEventListener('submit',enviarEditarForm);
 
         this.gastoButtonEditarForm.setAttribute('disabled','');
+
+        let BEnviarApi = formulario.querySelector("button.gasto-enviar-api");
+        let EnviarApi = new EnviarApiHandle();
+        EnviarApi.formulario = formulario;
+        EnviarApi.boton = BEnviarApi;
+        BEnviarApi.addEventListener('click', EnviarApi);
 
         let cancelarForm = new CancelarEditarHandleFormulario(); 
         cancelarForm.formulario = formulario;
@@ -408,21 +412,27 @@ function BorrarApi (){
 
 function EnviarApiHandle(){
     this.handleEvent = function(){
+        let descripcion = this.formulario.elements.descripcion.value;
+        let valor = this.formulario.elements.valor.value;
+        let fecha = this.formulario.elements.fecha.value;
+        let etiquetas = this.formulario.elements.etiquetas.value;
+        let gasto = {
+            descripcion :descripcion, 
+            valor:valor, 
+            fecha:fecha, 
+            etiquetas: etiquetas.split(","),
+        }
+        let jsonGasto = JSON.stringify(gasto)
         let user = (document.getElementById("nombre_usuario")).value;
         let url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${user}`;
         console.log(user);
         console.log(url);
-        fetch(url, {method: 'POST'})
-            .then((datos) => {
-                if(datos != "")
-                {
-                    gestionPresupuesto.cargarGastos(datos);
-                    repintar();
-                    console.log(`Gastos introducidos`);
-                    cargarGastosApi();
-                }
-                else console.log("No hay gastos para introducir")
-            });
+        fetch(url, {method: 'POST', body: jsonGasto, headers: {'Content-Type': 'application/json'}})
+            .then(response => response.json())
+            .then(datos => {
+                cargarGastosApi();
+            })
+            .catch(error => console.log('No se ha enviado el gasto ' + error));
     }
 }
 
