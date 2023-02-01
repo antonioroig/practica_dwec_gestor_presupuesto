@@ -70,6 +70,20 @@
         botonBorrar.addEventListener('click', objetoborrar);
         divGasto.append(botonBorrar);
         
+
+        //Boton Borrar (API) 
+        let botonBorrarApi = document.createElement('button');
+        botonBorrarApi.type = 'button';
+        botonBorrarApi.className = 'gasto-borrar-api';
+        botonBorrarApi.innerHTML += 'Borrar (Api)';
+    
+        let BorrarApi = new BorrarGastosApi();
+        BorrarApi.gasto = gasto;
+        /*console.log("id = " + gasto.id);
+        console.log("BorrarApiId = " + BorrarApi.gasto.id);*/
+        botonBorrarApi.addEventListener('click', BorrarApi);
+        divGasto.append( botonBorrarApi);
+
         // forma de formulario
         let botonEditarForm = document.createElement('button');
         botonEditarForm.type = 'button';
@@ -387,7 +401,7 @@ let botonCargar = document.getElementById('cargar-gastos');
 botonCargar.addEventListener('click', new cargarGastosWeb());
 
 
-function cargarGastosApi(){
+function CargarGastosApi(){
     this.handleEvent = function(event){
       event.preventDefault();
       let usuario = document.getElementById("nombre_usuario").value;
@@ -396,16 +410,42 @@ function cargarGastosApi(){
 
       .then (response => response.json())
 
-      .then (response => {presupuesto.cargarGastos(response);
-        repintar();
+      .then (response => {
+        if( response !="")
+        {
+          presupuesto.cargarGastos(response);
+          repintar();
+        }
+        else console.log("Gastos Vacios")
       });
     }
 }
-
     
     let bntCargarApi = document.getElementById('cargar-gastos-api');
-    bntCargarApi.addEventListener('click', new cargarGastosApi());
+    bntCargarApi.addEventListener('click', new CargarGastosApi());
     
+    
+    function BorrarGastosApi(){
+      this.handleEvent = function(event){
+        event.preventDefault();
+        let usuario = document.getElementById("nombre_usuario").value;
+    console.log("dentro de la funcion" + this.gasto.id);
+        let promise = fetch(`https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario}/${this.gasto.gastoId}`, {method: 'DELETE'} )
+        
+        .then (response => {
+          if (response.ok)
+          {
+            console.log(`se ha borrado el gasto ${this.gasto.gastoId}`);
+            CargarGastosApi();
+          }
+          else 
+          {
+            console.log('No se ha borrado el gasto');
+          }
+        })
+    
+      }
+    }   
 
 export{
     mostrarDatoEnId,
@@ -425,6 +465,7 @@ export{
     filtrarGastosWeb,
     guardarGastosWeb,
     cargarGastosWeb,
-    cargarGastosApi
+    CargarGastosApi,
+    BorrarGastosApi
   }
 
