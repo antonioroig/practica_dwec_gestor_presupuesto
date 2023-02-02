@@ -25,7 +25,7 @@ function mostrarGastoWeb(idElemento, gastos)
         DIVgasto.appendChild(DIVdescripcion);
         DIVgasto.appendChild(DIVfecha);
         DIVgasto.appendChild(DIVvalor);
-        if(gasto.etiquetas.length > 0)
+        if(gasto.etiquetas.length > 0 && typeof (gasto.etiquetas) === 'object')
         {
             gasto.etiquetas.forEach(etiqueta => {
                 let SPANetiqueta = document.createElement('span');
@@ -371,7 +371,7 @@ BUTTONcargarapi.addEventListener("click",CargarApi);
 
 function BorrarAPIHandle(){
     this.handleEvent = function(event) {
-        let id = this.gasto.id;
+        let id = this.gasto.gastoId;
         let usuario = (document.getElementById("nombre_usuario")).value;
         let URL = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario}/${id}`;
         fetch(URL,{method: "DELETE"})
@@ -384,32 +384,27 @@ function BorrarAPIHandle(){
                 {
                     console.log("Error este gasto no se encuentra en la API");
                 }
-                cargarGastosApi();
+                let cargar = new cargarGastosApi();
             })
     }
 }
 
 function EnviarAPIHandle(){
     this.handleEvent = function(event){
-        console.log("Entra a la función")
         let usuario = (document.getElementById("nombre_usuario")).value;
         let URL = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario}`;
         let descripcion = this.formulario.elements.descripcion.value;
         let valor = parseFloat(this.formulario.elements.valor.value);
         let fecha = new Date(this.formulario.elements.fecha.value);
         let etiquetas = this.formulario.elements.etiquetas.value;
-        let Gastos ={
-            descripcion
-        }
         let JSONgasto = JSON.stringify(new gestionPresupuesto.CrearGasto(descripcion,valor,fecha,etiquetas));
-        console.log(toString(JSONgasto));
         fetch(URL,{method: "POST", body: JSONgasto,headers: {
             'Content-Type': 'application/json'
         }})
             .then(solucion => solucion.json())
             .then(data =>{
-                cargarGastosApi();
-                console.log("Funciona");
+                console.log("Gasto Enviado Correctamente");
+                let cargar = new cargarGastosApi();
             })
             .catch(error => console.log(error));
     }
