@@ -30,18 +30,21 @@ function mostrarGastoWeb(idElemento,gastos)
         gastoDiv.appendChild(gastoDate);
         gastoDiv.appendChild(gastoVal);
 
-        gasto.etiquetas.forEach(etiqueta => {
-            let spanEti = document.createElement('span');
-            spanEti.className = 'gasto-etiquetas-etiqueta';
-            spanEti.innerHTML = etiqueta;
-            gastoEti.appendChild(spanEti);
-
-            let BorrarEtiqueta = new BorrarEtiquetasHandle();
-            BorrarEtiqueta.gasto = gasto;
-            BorrarEtiqueta.etiquetas = etiqueta;
-            spanEti.addEventListener('click', BorrarEtiqueta);
-        }); 
-        gastoDiv.appendChild(gastoEti);
+        if(typeof (gasto.etiquetas) === 'object'){
+            gasto.etiquetas.forEach(etiqueta => {
+                let spanEti = document.createElement('span');
+                spanEti.className = 'gasto-etiquetas-etiqueta';
+                spanEti.innerHTML = etiqueta;
+                gastoEti.appendChild(spanEti);
+    
+                let BorrarEtiqueta = new BorrarEtiquetasHandle();
+                BorrarEtiqueta.gasto = gasto;
+                BorrarEtiqueta.etiquetas = etiqueta;
+                spanEti.addEventListener('click', BorrarEtiqueta);
+            }); 
+            gastoDiv.appendChild(gastoEti);
+        }
+        
 
         let gastoButtonEditar = document.createElement('button');
         gastoButtonEditar.type = 'button';
@@ -394,7 +397,7 @@ document.getElementById("cargar-gastos-api").addEventListener('click', BcargarGa
 function BorrarApi (){
     this.handleEvent = function(){
         let user = (document.getElementById("nombre_usuario")).value;
-        let url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${user}/${this.gasto.id}`;
+        let url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${user}/${this.gasto.gastoId}`;
         console.log(user);
         console.log(url);
         fetch(url, {method: 'DELETE'})
@@ -402,13 +405,15 @@ function BorrarApi (){
                 if(res.ok){
                     console.log('Eliminado Correctamente');
                 }
-                cargarGastosApi();
+                let cargargastos = new cargarGastosApi();
             })
             .catch(error => {
                 console.log('No se ha eliminado ' + error);
             });
     }
 }
+
+
 
 function EnviarApiHandle(){
     this.handleEvent = function(){
@@ -430,7 +435,7 @@ function EnviarApiHandle(){
         fetch(url, {method: 'POST', body: jsonGasto, headers: {'Content-Type': 'application/json'}})
             .then(response => response.json())
             .then(datos => {
-                cargarGastosApi();
+                let cargargastos = new cargarGastosApi();
             })
             .catch(error => console.log('No se ha enviado el gasto ' + error));
     }
