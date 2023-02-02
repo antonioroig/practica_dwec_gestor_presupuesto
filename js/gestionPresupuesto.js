@@ -59,7 +59,7 @@ function CrearGasto(descripcion,valor_actual,fecha = Date.now(), ...etiquetas)
 
         for(let i = 0; i< etiquetas.length; i++)
         {
-             etq = etq + '- ' + etiquetas[i] +'\n';
+             etq = etq + '-' + etiquetas[i] +'\n';
         }
 
         return etq;

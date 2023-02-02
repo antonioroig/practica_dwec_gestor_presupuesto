@@ -36,7 +36,7 @@ function mostrarGastoWeb(idElemento,gasto)
  {
     let span = document.createElement('span');
     span.className = "gasto-etiquetas-etiqueta";
-    span.textContent = " " + etiqueta;
+    span.textContent = "" + etiqueta;
     etiquetas_gasto.append(span);
 
     let etiquetas_borradas = new BorrarEtiquetasHandle();
@@ -141,7 +141,7 @@ function nuevoGastoWeb()
     let descripcion = prompt('Introduce la descripcion:');
     let valor = parseFloat(prompt('Introduce el valor del gasto:'));
     let fecha = Date.parse(prompt('Introduce la fecha en formato yyyy/mm/dd'));
-    let etiquetas = prompt('Introduce las estiquetas de este gasto separadas por ,').split(',');
+    let etiquetas = prompt('Introduce las estiquetas de este gasto separadas por,').split(',');
 
     let gasto_nuevo = new pres.CrearGasto(descripcion,valor,fecha,...etiquetas);
 
@@ -161,14 +161,14 @@ function EditarHandle()
         let new_descripcion = prompt('Introduce la nueva descripcion:', this.gasto.descripcion);
         let new_valor = parseFloat(prompt('Introduce el nuevo valor del gasto:', this.gasto.valor));
         let new_fecha = Date.parse(prompt('Introduce la nueva fecha en formato yyyy/mm/dd', this.gasto.fecha));
-        let new_etiqueta = prompt('Introduce las estiquetas nuevas de este gasto separadas por ,', this.gasto.etiquetas.join(','));
-        let new_etiquetas = new_etiqueta.split(',');
+        let new_etiqueta = prompt('Introduce las estiquetas nuevas de este gasto separadas por ,').split(',');
+        
 
 
         this.gasto.actualizarDescripcion(new_descripcion);
         this.gasto.actualizarValor(new_valor);
         this.gasto.actualizarFecha(new_fecha);
-        this.gasto.anyadirEtiquetas(new_etiquetas);
+        this.gasto.anyadirEtiquetas(new_etiqueta);
 
         repintar();
 
@@ -426,7 +426,7 @@ function EnviarHandleApi()
             "descripcion": descripcion,
             "valor": valor,
             "fecha": fecha,
-            "etiquetas": etiquetas,
+            "etiquetas": etiquetas
         }
         fetch(url, {method: 'POST', body:  JSON.stringify(gasto), headers: {
             'Content-Type': 'application/json; charset=utf-8'}})
@@ -469,7 +469,7 @@ function EditarHandleApi()
             "descripcion": descripcion,
             "valor": valor,
             "fecha": fecha,
-            "etiquetas": etiquetas,
+            "etiquetas": etiquetas
         }
       
             fetch(url, {method: 'PUT', body:  JSON.stringify(gasto), headers: {
