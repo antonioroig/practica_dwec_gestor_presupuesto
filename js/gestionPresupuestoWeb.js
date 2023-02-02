@@ -315,7 +315,7 @@
 
         let controles = document.getElementById("controlesprincipales");
         controles.append(formulario);
-    
+        
         let botonFormulario = event.currentTarget;
         botonFormulario.append(formulario);
 
@@ -406,20 +406,15 @@ botonCargar.addEventListener('click', new cargarGastosWeb());
 
 function CargarGastosApi(){
     this.handleEvent = function(event){
-      event.preventDefault();
       let usuario = document.getElementById("nombre_usuario").value;
-
+      event.preventDefault();
+      
       let promise = fetch(`https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario}`)
 
       .then (response => response.json())
 
-      .then (response => {
-        if( response !="")
-        {
-          presupuesto.cargarGastos(response);
+      .then (response => {presupuesto.cargarGastos(response);
           repintar();
-        }
-        else console.log("Gastos Vacios")
       });
     }
 }
@@ -430,23 +425,14 @@ function CargarGastosApi(){
     
     function BorrarGastosApi(){
       this.handleEvent = function(event){
-        event.preventDefault();
         let usuario = document.getElementById("nombre_usuario").value;
-
-        console.log("dentro de la funcion" + this.gasto.id);
-
+        event.preventDefault();
+       
         let promise = fetch(`https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario}/${this.gasto.gastoId}`, {method: 'DELETE'} )
-        
-        .then (response => {
-          if (response.ok)
-          {
-            console.log(`se ha borrado el gasto ${this.gasto.gastoId}`);
+       
+        .then (response => { 
+            console.log(`se ha borrado el gasto ${this.gasto.descripcion}`);
             CargarGastosApi();
-          }
-          else 
-          {
-            console.log('No se ha borrado el gasto');
-          }
         })
     
       }
@@ -458,7 +444,7 @@ function CargarGastosApi(){
 
         let usuario = document.getElementById("nombre_usuario").value;
 
-        let formulario = document.querySelector('#controlesprincipales form');
+        let formulario = event.currentTarget.form;
         let descip = formulario.elements.descripcion.value;
         let valor = parseFloat(formulario.elements.valor.value);
         let fecha = formulario.elements.fecha.value;
@@ -480,11 +466,10 @@ function CargarGastosApi(){
             if(response.ok)
               {
                 console.log('Se ha creado el gasto');
-                CargarGastosApi();
               }
               else
               {
-                console.log('No se ha creado el gasto')
+                console.log('No se ha creado el gasto ')
               }
           }
         )
