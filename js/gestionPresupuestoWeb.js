@@ -240,11 +240,11 @@ function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo){
         divDato.append(spanDatoClave);
         divDato.append(spanDatoValor);
         divAgrup.append(divDato);
-    }*/
-    /* 
+    }
+
     elemento.append(divAgrup);   
 
-    return elemento; */
+    return elemento; */  
 }
         /* 
         <div class="agrupacion-dato">
@@ -279,7 +279,6 @@ function repintar(){
     }
     
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-    // Actividad 10 
     /* Modifica la función repintar para que actualice los datos de las capas div#agrupacion-dia, div#agrupacion-mes y div#agrupacion-anyo 
     mediante las funciones agruparGastos y mostrarGastosAgrupadosWeb */
 
@@ -510,7 +509,7 @@ function EditarHandleFormulario()
             repintar();
         });
         // cancelar Edición Gasto
-        formulario.querySelector('button.cancelar').addEventListener('click', this.handleEvent = function()
+        formulario.querySelector('button.cancelar').addEventListener('submit', this.handleEvent = function()
         {
             btnEditarGasto.disabled = false;
             divGastoForm.removeChild(formulario);
@@ -520,26 +519,27 @@ function EditarHandleFormulario()
         // Actividad 9 - Manejador de eventos del botón .gasto-enviar-api dentro de EditarHandleFormulario
         formulario.querySelector("button.gasto-enviar-api").addEventListener("click", this.handleEvent = async function()
         {
-            gasto.actualizarDescripcion(formulario.elements.descripcion.value);
-            gasto.actualizarValor(parseFloat(formulario.elements.valor.value));
-            gasto.actualizarFecha(formulario.elements.fecha.value);
+            gastoForm.actualizarDescripcion(formulario.elements.descripcion.value); // La problema solucionada (Cuidado con los variables asignados, el variable en este caso es gastoForm)
+            gastoForm.actualizarValor(parseFloat(formulario.elements.valor.value));
+            gastoForm.actualizarFecha(formulario.elements.fecha.value);
 
             let etiquetasForm = formulario.elements.etiquetas;
+
             etiquetasForm = etiquetasForm.value.split(",");
 
-            gasto.borrarEtiquetas(...gasto.etiquetas);
-            gasto.anyadirEtiquetas(...etiquetasForm);
+            gastoForm.borrarEtiquetas(...gastoForm.etiquetas);
+            gastoForm.anyadirEtiquetas(...etiquetasForm);
 
             btnEditarGasto.disabled = false;
 
             divGastoForm.removeChild(formulario);
 
             let nombre_usuario = document.getElementById("nombre_usuario").value;
-            let gastoApi = await fetch(`https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${nombre_usuario}` + "/" + gasto.gastoId, {method:'PUT',headers:
+            let gastoApi = await fetch(`https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${nombre_usuario}` + "/" + gastoForm.gastoId, {method:'PUT',headers:
             {
                 'Content-Type': 'application/json;charset=utf-8'
             },            
-            body:JSON.stringify(gasto)});
+            body:JSON.stringify(gastoForm)});
 
             if (gastoApi.ok)
             {
