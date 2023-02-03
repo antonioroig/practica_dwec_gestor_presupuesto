@@ -90,7 +90,8 @@ function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo)
 
 function repintar()
 {
-   
+   document.getElementById("presupuesto"). innerHTML="";
+   mostrarDatoEnId(gestionPresupuesto.mostrarPresupuesto(), "presupuesto");
 }
 
 export{
