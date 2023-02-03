@@ -384,12 +384,23 @@ async function cargarGastosApi(){
 
  function EnviarHandleApi(){
     this.handleEvent = async function(){
+        var formulario = formulario.querySelector("gasto-enviar-api");
+
+        formulario.elements.descripcion.value = this.gasto.descripcion;
+        formulario.elements.valor.value = this.gasto.valor;
+        formulario.elements.fecha.value = this.gasto.fecha;
+        formulario.elements.etiquetas.value = this.gasto.etiquetas;
+
+        let gasto = new gestion.CrearGasto(descripcion,valor,fecha,etiquetas);
+
+
         let usuario = document.getElementById('nombre_usuario').value;
-        
+
         let url =  `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario}`;
         fetch(url, 
         {
             method: "POST",
+            body: JSON.stringify(gasto)
         })
         .then(function(response)
         {
