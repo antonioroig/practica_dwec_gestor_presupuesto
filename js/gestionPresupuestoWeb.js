@@ -243,6 +243,11 @@ function repintar() {
  for (let gasto of gastos) {
      mostrarGastoWeb(gasto,"listado-gastos-completo");
  }
+ 
+gestionPresu.mostrarGastosAgrupadosWeb("agrupacion-dia", gestionPresu.agruparGastos("dia"), "día");
+gestionPresu.mostrarGastosAgrupadosWeb("agrupacion-mes", gestionPresu.agruparGastos("mes"), "mes");
+gestionPresu.mostrarGastosAgrupadosWeb("agrupacion-anyo", gestionPresu.agruparGastos("anyo"), "año");
+
 }
 
 
