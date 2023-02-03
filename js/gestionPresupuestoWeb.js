@@ -279,6 +279,7 @@ function repintar(){
     }
     
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+    // Actividad 10
     /* Modifica la función repintar para que actualice los datos de las capas div#agrupacion-dia, div#agrupacion-mes y div#agrupacion-anyo 
     mediante las funciones agruparGastos y mostrarGastosAgrupadosWeb */
 
@@ -509,7 +510,7 @@ function EditarHandleFormulario()
             repintar();
         });
         // cancelar Edición Gasto
-        formulario.querySelector('button.cancelar').addEventListener('submit', this.handleEvent = function()
+        formulario.querySelector('button.cancelar').addEventListener('click', this.handleEvent = function()
         {
             btnEditarGasto.disabled = false;
             divGastoForm.removeChild(formulario);
