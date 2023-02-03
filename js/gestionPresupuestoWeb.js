@@ -223,11 +223,11 @@ function repintar(){
         mostrarGastoWeb(gasto, "listado-gastos-completo");
     });
 
-    mostrarGastosAgrupadosWeb(agruparGastos("dia"), "día", "agrupacion-dia");
+    mostrarGastosAgrupadosWeb(gestionPresupuesto.agruparGastos("dia"), "día", "agrupacion-dia");
 
-    mostrarGastosAgrupadosWeb(agruparGastos("mes"), "mes", "agrupacion-mes");
+    mostrarGastosAgrupadosWeb(gestionPresupuesto.agruparGastos("mes"), "mes", "agrupacion-mes");
 
-    mostrarGastosAgrupadosWeb(agruparGastos("anyo"), "año", "agrupacion-anyo");
+    mostrarGastosAgrupadosWeb(gestionPresupuesto.agruparGastos("anyo"), "año", "agrupacion-anyo");
 }
 
 
@@ -487,7 +487,7 @@ let filtrarGastoWeb = function(){
         if(etiquetasTiene){
             etiquetasTiene = gestionPresupuesto.transformarListadoEtiquetas(etiquetasTiene);
         }
-        document.getElementById("listado-gastos-completo").innerHTML="";
+        //document.getElementById("listado-gastos-completo").innerHTML="";
         
         var filtrados = gestionPresupuesto.filtrarGastos({fechaDesde, fechaHasta, valorMaximo, valorMinimo, descripcionContiene, etiquetasTiene})
         filtros++;
@@ -549,8 +549,20 @@ function cargarGastosApi(){
         fetch('https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/'+nombreUsuario, {method: 'Get'})
             .then(response => response.json())
             .then(data => {
+                console.log(gestionPresupuesto.listarGastos());
                 console.log(data);
+                gestionPresupuesto.LimpiarGastos();
+                console.log(gestionPresupuesto.listarGastos());
                 gestionPresupuesto.cargarGastos(data);
+                let elemento = document.getElementById("listado-gastos-filtrado-1");
+                elemento.innerHTML="";
+                elemento = document.getElementById("listado-gastos-filtrado-2");
+                elemento.innerHTML="";
+                elemento = document.getElementById("listado-gastos-filtrado-3");
+                elemento.innerHTML="";
+                elemento = document.getElementById("listado-gastos-filtrado-4");
+                elemento.innerHTML="";
+
                 repintar();
             })
             .catch(err => console.log(err));

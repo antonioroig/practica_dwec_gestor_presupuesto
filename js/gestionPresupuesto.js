@@ -19,6 +19,10 @@ function mostrarPresupuesto() {
     return `Tu presupuesto actual es de ${presupuesto} €`;
 }
 
+function LimpiarGastos() {
+    gastos=[];
+}
+
 
 function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
     this.descripcion = descripcion;
@@ -246,5 +250,6 @@ export   {
     filtrarGastos,
     agruparGastos,
     transformarListadoEtiquetas,
-    cargarGastos
+    cargarGastos,
+    LimpiarGastos
 }
