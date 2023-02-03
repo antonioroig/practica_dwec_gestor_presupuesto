@@ -294,6 +294,13 @@ function filtrarGastosWeb(){
         const form = event.currentTarget;
         let a = form.elements
 
+        let desc = a["formulario-filtrado-descripcion"].value
+        let vMin = a["formulario-filtrado-valor-minimo"].value
+        let vMax = a["formulario-filtrado-valor-maximo"].value
+        let fechaInicial = a["formulario-filtrado-fecha-desde"].value
+        let fechaFinal = a["formulario-filtrado-fecha-hasta"].value
+        let etiquetas = a["formulario-filtrado-etiquetas-tiene"].value
+
         repintar()
     }
 }
