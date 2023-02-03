@@ -90,8 +90,18 @@ function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo)
 
 function repintar()
 {
-   document.getElementById("presupuesto"). innerHTML="";
+   document.getElementById("presupuesto").innerHTML="";
    mostrarDatoEnId(gestionPresupuesto.mostrarPresupuesto(), "presupuesto");
+
+   document.getElementById("gastos-totales").innerHTML="";
+   mostrarDatoEnId(gestionPresupuesto.calcularTotalGastos(), "gastos-totales");
+
+   document.getElementById("balance-total").innerHTML="";
+   mostrarDatoEnId(gestionPresupuesto.calcularBalance(), "balance-total");
+
+   document.getElementById("listado-gastos-completo").innerHTML="";
+
+   gestionPresupuesto.listarGastos.array.forEach(element => mostrarGastoWeb("listado-gastos-completo", element));
 }
 
 export{
