@@ -158,7 +158,7 @@ function mostrarGastosAgrupadosWeb(agrup, periodo, idElemento){
                 
                 var spanAgrupClave = document.createElement('span');
                 spanAgrupClave.className = "agrupacion-dato-clave";
-                spanAgrupClave.innerHTML += "Fecha: " + property + " Numero Gastos: ";
+                spanAgrupClave.innerHTML += "Fecha: " + property + " Valor Gastos: ";
                 divAgrup.appendChild(spanAgrupClave);
     
                 var spanAgrupValor = document.createElement('span');
@@ -576,15 +576,14 @@ function EditarApiHandle(){
         let valor = Number(this.formulario.elements.valor.value);
         let fecha = new Date (this.formulario.elements.fecha.value);
         let etiquetas = this.formulario.elements.etiquetas.value;
-        let gasto = new CrearGasto(descripcion,valor,fecha,...etiquetas)
         let nuevoGasto = {
             descripcion :descripcion, 
             valor:valor, 
             fecha:fecha, 
             etiquetas: etiquetas.split(","),
-            orden:order
+            orden:this.gasto.orden
         }
-        let jsonGasto = JSON.stringify(gasto)
+        let jsonGasto = JSON.stringify(nuevoGasto)
         let user = document.getElementById('nombre_usuario').value;
         let url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/` + user + "/" + this.gasto.gastoId;
     
