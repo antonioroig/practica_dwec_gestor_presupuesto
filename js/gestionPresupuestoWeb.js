@@ -217,9 +217,8 @@ function nuevoGastoWebFormulario(){
    cancelar.buttonAnyadir = botonAnyadir;
    botonCancelar.addEventListener('click', cancelar);
 
-   let botonEnvianApi = formulario.getElementById("gasto-enviar-api");
    let Enviar = new EnviarHandleApi();
-   botonEnvianApi.addEventListener("click", Enviar);
+   formulario.querySelector("button[class='gasto-enviar-api']").addEventListener('click', Enviar);
 }
 
 function SubmitHandle(){
@@ -263,7 +262,7 @@ function EditarHandleFormulario(){
 
         formulario.elements.descripcion.value = this.gasto.descripcion;
         formulario.elements.valor.value = this.gasto.valor;
-        formulario.elements.fecha.value = this.gasto.fecha;
+        formulario.elements.fecha.value = new Date(this.gasto.fecha).toISOString().split('T')[0];
         formulario.elements.etiquetas.value = this.gasto.etiquetas;
 
         let enviarFormulario = new EnviarEditarHandle();
@@ -275,9 +274,9 @@ function EditarHandleFormulario(){
         let botonCancelar = formulario.querySelector("button.cancelar");
         botonCancelar.addEventListener('click', cancelar);
 
-        let botonEditarApi = formulario.getElementById("gasto-editar-api");
         let Editar = new EditarHandleApi();
-        botonEditarApi.addEventListener("click", Editar);
+        formulario.querySelector("button[class='gasto-enviar-api']").addEventListener('click', Editar);
+
     }
 }
 
@@ -365,44 +364,66 @@ async function cargarGastosApi(){
  function BorrarHandleApi(){
     this.handleEvent = async function(){
 
-            let usuario = document.getElementById("nombre_usuario").value;
-            let repost = await fetch(`https://jsonplaceholder.typicode.com/posts/${usuario}/${this.gasto.id}` , { method: 'DELETE' });
-            let post = await repost.json();
-            console.log(post);
-            gestion.cargarGastosApi();   
+        let usuario = document.getElementById('nombre_usuario').value;
+        
+        let url =  `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario}/${this.gasto.gastoId}`;
+        fetch(url, 
+        {
+            method: "DELETE",
+        })
+        .then(function(response)
+        {
+            if(response.ok)
+            {
+                cargarGastosApi();
+            }
+            
+        })   
           }
     }
 
  function EnviarHandleApi(){
     this.handleEvent = async function(){
-        try{
-            let usuario = document.getElementById("nombre_usuario").value;
-            let repost = await fetch(`https://jsonplaceholder.typicode.com/posts/${usuario}` , { method: 'POST' });
-            let post = repost.json();
-            console.log(post);
-            gestion.cargarGastosApi();   
-          }
-          catch(error){
-            console.log(error);
+        let usuario = document.getElementById('nombre_usuario').value;
+        
+        let url =  `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario}`;
+        fetch(url, 
+        {
+            method: "POST",
+        })
+        .then(function(response)
+        {
+            if(response.ok)
+            {
+                cargarGastosApi();
             }
+            
+        })   
+          }
     }
- }
+ 
 
  
  function EditarHandleApi(){
     this.handleEvent = async function(){
-        try{
-            let usuario = document.getElementById("nombre_usuario").value;
-            let repost = await fetch(`https://jsonplaceholder.typicode.com/posts/${usuario}` , { method: 'PUT' });
-            let post = repost.json();
-            console.log(post);
-            gestion.cargarGastosApi();   
-          }
-          catch(error){
-            console.log(error);
+        let usuario = document.getElementById('nombre_usuario').value;
+        
+        let url =  `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario}/${this.gasto.gastoId}`;
+        fetch(url, 
+        {
+            method: "PUT",
+        })
+        .then(function(response)
+        {
+            if(response.ok)
+            {
+                cargarGastosApi();
             }
+            
+        })   
+          }  
     }
- }
+
 
  let btnCargarGastosdApi = document.getElementById("cargar-gastos-api");
  btnCargarGastosdApi.onclick = cargarGastosApi;
