@@ -4,7 +4,7 @@ import * as gestionPre from "./gestionPresupuesto.js";
 function mostrarDatoEnId(valor, idElemento) {
     if (idElemento != null) {
         let elem = document.getElementById(idElemento);
-        elem.innerHTML += "" + valor;
+        elem.innerHTML = "" + valor;
     }
 }
 function mostrarGastoWeb(idElemento, gasto) {
@@ -95,6 +95,7 @@ function mostrarGastoWeb(idElemento, gasto) {
 function mostrarGastosAgrupadosWeb(agrup, periodo, idElemento) {
     if (idElemento != null) {
         let id = document.getElementById(idElemento);
+        id.innerHTML = "";
         let divContenedor = document.createElement("div");
         divContenedor.className = "agrupacion";
         let h1 = document.createElement("h1")
@@ -116,9 +117,52 @@ function mostrarGastosAgrupadosWeb(agrup, periodo, idElemento) {
             divContenedor.appendChild(divAgrupDato);
         }
         id.appendChild(divContenedor);
+        id.style.width = "33%";
+        id.style.display = "inline-block";
+        let chart = document.createElement("canvas");
+        let unit ="";
+        switch(periodo) {
+            case "anyo": 
+                unit = "year";
+                break;
+            case "mes":
+                unit = "month";
+                break;
+            case "dia":
+            default:
+                unit = "day";
+                break;
+        }
+        const myChart = new Chart(chart.getContext("2d"), {
+            type: 'bar',
+            data: {
+                datasets: [
+                    {
+                        label: `Gastos por ${periodo}`,
+                        background: "#555555",
+                        data: agrup
+                    }
+                ],
+            },
+            options: {
+                scales: {
+                    x: {
+                        type: 'time',
+                        time: {
+                            unit: unit
+                        }
+                    },
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+        id.append(chart);
     }
 }
 function repintar() {
+    
     mostrarDatoEnId(gestionPre.mostrarPresupuesto(), 'presupuesto');
     mostrarDatoEnId(gestionPre.calcularTotalGastos(), 'gastos-totales');
     mostrarDatoEnId(gestionPre.calcularBalance(), 'balance-total');
@@ -223,7 +267,7 @@ function EnviarApiHandleFormulario() {
         //.then(response => response.json())
         .then(data => {
             console.log(data);
-            cargarGastosApi();
+            cargarGastoApi();
         })
         .catch(err => console.log(err));
             document.getElementById("anyadirgasto-formulario").removeAttribute("disabled");  
@@ -305,7 +349,7 @@ function EditarApiHandleFormulario() {
     //.then(response => response.json())
     .then(data => {
         console.log(data);
-        cargarGastosApi();
+        cargarGastoApi();
     })
     .catch(err => console.log(err));
       
