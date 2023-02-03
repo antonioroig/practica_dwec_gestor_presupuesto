@@ -90,11 +90,7 @@ function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo)
 
 function repintar()
 {
-    gestionPresupuestoWeb.mostrarDatoEnId('presupuesto', gestionPresupuesto.mostrarPresupuesto());
-    gestionPresupuestoWeb.mostrarDatoEnId('gastos-totales', gestionPresupuesto.calcularTotalGastos());
-    gestionPresupuestoWeb.mostrarDatoEnId('balance-total', gestionPresupuesto.calcularBalance());
-
-    gestionPresupuestoWeb.mostrarDatoEnId('listado-gastos-completo', gestionPresupuesto.listarGastos());
+   
 }
 
 export{
