@@ -93,7 +93,11 @@ function mostrarGastoWeb(idElemento, gasto)
         BtnBorrarAPIHandle.gasto = gasto;
         bBorrarAPI.addEventListener("click", BtnBorrarAPIHandle);
         divGasto.append(bBorrarAPI);
-
+/*
+        let BtnAPIEnviar = formulario.querySelector("gasto-enviar-api");
+        let enviarAPI = new BtnAPIEnviarHandle();
+        BtnAPIEnviar.addEventListener('click', enviarAPI());
+*/
         
         divGastoEtiquetas.addEventListener("click", handleBorrarEtiq);
 
@@ -222,17 +226,32 @@ function BorrarEtiquetasHandle()
 function BorrarAPIHandle(){
     this.handleEvent = async function(){
         let usuario = document.getElementById("nombre_usuario").value;
-        try{
-            const resPost = await fetch(`https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario}/${this.gasto.id}`, {method: 'DELETE'});
-            console.log(resPost)
-            gesP.cargarGastosApi();
-        }
-        catch(error){
-            console.log(error);
-        }
+        let url =`https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario}/${this.gasto.gastoId}`;
+        fetch(url,{
+            method: 'DELETE'
+        })
+        .then(function(response){
+            if(response.ok){
+                cargarGastosApi();
+            }
+        })
     }
 }
 
+function BtnAPIEnviarHandle(){
+    this.handleEvent = async function(){
+        let usuario = document.getElementById("nombre_usuario").value;
+        let url =`https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario}`;
+        fetch(url,{
+            method: 'POST'
+        })
+        .then(function(response){
+            if(response.ok){
+                cargarGastosApi();
+            }
+        })
+    }
+}
 
 function nuevoGastoWebFormulario()
 {
