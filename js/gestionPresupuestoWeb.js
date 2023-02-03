@@ -104,6 +104,14 @@ function repintar()
    gestionPresupuesto.listarGastos.array.forEach(element => mostrarGastoWeb("listado-gastos-completo", element));
 }
 
+function actualizarPresupuestoWeb()
+{
+    let presup = prompt ("introducir presupuesto");
+    let res= parseFloat(presup);
+    gestionPresupuesto.actualizarPresupuesto(res);
+    repintar;
+}
+
 export{
     mostrarDatoEnId,
     mostrarGastoWeb,
