@@ -220,9 +220,13 @@ function nuevoGastoWebFormulario() //PRACTICA 6 La primera parte
     cancelar.botonAnyadir = botonAnyadir;
     botonCancelar.addEventListener('click', cancelar);
 
-    let CrearApiEvento = new PostHandle();
-            CrearApiEvento.formulario = formulario;
-            formulario.querySelector("button[class='gasto-enviar-api']").addEventListener('click', CrearApiEvento);
+    let CrearApiEvento = new EnviarHandleApi();
+    CrearApiEvento.formulario = formulario;   
+    formulario.querySelector("button[class='gasto-enviar-api']").addEventListener('click', CrearApiEvento);
+
+
+
+    
 }
 
 function EnviarFormularioHandle() //PRACTICA 6 La primera parte 
@@ -242,6 +246,9 @@ function EnviarFormularioHandle() //PRACTICA 6 La primera parte
 
         repintar();
         document.getElementById("anyadirgasto-formulario").disabled = false;
+        let Edita = new EditarHandleApi();
+    Edita.formulario = formulario;   
+    formulario.querySelector("button[class='gasto-enviar-api']").addEventListener('click', Edita);
 
     }    
 }
@@ -429,7 +436,7 @@ function BorrarHandleApi(){
     }
  }
 /////////////////////////////////////////////////////// EnviarHandleApi ////////////////////////////////////////////////////////
-function PostHandle(){
+function EnviarHandleApi(){
     this.handleEvent = async function(){
         let nameUser = document.getElementById("nombre_usuario").value;
 
@@ -444,6 +451,37 @@ function PostHandle(){
         let respuesta = await fetch(
             `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${nameUser}`,{
               method: 'POST',  
+
+              headers: {
+                'Content-Type': 'application/json;charset=utf-8'
+            },
+
+              body: JSON.stringify(gasto)
+            });
+
+        if(respuesta.ok)
+        {
+            id++;
+        }
+    }
+}
+
+
+function EditarHandleApi(){
+    this.handleEvent = async function(){
+        let nameUser = document.getElementById("nombre_usuario").value;
+
+        let gasto = {
+            descripcion: this.formulario.descripcion.value,
+            valor: this.formulario.valor.value,
+            fecha: this.formulario.fecha.value,
+            etiquetas: (typeof this.formulario.etiquetas.value !== "undefined") ? this.formulario.etiquetas.value.split(",") : undefined,
+            id: id
+        }
+
+        let respuesta = await fetch(
+            `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${nameUser}`,{
+              method: 'PUT',  
 
               headers: {
                 'Content-Type': 'application/json;charset=utf-8'
