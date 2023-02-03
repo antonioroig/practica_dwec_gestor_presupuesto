@@ -158,7 +158,7 @@ function mostrarGastosAgrupadosWeb(agrup, periodo, idElemento){
                 
                 var spanAgrupClave = document.createElement('span');
                 spanAgrupClave.className = "agrupacion-dato-clave";
-                spanAgrupClave.innerHTML += property;
+                spanAgrupClave.innerHTML += "Fecha: " + property + " Numero Gastos: ";
                 divAgrup.appendChild(spanAgrupClave);
     
                 var spanAgrupValor = document.createElement('span');
@@ -227,12 +227,13 @@ function mostrarGastosAgrupadosWeb(agrup, periodo, idElemento){
             }
         });
         // Añadimos la gráfica a la capa
-        divP.append(chart);
         elemento.appendChild(divAgrupacion);
+        divP.appendChild(chart);
     }
 
 }
 function repintar(){
+        
     mostrarDatoEnId(mostrarPresupuesto(),"presupuesto");
     mostrarDatoEnId(calcularTotalGastos(),"gastos-totales");
     mostrarDatoEnId(calcularBalance(),"balance-total");
@@ -242,7 +243,6 @@ function repintar(){
     listarGastos().forEach(gasto => {
         mostrarGastoWeb("listado-gastos-completo",gasto); 
     });
-        
     mostrarGastosAgrupadosWeb(agruparGastos("dia"), "día", "agrupacion-dia");
 
     mostrarGastosAgrupadosWeb(agruparGastos("mes"), "mes", "agrupacion-mes");
@@ -577,6 +577,13 @@ function EditarApiHandle(){
         let fecha = new Date (this.formulario.elements.fecha.value);
         let etiquetas = this.formulario.elements.etiquetas.value;
         let gasto = new CrearGasto(descripcion,valor,fecha,...etiquetas)
+        let nuevoGasto = {
+            descripcion :descripcion, 
+            valor:valor, 
+            fecha:fecha, 
+            etiquetas: etiquetas.split(","),
+            orden:order
+        }
         let jsonGasto = JSON.stringify(gasto)
         let user = document.getElementById('nombre_usuario').value;
         let url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/` + user + "/" + this.gasto.gastoId;
