@@ -112,7 +112,7 @@ function mostrarGastoWeb(gasto,idElemento)
 //Manejador de eventos de los botones .gasto-borrar-api
 let BorrarHandleApi =  function(){
   this.handleEvent = async function() {
-    let nombreUsuario = document.querySelector('#nombre_usuario').value;
+    let nombreUsuario = document.querySelector('nombre_usuario').value;
   //Se encargará de realizar mediante fetch una solicitud DELETE a la URL correspondiente de la API
     let url =` https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/DELETE/${nombreUsuario}/${this.gasto.id}`;
   
@@ -122,10 +122,11 @@ let BorrarHandleApi =  function(){
    cargarGastosApi();
   } else  
   {
-    alert("Error-HTTP: " + response.status);
+    alert("Error-HTTP: " + respuesta.status);
   }
   }
  }
+
 
 function mostrarGastosAgrupadosWeb(idElemento,agrup,periodo)
 {
@@ -258,10 +259,14 @@ function nuevoGastoWebformulario(){
  let  btnCancelar = formulario.querySelector("button.cancelar")
  btnCancelar.addEventListener("click",btnCancelarHandel);
 
+//Manejador de eventos del botón .gasto-enviar-api dentro de nuevoGastoWebFormulario
+
  repintar();
 
 
 }
+
+document.getElementById("gasto-enviar-api").addEventListener("click",nuevoGastoWebformulario);
 
 document.getElementById("anyadirgasto-formulario").addEventListener("click",nuevoGastoWebformulario);
 
@@ -402,7 +407,7 @@ document.getElementById("cargar-gastos").addEventListener("click", new cargarGas
 async function cargarGastosApi() 
 {
   //Se deberá crear la URL correspondiente utilizando el nombre de usuario que se haya introducido en el control input#nombre_usuario
-    let nombreUsuario = document.querySelector('#nombre_usuario').value;
+    let nombreUsuario = document.querySelector('nombre_usuario');
     //tendrá que hacer una solicitud GET a la URL correspondiente de la API
     let url = ` https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${nombreUsuario}`;
     //se encargará de obtener mediante fetch el listado de gastos a través de la API de servidor.
@@ -420,7 +425,7 @@ async function cargarGastosApi()
   }
 
 //Esta función se utilizará como manejadora de eventos del evento click del botón cargar-gastos-api.
-document.getElementById("cargar-gastos-api").addEventListener("click", new cargarGastosApi() );
+document.getElementById("cargar-gastos-api").addEventListener("click", cargarGastosApi);
 
 export{
  mostrarDatoEnId,
