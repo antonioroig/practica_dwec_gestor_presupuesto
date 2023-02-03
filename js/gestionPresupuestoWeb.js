@@ -264,9 +264,9 @@ function repintar(){
     });
 
     // Práctica 10 -- Librerías externas
-    mostrarGastosAgrupadosWeb("agrupacion-dia", gestion.agruparGastos("dia"), "dia");
-    mostrarGastosAgrupadosWeb("agrupacion-mes", gestion.agruparGastos("mes"), "mes");
-    mostrarGastosAgrupadosWeb("agrupacion-anyo", gestion.agruparGastos("anyo"), "anyo");
+    mostrarGastosAgrupadosWeb("agrupacion-dia", gp.agruparGastos("dia"), "dia");
+    mostrarGastosAgrupadosWeb("agrupacion-mes", gp.agruparGastos("mes"), "mes");
+    mostrarGastosAgrupadosWeb("agrupacion-anyo", gp.agruparGastos("anyo"), "anyo");
 }
 function actualizarPresupuestoWeb (){
 
@@ -346,16 +346,17 @@ function nuevoGastoWebFormulario(){
   btnCancelar.addEventListener('click', objCancelar);
   
   // MANEJADOR DE EVENTO BORRAR API
-  let btnBorrarApi = formulario.querySelector('button.gasto-borrar-api');
+  /* let btnBorrarApi = formulario.querySelector('button.gasto-borrar-api');
   let objBorrarApi = new borrarGastoApi();
-    btnBorrarApi.addEventListener('click',objBorrarApi);
+    btnBorrarApi.addEventListener('click',objBorrarApi); */
   
   // OJO
   let btnGastoApi = formulario.querySelector('button.gasto-enviar-api');
-  btnGastoApi.addEventListener('click', gastoApiFormulario);
+  btnGastoApi.addEventListener('click',new gastoApiFormulario());
 }
 
-function gastoApiFormulario(event){
+function gastoApiFormulario(){
+  this.handleEvent = function(event){
   let usuario = document.getElementById(`nombre_usuario`).value;
     let url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario}`;
 
@@ -373,7 +374,7 @@ function gastoApiFormulario(event){
       etiquetas: array
   }
 
-  console.log(nObjeto);
+  /* console.log(nObjeto); */
 
       fetch(url, {
         method: 'POST', 
@@ -394,8 +395,10 @@ function gastoApiFormulario(event){
             console.log("Añadido Incorrectamente");
         }
     })
-    //.catch(err => console.error(err));
+    .catch(err => console.error(err));
     let btnAnyadirGastoForm = document.getElementById("anyadirgasto-formulario").removeAttribute("disabled");
+    event.currentTarget.parentNode.remove();
+  }
 }
 
 // Función constructora 
@@ -477,7 +480,7 @@ function EnviarGastoApi (){
           console.log("Modificacion INcorrecta");
       }
   })
-  // .catch(err => console.error(err));
+   .catch(err => console.error(err));
 
   let btnAnyadirGastoForm = document.getElementById("anyadirgasto-formulario");
         btnAnyadirGastoForm.removeAttribute('disabled');
@@ -621,7 +624,7 @@ function cargarGastosApi(event){
     gp.cargarGastos(gastosAPI);
     repintar();
 })
-//.catch(err => alert(err));
+.catch(err => alert(err));
 
 }
 
@@ -636,10 +639,9 @@ function borrarGastoApi(){
       fetch(url,{method: 'DELETE'})
             .then(response => response.json())
             .then(datos => {
-              cargarGastosApi();
+              new cargarGastosApi();
             })
-            //.catch(err => console.error(err));
-    
+            .catch(err => console.error(err));    
   }
 }
 
