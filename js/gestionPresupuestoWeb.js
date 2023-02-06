@@ -123,7 +123,12 @@ function nuevoGastoWeb()
     let etiquetas = prompt("introducir etiquetas", '');
 
     let res= parseFloat(valor);
+
+    let gastonuevo = new gestionPresupuesto.CrearGasto(descripcion,res,fecha,etiquetas);
+    gestionPresupuesto.anyadirGasto(gastonuevo);
+    repintar;
 }
+
 
 export{
     mostrarDatoEnId,
