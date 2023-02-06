@@ -115,6 +115,15 @@ function actualizarPresupuestoWeb()
 let actPres = document.getElementById('actualizarPresupuesto');
 actPres.addEventListener('click',actualizarPresupuestoWeb);
 
+function nuevoGastoWeb()
+{
+    let descripcion=;
+    let valor=;
+    let fecha=;
+    let etiquetas=;
+
+}
+
 export{
     mostrarDatoEnId,
     mostrarGastoWeb,
