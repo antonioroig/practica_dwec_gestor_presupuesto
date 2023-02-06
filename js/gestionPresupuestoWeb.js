@@ -128,7 +128,8 @@ function nuevoGastoWeb()
     gestionPresupuesto.anyadirGasto(gastonuevo);
     repintar;
 }
-
+let gastonew = document.getElementById('anyadirgasto');
+gastonew.addEventListener('click',nuevoGastoWeb);
 
 export{
     mostrarDatoEnId,
