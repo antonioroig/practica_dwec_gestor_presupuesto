@@ -112,6 +112,9 @@ function actualizarPresupuestoWeb()
     repintar;
 }
 
+let actPres = document.getElementById('actualizarPresupuesto');
+actPres.addEventListener('click',actualizarPresupuestoWeb);
+
 export{
     mostrarDatoEnId,
     mostrarGastoWeb,
