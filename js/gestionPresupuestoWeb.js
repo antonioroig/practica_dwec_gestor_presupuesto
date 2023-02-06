@@ -106,7 +106,7 @@ function repintar()
 
 function actualizarPresupuestoWeb()
 {
-    let presup = prompt ("introducir presupuesto");
+    let presup = prompt ("introducir presupuesto:", '');
     let res= parseFloat(presup);
     gestionPresupuesto.actualizarPresupuesto(res);
     repintar;
@@ -117,11 +117,12 @@ actPres.addEventListener('click',actualizarPresupuestoWeb);
 
 function nuevoGastoWeb()
 {
-    let descripcion=;
-    let valor=;
-    let fecha=;
-    let etiquetas=;
+    let descripcion = prompt("introducir descripcion", '');
+    let valor = prompt("introducir valor", '');
+    let fecha = prompt("introducir fecha", '');
+    let etiquetas = prompt("introducir etiquetas", '');
 
+    let res= parseFloat(valor);
 }
 
 export{
