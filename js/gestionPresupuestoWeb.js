@@ -190,11 +190,7 @@ function nuevoGastoWebFormulario(){
     formulario.addEventListener('submit',enviarForm);
     
     let BEnviarApi = formulario.querySelector("button.gasto-enviar-api");
-    let EnviarApi = new EnviarApiHandle();
-    EnviarApi.formulario = formulario;
-    EnviarApi.boton = BEnviarApi;
-    BEnviarApi.addEventListener('click',EnviarApi);
-        
+    BEnviarApi.addEventListener('click',new EnviarApiHandle); 
 
     document.getElementById('anyadirgasto-formulario').setAttribute('disabled','');
 
@@ -253,11 +249,12 @@ function EditarHandleFormulario(){
 
         this.gastoButtonEditarForm.setAttribute('disabled','');
 
-        let BEnviarApi = formulario.querySelector("button.gasto-enviar-api");
-        let EnviarApi = new EnviarApiHandle();
-        EnviarApi.formulario = formulario;
-        EnviarApi.boton = BEnviarApi;
-        BEnviarApi.addEventListener('click', EnviarApi);
+        
+
+        let EditarApi = new EditarHandleApi();
+        let BEditarApi = formulario.querySelector('button.gasto-enviar-api')
+        EditarApi.gasto = this.gasto;
+        BEditarApi.addEventListener('click',EditarApi)
 
         let cancelarForm = new CancelarEditarHandleFormulario(); 
         cancelarForm.formulario = formulario;
@@ -438,6 +435,35 @@ function EnviarApiHandle(){
                 let cargargastos = new cargarGastosApi();
             })
             .catch(error => console.log('No se ha enviado el gasto ' + error));
+    }
+}
+
+function EditarHandleApi(){
+    this.handleEvent = function (event){
+        let formulario = event.currentTarget.form;
+
+        let descripcion = formulario.elements.descripcion.value;
+        let valor = formulario.elements.valor.value;
+        let fecha = formulario.elements.fecha.value;
+        let etiquetas = formulario.elements.etiquetas.value;
+        
+        let gasto = {
+            descripcion :descripcion, 
+            valor:valor, 
+            fecha:fecha, 
+            etiquetas: etiquetas.split(","),
+        }
+        
+        let jsonGasto = JSON.stringify(gasto)
+        let user = (document.getElementById("nombre_usuario")).value;
+        let url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${user}/${this.gasto.gastoId}`;
+        console.log(user);
+        console.log(url);
+        fetch(url, {method: 'PUT', body:  jsonGasto, headers: {'Content-Type': 'application/json'}})
+            .then(response => response.json())
+            .then(gasto => {
+                new cargarGastosApi(gasto);})
+            .catch(error => console.log("El gasto no se ha editado " + error));
     }
 }
 
