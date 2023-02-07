@@ -61,6 +61,11 @@ function mostrarGastoWeb(idElemento, gasto)
     let objedit= new EditarHandle();
     objedit.gasto = gasto;
     btedit.addEventListener('click', objedit);
+
+    let btborrar = document.createElement('button');
+    let objborrar = new BorrarHandle();
+    objborrar.gasto = gasto;
+    btborrar.addEventListener('click', objborrar)
 }
 
 function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo)
@@ -151,6 +156,15 @@ function EditarHandle()
         this.gasto.actualizarFecha(edFecha);
         this.gasto.actualizarValor(res);
             
+        repintar();
+    }
+};
+
+function BorrarHandle()
+{
+    this.handleEvent = function (event)
+    {
+        gestionPresupuesto.borrarGasto(this.gasto.id);
         repintar();
     }
 }
