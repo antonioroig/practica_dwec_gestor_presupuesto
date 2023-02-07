@@ -36,7 +36,7 @@ function mostrarGastoWeb(idElemento,gasto)
  {
     let span = document.createElement('span');
     span.className = "gasto-etiquetas-etiqueta";
-    span.textContent = "" + etiqueta;
+    span.textContent = " " + etiqueta;
     etiquetas_gasto.append(span);
 
     let etiquetas_borradas = new BorrarEtiquetasHandle();
@@ -197,7 +197,8 @@ function repintar()
     let mes = pres.agruparGastos('mes');
     mostrarGastosAgrupadosWeb('agrupacion-mes',mes,'mes');
 
-    let anyo = pres.agruparGastos('agrupacion-anyo', anyo, 'año')
+    let anyo = pres.agruparGastos('anyo');
+    mostrarGastosAgrupadosWeb('agrupacion-anyo',anyo,'año');
 
 }
 
