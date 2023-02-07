@@ -66,6 +66,11 @@ function mostrarGastoWeb(idElemento, gasto)
     let objborrar = new BorrarHandle();
     objborrar.gasto = gasto;
     btborrar.addEventListener('click', objborrar)
+
+    let btelimEtiq = document.createElement('button');
+    let objelimEtiq = new BorrarEtiquetasHandle();
+    objelimEtiq.gasto = gasto;
+    btelimEtiq.addEventListener('click', objelimEtiq)
 }
 
 function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo)
@@ -168,6 +173,16 @@ function BorrarHandle()
         repintar();
     }
 }
+
+function BorrarEtiquetasHandle()
+{
+    this.handleEvent = function (event)
+    {
+        this.gasto.borrarEtiquetas(this.etiqueta);
+        repintar();
+    }
+}
+
 
 export{
     mostrarDatoEnId,
