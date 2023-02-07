@@ -114,7 +114,7 @@ function actualizarPresupuestoWeb()
     let presup = prompt ("introducir presupuesto:", '');
     let res= parseFloat(presup);
     gestionPresupuesto.actualizarPresupuesto(res);
-    repintar;
+    repintar();
 }
 
 let actPres = document.getElementById('actualizarPresupuesto');
@@ -131,7 +131,7 @@ function nuevoGastoWeb()
 
     let gastonuevo = new gestionPresupuesto.CrearGasto(descripcion,res,fecha,etiquetas);
     gestionPresupuesto.anyadirGasto(gastonuevo);
-    repintar;
+    repintar();
 }
 let gastonew = document.getElementById('anyadirgasto');
 gastonew.addEventListener('click',nuevoGastoWeb);
@@ -144,11 +144,14 @@ function EditarHandle()
         let edvalor = prompt ("Introducir valor: ", this.gasto.valor);
         let edDesc = prompt ("Introducir descripción: ", this.gasto.descripcion);
         let edetiquetas = prompt ("Introducir etiquetas separadas por ','", this.gasto.etiquetas);
-
         let res = parseFloat(edvalor);
+
         this.gasto.etiquetas = edetiquetas.split(',');
-        
-        
+        this.gasto.actualizarDescripcion(edDesc);
+        this.gasto.actualizarFecha(edFecha);
+        this.gasto.actualizarValor(res);
+            
+        repintar();
     }
 }
 
