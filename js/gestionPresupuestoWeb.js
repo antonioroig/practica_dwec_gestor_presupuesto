@@ -304,7 +304,7 @@ function EnviarHandleFormulario()
         let new_desc = formulario.elements.descripcion.value;
         let new_valor = parseFloat(formulario.elements.valor.value);
         let new_fecha = formulario.elements.fecha.value;
-        let new_etiquetas = formulario.elements.etiquetas.value;
+        let new_etiquetas = formulario.elements.etiquetas.value.split();
 
         let new_gasto = new pres.CrearGasto(new_desc,new_valor,new_fecha,...new_etiquetas);
 
@@ -497,7 +497,7 @@ function EnviarHandleApi()
         let descripcion = formulario.elements.descripcion.value;
         let valor = parseFloat(formulario.elements.valor.value);
         let fecha = formulario.elements.fecha.value;
-        let etiquetas = formulario.elements.etiquetas.value;
+        let etiquetas = formulario.elements.etiquetas.value.split();
         let user = document.getElementById('nombre_usuario').value;
         let url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${user}`;
         let gasto = {
@@ -540,7 +540,7 @@ function EditarHandleApi()
         let descripcion = formulario.elements.descripcion.value;
         let valor = parseFloat(formulario.elements.valor.value);
         let fecha = formulario.elements.fecha.value;
-        let etiquetas = formulario.elements.etiquetas.value;
+        let etiquetas = formulario.elements.etiquetas.value.split();
         let user = document.getElementById('nombre_usuario').value;
         let url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${user}/${this.gasto.gastoId}`;
         let gasto = {
@@ -551,11 +551,11 @@ function EditarHandleApi()
         }
       
             fetch(url, {method: 'PUT', body:  JSON.stringify(gasto), headers: {
-                'Content-Type': 'application/json; charset=utf-8'}})
-               .then(response => response.json())
-                .then(gasto => {
+            'Content-Type': 'application/json; charset=utf-8'}})
+            .then(response => response.json())
+            .then(gasto => {
                 cargarGastosApi();})
-                .catch(error => console.log(error));
+            .catch(error => console.log(error));
        
     }
 }
