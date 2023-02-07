@@ -188,7 +188,17 @@ function repintar()
     // }
      pres.listarGastos().forEach(gasto =>{
         mostrarGastoWeb("listado-gastos-completo", gasto);
-     });
+    });
+
+    
+    let dia = pres.agruparGastos('dia');
+    mostrarGastosAgrupadosWeb('agrupacion-dia',dia,'día');
+
+    let mes = pres.agruparGastos('mes');
+    mostrarGastosAgrupadosWeb('agrupacion-mes',mes,'mes');
+
+    let anyo = pres.agruparGastos('agrupacion-anyo', anyo, 'año')
+
 }
 
 
