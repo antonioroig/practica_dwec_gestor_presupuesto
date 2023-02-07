@@ -56,6 +56,11 @@ function mostrarGastoWeb(idElemento, gasto)
         let salto=document.createElement("br");
         divGasto.append(divGastoEtiquetas, salto);
     }
+
+    let btedit = document.createElement('button');
+    let objedit= new EditarHandle();
+    objedit.gasto = gasto;
+    btedit.addEventListener('click', objedit);
 }
 
 function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo)
@@ -131,9 +136,27 @@ function nuevoGastoWeb()
 let gastonew = document.getElementById('anyadirgasto');
 gastonew.addEventListener('click',nuevoGastoWeb);
 
+function EditarHandle()
+{
+    this.handleEvent = function (event)
+    {
+        let edFecha = promt("introducir fecha en formato internacional: ", this.gasto.fecha);
+        let edvalor = prompt ("Introducir valor: ", this.gasto.valor);
+        let edDesc = prompt ("Introducir descripción: ", this.gasto.descripcion);
+        let edetiquetas = prompt ("Introducir etiquetas separadas por ','", this.gasto.etiquetas);
+
+        let res = parseFloat(edvalor);
+        this.gasto.etiquetas = edetiquetas.split(',');
+        
+        
+    }
+}
+
 export{
     mostrarDatoEnId,
     mostrarGastoWeb,
     mostrarGastosAgrupadosWeb,
-    repintar
+    repintar,
+    actualizarPresupuestoWeb,
+    nuevoGastoWeb
 }
