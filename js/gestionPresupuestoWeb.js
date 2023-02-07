@@ -263,8 +263,8 @@
           
           let formulario = event.currentTarget;
   
-          let descripcion = formulario.elements.descripcion.value;
-          this.gasto.actualizarDescripcion(descripcion);
+          let Descrip = formulario.elements.descripcion.value;
+          this.gasto.actualizarDescripcion(Descrip);
   
           let valor = parseFloat(formulario.elements.valor.value);
           this.gasto.actualizarValor(valor);
@@ -333,6 +333,11 @@
         formulario.addEventListener('submit',enviar);
 
         botonFormulario.setAttribute('disabled', "");
+
+        let editarApi = new EditarGastosApi();
+        editarApi.gasto = this.gasto;
+        let botonEditarApi = formulario.querySelector('button.gasto-editar-api')
+        botonEditarApi.addEventListener('click',editarApi);
     }
 }
 
@@ -430,9 +435,9 @@ function CargarGastosApi(){
        
         let promise = fetch(`https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario}/${this.gasto.gastoId}`, {method: 'DELETE'} )
        
+        .then (()=> cargarTodo())
         .then (response => { 
             console.log(`se ha borrado el gasto ${this.gasto.descripcion}`);
-            CargarGastosApi();
         })
     
       }
@@ -465,6 +470,7 @@ function CargarGastosApi(){
           {
             if(response.ok)
               {
+                cargarTodo();
                 console.log('Se ha creado el gasto');
               }
               else
@@ -477,7 +483,46 @@ function CargarGastosApi(){
       }
     }
 
-export{
+    function EditarGastosApi(){
+      this.handleEvent = function(event){
+        event.preventDefault();
+
+        let usuario = document.getElementById("nombre_usuario").value;
+
+        let formulario = event.currentTarget.form;
+        let descip = formulario.elements.descripcion.value;
+        let valor = parseFloat(formulario.elements.valor.value);
+        let fecha = formulario.elements.fecha.value;
+        let etiquetas = formulario.elements.etiquetas.value.split(',');
+        
+        let GastoApi = {
+          descripcion: descip,
+          valor: valor,
+          fecha: fecha,
+          etiquetas: etiquetas,
+        }
+        
+        let promise = fetch(`https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario}/${this.gasto.gastoId}/`, 
+        {method: 'PUT', headers:{'Content-Type': 'application/json;charset=utf-8'}, body: JSON.stringify(GastoApi)})
+
+        .then (()=> cargarTodo())
+
+        .then (console.log('Edited'));
+      }
+    }
+
+    function cargarTodo(){
+      let usuario = document.getElementById("nombre_usuario").value;
+      let promise = fetch(`https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario}`)
+
+      .then (response => response.json())
+
+      .then (response => {presupuesto.cargarGastos(response);
+          repintar();
+      })
+    }
+
+    export{
     mostrarDatoEnId,
     mostrarGastoWeb,
     mostrarGastosAgrupadosWeb,
@@ -497,6 +542,7 @@ export{
     cargarGastosWeb,
     CargarGastosApi,
     BorrarGastosApi,
-    EnviarGastosApi
+    EnviarGastosApi,
+    EditarGastosApi
   }
 
