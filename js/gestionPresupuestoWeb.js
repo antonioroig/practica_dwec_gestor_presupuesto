@@ -99,7 +99,7 @@ function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo)
         DIVdato.className = 'agrupacion-dato';
         let SPANclave = document.createElement('span');
         SPANclave.className = 'agrupacion-dato-clave';
-        SPANclave.innerHTML += `${propiedad}`;
+        SPANclave.innerHTML += " " + `${propiedad}`;
         let SPANvalor = document.createElement('span');
         SPANvalor.className = 'agrupacion-dato-valor';
         SPANvalor.innerHTML += " " + agrup[propiedad] + " €";
@@ -183,6 +183,20 @@ function repintar(){
     mostrarDatoEnId('balance-total', gestionPresupuesto.calcularBalance());
     mostrarDatoEnId('listado-gastos-completo', "");
     mostrarGastoWeb('listado-gastos-completo', gestionPresupuesto.listarGastos());
+    mostrarDatoEnId('listado-gastos-filtrado-1', "");
+    mostrarGastoWeb('listado-gastos-filtrado-1', gestionPresupuesto.filtrarGastos({fechaDesde: "2021-09-01", fechaHasta: "2021-09-30"}));
+    mostrarDatoEnId('listado-gastos-filtrado-2', "");
+    mostrarGastoWeb('listado-gastos-filtrado-2', gestionPresupuesto.filtrarGastos({valorMinimo: 50}));
+    mostrarDatoEnId('listado-gastos-filtrado-3', "");
+    mostrarGastoWeb('listado-gastos-filtrado-3', gestionPresupuesto.filtrarGastos({valorMinimo: 200,etiquetasTiene: ["seguros"]}));
+    mostrarDatoEnId('listado-gastos-filtrado-4', "");
+    mostrarGastoWeb('listado-gastos-filtrado-4', gestionPresupuesto.filtrarGastos({valorMaximo: 50,etiquetasTiene: ["comida","transporte"]}));
+    mostrarDatoEnId('agrupacion-dia', "");
+    mostrarGastosAgrupadosWeb('agrupacion-dia', gestionPresupuesto.agruparGastos("dia"),"día");
+    mostrarDatoEnId('agrupacion-mes', "");
+    mostrarGastosAgrupadosWeb('agrupacion-mes',gestionPresupuesto.agruparGastos("mes"),"mes");
+    mostrarDatoEnId('agrupacion-anyo', "");
+    mostrarGastosAgrupadosWeb('agrupacion-anyo',gestionPresupuesto.agruparGastos("anyo"),"año");
 }
 function nuevoGastoWeb(){
     let descripcion = prompt("Introduce la descripción del gasto:","");
@@ -254,6 +268,7 @@ function EditarHandleformulario(){
         BUTTONcancelar.addEventListener('click',CancelarForm);
         let BUTTONenviarapi = formulario.querySelector("button.gasto-enviar-api");
         let EditarAPI = new EditarAPIHandle();
+        EditarAPI.gasto = this.gasto;
         EditarAPI.formulario = formulario;
         EditarAPI.BUTTONenviarapi = BUTTONenviarapi;
         BUTTONenviarapi.addEventListener('click',EditarAPI);
@@ -288,6 +303,7 @@ function nuevoGastoWebFormulario(){
     let Enviar = new funcionEnviar();
     formulario.addEventListener("submit",Enviar);
     let Cancelar =  new funcionCancelar();
+    Cancelar.formulario = formulario;
     let BUTTONcancelar = formulario.querySelector("button.cancelar");
     BUTTONcancelar.addEventListener('click',Cancelar);
     let BUTTONenviarapi = formulario.querySelector("button.gasto-enviar-api");
@@ -321,7 +337,7 @@ function funcionEnviar(){
 function funcionCancelar(){
     this.handleEvent = function(event){
         event.preventDefault();
-        let formulario = event.currentTarget;
+        let formulario = this.formulario;
         formulario.remove();
         document.getElementById('anyadirgasto-formulario').removeAttribute('disabled');
         repintar();
@@ -425,6 +441,26 @@ function cargarGastosApi(){
     }
 }
 
+function actualizarAPI ()
+{
+    let usuario = (document.getElementById("nombre_usuario")).value;
+    let URL = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario}`;
+    fetch(URL,{method: "GET"})
+        .then(solucion => solucion.json())
+        .then((datos)  => {
+            if(datos != "")
+                {
+                    gestionPresupuesto.cargarGastos(datos);
+                    console.log("Gastos Introducidos Correctamente");
+                    repintar();
+                }
+            else
+            {
+                console.log("No hay gastos");
+            }
+        })
+}
+
 let CargarApi = new cargarGastosApi();
 let BUTTONcargarapi = document.getElementById("cargar-gastos-api");
 BUTTONcargarapi.addEventListener("click",CargarApi);
@@ -444,6 +480,7 @@ function BorrarAPIHandle(){
                 {
                     console.log("Error este gasto no se encuentra en la API");
                 }
+                actualizarAPI();
             })
     }
 }
@@ -454,7 +491,7 @@ function EnviarAPIHandle(){
         let URL = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario}`;
         let descripcion = this.formulario.elements.descripcion.value;
         let valor = parseFloat(this.formulario.elements.valor.value);
-        let fecha = new Date(this.formulario.elements.fecha.value);
+        let fecha = this.formulario.elements.fecha.value;
         let etiquetas = this.formulario.elements.etiquetas.value;
         let JSONgasto = JSON.stringify(new gestionPresupuesto.CrearGasto(descripcion,valor,fecha,etiquetas));
         fetch(URL,{method: "POST", body: JSONgasto,headers: {
@@ -464,6 +501,7 @@ function EnviarAPIHandle(){
             .then(data =>{
                 console.log("Gasto Enviado Correctamente");
             })
+            .then(() => {actualizarAPI()})
             .catch(error => console.log(error));
     }
 }
@@ -475,7 +513,7 @@ function EditarAPIHandle(){
         let URL = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario}/${this.gasto.gastoId}`;
         let descripcion = this.formulario.elements.descripcion.value;
         let valor = parseFloat(this.formulario.elements.valor.value);
-        let fecha = new Date(this.formulario.elements.fecha.value);
+        let fecha =  this.formulario.elements.fecha.value;
         let etiquetas = this.formulario.elements.etiquetas.value;
         let JSONgasto = JSON.stringify(new gestionPresupuesto.CrearGasto(descripcion,valor,fecha,etiquetas));
         fetch(URL,{method: "PUT", body: JSONgasto,headers: {
@@ -485,7 +523,9 @@ function EditarAPIHandle(){
             .then(data =>{
                 console.log("Gasto Enviado Correctamente");
             })
+            .then(() => {actualizarAPI()})
             .catch(error => console.log(error));
+
     }
 }
 
