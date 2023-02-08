@@ -181,16 +181,24 @@ function repintar(){
     mostrarDatoEnId('balance-total',gestionPresupuesto.calcularBalance());
     mostrarDatoEnId('listado-gastos-completo',"");
     mostrarGastoWeb('listado-gastos-completo',gestionPresupuesto.listarGastos());
-    mostrarGastosAgrupadosWeb('agrupacion-dia',"");
-    mostrarGastosAgrupadosWeb('agrupacion-mes',"");
-    mostrarGastosAgrupadosWeb('agrupacion-anyo',"");
+    mostrarDatoEnId('listado-gastos-filtrado-1',"");
+    mostrarGastoWeb('listado-gastos-filtrado-1',gestionPresupuesto.filtrarGastos({fechaDesde: "2021-09-01", fechaHasta: "2021-09-30"}));
+    mostrarDatoEnId('listado-gastos-filtrado-2',"");
+    mostrarGastoWeb('listado-gastos-filtrado-2',gestionPresupuesto.filtrarGastos({valorMinimo: 50}));
+    mostrarDatoEnId('listado-gastos-filtrado-3', "");
+    mostrarGastoWeb('listado-gastos-filtrado-3', gestionPresupuesto.filtrarGastos({valorMinimo: 200, etiquetasTiene: ["seguros"]}));
+    mostrarDatoEnId('listado-gastos-filtrado-4',"");
+    mostrarGastoWeb('listado-gastos-filtrado-4',gestionPresupuesto.filtrarGastos({valorMaximo: 50,etiquetasTiene: ["comida", "transporte"]}));
+    mostrarDatoEnId('agrupacion-dia',"");
+    mostrarDatoEnId('agrupacion-mes',"");
+    mostrarDatoEnId('agrupacion-anyo',"");
     mostrarGastosAgrupadosWeb('agrupacion-dia',gestionPresupuesto.agruparGastos("dia"),"día");
     mostrarGastosAgrupadosWeb('agrupacion-mes',gestionPresupuesto.agruparGastos("mes"),"mes");
     mostrarGastosAgrupadosWeb('agrupacion-anyo',gestionPresupuesto.agruparGastos("anyo"),"año");
 }
 
 function actualizarPresupuestoWeb(){
-    let alert = prompt("Introduce un nuevo presupuesto:",'');
+    let alert = prompt("Introduce un nuevo presupuesto:",0);
     gestionPresupuesto.actualizarPresupuesto(parseInt(`${alert}`,10));
     repintar();
 }
@@ -455,6 +463,23 @@ function cargarGastosApi(){
     }
 }
 
+function cargarTodo (){
+    let user = (document.getElementById("nombre_usuario")).value;
+    let url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${user}`;
+    console.log(user);
+    console.log(url);
+    fetch(url, {method: 'GET'})
+        .then(res => res.json())
+        .then((datos) => {
+            if(datos != "")
+            {
+                gestionPresupuesto.cargarGastos(datos);
+                repintar();
+            }
+            else console.log("No hay gastos")
+        })
+}
+
 let BcargarGastosApi = new cargarGastosApi();
 document.getElementById("cargar-gastos-api").addEventListener('click', BcargarGastosApi);
 
@@ -469,7 +494,7 @@ function BorrarApi (){
                 if(res.ok){
                     console.log('Eliminado Correctamente');
                 }
-                let cargargastos = new cargarGastosApi();
+                cargarTodo();
             })
             .catch(error => {
                 console.log('No se ha eliminado ' + error);
@@ -480,11 +505,13 @@ function BorrarApi (){
 
 
 function EnviarApiHandle(){
-    this.handleEvent = function(){
-        let descripcion = this.formulario.elements.descripcion.value;
-        let valor = this.formulario.elements.valor.value;
-        let fecha = this.formulario.elements.fecha.value;
-        let etiquetas = this.formulario.elements.etiquetas.value;
+    this.handleEvent = function(event){
+        let formulario = event.currentTarget.form;
+
+        let descripcion = formulario.elements.descripcion.value;
+        let valor = parseFloat(formulario.elements.valor.value);
+        let fecha = formulario.elements.fecha.value;
+        let etiquetas = formulario.elements.etiquetas.value;
         let gasto = {
             descripcion :descripcion, 
             valor:valor, 
@@ -499,7 +526,7 @@ function EnviarApiHandle(){
         fetch(url, {method: 'POST', body: jsonGasto, headers: {'Content-Type': 'application/json'}})
             .then(response => response.json())
             .then(datos => {
-                let cargargastos = new cargarGastosApi();
+                cargarTodo();
             })
             .catch(error => console.log('No se ha enviado el gasto ' + error));
     }
@@ -510,7 +537,7 @@ function EditarHandleApi(){
         let formulario = event.currentTarget.form;
 
         let descripcion = formulario.elements.descripcion.value;
-        let valor = formulario.elements.valor.value;
+        let valor = parseFloat(formulario.elements.valor.value);
         let fecha = formulario.elements.fecha.value;
         let etiquetas = formulario.elements.etiquetas.value;
         
@@ -529,7 +556,7 @@ function EditarHandleApi(){
         fetch(url, {method: 'PUT', body:  jsonGasto, headers: {'Content-Type': 'application/json'}})
             .then(response => response.json())
             .then(gasto => {
-                new cargarGastosApi(gasto);})
+                cargarTodo();})
             .catch(error => console.log("El gasto no se ha editado " + error));
     }
 }

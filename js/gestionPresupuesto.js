@@ -166,9 +166,9 @@ function borrarGasto(idEliminar){
 }
 
 function calcularTotalGastos(){
-    var total = 0;
+    let total = 0;
     gastos.forEach(gasto => {
-        total = total + gasto.valor;
+        total += gasto.valor;
     });
     return total;
 }
