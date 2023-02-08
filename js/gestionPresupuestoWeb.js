@@ -71,6 +71,10 @@ function mostrarGastoWeb(idElemento, gasto)
     let objelimEtiq = new BorrarEtiquetasHandle();
     objelimEtiq.gasto = gasto;
     btelimEtiq.addEventListener('click', objelimEtiq)
+
+    let botEd = document.createElement('button');
+    botEd.className = 'gasto-editar';
+    botEd.textContent = 'Editar';
 }
 
 function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo)
@@ -193,4 +197,5 @@ export{
     nuevoGastoWeb,
     EditarHandle,
     BorrarHandle,
+    BorrarEtiquetasHandle
 }
