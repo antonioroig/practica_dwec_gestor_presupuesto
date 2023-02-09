@@ -135,10 +135,12 @@ function actualizarPresupuestoWeb()
     let res= parseFloat(presup);
     gestionPresupuesto.actualizarPresupuesto(res);
     repintar();
+
+    let actPres = document.getElementById('actualizarPresupuesto');
+    actPres.addEventListener('click',actualizarPresupuestoWeb);
 }
 
-let actPres = document.getElementById('actualizarPresupuesto');
-actPres.addEventListener('click',actualizarPresupuestoWeb);
+
 
 function nuevoGastoWeb()
 {
