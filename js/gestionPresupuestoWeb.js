@@ -73,6 +73,7 @@ function mostrarGastoWeb(gasto, idElemento)
         borrarEtiqueta.etiqueta = gasto.etiquetas[i];
 
         let etiq = document.createElement('span');
+        
         etiq.className = 'gasto-etiquetas-etiqueta';
         etiq.textContent = `${gasto.etiquetas[i]}` +" ";
         etiq.addEventListener("click", borrarEtiqueta);
@@ -131,7 +132,16 @@ function mostrarGastoWeb(gasto, idElemento)
     editarFormEvent.elements= padre;
     editarFormEvent.boton=botonEditarForm;
     botonEditarForm.addEventListener('click',editarFormEvent);
-    
+
+    let evBorrarAPI = new BorrarGastoApiHandle();
+    evBorrarAPI.gasto = gasto;
+
+    // boton borrar API
+    let btnBorrarAPI = document.createElement("button");
+    btnBorrarAPI.className = "gasto-borrar-api";
+    btnBorrarAPI.type = "button";
+    btnBorrarAPI.textContent = "Borrar (API)";
+    btnBorrarAPI.addEventListener('click', evBorrarAPI);
     
     padre.appendChild(botonEditarForm);
     elem.appendChild(padre);
@@ -382,6 +392,7 @@ function cargarGastoWeb(){
         repintar();    
     };
 }
+//practica 9//
 function CargarGastosApi(){
     let usuario = document.getElementById('nombre_usuario').value;
     if(usuario != '')
@@ -407,6 +418,88 @@ function CargarGastosApi(){
    
 }
 
+function BorrarGastoApiHandle()
+{
+    
+    this.handleEvent = function(event){
+        let usuario = document.getElementById("nombre_usuario").value;
+        let url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario}/${this.gasto.gastoId}`;
+
+        if (usuario == "") 
+        {
+            console.log("Campo vacio");
+        } 
+        else 
+        {
+            fetch(url, {method: 'DELETE'})
+            .then(response => response.json())
+            .then(datos => {
+                if(!datos.errorMessage)
+                {
+                    CargarGastosApi();
+                } 
+                else 
+                {
+                    console.log(datos.errorMessage);
+                }
+            })
+            .catch(err => console.error(err));
+        }
+    }
+}
+function EnviarGastoApi(event)
+{
+    let usuario = document.getElementById("nombre_usuario").value;
+    let url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario}`;
+    
+    let form = event.currentTarget.form;
+    let descripcion = form.elements.descripcion.value;
+    let valor = form.elements.valor.value;
+    let fecha = form.elements.fecha.value;
+    let etiquetas = form.elements.etiquetas.value;
+
+    val = parseFloat(val);
+    etiq = etiq.split(",");
+
+    let nObjeto = {
+        descripcion: descripcion,
+        fecha: fecha,
+        valor: valor,
+        etiquetas: etiquetas
+    }
+
+    console.log(nObjeto);
+
+    if(usuario == "")
+    {
+        console.log("No ha introducido el nombre de usuario");
+    }
+    
+    else
+    {
+        fetch(url, {
+            method: 'POST', 
+            body: JSON.stringify(nObjeto),
+            headers:{
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(response => {
+            
+            if(response.ok)
+            {
+                console.log("Se ha añadido Correctamente");
+                CargarGastosApi();
+            }
+            
+            else
+            {
+                console.log("Se ha añadido Incorrectamente");
+            }
+        })
+        .catch(err => console.error(err));
+    }
+}
 export   {  
     mostrarDatoEnId,
     mostrarGastoWeb,
