@@ -275,8 +275,11 @@ function EditarHandleFormulario(){
         let botonCancelar = formulario.querySelector("button.cancelar");
         botonCancelar.addEventListener('click', cancelar);
 
-        let Editar = new EditarHandleApi();
-        formulario.querySelector("button[class='gasto-enviar-api']").addEventListener('click', Editar);
+       
+        let enviar = new EditarHandleApi();
+        enviar.formulario = formulario;
+        enviar.gasto = this.gasto;
+        formulario.querySelector("button[class='gasto-enviar-api']").addEventListener('click', enviar);
 
     }
 }
@@ -411,23 +414,27 @@ async function cargarGastosApi(){
  
  function EditarHandleApi(){
     this.handleEvent = async function(){
-        let usuario = document.getElementById('nombre_usuario').value;
+        let gasto = {
+            descripcion: this.formulario.descripcion.value,
+            valor: this.formulario.valor.value,
+            fecha: this.formulario.fecha.value,
+            etiquetas: (typeof this.formulario.etiquetas.value !== "undefined") ? this.formulario.etiquetas.value.split(",") : undefined,
+        }
         
-        let url =  `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario}/${this.gasto.gastoId}`;
-        fetch(url, 
-        {
-            method: "PUT",
-        })
-        .then(function(response)
-        {
-            if(response.ok)
-            {
-                cargarGastosApi();
-            }
-            
-        })   
-          }  
+        let response = await fetch(
+            `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${document.getElementById("nombre_usuario").value}/${this.gasto.gastoId}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8'
+            }, 
+            body: JSON.stringify(gasto)
+        });
+        
+        if (response.ok) {
+            cargarGastosApi();
+        }
     }
+      }
 
 
  let btnCargarGastosdApi = document.getElementById("cargar-gastos-api");
