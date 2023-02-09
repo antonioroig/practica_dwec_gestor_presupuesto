@@ -8,14 +8,13 @@ let idgasto = 0;
 
 function actualizarPresupuesto(NumIntroducido) {
     // TODO
-    if (NumIntroducido >= 0 && typeof NumIntroducido === "number")
+    if (NumIntroducido >= 0 && typeof NumIntroducido === 'number')
     {
         presupuesto = NumIntroducido;
-        return presupuesto;
+        return presupuesto
     }
-    else
-    {
-        console.log("Error el numero es negativo");
+    else {
+        console.log("El valor debe ser mayor o igual a 0");
         return -1;
     }
 }
@@ -185,20 +184,17 @@ function borrarGasto(id){
            }
         }
 }
-function calcularTotalGastos(){
-    let totalGastos = 0;
-    for ( let i = 0; i < gastos.length; i++)
-    {
-        totalGastos += gastos[i].valor
-    }
-    return totalGastos;
-}
-function calcularBalance(){
-    let balance = 0;
-    let gasto = calcularTotalGastos();
-    balance = presupuesto - gasto;
-    return balance;
+function calcularBalance() {
+    return (presupuesto-calcularTotalGastos())
 
+}
+
+function calcularTotalGastos() {
+    let total = 0;
+    gastos.forEach(gasto => {
+        total += gasto.valor;
+    });
+    return total;
 }
 
 function filtrarGastos({fechaDesde,fechaHasta,valorMinimo,valorMaximo,descripcionContiene,etiquetasTiene})
