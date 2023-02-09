@@ -51,30 +51,36 @@ function mostrarGastoWeb(idElemento, gasto)
             spanEtiquetas.className= "gasto-etiquetas-etiqueta";
             spanEtiquetas.textContent = gasto.etiquetas[i] + " ";
             divGastoEtiquetas.append(spanEtiquetas)
+
+            //evento borrar etiquetas practica 5
+            let etBorradas = new BorrarEtiquetasHandle(gasto);
+            etBorradas.gasto = gasto;
+            etBorradas.etiquetas = etiqueta;
+            spanEtiquetas.addEventListener('click',etBorradas);
         }
         
         let salto=document.createElement("br");
         divGasto.append(divGastoEtiquetas, salto);
     }
 
+    //botones + eventos editar y borrar practica 5
     let btedit = document.createElement('button');
+    btedit.type = 'button';
+    btedit.className = 'gasto-editar';
+    btedit.textContent = 'Editar';
     let objedit= new EditarHandle();
     objedit.gasto = gasto;
     btedit.addEventListener('click', objedit);
+    divGasto.append(btedit);
 
     let btborrar = document.createElement('button');
+    btborrar.type = 'button';
+    btborrar.className = 'gasto-borrar';
+    btborrar.textContent = 'Borrar';
     let objborrar = new BorrarHandle();
     objborrar.gasto = gasto;
-    btborrar.addEventListener('click', objborrar)
-
-    let btelimEtiq = document.createElement('button');
-    let objelimEtiq = new BorrarEtiquetasHandle();
-    objelimEtiq.gasto = gasto;
-    btelimEtiq.addEventListener('click', objelimEtiq)
-
-    let botEd = document.createElement('button');
-    botEd.className = 'gasto-editar';
-    botEd.textContent = 'Editar';
+    btborrar.addEventListener('click', objborrar);
+    divGasto.append(btborrar);
 }
 
 function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo)
