@@ -55,7 +55,7 @@ function mostrarGastoWeb(idElemento, gasto)
             //evento borrar etiquetas practica 5
             let etBorradas = new BorrarEtiquetasHandle(gasto);
             etBorradas.gasto = gasto;
-            etBorradas.etiquetas = etiqueta;
+            etBorradas.etiquetas = gasto.etiquetas[i];
             spanEtiquetas.addEventListener('click',etBorradas);
         }
         
