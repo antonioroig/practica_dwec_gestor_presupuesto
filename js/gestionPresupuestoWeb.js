@@ -217,8 +217,9 @@ function nuevoGastoWebFormulario(){
    cancelar.buttonAnyadir = botonAnyadir;
    botonCancelar.addEventListener('click', cancelar);
 
-   let Enviar = new EnviarHandleApi();
-   formulario.querySelector("button[class='gasto-enviar-api']").addEventListener('click', Enviar);
+   let enviar = new EnviarHandleApi();
+   enviar.formulario = formulario;
+   formulario.querySelector("button[class='gasto-enviar-api']").addEventListener('click', enviar);
 }
 
 function SubmitHandle(){
@@ -384,34 +385,27 @@ async function cargarGastosApi(){
 
  function EnviarHandleApi(){
     this.handleEvent = async function(){
-        var formulario = formulario.querySelector("gasto-enviar-api");
-
-        formulario.elements.descripcion.value = this.gasto.descripcion;
-        formulario.elements.valor.value = this.gasto.valor;
-        formulario.elements.fecha.value = this.gasto.fecha;
-        formulario.elements.etiquetas.value = this.gasto.etiquetas;
-
-        let gasto = new gestion.CrearGasto(descripcion,valor,fecha,etiquetas);
-
-
-        let usuario = document.getElementById('nombre_usuario').value;
-
-        let url =  `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario}`;
-        fetch(url, 
-        {
-            method: "POST",
-            body: JSON.stringify(gasto)
-        })
-        .then(function(response)
-        {
-            if(response.ok)
-            {
-                cargarGastosApi();
+            let gasto = {
+                descripcion: this.formulario.descripcion.value,
+                valor: this.formulario.valor.value,
+                fecha: this.formulario.fecha.value,
+                etiquetas: (typeof this.formulario.etiquetas.value !== "undefined") ? this.formulario.etiquetas.value.split(",") : undefined,
             }
             
-        })   
+            let response = await fetch(
+                `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${document.getElementById("nombre_usuario").value}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json;charset=utf-8'
+                }, 
+                body: JSON.stringify(gasto)
+            });
+            
+            if (response.ok) {
+                cargarGastosApi();
+            }
+        }
           }
-    }
  
 
  
