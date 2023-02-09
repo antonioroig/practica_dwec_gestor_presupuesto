@@ -333,15 +333,42 @@ function nuevoGastoWebformulario(){
  btnCancelar.addEventListener("click",btnCancelarHandel);
 
 //Manejador de eventos del botón .gasto-enviar-api dentro de nuevoGastoWebFormulario
-
+document.getElementById("gasto-enviar-api").addEventListener("click",new EnviarApi());
  repintar();
 
 
 }
 
-document.getElementById("gasto-enviar-api").addEventListener("click",nuevoGastoWebformulario);
+//document.getElementById("gasto-enviar-api").addEventListener("click",nuevoGastoWebformulario);
 
 document.getElementById("anyadirgasto-formulario").addEventListener("click",nuevoGastoWebformulario);
+
+function EnviarApi (){
+this.handleEvent = function(evento){
+  evento.preventDefault();
+  let nombreUsuario = document.querySelector('nombre_usuario').value;
+  let url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${nombreUsuario}`;
+  
+  let formulario = evento.currentTarget;
+  let data = {
+    nombre: nombreUsuario,
+    descripción : formulario.elements.descripcion.value,
+     valor : parseFloat(formulario.elements.valor.value),
+    fecha :new Date(formulario.elements.fecha.value),
+     etiquetasUsuario: toString(formulario.elements.etiquetas.value)
+  };
+  fetch(url, {
+    method: 'POST',
+    body: JSON.stringify(data),
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  })
+      cargarGastosApi();
+  
+
+}
+} 
 
 
 function EnviarHandleFormulario(){
@@ -415,10 +442,6 @@ function btnCancelarHandle(){
  }
  
 }
-
-
-
-
 
 function filtrarGastosWeb() {
 
