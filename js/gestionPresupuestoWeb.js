@@ -226,52 +226,54 @@ function BorrarEtiquetasHandle(){
 
 function nuevoGastoWebFormulario(){
     let plantillaFormulario = document.getElementById("formulario-template").content.cloneNode(true);
-    var formulario = plantillaFormulario.querySelector("form");
-    
-    let formControles = document.getElementById("controlesprincipales");
-    formControles.appendChild(formulario);
+   var formulario = plantillaFormulario.querySelector("form");
 
-    let btnAnyadirGasto = document.getElementById("anyadirgasto-formulario");
-    btnAnyadirGasto.disabled = true;
+   let dicControlesPrincipales = document.getElementById("controlesprincipales");
+   dicControlesPrincipales.append(formulario);
 
-    let btnSubmit = new SubmitHandle();
-    formulario.addEventListener('submit', btnSubmit);
 
-    let btnCancelar = formulario.querySelector("button.cancelar");
-    let cancelar = new btnCancelarHandle();
-    cancelar.buttonAnyadir = btnAnyadirGasto;
-    btnCancelar.addEventListener('click' , cancelar);
+   let botonAnyadir = document.getElementById("anyadirgasto-formulario");
+   botonAnyadir.disabled = true;
 
-    let btnEnviarAPI = formulario.querySelector("gasto-enviar-api");
-    let enviarAPI = new btnEnviarApiHandle();
-    btnEnviarAPI.addEventListener('click', enviarAPI);
+
+   let botonSubmit = new SubmitHandle();
+   formulario.addEventListener('submit', botonSubmit);
+
+
+   let botonCancelar = formulario.querySelector("button.cancelar");
+   let cancelar = new btnCancelarHandle();
+   cancelar.buttonAnyadir = botonAnyadir;
+   botonCancelar.addEventListener('click', cancelar);
+
+   let enviar = new btnEnviarApiHandle();
+   enviar.formulario = formulario;
+   formulario.querySelector("button[class='gasto-enviar-api']").addEventListener('click', enviar);
 
 }
 function btnEnviarApiHandle(){
     this.handleEvent = async function(){
-        var formulario = formulario.querySelector("button.gasto-enviar-api");
 
-        formulario.elements.descripcion.value = this.gasto.descripcion;
-        formulario.elements.valor.value = this.gasto.valor;
-        formulario.elements.fecha.value = this.gasto.fecha;
-        formulario.elements.etiquetas.value = this.gasto.etiquetas;
-
-        let gasto = new ges.CrearGasto(descripcion,valor,fecha,etiquetas);
-
-        let usuario = document.getElementById("nombre_usuario").value;
-        let url =`https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario}`;
-        fetch(url,
-        { 
+        let gasto = {
+            descripcion: this.formulario.descripcion.value,
+            valor: this.formulario.valor.value,
+            fecha: this.formulario.fecha.value,
+            etiquetas: (typeof this.formulario.etiquetas.value !== "undefined") ? this.formulario.etiquetas.value.split(",") : undefined,
+        }
+        
+        let response = await fetch(
+            `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${document.getElementById("nombre_usuario").value}`, {
             method: 'POST',
-            body: JSON.stringify(gasto),
-        })
-        .then(function(response)
-        {
-            if(response.ok){
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8'
+            }, 
+            body: JSON.stringify(gasto)
+        });
+        
+        if (response.ok) {
             cargarGastosApi();
-            }
-        })
+        }
     }
+    
 }
 
 let anyadirGastoFormulario = document.getElementById("anyadirgasto-formulario");
