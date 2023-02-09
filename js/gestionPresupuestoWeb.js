@@ -33,20 +33,24 @@ function mostrarGastoWeb(gasto, idElemento)
     let elem = document.getElementById(idElemento);
     let padre = document.createElement("div");
     padre.className  = "gasto";
-
+    
+    let titulo = document.createElement("h2");
+    titulo.className  = "gasto";
+    titulo.textContent = "GASTO";
+    padre.appendChild(titulo);
     let gastDes = document.createElement("div");
     gastDes. className = "gasto-descripcion";
-    gastDes.textContent = gasto.descripcion;
+    gastDes.textContent = "DESCRIPCION: "+ gasto.descripcion;
     padre.appendChild(gastDes);
 
     let gastFech = document.createElement("div");
     gastFech. className = "gasto-fecha";
-    gastFech.textContent = new Date(gasto.fecha).toLocaleDateString();
+    gastFech.textContent = " FECHA: " + new Date(gasto.fecha).toLocaleDateString();
     padre.appendChild(gastFech);
 
     let gastVal = document.createElement("div");
     gastVal. className = "gasto-valor";
-    gastVal.textContent = gasto.valor;
+    gastVal.textContent ="VALOR: " + gasto.valor;
     padre.appendChild(gastVal);
 
     let gastEtiq = document.createElement("div");
@@ -75,7 +79,7 @@ function mostrarGastoWeb(gasto, idElemento)
         let etiq = document.createElement('span');
         
         etiq.className = 'gasto-etiquetas-etiqueta';
-        etiq.textContent = `${gasto.etiquetas[i]}` +" ";
+        etiq.textContent = `ETIQUETA ${[i+1]}: ${gasto.etiquetas[i]}` +" ";
         etiq.addEventListener("click", borrarEtiqueta);
         gastEtiq.appendChild(etiq);
     }
@@ -263,7 +267,10 @@ function nuevoGastoWebFormulario()
     let cancelar = new CancelarHandleFormulario();
     cancelar.form = form;
     let btnCancel = form.querySelector("button.cancelar");
-    btnCancel.addEventListener("click", cancelar);                                       
+    btnCancel.addEventListener("click", cancelar);
+
+    let enviarApi = form.querySelector("button.gasto-enviar-api");
+    enviarApi.addEventListener("click", EnviarGastoApi);                                   
     
 }
 
