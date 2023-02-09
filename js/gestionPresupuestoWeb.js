@@ -162,7 +162,7 @@ function mostrarGastosAgrupadosWeb(agrup, periodo, idElemento) {
     }
 }
 function repintar() {
-    
+
     mostrarDatoEnId(gestionPre.mostrarPresupuesto(), 'presupuesto');
     mostrarDatoEnId(gestionPre.calcularTotalGastos(), 'gastos-totales');
     mostrarDatoEnId(gestionPre.calcularBalance(), 'balance-total');
