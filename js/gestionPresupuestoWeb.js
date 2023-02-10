@@ -121,7 +121,7 @@ function mostrarGastosAgrupadosWeb(idElemento,agrup,periodo){
     for(let key of Object.keys(agrup)){
         let divAgrupacionDato = document.createElement("div");
 
-        
+
         divAgrupacionDato.className = "agrupacion-dato";
         let span = document.createElement("span");
         span.className = "agrupacion-dato-clave";
@@ -214,17 +214,14 @@ function repintar(){
         mostrarGastoWeb("listado-gastos-completo", gasto);
     }
 
-    let agrupacion = gestion.agruparGastos("dia");
     mostrarDatoEnId("agrupacion-dia","");
-    mostrarGastosAgrupadosWeb("agrupacion-dia",agrupacion,"día");
+    mostrarGastosAgrupadosWeb("agrupacion-dia",gestion.agruparGastos("dia"),"día");
 
-    agrupacion = gestion.agruparGastos("mes");
     mostrarDatoEnId("agrupacion-mes","");
-    mostrarGastosAgrupadosWeb("agrupacion-mes",agrupacion,"mes");
+    mostrarGastosAgrupadosWeb("agrupacion-mes",gestion.agruparGastos("mes"),"mes");
 
-    agrupacion = gestion.agruparGastos("anyo");
     mostrarDatoEnId("agrupacion-año","");
-    mostrarGastosAgrupadosWeb("agrupacion-anyo",agrupacion,"año");
+    mostrarGastosAgrupadosWeb("agrupacion-anyo",gestion.agruparGastos("anyo"),"año");
 };
 
 function actualizarPresupuestoWeb(){
