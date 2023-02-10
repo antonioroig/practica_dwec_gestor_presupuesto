@@ -8,6 +8,7 @@ function mostrarDatoEnId(valor,idElemento){
     }
 }
 
+var h1Suma = 1;
 function mostrarGastoWeb(idElemento, gasto){
     
     let id = document.getElementById(idElemento);
@@ -15,6 +16,9 @@ function mostrarGastoWeb(idElemento, gasto){
     let divGasto = document.createElement("div");
     divGasto.className = "gasto";
 
+    let h1 = document.createElement("h1");
+    h1.innerHTML =`Filtrado ${h1Suma}`;
+    divGasto.append(h1);
 
     let divGastoDes = document.createElement("div");
     divGastoDes.className = "gasto-descripcion";
@@ -24,7 +28,7 @@ function mostrarGastoWeb(idElemento, gasto){
 
     let divGastoFecha = document.createElement("div");
     divGastoFecha.className = "gasto-fecha";
-    divGastoFecha.innerHTML += gasto.fecha;
+    divGastoFecha.innerHTML += new Date(gasto.fecha).toLocaleDateString();
     divGasto.append(divGastoFecha);
 
 
@@ -46,7 +50,8 @@ function mostrarGastoWeb(idElemento, gasto){
         span.innerHTML = gasto.etiquetas[i];
         divGastoEtiqueta.append(span);
     }
-        
+    divGasto.append(divGastoEtiqueta);
+
 
         let botonEditar = document.createElement("button");
         botonEditar.className = "gasto-editar";
@@ -95,9 +100,8 @@ function mostrarGastoWeb(idElemento, gasto){
         divGasto.append(botonEditarForm);
 
 
-    divGasto.append(divGastoEtiqueta);
     id.append(divGasto);
-
+    h1Suma++;
     return id;
 
 }
@@ -116,13 +120,17 @@ function mostrarGastosAgrupadosWeb(idElemento,agrup,periodo){
 
     for(let key of Object.keys(agrup)){
         let divAgrupacionDato = document.createElement("div");
+
+        
         divAgrupacionDato.className = "agrupacion-dato";
         let span = document.createElement("span");
         span.className = "agrupacion-dato-clave";
         span.innerHTML = `${key}`;
+
+
         let span2 = document.createElement("span");
         span2.className = "agrupacion-dato-valor";
-        span2.innerHTML = `${key.valueOf()}`;
+        span2.innerHTML = `${key.valueOf}`;
         divAgrupacion.append(divAgrupacionDato);
         divAgrupacionDato.append(span);
         divAgrupacionDato.append(span2);
@@ -205,6 +213,18 @@ function repintar(){
     for(let gasto of gestion.listarGastos()){
         mostrarGastoWeb("listado-gastos-completo", gasto);
     }
+
+    let agrupacion = gestion.agruparGastos("dia");
+    mostrarDatoEnId("agrupacion-dia","");
+    mostrarGastosAgrupadosWeb("agrupacion-dia",agrupacion,"día");
+
+    agrupacion = gestion.agruparGastos("mes");
+    mostrarDatoEnId("agrupacion-mes","");
+    mostrarGastosAgrupadosWeb("agrupacion-mes",agrupacion,"mes");
+
+    agrupacion = gestion.agruparGastos("anyo");
+    mostrarDatoEnId("agrupacion-año","");
+    mostrarGastosAgrupadosWeb("agrupacion-anyo",agrupacion,"año");
 };
 
 function actualizarPresupuestoWeb(){
@@ -431,8 +451,7 @@ async function cargarGastosApi(){
 
         let usuario = document.getElementById('nombre_usuario').value;
         
-        let url =  `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario}/${this.gasto.gastoId}`;
-        fetch(url, 
+        fetch(`https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario}/${this.gasto.gastoId}`, 
         {
             method: "DELETE",
         })
