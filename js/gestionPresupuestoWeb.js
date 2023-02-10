@@ -8,7 +8,6 @@ function mostrarDatoEnId(valor,idElemento){
     }
 }
 
-var h1Suma = 1;
 function mostrarGastoWeb(idElemento, gasto){
     
     let id = document.getElementById(idElemento);
@@ -17,7 +16,7 @@ function mostrarGastoWeb(idElemento, gasto){
     divGasto.className = "gasto";
 
     let h1 = document.createElement("h1");
-    h1.innerHTML =`Filtrado ${h1Suma}`;
+    h1.innerHTML =`Filtrado`;
     divGasto.append(h1);
 
     let divGastoDes = document.createElement("div");
@@ -101,7 +100,6 @@ function mostrarGastoWeb(idElemento, gasto){
 
 
     id.append(divGasto);
-    h1Suma++;
     return id;
 
 }
@@ -118,19 +116,19 @@ function mostrarGastosAgrupadosWeb(idElemento,agrup,periodo){
     h1GastosAgrupados.innerHTML += `Gastos agrupados por ${periodo}`;
     divAgrupacion.append(h1GastosAgrupados);
 
-    for(let key of Object.keys(agrup)){
+    for(let key of Object.entries(agrup)){
         let divAgrupacionDato = document.createElement("div");
 
 
         divAgrupacionDato.className = "agrupacion-dato";
         let span = document.createElement("span");
         span.className = "agrupacion-dato-clave";
-        span.innerHTML = `${key}`;
+        span.innerHTML = `Fecha: ${key[0]} `;
 
 
         let span2 = document.createElement("span");
         span2.className = "agrupacion-dato-valor";
-        span2.innerHTML = `${key.valueOf}`;
+        span2.innerHTML = `Valor: ${key[1]}`;
         divAgrupacion.append(divAgrupacionDato);
         divAgrupacionDato.append(span);
         divAgrupacionDato.append(span2);
@@ -214,13 +212,13 @@ function repintar(){
         mostrarGastoWeb("listado-gastos-completo", gasto);
     }
 
-    mostrarDatoEnId("agrupacion-dia","");
+    document.getElementById("agrupacion-dia").innerHTML="";
     mostrarGastosAgrupadosWeb("agrupacion-dia",gestion.agruparGastos("dia"),"día");
 
-    mostrarDatoEnId("agrupacion-mes","");
+    document.getElementById("agrupacion-mes").innerHTML="";
     mostrarGastosAgrupadosWeb("agrupacion-mes",gestion.agruparGastos("mes"),"mes");
 
-    mostrarDatoEnId("agrupacion-año","");
+    document.getElementById("agrupacion-anyo").innerHTML="";
     mostrarGastosAgrupadosWeb("agrupacion-anyo",gestion.agruparGastos("anyo"),"año");
 };
 
