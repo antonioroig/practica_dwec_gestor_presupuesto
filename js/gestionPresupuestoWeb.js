@@ -23,8 +23,7 @@ let mostrarGastoWeb = function(idsento,gasto){
 
     sento.append(divContenedor);
     let titulo = document.createElement("h1"); 
-    
-    titulo.textContent = "Filtrado";
+    titulo.innerHTML+= `<h1 style="margin-left: 7%;">Filtrado</h1>`
     divContenedor.append(titulo);
     divContenedor.innerHTML += `<div style='border: 1px solid;width: 10%;text-align: center;margin-left: 5%;margin-bottom: 1%'>
                                 <div class="gasto-descripcion">${gasto.descripcion}</div>
@@ -108,15 +107,14 @@ let mostrarGastosAgrupadosWeb = function(idsento,agrup,periodo){
     divContenedor.innerHTML += `<h1>Gastos agrupados por ${periodo}</h1>`;
 
     
-
-    for(let propiedad of Object.keys(agrup))
+    for(let propiedad of Object.entries(agrup))
     {
         let divAgrupacion = document.createElement('div');
         divContenedor.append(divAgrupacion);
         divAgrupacion.className= "agrupacion-dato";
         divAgrupacion.innerHTML += `
-                <span class="agrupacion-dato-clave">${propiedad}</span>
-                <span class="agrupacion-dato-valor">${propiedad.valueOf()}</span>`;
+                <span class="agrupacion-dato-clave">Fecha:&nbsp${propiedad[0]}</span>&nbsp &nbsp &nbsp  
+                <span class="agrupacion-dato-valor">Valor:&nbsp${propiedad[1]}</span>`;
     }
 
     divContenedor.style.width = "33%";
