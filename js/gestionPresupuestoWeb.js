@@ -141,12 +141,12 @@ function mostrarGastoWeb(gasto, idElemento)
     BorrarAPI.gasto = gasto;
 
     // boton borrar API
-    let btnBorrarAPI = document.createElement("button");
-    btnBorrarAPI.className = "gasto-borrar-api";
-    btnBorrarAPI.type = "button";
-    btnBorrarAPI.textContent = "Borrar (API)";
-    btnBorrarAPI.addEventListener('click', BorrarAPI);
-    padre.appendChild(btnBorrarAPI);
+    let botonBorrarAPI = document.createElement("button");
+    botonBorrarAPI.className = "gasto-borrar-api";
+    botonBorrarAPI.type = "button";
+    botonBorrarAPI.textContent = "Borrar (API)";
+    botonBorrarAPI.addEventListener('click', BorrarAPI);
+    padre.appendChild(botonBorrarAPI);
     padre.appendChild(botonEditarForm);
     elem.appendChild(padre);
 }
@@ -464,9 +464,8 @@ function EnviarGastoApi(event)
     let valor = form.elements.valor.value;
     let fecha = form.elements.fecha.value;
     let etiquetas = form.elements.etiquetas.value;
-
-    val = parseFloat(val);
-    etiq = etiq.split(",");
+    valo = parseFloat(valo);
+    etiquetas = etiquetas.split(",");
 
     let nObjeto = {
         descripcion: descripcion,
