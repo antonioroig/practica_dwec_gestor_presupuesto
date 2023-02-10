@@ -14,7 +14,7 @@ function mostrarGastoWeb(idElemento, gasto)
 {
     if(idElemento != undefined)
     {
-        let elemento=document.getElementById(idElemento);
+        let elemento = document.getElementById(idElemento);
         let divGasto = document.createElement("div");
         divGasto.className="gasto";
         elemento.append(divGasto);
@@ -61,27 +61,29 @@ function mostrarGastoWeb(idElemento, gasto)
         
         let salto=document.createElement("br");
         divGasto.append(divGastoEtiquetas, salto);
-    }
 
-    //botones + eventos editar y borrar practica 5
-    let btedit = document.createElement('button');
-    btedit.type = 'button';
-    btedit.className = 'gasto-editar';
-    btedit.textContent = 'Editar';
-    let objedit= new EditarHandle();
-    objedit.gasto = gasto;
-    btedit.addEventListener('click', objedit);
-    divGasto.append(btedit);
+        //botones + eventos editar y borrar practica 5
+        let btedit = document.createElement('button');
+        btedit.type = 'button';
+        btedit.className = 'gasto-editar';
+        btedit.textContent = 'Editar';
 
-    let btborrar = document.createElement('button');
-    btborrar.type = 'button';
-    btborrar.className = 'gasto-borrar';
-    btborrar.textContent = 'Borrar';
-    let objborrar = new BorrarHandle();
-    objborrar.gasto = gasto;
-    btborrar.addEventListener('click', objborrar);
-    divGasto.append(btborrar);
-}
+        let objedit= new EditarHandle();
+        objedit.gasto = gasto;
+        btedit.addEventListener('click', objedit);
+        divGasto.append(btedit);
+
+        let btborrar = document.createElement('button');
+        btborrar.type = 'button';
+        btborrar.className = 'gasto-borrar';
+        btborrar.textContent = 'Borrar';
+        
+        let objborrar = new BorrarHandle();
+        objborrar.gasto = gasto;
+        btborrar.addEventListener('click', objborrar);
+        divGasto.append(btborrar);
+    };
+};
 
 function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo)
 {
@@ -110,19 +112,21 @@ function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo)
         datoDIV.append(datoValorSPAN);
         agrupDIV.append(datoDIV);
     }
+
+    
     elemento.append(agrupDIV);
 }
 
 function repintar()
 {
    document.getElementById("presupuesto").innerHTML="";
-   mostrarDatoEnId(gestionPresupuesto.mostrarPresupuesto(), "presupuesto");
+   mostrarDatoEnId("presupuesto" , gestionPresupuesto.mostrarPresupuesto());
 
    document.getElementById("gastos-totales").innerHTML="";
-   mostrarDatoEnId(gestionPresupuesto.calcularTotalGastos(), "gastos-totales");
+   mostrarDatoEnId("gastos-totales" , gestionPresupuesto.calcularTotalGastos());
 
    document.getElementById("balance-total").innerHTML="";
-   mostrarDatoEnId(gestionPresupuesto.calcularBalance(), "balance-total");
+   mostrarDatoEnId("balance-total" , gestionPresupuesto.calcularBalance());
 
    document.getElementById("listado-gastos-completo").innerHTML="";
 
@@ -137,44 +141,45 @@ function actualizarPresupuestoWeb()
     repintar();
 
     let actPres = document.getElementById('actualizarPresupuesto');
-    actPres.addEventListener('click',actualizarPresupuestoWeb);
+    actPres.addEventListener('click', actualizarPresupuestoWeb);
 }
 
 
 
 function nuevoGastoWeb()
 {
-    let descripcion = prompt("introducir descripcion", '');
-    let valor = prompt("introducir valor", '');
-    let fecha = prompt("introducir fecha", '');
-    let etiquetas = prompt("introducir etiquetas", '');
+    let descripcion = prompt("introducir descripcion:");
+    let valor = prompt("introducir valor:");
+    let fecha = Date.parse(prompt("introducir fecha:"));
+    let etiquetas = prompt("introducir etiquetas:").split(',');
 
     let res= parseFloat(valor);
 
     let gastonuevo = new gestionPresupuesto.CrearGasto(descripcion,res,fecha,etiquetas);
     gestionPresupuesto.anyadirGasto(gastonuevo);
     repintar();
-}
-let gastonew = document.getElementById('anyadirgasto');
-gastonew.addEventListener('click',nuevoGastoWeb);
+
+    let gastonew = document.getElementById('anyadirgasto');
+    gastonew.addEventListener('click',nuevoGastoWeb);
+};
+
 
 function EditarHandle()
 {
     this.handleEvent = function (event)
     {
-        let edFecha = promt("introducir fecha en formato internacional: ", this.gasto.fecha);
+        let edFecha = Date.parse(promt("introducir fecha en formato internacional: ", this.gasto.fecha));
         let edvalor = prompt ("Introducir valor: ", this.gasto.valor);
         let edDesc = prompt ("Introducir descripción: ", this.gasto.descripcion);
-        let edetiquetas = prompt ("Introducir etiquetas separadas por ','", this.gasto.etiquetas);
+        let edetiquetas = prompt ("Introducir etiquetas separadas por ','", this.gasto.etiquetas).split(',');
         let res = parseFloat(edvalor);
 
-        this.gasto.etiquetas = edetiquetas.split(',');
         this.gasto.actualizarDescripcion(edDesc);
         this.gasto.actualizarFecha(edFecha);
         this.gasto.actualizarValor(res);
-            
+        this.gasto.anyadirEtiquetas(...edetiquetas);  
         repintar();
-    }
+    };
 };
 
 function BorrarHandle()
@@ -183,8 +188,8 @@ function BorrarHandle()
     {
         gestionPresupuesto.borrarGasto(this.gasto.id);
         repintar();
-    }
-}
+    };
+};
 
 function BorrarEtiquetasHandle()
 {
@@ -192,8 +197,8 @@ function BorrarEtiquetasHandle()
     {
         this.gasto.borrarEtiquetas(this.etiqueta);
         repintar();
-    }
-}
+    };
+};
 
 
 export{
