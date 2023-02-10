@@ -120,6 +120,12 @@ function BorrarHandleGastosApi(){
 }
 
 function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo){
+        // Obtener la capa donde se muestran los datos agrupados por el período indicado.
+    // Seguramente este código lo tengas ya hecho pero el nombre de la variable sea otro.
+    // Puedes reutilizarlo, por supuesto. Si lo haces, recuerda cambiar también el nombre de la variable en el siguiente bloque de código
+    var divP = document.getElementById(idElemento);
+    // Borrar el contenido de la capa para que no se duplique el contenido al repintar
+    divP.innerHTML = "";
     let id = document.getElementById(idElemento);
 
     let divAgrupado = document.createElement("div");
@@ -146,8 +152,69 @@ function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo){
         divAgrupacionDato.append(spanValor);
 
     }
+    // Estilos
+divP.style.width = "33%";
+divP.style.display = "inline-block";
+// Crear elemento <canvas> necesario para crear la gráfica
+// https://www.chartjs.org/docs/latest/getting-started/
+let chart = document.createElement("canvas");
+// Variable para indicar a la gráfica el período temporal del eje X
+// En función de la variable "periodo" se creará la variable "unit" (anyo -> year; mes -> month; dia -> day)
+let unit = "";
+switch (periodo) {
+case "anyo":
+    unit = "year";
+    break;
+case "mes":
+    unit = "month";
+    break;
+case "dia":
+default:
+    unit = "day";
+    break;
+}
+
+// Creación de la gráfica
+// La función "Chart" está disponible porque hemos incluido las etiquetas <script> correspondientes en el fichero HTML
+const myChart = new Chart(chart.getContext("2d"), {
+    // Tipo de gráfica: barras. Puedes cambiar el tipo si quieres hacer pruebas: https://www.chartjs.org/docs/latest/charts/line.html
+    type: 'bar',
+    data: {
+        datasets: [
+            {
+                // Título de la gráfica
+                label: `Gastos por ${periodo}`,
+                // Color de fondo
+                backgroundColor: "#555555",
+                // Datos de la gráfica
+                // "agrup" contiene los datos a representar. Es uno de los parámetros de la función "mostrarGastosAgrupadosWeb".
+                data: agrup
+            }
+        ],
+    },
+    options: {
+        scales: {
+            x: {
+                // El eje X es de tipo temporal
+                type: 'time',
+                time: {
+                    // Indicamos la unidad correspondiente en función de si utilizamos días, meses o años
+                    unit: unit
+                }
+            },
+            y: {
+                // Para que el eje Y empieza en 0
+                beginAtZero: true
+            }
+        }
+    }
+});
+// Añadimos la gráfica a la capa
+divP.append(chart);
     id.append(divAgrupado);
+    
     return id;
+    
 
 }
 
@@ -252,7 +319,6 @@ function nuevoGastoWebFormulario(){
 }
 function btnEnviarApiHandle(){
     this.handleEvent = async function(){
-
         let gasto = {
             descripcion: this.formulario.descripcion.value,
             valor: this.formulario.valor.value,
@@ -330,28 +396,34 @@ function EditarHandleFormulario(){
         cancelarForm.buttonAnyadir = botonEditarForm;
         let btnCancelarForm = formulario.querySelector("button.cancelar");
         btnCancelarForm.addEventListener('click', cancelarForm);
-
-        let btnEditarHandleApi = formulario.querySelector("gasto-editar-api")
-        let editarApiHandle = new EditarApiHandle();
-        btnEditarHandleApi.addEventListener('click' , editarApiHandle);
+        
+        let editar = new EditarApiHandle();
+        editar.formulario = formulario;
+        editar.gasto = this.gasto;
+        formulario.querySelector("button[class='gasto-enviar-api']").addEventListener('click', editar);
         
     }
 }
 function EditarApiHandle(){
     this.handleEvent = async function(){
-        let usuario = document.getElementById("nombre_usuario").value;
-        let url =`https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario}/${this.gasto.gastoId}`;
-        fetch(url,
-        { 
+        let gasto = {
+            descripcion: this.formulario.descripcion.value,
+            valor: this.formulario.valor.value,
+            fecha: this.formulario.fecha.value,
+            etiquetas: (typeof this.formulario.etiquetas.value !== "undefined") ? this.formulario.etiquetas.value.split(",") : undefined,
+        }
+        let response = await fetch(
+            `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${document.getElementById("nombre_usuario").value}/${this.gasto.gastoId}`, {
             method: 'PUT',
-            headers: {'Content-Type': 'application/json'}
-        })
-        .then(function(response)
-        {
-            if(response.ok){
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8'
+            }, 
+            body: JSON.stringify(gasto)
+        });
+        
+        if (response.ok) {
             cargarGastosApi();
-            }
-        })
+        }
     }
 }
 function EnviarEditarHandleFormulario(){
