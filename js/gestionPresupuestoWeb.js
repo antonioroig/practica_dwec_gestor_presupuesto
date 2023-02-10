@@ -237,59 +237,66 @@ function BorrarAPIHandle(){
 }
 
 function BtnAPIEnviarHandle(){
-    this.handleEvent = async function(){
+    this.handleEvent = async function(event){
 
-        var formulario = formulario.querySelector("button.gasto-enviar-api");
-
-        let desc = formulario.elements.descripcion;
-        let valor = formulario.elements.valor;
-        let fecha = formulario.elements.fecha;
-        let etiquetas = formulario.elements.etiquetas;
-
-        etiquetas = etiquetas.value.split(",");
-
-        let gasto = new gestionPresupuesto.CrearGasto(desc.value, parseFloat(valor.value), fecha.value, ...etiquetas);
+        let form = event.currentTarget.form
+        let gasto = {
+            descripcion: form.descripcion.value,//this.formulario.descripcion.value,
+            valor: form.valor.value,//this.formulario.valor.value,
+            fecha: form.fecha.value,//this.formulario.fecha.value,
+            etiquetas: (typeof form.etiquetas.value !== "undefined") ? form.etiquetas.value.split(",") : undefined,
+        }
         
-        let usuario = document.getElementById("nombre_usuario").value;
-        let url =`https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario}`;
-        fetch(url,{
+        let response = await fetch(
+            `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${document.getElementById("nombre_usuario").value}`, {
             method: 'POST',
-            body: JSON.stringify(gasto),
-        })
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8'
+            }, 
+            body: JSON.stringify(gasto)
+        });
         
-        .then(function(response){
-            if(response.ok){
-                cargarGastosApi();
-            }
-        })
-
+        if (response.ok) {
+            cargarGastosApi();
+        }
+    
     }
 }
 
 function EditarAPIHandle(){
-    this.handleEvent = async function(){
-        let usuario = document.getElementById("nombre_usuario").value;
-        let url =`https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario}/${this.gasto.gastoId}`;
-        fetch(url,{
-            method: 'PUT'
-        })
-        
-        .then(function(response){
-            if(response.ok){
-                cargarGastosApi();
-            }
-        })
+    this.handleEvent = async function(event){
 
+        let form = event.currentTarget.form
+        let gasto = {
+            descripcion: form.descripcion.value,//this.formulario.descripcion.value,
+            valor: form.valor.value,//this.formulario.valor.value,
+            fecha: form.fecha.value,//this.formulario.fecha.value,
+            etiquetas: (typeof form.etiquetas.value !== "undefined") ? form.etiquetas.value.split(",") : undefined,
+        }
+        
+        let response = await fetch(
+            `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${document.getElementById("nombre_usuario").value}/${this.gasto.gastoId}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8'
+            }, 
+            body: JSON.stringify(gasto)
+        });
+        
+        if (response.ok) {
+            cargarGastosApi();
+        }
+    
     }
 }
 
 function nuevoGastoWebFormulario()
 {
     let plantillaForm = document.getElementById("formulario-template").content.cloneNode(true);;
-    var form = plantillaForm.querySelector("form");
+    let form = plantillaForm.querySelector("form");
 
     let formControles = document.getElementById("controlesprincipales");
-    formControles.appendChild(form);
+    formControles.append(form);
     
     let btnAnyadirGasto = document.getElementById("anyadirgasto-formulario");
     btnAnyadirGasto.disabled = true;
@@ -299,12 +306,15 @@ function nuevoGastoWebFormulario()
 
     let btnCancelar = formControles.querySelector("button.cancelar");
     let cancelar = new btnCancelarHandle();
-    cancelar.btnAnyadirGasto = btnAnyadirGasto;
+    cancelar.buttonAnyadirGasto = btnAnyadirGasto;
     btnCancelar.addEventListener("click", cancelar);
 
-    let BtnAPIEnviar = form.querySelector("gasto-enviar-api");
+    let BtnAPIEnviar = document.querySelector("button[class='gasto-enviar-api']");
+    
         let enviarAPI = new BtnAPIEnviarHandle();
+
         BtnAPIEnviar.addEventListener('click', enviarAPI);
+
 
 }
 
@@ -336,7 +346,7 @@ function EditarHandleFormulario(){
         formControles.append(form);
 
         let btnEditarForm = event.currentTarget;
-        btnEditarForm.after(form);
+        btnEditarForm.append(form);
         btnEditarForm.disabled = true;
 
         form.elements.descripcion.value = this.gasto.descripcion;
@@ -353,8 +363,9 @@ function EditarHandleFormulario(){
         let btnCancelHandle = form.querySelector("button.cancelar");
         btnCancelHandle.addEventListener('click', cancelForm);
 
-        let btnEditarAPIHandle = form.querySelector("gasto-editar-api");
+        let btnEditarAPIHandle = document.querySelector("button[class='gasto-enviar-api']");
         let editarAPIHandle = new EditarAPIHandle();
+        editarAPIHandle.gasto = this.gasto;
         btnEditarAPIHandle.addEventListener('click', editarAPIHandle);
     }
 }
