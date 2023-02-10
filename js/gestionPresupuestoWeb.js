@@ -94,7 +94,6 @@ function mostrarGastoWeb(idElemento,gasto){
     btnEditarFormulario.addEventListener('click' , handleEditarFormulario);
     divGasto.append(btnEditarFormulario);
     
-    divGasto.append(divEtiquetas);
     id.append(divGasto);
     
     return id;
@@ -123,12 +122,11 @@ function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo){
         // Obtener la capa donde se muestran los datos agrupados por el período indicado.
     // Seguramente este código lo tengas ya hecho pero el nombre de la variable sea otro.
     // Puedes reutilizarlo, por supuesto. Si lo haces, recuerda cambiar también el nombre de la variable en el siguiente bloque de código
-    var divP = document.getElementById(idElemento);
     // Borrar el contenido de la capa para que no se duplique el contenido al repintar
-    divP.innerHTML = "";
     let id = document.getElementById(idElemento);
 
     let divAgrupado = document.createElement("div");
+    divAgrupado.innerHTML = "";
     divAgrupado.className = "agrupacion";
 
     let divAgrupadoH1 = document.createElement("h1");
@@ -153,8 +151,8 @@ function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo){
 
     }
     // Estilos
-divP.style.width = "33%";
-divP.style.display = "inline-block";
+    divAgrupado.style.width = "33%";
+    divAgrupado.style.display = "inline-block";
 // Crear elemento <canvas> necesario para crear la gráfica
 // https://www.chartjs.org/docs/latest/getting-started/
 let chart = document.createElement("canvas");
@@ -210,7 +208,7 @@ const myChart = new Chart(chart.getContext("2d"), {
     }
 });
 // Añadimos la gráfica a la capa
-divP.append(chart);
+divAgrupado.append(chart);
     id.append(divAgrupado);
     
     return id;
@@ -230,6 +228,18 @@ function repintar(){
     for(let gasto of ges.listarGastos()){
         mostrarGastoWeb("listado-gastos-completo",gasto);
     }
+
+    let agrupacion = ges.agruparGastos("dia");
+    mostrarDatoEnId("agrupacion-dia", "");
+    mostrarGastosAgrupadosWeb("agrupacion-dia",agrupacion,"día");
+
+     agrupacion = ges.agruparGastos("mes");
+    mostrarDatoEnId("agrupacion-mes", "");
+    mostrarGastosAgrupadosWeb("agrupacion-mes",agrupacion,"mes");
+
+    agrupacion = ges.agruparGastos("anyo");
+    mostrarDatoEnId("agrupacion-año", "");
+    mostrarGastosAgrupadosWeb("agrupacion-anyo",agrupacion,"año");
 }
 
 function actualizarPresupuestoWeb(){
