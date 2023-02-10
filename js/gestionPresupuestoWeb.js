@@ -1,5 +1,5 @@
 //gestionPresupuestoWeb.js
-//
+// hacer el html menos horrible
 /*
 mostrarDatoEnId
 mostrarGastoWeb
@@ -17,6 +17,7 @@ function mostrarDatoEnId(valor, idElemento)
     }
 }
 
+//let h1Suma = 0;
 function mostrarGastoWeb(idElemento, gasto)
 {
     if (idElemento != undefined)
@@ -24,6 +25,11 @@ function mostrarGastoWeb(idElemento, gasto)
         
         let elemento = document.getElementById(idElemento);
         let divGasto = document.createElement('div');
+
+        let h1 = document.createElement("h1");
+        h1.innerHTML = `Gasto:`;
+        divGasto.append(h1);
+
         divGasto.className = "gasto";
         let divGastoDescripcion = document.createElement('div');
         divGastoDescripcion.className = "gasto-descripcion";
@@ -42,7 +48,8 @@ function mostrarGastoWeb(idElemento, gasto)
 
         let divGastoEtiquetas = document.createElement('div');
         divGastoEtiquetas.className = "gasto-etiquetas";
-        
+
+
         let handleBorrarEtiq = document.createElement("div");
         handleBorrarEtiq.gasto = gasto;
 
@@ -111,9 +118,10 @@ function mostrarGastoWeb(idElemento, gasto)
         btnEditForm.addEventListener('click', handleEditForm);
         divGasto.append(btnEditForm);
 
-        divGasto.append(divGastoEtiquetas);
+
         elemento.append(divGasto);
 
+        //h1Suma++;
         return elemento;
     }
 }
@@ -146,10 +154,10 @@ function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo)
             divAgrupacionDato.className = "agrupacion-dato";
             let spanAgrupacionDatoClave = document.createElement('span');
             spanAgrupacionDatoClave.className = "agrupacion-dato-clave";
-            spanAgrupacionDatoClave.innerHTML += `${key}`;
+            spanAgrupacionDatoClave.innerHTML += `${key}`;//
             let spanAgrupacionDatoValor = document.createElement('span');
             spanAgrupacionDatoValor.className = "agrupacion-dato-valor";
-            spanAgrupacionDatoValor.innerHTML += `${key.valueOf()}`;
+            spanAgrupacionDatoValor.innerHTML += `${key.valueOf()}`;//
             divAgrupacion.append(divAgrupacionDato);
             divAgrupacionDato.append(spanAgrupacionDatoClave);
             divAgrupacionDato.append(spanAgrupacionDatoValor);
@@ -235,6 +243,16 @@ function repintar()
         mostrarGastoWeb("listado-gastos-completo",gasto)
     }
     
+    //terminar repintar
+    document.getElementById("agrupacion-dia").innerHTML = "";
+    mostrarGastosAgrupadosWeb("agrupacion-dia", gesP.agruparGastos("dia"),"día");
+
+    document.getElementById("agrupacion-mes").innerHTML = "";
+    mostrarGastosAgrupadosWeb("agrupacion-mes", gesP.agruparGastos("mes"),"mes");
+
+    document.getElementById("agrupacion-anyo").innerHTML = "";
+    mostrarGastosAgrupadosWeb("agrupacion-anyo", gesP.agruparGastos("anyo"),"año");
+
 }
 function actualizarPresupuestoWeb()
 {
