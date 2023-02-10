@@ -270,7 +270,7 @@ function nuevoGastoWebFormulario()
     btnCancel.addEventListener("click", cancelar);
 
     let enviarApi = form.querySelector("button.gasto-enviar-api");
-    enviarApi.addEventListener("click", EnviarGastoApi);                                   
+    enviarApi.addEventListener("click", new EnviarGastoApi);                                   
     
 }
 
@@ -348,8 +348,11 @@ function EditarHandleFormulario()
         let cancelObj = new CancelarHandleEditarFormulario();
         btnCancel.addEventListener("click", cancelObj);
 
-        
-        btnEditarFormulario.setAttribute("disabled", "");                                                      
+        btnEditarFormulario.setAttribute("disabled", "");  
+        let editarFormularioApi = form.querySelector("button.gasto-enviar-api");
+        let eventEditar = new EditarGastoApi();
+        eventEditar.gasto = this.gasto;
+        editarFormularioApi.addEventListener("click", eventEditar);                                                    
     };
 }
 function CancelarHandleEditarFormulario(){
@@ -454,8 +457,12 @@ function BorrarGastoApiHandle()
         }
     }
 }
-function EnviarGastoApi(event)
+
+function EnviarGastoApi()
 {
+    this.handleEvent = function(event)
+    {
+
     let usuario = document.getElementById("nombre_usuario").value;
     let url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario}`;
     
@@ -464,7 +471,7 @@ function EnviarGastoApi(event)
     let valor = form.elements.valor.value;
     let fecha = form.elements.fecha.value;
     let etiquetas = form.elements.etiquetas.value;
-    valo = parseFloat(valo);
+    valor = parseFloat(valor);
     etiquetas = etiquetas.split(",");
 
     let nObjeto = {
@@ -504,6 +511,53 @@ function EnviarGastoApi(event)
             }
         })
         .catch(err => console.error(err));
+    }
+  }
+}
+function EditarGastoApi()
+{
+
+    this.handleEvent = function(event){
+        let usuario = document.getElementById("nombre_usuario").value;
+        let url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario}/${this.gasto.gastoId}`;
+        
+        let form = event.currentTarget.form;
+        let descripcion = form.elements.descripcion.value;
+        let valor = form.elements.valor.value;
+        let fecha = form.elements.fecha.value;
+        let etiquetas = form.elements.etiquetas.value;
+
+        valor = parseFloat(valor);
+        etiquetas = etiquetas.split(",");
+    
+        let nObjeto = {
+            descripcion: descripcion,
+            fecha: fecha,
+            valor: valor,
+            etiquetas: etiquetas
+        }
+
+        if(usuario == ""){
+            console.log("No ha introducido el nombre de usuario");
+        } else {
+            fetch(url, {
+                method: 'PUT', 
+                body: JSON.stringify(nObjeto),
+                headers:{
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => {
+                
+                if(response.ok){
+                    console.log("Modificacion correcta");
+                    CargarGastosApi();
+                }else{
+                    console.log("Modificacion INcorrecta");
+                }
+            })
+            .catch(err => console.error(err));
+        }
     }
 }
 export   {  
