@@ -7,13 +7,17 @@ function mostrarDatoEnId(valor,idElemento){
         elemento.innerHTML += " " + valor;
     }
 }
-
+var h1Suma = 0;
 function mostrarGastoWeb(idElemento,gasto){
     
     let id = document.getElementById(idElemento);
 
     let divGasto = document.createElement("div");
     divGasto.className = "gasto";
+    
+    let h1 = document.createElement("h1");
+    h1.innerHTML = `Filtrado ${h1Suma}`;
+    divGasto.append(h1);
 
     let divGD = document.createElement("div");
     divGD.className = "gasto-descripcion";
@@ -22,7 +26,7 @@ function mostrarGastoWeb(idElemento,gasto){
 
     let divF = document.createElement("div");
     divF.className = "gasto-fecha";
-    divF.innerHTML += gasto.fecha
+    divF.innerHTML += new Date(gasto.fecha).toLocaleDateString();
     divGasto.append(divF);
 
     let divValor = document.createElement("div");
@@ -50,7 +54,7 @@ function mostrarGastoWeb(idElemento,gasto){
         divEtiquetas.append(spanE);
     }
     divGasto.append(divEtiquetas);
-        
+
     let btnEditar = document.createElement("button");
     btnEditar.className = "gasto-editar";
     btnEditar.type = "button";
@@ -95,7 +99,7 @@ function mostrarGastoWeb(idElemento,gasto){
     divGasto.append(btnEditarFormulario);
     
     id.append(divGasto);
-    
+    h1Suma++;
     return id;
     
 }
@@ -133,21 +137,22 @@ function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo){
     divAgrupadoH1.innerHTML += `Gastos agrupados por ${periodo}`;
     divAgrupado.append(divAgrupadoH1);
 
-    for(let key of Object.keys(agrup)){
+    for(let key of Object.entries(agrup)){
         let divAgrupacionDato = document.createElement("div");
         divAgrupacionDato.className = "agrupacion-dato";
 
         let spanClave = document.createElement("span");
         spanClave.className = "agrupacion-dato-clave";
-        spanClave.innerHTML = `${key}`;
+        spanClave.innerHTML = `Fecha : ${key[0]} `;
 
         let spanValor = document.createElement("span");
         spanValor.className = "agrupacion-dato-valor";
-        spanValor.innerHTML = `${key.valueOf()}`;
+        spanValor.innerHTML = ` Valor: ${key[1]}`;
 
-        divAgrupado.append(divAgrupacionDato);
         divAgrupacionDato.append(spanClave);
         divAgrupacionDato.append(spanValor);
+        divAgrupado.append(divAgrupacionDato);
+        
 
     }
     // Estilos
@@ -229,17 +234,14 @@ function repintar(){
         mostrarGastoWeb("listado-gastos-completo",gasto);
     }
 
-    let agrupacion = ges.agruparGastos("dia");
-    mostrarDatoEnId("agrupacion-dia", "");
-    mostrarGastosAgrupadosWeb("agrupacion-dia",agrupacion,"día");
+    document.getElementById('agrupacion-dia').innerHTML="";
+    mostrarGastosAgrupadosWeb('agrupacion-dia', ges.agruparGastos('dia'), 'día');
 
-     agrupacion = ges.agruparGastos("mes");
-    mostrarDatoEnId("agrupacion-mes", "");
-    mostrarGastosAgrupadosWeb("agrupacion-mes",agrupacion,"mes");
+    document.getElementById('agrupacion-mes').innerHTML="";
+    mostrarGastosAgrupadosWeb('agrupacion-mes', ges.agruparGastos('mes'), 'mes');
 
-    agrupacion = ges.agruparGastos("anyo");
-    mostrarDatoEnId("agrupacion-año", "");
-    mostrarGastosAgrupadosWeb("agrupacion-anyo",agrupacion,"año");
+    document.getElementById('agrupacion-anyo').innerHTML="";
+    mostrarGastosAgrupadosWeb('agrupacion-anyo', ges.agruparGastos('anyo'), 'año');
 }
 
 function actualizarPresupuestoWeb(){
