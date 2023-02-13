@@ -1,15 +1,13 @@
 import * as gestionPresupuesto from './gestionPresupuesto.js';
 //unción de dos parámetros que se encargará 
 //de escribir el valor (texto) en el elemento HTML con id idElemento
-function mostrarDatoEnId(idElemento,valor)
-{
+function mostrarDatoEnId(idElemento,valor){
     let elemento=document.getElementById(idElemento);
     elemento.innerHTML +=valor;
 }
 //Función de dos parámetros que se encargará de añadir dentro del elemento 
 //HTML con id idElemento indicado una estructura HTML para el gasto que se pase como parámetro
-function mostrarGastoWeb(idElemento, gasto)
-{
+function mostrarGastoWeb(idElemento, gasto){
     let elemento=document.getElementById(idElemeto);
 
     let divClase=document.createElement('div');
@@ -42,9 +40,9 @@ function mostrarGastoWeb(idElemento, gasto)
     divClase.append(divEtiquetas);
 }
 
-function mostrarGastosAgrupadosWeb()
-{
-
+function mostrarGastosAgrupadosWeb(idElemento,agrup,periodo){
+    let grupo = document.getElementById(idElemento);
+    grupo.innerHTML='';
 }
 
 export {
