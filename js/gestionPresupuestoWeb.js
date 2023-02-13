@@ -158,12 +158,55 @@ function mostrarGastoWeb(gasto, idElemento)
 }
 function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo)
 {   
+    // let elem = document.getElementById(idElemento);
+    // let padre = document.createElement("div");
+    // padre.className  = 'agrupacion';
+    // let h1 = document.createElement("h1");
+    // h1.textContent = `Gastos agrupados por  ${periodo}`;
+    // padre.appendChild(h1);
+
+    // for( let [nombre, valor] of Object.entries( agrup ))
+    // {
+    //     let aux = document.createElement('div');
+    //     aux.className = 'agrupacion-dato';
+    //     let span1 = document.createElement('span');
+    //     span1.className= 'agrupacion-dato-clave';
+    //     span1.textContent = nombre;
+    //     let span2 = document.createElement('span');
+    //     span2.className= 'agrupacion-dato-valor';
+    //     span2.textContent = valor;
+    //     aux.appendChild(span1);
+    //     aux.appendChild(span2);
+    //     padre.appendChild(aux);
+    // }
+    // elem.appendChild(padre);
+    
     // Obtener la capa donde se muestran los datos agrupados por el período indicado.
     // Seguramente este código lo tengas ya hecho pero el nombre de la variable sea otro.
     // Puedes reutilizarlo, por supuesto. Si lo haces, recuerda cambiar también el nombre de la variable en el siguiente bloque de código
     var divP = document.getElementById(idElemento);
     // Borrar el contenido de la capa para que no se duplique el contenido al repintar
     divP.innerHTML = "";
+    let Agrup = "";
+
+
+        for( let [nombre, valor] of Object.entries( agrup ) ){
+            Agrup += `
+                <div class="agrupacion-dato">
+                    <span class="agrupacion-dato-clave">${nombre}</span>
+                    <span class="agrupacion-dato-valor">${valor}</span>
+                </div>
+            `;
+        }
+
+
+        divP.innerHTML = `
+            <div class="agrupacion">
+                <h1>Gastos agrupados por ${periodo}</h1>
+                ${Agrup}
+            </div>
+        `;
+
     // Estilos
 divP.style.width = "33%";
 divP.style.display = "inline-block";
@@ -223,28 +266,7 @@ const myChart = new Chart(chart.getContext("2d"), {
 });
 // Añadimos la gráfica a la capa
 divP.append(chart);
-    // let elem = document.getElementById(idElemento);
-    // let padre = document.createElement("div");
-    // padre.className  = 'agrupacion';
-    // let h1 = document.createElement("h1");
-    // h1.textContent = `Gastos agrupados por ${periodo}`;
-    // padre.appendChild(h1);
-
-    // for( let [nombre, valor] of Object.entries( agrup ))
-    // {
-    //     let aux = document.createElement('div');
-    //     aux.className = 'agrupacion-dato';
-    //     let span1 = document.createElement('span');
-    //     span1.className= 'agrupacion-dato-clave';
-    //     span1.textContent = nombre;
-    //     let span2 = document.createElement('span');
-    //     span2.className= 'agrupacion-dato-valor';
-    //     span2.textContent = valor;
-    //     aux.appendChild(span1);
-    //     aux.appendChild(span2);
-    //     padre.appendChild(aux);
-    // }
-    // elem.appendChild(padre);
+    
 }
 function repintar()
 {
@@ -268,24 +290,28 @@ function repintar()
     exGp.listarGastos().forEach(gasto => {
         mostrarGastoWeb(gasto,"listado-gastos-completo");
     });
-    document.getElementById("listado-gastos-filtrado-1").innerHTML="";
-    exGp.filtrarGastos({fechaDesde: "2021-09-01", fechaHasta: "2021-09-30"}).forEach(aux => {
-        mostrarGastoWeb(aux,"listado-gastos-filtrado-1");
+    let aux1 = document.getElementById("listado-gastos-filtrado-1");
+    aux1.innerHTML="";
+    exGp.filtrarGastos({fechaDesde: "2021-09-01", fechaHasta: "2021-09-30"}).forEach(a => {
+        mostrarGastoWeb(a,"listado-gastos-filtrado-1");
     });
 
-    document.getElementById("listado-gastos-filtrado-2").innerHTML = "";
-    exGp.filtrarGastos({valorMinimo: 50}).forEach(aux => {
-        mostrarGastoWeb(aux,"listado-gastos-filtrado-2");
+    let aux2 = document.getElementById("listado-gastos-filtrado-2");
+    aux2.innerHTML = "";
+    exGp.filtrarGastos({valorMinimo: 50}).forEach(a => {
+        mostrarGastoWeb(a,"listado-gastos-filtrado-2");
     });
 
-    document.getElementById("listado-gastos-filtrado-3").innerHTML = "";
-    exGp.filtrarGastos({valorMinimo: 200, etiquetasTiene: ["seguros"]}).forEach(aux => {
-        mostrarGastoWeb(aux,"listado-gastos-filtrado-3");
+    let aux3 = document.getElementById("listado-gastos-filtrado-3");
+    aux3.innerHTML = "";
+    exGp.filtrarGastos({valorMinimo: 200, etiquetasTiene: ["seguros"]}).forEach(a => {
+        mostrarGastoWeb(a,"listado-gastos-filtrado-3");
     });
 
-    document.getElementById("listado-gastos-filtrado-4").innerHTML = "";
-    exGp.filtrarGastos({valorMaximo: 50, etiquetasTiene: ["comida" , "transporte"]}).forEach(aux => {
-        mostrarGastoWeb(aux,"listado-gastos-filtrado-4");
+    let aux4 = document.getElementById("listado-gastos-filtrado-4");
+    aux4.innerHTML = "";
+    exGp.filtrarGastos({valorMaximo: 50, etiquetasTiene: ["comida" , "transporte"]}).forEach(a => {
+        mostrarGastoWeb(a,"listado-gastos-filtrado-4");
     });
 
     document.getElementById("agrupacion-dia").innerHTML="";
