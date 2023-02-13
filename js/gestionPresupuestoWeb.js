@@ -91,14 +91,40 @@ function nuevoGastoWeb(){
 
     repintar();
 }
-function EditarHandle(){
+//BOTON ANYADIR
+let botonAnyadir=document.getElementById('anyadirgasto');
+botonAnyadir.addEventListener('click',nuevoGastoWeb);
 
+
+function EditarHandle(){
+    this.handleEvent = function(event){
+        let nDescripcion=prompt('Introduce nueva descripcion: ');
+        let nValor=parseFloat(prompt('Introduce nuevo valor: '));
+        let nFecha=Date.parse(prompt('Introduce nueva fecha: '));
+        let nEtiquetas=prompt('Introduce nuevas etiquetas separadas por coma').split(',');
+
+        this.gasto.actualizarDescripcion(nDescripcion);
+        this.gasto.actuaLizarValor(nValor);
+        this.gasto.actualizarFecha(nFecha);
+        this.gasto.anyadirEtiquetas(...nEtiquetas);
+
+        repintar();
+    }
 }
 function BorrarHandle(){
+    this.handleEvent=function(event){
+        let eliminarGasto=this.gasto.id;
+        gestionPresupuesto.borrarGasto(borrarGasto);
 
+        repintar();
+    }
 }
 function BorrarEtiquetasHandle(){
+    this.handleEvent=function(event){
+        this.gasto.BorrarEtiquetasHandle(this.etiquetas);
 
+        repintar();
+    }
 }
 export {
     mostrarDatoEnId,
