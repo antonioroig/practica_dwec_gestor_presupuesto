@@ -55,8 +55,21 @@ function mostrarGastosAgrupadosWeb(idElemento,agrup,periodo){
     grupo.innerHTML=divAgrupado;
 }
 function repintar(){
+    document.getElementById('presupuesto');
+    mostrarDatoEnId('presupuesto',gestionPresupuesto.mostrarPresupuesto());
 
-}
+    document.getElementById('gastos-totales');
+    mostrarDatoEnId('gastos-totales',gestionPresupuesto.calcularTotalGastos());
+
+    document.getElementById('balance-total');
+    mostrarDatoEnId('balance-total',gestionPresupuesto.calcularBalance());
+
+    document.getElementById('listado-gastos-completo').innerHTML='';
+    for(listaCompleta of gestionPresupuesto.listarGastos()){
+        mostrarGastoWeb('listado-gastos-complrto',listaCompleta);
+    }
+};
+
 function actualizarPresupuestoWeb(){
 
 }
