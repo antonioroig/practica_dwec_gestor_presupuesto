@@ -569,7 +569,10 @@ document.getElementById("cargar-gastos").addEventListener("click", new cargarGas
       repintar();
     })
     .catch(error => alert(error));
-
+    
+  
+  let btnAnyadirform = document.getElementById("anyadirgasto-formulario");
+  btnAnyadirform.removeAttribute('disabled');
  
   }
   
