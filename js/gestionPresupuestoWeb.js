@@ -54,9 +54,32 @@ function mostrarGastosAgrupadosWeb(idElemento,agrup,periodo){
     divAgrupado+='/<div>';
     grupo.innerHTML=divAgrupado;
 }
+function repintar(){
 
+}
+function actualizarPresupuestoWeb(){
+
+}
+function nuevoGastoWeb(){
+
+}
+function EditarHandle(){
+
+}
+function BorrarHandle(){
+
+}
+function BorrarEtiquetasHandle(){
+
+}
 export {
     mostrarDatoEnId,
     mostrarGastoWeb,
-    mostrarGastosAgrupadosWeb
+    mostrarGastosAgrupadosWeb,
+    repintar,
+    actualizarPresupuestoWeb,
+    nuevoGastoWeb, 
+    EditarHandle,
+    BorrarHandle,
+    BorrarEtiquetasHandle
 }
