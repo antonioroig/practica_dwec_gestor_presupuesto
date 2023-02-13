@@ -353,11 +353,12 @@ this.handleEvent = function(evento){
   let url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${nombreUsuario}`;
   
   let formulario = evento.currentTarget.form;
+  
   let data = {
-    descripción : formulario.elements.descripcion.value,
+    descripcion : formulario.elements.descripcion.value,
      valor : parseFloat(formulario.elements.valor.value),
     fecha :new Date(formulario.elements.fecha.value),
-     etiquetasUsuario: toString(formulario.elements.etiquetas.value)
+     etiquetas:formulario.elements.etiquetas.value
   };
   fetch(url, {
     method: 'POST',
@@ -441,14 +442,14 @@ function EnviarApiEditForm (){
   this.handleEvent = async function(evento){
     evento.preventDefault();
     let nombreUsuario = document.getElementById('nombre_usuario').value;
-    let url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${nombreUsuario}/${this.gasto.id}`;
+    let url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${nombreUsuario}/${this.gasto["gastoId"]}`;
     
     let formulario = evento.currentTarget.form;
     let data = {
-      descripción : formulario.elements.descripcion.value,
+      descripcion : formulario.elements.descripcion.value,
        valor : parseFloat(formulario.elements.valor.value),
       fecha :new Date(formulario.elements.fecha.value),
-       etiquetasUsuario: toString(formulario.elements.etiquetas.value)
+       etiquetas: formulario.elements.etiquetas.value
     };
   
     try{
@@ -458,7 +459,9 @@ function EnviarApiEditForm (){
       headers:{
           'Content-Type': 'application/json'
       }
-  })
+      
+  }  )
+  new cargarGastosApi();
 }
 catch{
   alert("error")
@@ -558,33 +561,6 @@ document.getElementById("cargar-gastos").addEventListener("click", new cargarGas
     let nombreUsuario = document.getElementById('nombre_usuario').value;
     //tendrá que hacer una solicitud GET a la URL correspondiente de la API
     let url =`https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${nombreUsuario}`;
-   
-    //se encargará de obtener mediante fetch el listado de gastos a través de la API de servidor.
-   /* let respuesta = await fetch(url);
-    if (respuesta.ok){
-      //Una vez obtenida la lista de gastos de la API
-      let listaGastos = await respuesta.json();
-      //I deberá llamar a la función cargarGastos del paquete js/gestionPresupuesto.js para actualizar el array de gastos.
-      gestionPresu.cargarGastos(listaGastos);
-      repintar();
-    } else  
-    {
-      alert("Error-HTTP: " + respuesta.status);
-    }*/
- /* try{
-      await fetch(url,{
-       method:'GET',
-      
-   })
-  //Una vez obtenida la lista de gastos de la API
-   let listaGastos = await respuesta.json();
-      //I deberá llamar a la función cargarGastos del paquete js/gestionPresupuesto.js para actualizar el array de gastos.
-      gestionPresu.cargarGastos(listaGastos);
-      repintar();
- }
- catch{
-  alert("Error-HTTP: " );
- }*/
  
   fetch(url, {method:"GET"})
     .then(response => response.json())
@@ -592,7 +568,7 @@ document.getElementById("cargar-gastos").addEventListener("click", new cargarGas
       gestionPresu.cargarGastos(gastos);
       repintar();
     })
-    .catch(error => console.error(error));
+    .catch(error => alert(error));
 
  
   }
