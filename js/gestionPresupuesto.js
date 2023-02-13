@@ -2,6 +2,8 @@ let presupuesto = 0;
 let gastos = new Array();
 let idGasto = 0;
 
+'use strict';
+
 function actualizarPresupuesto(a) {
 
     if(a >= 0 && typeof a === "number"){

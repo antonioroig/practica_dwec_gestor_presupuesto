@@ -1,5 +1,8 @@
 import * as gestionPresupuesto from './gestionPresupuesto.js';
 import * as gestionPresupuestoWeb from './gestionPresupuestoWeb.js';
+
+'use strict';
+
 //Actualizar el presupuesto a 1500€ (función actualizarPresupuesto)
 gestionPresupuesto.actualizarPresupuesto(1500);
 //Mostrar el presupuesto en el div#presupuesto (funciones mostrarPresupuesto y mostrarDatoEnId)
@@ -51,3 +54,11 @@ for(let gasto of gastoFiltrado4){
     gestionPresupuestoWeb.mostrarGastoWeb('listado-gastos-filtrado-4',gasto);
 }
 
+let agrupadosDia=gestionPresupuesto.agruparGastos('dia');
+gestionPresupuestoWeb.mostrarGastosAgrupadosWeb('agrupacion-dia',agrupadosDia,'dia');
+
+let agrupadosMes=gestionPresupuesto.agruparGastos('mes');
+gestionPresupuestoWeb.mostrarGastosAgrupadosWeb('agrupacion-mes',agrupadosMes,'mes');
+
+let agrupadosAnyo=gestionPresupuesto.agruparGastos('anyo');
+gestionPresupuestoWeb.mostrarGastosAgrupadosWeb('agrupacion-anyo', agrupadosAnyo,'anyo');
