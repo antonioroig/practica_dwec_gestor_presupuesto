@@ -112,9 +112,9 @@ function mostrarGastoWeb(gasto,idElemento)
 //Manejador de eventos de los botones .gasto-borrar-api
 let BorrarHandleApi =  function(){
   this.handleEvent = async function() {
-    let nombreUsuario = document.querySelector('nombre_usuario').value;
+    let nombreUsuario = document.getElementById('nombre_usuario').value;
   //Se encargará de realizar mediante fetch una solicitud DELETE a la URL correspondiente de la API
-    let url =`https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${nombreUsuario}/${this.gasto.id}`;
+    let url =`https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${nombreUsuario}/${this.gasto["gastoId"]}`;
   
   let respuesta = await 
   fetch(url, {
@@ -122,7 +122,7 @@ let BorrarHandleApi =  function(){
   });
   if (respuesta.ok){
     //se deberá llamar a la función cargarGastosApi para actualizar la lista en la página.
-   cargarGastosApi();
+  new cargarGastosApi();
   } else  
   {
     alert("Error-HTTP: " + respuesta.status);
@@ -468,8 +468,6 @@ catch{
   btnAnyadirform.removeAttribute('disabled');
   
         
-
-  
   }
   } 
   
@@ -553,7 +551,7 @@ document.getElementById("cargar-gastos").addEventListener("click", new cargarGas
 
 
   //Nueva función cargarGastosApi
-async function cargarGastosApi() 
+ function cargarGastosApi() 
 {
   
   //Se deberá crear la URL correspondiente utilizando el nombre de usuario que se haya introducido en el control input#nombre_usuario
@@ -588,7 +586,7 @@ async function cargarGastosApi()
   alert("Error-HTTP: " );
  }*/
  
-  fetch(url)
+  fetch(url, {method:"GET"})
     .then(response => response.json())
     .then(gastos => {
       gestionPresu.cargarGastos(gastos);
