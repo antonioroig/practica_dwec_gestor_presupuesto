@@ -71,10 +71,25 @@ function repintar(){
 };
 
 function actualizarPresupuestoWeb(){
+    let presupuesto=parseInt(prompt('Introduce presupuesto: '));
+    gestionPresupuesto.actualizarPresupuesto(presupuesto);
 
+    repintar();
 }
-function nuevoGastoWeb(){
+//BOTON ACTUALIZAR
+let botonActualizar=document.getElementById('actualizarpresupuesto');
+botonActualizar.addEventListener('click',actualizarPresupuestoWeb);
 
+function nuevoGastoWeb(){
+    let descripcion=prompt('Introduce descripcion: ');
+    let valor=parseFloat(prompt('Introduce valor: '));
+    let fecha=Date.parse(prompt('Introduce fecha: '));
+    let etiquetas=prompt('Introduce etiquetas separadas por coma').split(',');
+
+    let nuevoGasto=new gestionPresupuesto.CrearGasto(descripcion,valor,fecha,...etiquetas);
+    gestionPresupuesto.anyadirGasto(nuevoGasto);
+
+    repintar();
 }
 function EditarHandle(){
 
