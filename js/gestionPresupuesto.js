@@ -26,8 +26,8 @@ function mostrarPresupuesto() {
 }
 // revisar
 function CrearGasto(descripcion,valor,fecha=Date.now(),...etiquetas) {
-    this.descripcion = descripcion;
-    this.etiquetas=String(descripcion);
+    this.descripcion = string(descripcion);
+    this.etiquetas=[...etiquetas];
 
     if(valor >= 0 && ! isNaN(valor)){
 
