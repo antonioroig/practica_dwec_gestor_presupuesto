@@ -16,7 +16,6 @@ function actualizarPresupuesto(a) {
         console.log(`el número ${a} no es valido `);
         return -1;
     }
-    return presupuesto;
 }
 
 //Revisar
@@ -26,15 +25,17 @@ function mostrarPresupuesto() {
 }
 // revisar
 function CrearGasto(descripcion,valor,fecha=Date.now(),...etiquetas) {
-    this.descripcion = string(descripcion);
-    this.etiquetas=[...etiquetas];
+    this.descripcion = String(descripcion);
+    this.etiquetas = [...etiquetas];
 
-    if(valor >= 0 && ! isNaN(valor)){
+    if(valor >= 0 && (typeof valor==="number")){
 
         this.valor = valor;
 
-    }else{
+    }
+    else{
         this.valor = 0;
+        console.log(`El valor ${valor} no es válido.`);
     }
     if((typeof fecha==="string")&&(!isNaN(Date.parse(fecha)))){
         this.fecha=Date.parse(fecha);
@@ -45,7 +46,7 @@ function CrearGasto(descripcion,valor,fecha=Date.now(),...etiquetas) {
     
 
     this.mostrarGasto = function (){
-        return `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €`;
+        return (`Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €`);
     }
 
     this.actualizarDescripcion = function(cadena){
@@ -53,21 +54,20 @@ function CrearGasto(descripcion,valor,fecha=Date.now(),...etiquetas) {
     }
 
     this.actualizarValor = function(valorActualizado){
-        if(valorActualizado >= 0){
-            this.valor = valorActualizado
+        if(valorActualizado >= 0 && typeof valorActualizado==="number"){
+            this.valor = valorActualizado;
         }
         else{
-            console.log(`El valor introducido es negativo, no ha podido ser cambiado`)
+            console.log(`El valor introducido es negativo, no ha podido ser cambiado`);
         }
     }
     this.mostrarGastoCompleto = function(){
         let fechaMostar=new Date(this.fecha);
-        let cadenaDevolver = `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €.\n
-        Fecha: ${date.toLocaleString()}.\n
-        Etiquetas: \n`;
+        let cadenaDevolver = `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €.\nFecha: ${fechaMostar.toLocaleString()}\nEtiquetas:\n`;
         for(let i=0;i<etiquetas.length;i++){
-            cadenaDevolver += `- `+etiquetas[i] + `\n`;
+            cadenaDevolver += `- `+ etiquetas[i] + `\n`;
         }
+        return cadenaDevolver;
     }
     this.actualizarFecha=function(nuevaFecha){
         if((typeof nuevaFecha === "string") && (!isNaN(Date.parse(nuevaFecha)))){
@@ -102,7 +102,7 @@ function CrearGasto(descripcion,valor,fecha=Date.now(),...etiquetas) {
         let dia=date.getDate();
 
         if(periodo==="anyo"){
-            return `${year}`;
+            return `${anyo}`;
         }
         if(periodo==="mes"){
             if(mes>=10){
@@ -153,49 +153,57 @@ function calcularTotalGastos(){
 function calcularBalance(){
     return presupuesto - calcularTotalGastos();
 }
-function filtrarGastos(fechaDesde,fechaHasta,valorMinimo,valorMaximo,descripcionContiene,etiquetasTiene){
+function filtrarGastos({fechaDesde,fechaHasta,valorMinimo,valorMaximo,descripcionContiene,etiquetasTiene}){
     let arrayDevolver=gastos.filter(function(gasto){
         let anyadir=true;
         let esta=false;
-        if (fechaDesde!=undefined){
-            if(isNaN(Date.parse(fechaDesde))||Date.parse(fechaDesde)>gasto.fecha){
-                anyadir=false;
-            }
-        }
-        if(fechaHasta!=undefined){
-            if(isNaN(Date.parse(fechaHasta))||Date.parse(fechaHasta)<gasto.fecha){
-                anyadir=false;
-            }
-        }
-        if(valorMinimo!=undefined){
-            if(isNaN(valorMinimo)||valorMinimo>gasto.valor){
-                anyadir=false;
-            }
-        }
-        if(valorMaximo!=undefined){
-            if(isNaN(valorMinimo)||valorMinimo<gasto.valor){
-                anyadir=false;
-            }
-        }
-        if(descripcionContiene!=undefined){
+
+        if(descripcionContiene != undefined){
             gasto.descripcion.toUpperCase();
             descripcionContiene.toUpperCase();
-            if(gasto.descripcion.indexOf(descripcionContiene)=== -1){
-                anyadir=false;
+            if(gasto.descripcion.indexOf(descripcionContiene) === -1)
+            {
+                anyadir = false;
             }
         }
-        if(etiquetasTiene!=undefined){
-            for(let i=0;i<gasto.etiquetas.length;i++){
-                for(let j=0;etiquetasTiene.length;j++){
-                    if(gasto.etiquetas[i]===etiquetasTiene[j]){
-                        esta=true;
+        if(fechaDesde != undefined){
+            if(isNaN(Date.parse(fechaDesde)) || Date.parse(fechaDesde) > gasto.fecha)
+            {
+                anyadir = false;
+            }
+        }
+        if(fechaHasta != undefined){
+            if(isNaN(Date.parse(fechaHasta)) || Date.parse(fechaHasta) < gasto.fecha)
+            {
+                anyadir = false;
+            }
+       }
+       if(valorMinimo != undefined){
+            if(isNaN(valorMinimo) || valorMinimo > gasto.valor)
+            {
+                anyadir = false;
+            }
+       }
+       
+       if(valorMaximo != undefined){
+            if(isNaN(valorMaximo) || valorMaximo < gasto.valor)
+            {
+                anyadir = false;
+            }
+       }
+       if(etiquetasTiene != undefined){
+            for (let i = 0; i < gasto.etiquetas.length; i++) {
+                for (let j = 0; j < etiquetasTiene.length; j++){
+                    if(gasto.etiquetas[i] === etiquetasTiene[j])
+                    {
+                        esta = true;
                     }
                 }
+            }  
+            if(esta === false){
+                anyadir = false;
             }
-            if(esta===false){
-                anyadir=false;
-            }
-        }
+       }
         return anyadir;
     });
     return arrayDevolver;
