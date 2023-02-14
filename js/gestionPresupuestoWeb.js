@@ -36,8 +36,33 @@ function mostrarGastoWeb(idElemento, gasto){
         spanEtiqueta.className='gasto-etiquetas-etiqueta';
         spanEtiqueta.textContent=etiqueta;
         divEtiquetas.append(spanEtiqueta);
+
+        let borrarEtiquetas= new BorrarEtiquetasHandle();
+        borrarEtiquetas.gasto=gasto;
+        borrarEtiquetas.etiquetas=etiqueta;
+        spanEtiqueta.addEventListener('click',borrarEtiquetas);
     }
     divClase.append(divEtiquetas);
+
+    //Boton editar
+    let botonEditar=document.createElement('button');
+    botonEditar.type='button';
+    botonEditar.className='gasto-editar';
+    botonEditar.textContent='Editar';
+    let editar=new EditarHandle(gasto);
+    editar.gasto=gasto;
+    botonEditar.addEventListener('click',editar);
+    divClase.append(botonEditar);
+    //Boton borrar
+    let botonBorrar=document.createElement('button');
+    botonBorrar.type='button';
+    botonBorrar.className='gasto-borrar';
+    botonBorrar.textContent='Borrar';
+    let borrar=new BorrarHandle(gasto);
+    borrar.gasto=gasto;
+    bottonBorrar.addEventListener('click',borrar);
+    divClase.append(botonBorrar);
+
 }
 
 function mostrarGastosAgrupadosWeb(idElemento,agrup,periodo){
@@ -114,14 +139,14 @@ function EditarHandle(){
 function BorrarHandle(){
     this.handleEvent=function(event){
         let eliminarGasto=this.gasto.id;
-        gestionPresupuesto.borrarGasto(borrarGasto);
+        gestionPresupuesto.borrarGasto(eliminarGasto);
 
         repintar();
     }
 }
 function BorrarEtiquetasHandle(){
     this.handleEvent=function(event){
-        this.gasto.BorrarEtiquetasHandle(this.etiquetas);
+        this.gasto.borrarEtiquetas(this.etiquetas);
 
         repintar();
     }

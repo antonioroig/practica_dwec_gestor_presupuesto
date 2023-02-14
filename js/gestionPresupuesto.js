@@ -131,10 +131,10 @@ function CrearGasto(descripcion,valor,fecha=Date.now(),...etiquetas) {
 function listarGastos(){
     return gastos;
 }
-function anyadirGastos(gastoAnyadir){
-    gastoAnyadir.id=idGasto;
+function anyadirGasto(gasto){
+    gasto.id = idGasto;
     idGasto++;
-    gastos.push(gastoAnyadir);
+    gastos.push(gasto);
 }
 function borrarGasto(idBorrar){
     for(let i=0;i<gastos.length;i++){
