@@ -1,15 +1,11 @@
 import * as gestionPresupuesto from './gestionPresupuesto.js';
 'use strict';
-//unción de dos parámetros que se encargará 
-//de escribir el valor (texto) en el elemento HTML con id idElemento
 function mostrarDatoEnId(idElemento,valor){
     let elemento=document.getElementById(idElemento);
-    elemento.innerHTML +=valor;
+    elemento.innerHTML += valor;
 }
-//Función de dos parámetros que se encargará de añadir dentro del elemento 
-//HTML con id idElemento indicado una estructura HTML para el gasto que se pase como parámetro
 function mostrarGastoWeb(idElemento, gasto){
-    let elemento=document.getElementById(idElemeto);
+    let elemento=document.getElementById(idElemento);
 
     let divClase=document.createElement('div');
     divClase.className='gasto';
@@ -61,11 +57,9 @@ function mostrarGastoWeb(idElemento, gasto){
     botonBorrar.textContent='Borrar';
     let borrar=new BorrarHandle(gasto);
     borrar.gasto=gasto;
-    bottonBorrar.addEventListener('click',borrar);
+    botonBorrar.addEventListener('click',borrar);
     divClase.append(botonBorrar);
-
 }
-
 function mostrarGastosAgrupadosWeb(idElemento,agrup,periodo){
     let grupo = document.getElementById(idElemento);
     grupo.innerHTML='';
@@ -91,11 +85,10 @@ function repintar(){
     mostrarDatoEnId('balance-total',gestionPresupuesto.calcularBalance());
 
     document.getElementById('listado-gastos-completo').innerHTML='';
-    for(listaCompleta of gestionPresupuesto.listarGastos()){
-        mostrarGastoWeb('listado-gastos-complrto',listaCompleta);
+    for(let listaCompleta of gestionPresupuesto.listarGastos()){
+        mostrarGastoWeb('listado-gastos-completo',listaCompleta);
     }
 };
-
 function actualizarPresupuestoWeb(){
     let presupuesto=parseInt(prompt('Introduce presupuesto: '));
     gestionPresupuesto.actualizarPresupuesto(presupuesto);
@@ -121,19 +114,18 @@ function nuevoGastoWeb(){
 let botonAnyadir=document.getElementById('anyadirgasto');
 botonAnyadir.addEventListener('click',nuevoGastoWeb);
 
-
 function EditarHandle(){
-    this.handleEvent = function(event){
-        let nDescripcion=prompt('Introduce nueva descripcion: ');
-        let nValor=parseFloat(prompt('Introduce nuevo valor: '));
-        let nFecha=Date.parse(prompt('Introduce nueva fecha: '));
-        let nEtiquetas=prompt('Introduce nuevas etiquetas separadas por coma').split(',');
+    this.handleEvent=function(event){
+        let nDescripcion = prompt('Introduce nueva descripción: ');
+        let nValor = parseFloat(prompt('Introduce nuevo valor: '));
+        let nFecha = Date.parse(prompt('Introduce nueva fecha: '));
+        let nEtiquetas = prompt('Introduce nuevas etiquetas separadas por comas: ').split(',');
 
+        this.gasto.actualizarValor(nValor);
         this.gasto.actualizarDescripcion(nDescripcion);
-        this.gasto.actuaLizarValor(nValor);
         this.gasto.actualizarFecha(nFecha);
         this.gasto.anyadirEtiquetas(...nEtiquetas);
-
+        
         repintar();
     }
 }
@@ -141,14 +133,14 @@ function BorrarHandle(){
     this.handleEvent=function(event){
         let eliminarGasto=this.gasto.id;
         gestionPresupuesto.borrarGasto(eliminarGasto);
-
+        
         repintar();
     }
 }
 function BorrarEtiquetasHandle(){
     this.handleEvent=function(event){
         this.gasto.borrarEtiquetas(this.etiquetas);
-
+        
         repintar();
     }
 }
