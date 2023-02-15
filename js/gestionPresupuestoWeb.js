@@ -171,6 +171,18 @@ function EditarHandleFormulario(){
         //BOTON ENVIAR
     }
 }
+function EnviarFormulario(){
+    this.handleEvent=function(event){
+        event.preventDefault();
+        
+    }
+}
+function BorrarFormulario(){
+    this.handleEvent=function(event){
+        event.preventDefault();
+
+    }
+}
 
 
 export {
