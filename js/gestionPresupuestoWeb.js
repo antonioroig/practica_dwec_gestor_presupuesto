@@ -146,10 +146,23 @@ function BorrarEtiquetasHandle(){
 }
 function nuevoGastoWebFormulario(){
     let plantillaFormulario = document.getElementById("formulario-template").content.cloneNode(true);
+    var formulario = plantillaFormulario.querySelector("form");
+
+    //BOTON CANCELAR
+    //BOTON ENVIAR
 }
-//BOTON GASTO FORMULARIO
+//BOTON ANYADIR GASTO FORMULARIO
 let botonAnyadirGastoFormulario=document.getElementById('anyadirgasto-formulario');
 botonAnyadirGastoFormulario.addEventListener('click',nuevoGastoWebFormulario);
+
+function EditarHandleFormulario(){
+    this.handleEvent=function(event){
+        event.preventDefault();
+
+        //let 
+    }
+}
+
 
 export {
     mostrarDatoEnId,
