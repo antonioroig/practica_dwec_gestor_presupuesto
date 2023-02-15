@@ -150,6 +150,8 @@ function nuevoGastoWebFormulario(){
 
     //BOTON CANCELAR
     //BOTON ENVIAR
+    let botonEnviar=new EnviarFormulario();
+    formulario.addEventListener('submit',botonEnviar);
 }
 //BOTON ANYADIR GASTO FORMULARIO
 let botonAnyadirGastoFormulario=document.getElementById('anyadirgasto-formulario');
@@ -160,6 +162,8 @@ function EditarHandleFormulario(){
         event.preventDefault();
 
         let plantilla = document.getElementById('formulario-template').content.cloneNode(true);
+        let botonFormulario=event.currentTarget;
+        botonFormulario.append(formulario);
 
         var formulario = plantillaFormulario.querySelector("form");
         formulario.elements.descripcion.value=this.gasto.descripcion;
@@ -169,6 +173,10 @@ function EditarHandleFormulario(){
 
         //BOTON CANCELAR
         //BOTON ENVIAR
+        let botonEnviar=new EnviarFormulario();
+        formulario.addEventListenner('submit',botonEnviar);
+
+        botonFormulario.setAttribute('disabled',"");
     }
 }
 function EnviarFormulario(){
@@ -188,7 +196,7 @@ function EnviarFormulario(){
         document.getElementById("anyadirgasto-formulario").removeAttribute("disabled");
     }
 }
-function BorrarFormulario(){
+function CancelarFormulario(){
     this.handleEvent=function(event){
         event.preventDefault();
 
