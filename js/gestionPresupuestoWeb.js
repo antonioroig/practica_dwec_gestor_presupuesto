@@ -159,7 +159,16 @@ function EditarHandleFormulario(){
     this.handleEvent=function(event){
         event.preventDefault();
 
-        //let 
+        let plantilla = document.getElementById('formulario-template').content.cloneNode(true);
+
+        var formulario = plantillaFormulario.querySelector("form");
+        formulario.elements.descripcion.value=this.gasto.descripcion;
+        formulario.elements.valor.value=this.gasto.valor;
+        formulario.elements.fecha.value=new Date(this.gasto.fecha);
+        formulario.elements.etiquetas.value=this.gasto.etiquetas;
+
+        //BOTON CANCELAR
+        //BOTON ENVIAR
     }
 }
 
