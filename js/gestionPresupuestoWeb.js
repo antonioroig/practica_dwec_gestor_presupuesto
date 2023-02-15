@@ -174,7 +174,18 @@ function EditarHandleFormulario(){
 function EnviarFormulario(){
     this.handleEvent=function(event){
         event.preventDefault();
-        
+
+        let formulario=event.currentTarget;
+        let descripcion=formulario.elements.description.value;
+        let valor=formulario.elements.valor.value;
+        let fecha=formulario.elements.fecha.value;
+        let etiquetas=formulario.elemts.etiquetas.value;
+
+        let nuevoGasto=new gestionPresupuesto.CrearGasto(descripcion,valor,fecha,...etiquetas);
+        gestionPresupuesto.anyadirGasto(nuevoGasto);
+
+        repintar();
+        document.getElementById("anyadirgasto-formulario").removeAttribute("disabled");
     }
 }
 function BorrarFormulario(){
