@@ -172,9 +172,11 @@ function EditarHandleFormulario(){
         formulario.elements.etiquetas.value=this.gasto.etiquetas;
 
         //BOTON CANCELAR
+        let botonCancelar=new CancelarFormulario();
+        botonCancelar.addEventListener('click',botonCancelar);
         //BOTON ENVIAR
         let botonEnviar=new EnviarFormulario();
-        formulario.addEventListenner('submit',botonEnviar);
+        formulario.addEventListener('submit',botonEnviar);
 
         botonFormulario.setAttribute('disabled',"");
     }
@@ -199,7 +201,9 @@ function EnviarFormulario(){
 function CancelarFormulario(){
     this.handleEvent=function(event){
         event.preventDefault();
-
+        
+        repintar();
+        document.getElementById("anyadirgasto-formulario").removeAttribute("disabled");
     }
 }
 
