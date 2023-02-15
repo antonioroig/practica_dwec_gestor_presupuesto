@@ -144,6 +144,13 @@ function BorrarEtiquetasHandle(){
         repintar();
     }
 }
+function nuevoGastoWebFormulario(){
+    let plantillaFormulario = document.getElementById("formulario-template").content.cloneNode(true);
+}
+//BOTON GASTO FORMULARIO
+let botonAnyadirGastoFormulario=document.getElementById('anyadirgasto-formulario');
+botonAnyadirGastoFormulario.addEventListener('click',nuevoGastoWebFormulario);
+
 export {
     mostrarDatoEnId,
     mostrarGastoWeb,
