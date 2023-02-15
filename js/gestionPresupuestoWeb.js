@@ -149,6 +149,7 @@ function nuevoGastoWebFormulario(){
     var formulario = plantillaFormulario.querySelector("form");
     let controles=document.getElementById('controlesprincipales');
     controles.append(formulario);
+    document.getElementById('anyadirgasto-formulario').setAttribute('disabled',"");
 
     //BOTON CANCELAR
     let botoncancelar=new CancelarHandleFormulario();
@@ -166,7 +167,7 @@ function EditarHandleFormulario(){
     this.handleEvent=function(event){
         event.preventDefault();
 
-        let plantillaFormulario=document.getElementById("formulario-template").content.cloneNode(true);;
+        let plantillaFormulario=document.getElementById("formulario-template").content.cloneNode(true);
         var formulario=plantillaFormulario.querySelector("form");
         let controlesPrincipales=document.getElementById("controlesprincipales");
         controlesPrincipales.append(formulario);
@@ -180,7 +181,7 @@ function EditarHandleFormulario(){
         formulario.elements.etiquetas.value=this.gasto.etiquetas;
 
         //BOTON CANCELAR
-        let botoncancelar=new CancelarFormulario();
+        let botoncancelar=new CancelaroHandleFormulario();
         let botonCancelar=formulario.querySelector("button.cancelar");
         botonCancelar.addEventListener('click',botoncancelar);
         //BOTON ENVIAR
@@ -225,7 +226,7 @@ function EnviarHandle(){
         repintar();
     }
 }
-function CancelarFormulario(){
+function CancelarHandleFormulario(){
     this.handleEvent=function(event){
         event.preventDefault();
         event.currentTarget.parentNode.remove();
@@ -248,5 +249,7 @@ export {
     BorrarHandle,
     BorrarEtiquetasHandle, 
     EditarHandleFormulario,
-    CancelarFormulario
+    EnviarHandle,
+    EnviarFormulario,
+    CancelarHandleFormulario
 }
