@@ -221,8 +221,38 @@ function CancelarHandleFormulario(){
     }
 }
 function filtrarGastosWeb(){
-    
+    this.handleEvent=function(event){
+
+        let formulario=event.currentTarget;
+        let descripcion=formulario.elements.descripcion.value;
+        let valor=parseFloat(formulario.elements.valor.value);
+        let fecha=formulario.elements.fecha.value;
+        let etiquetas=formulario.elements.etiquetas.value;
+
+        let datosFiltrados={};
+
+        if(descripcion != ""){
+            datosFiltrados.descripcionContiene=descripcion;
+        }
+        if(!isNaN(valor)){
+            datosFiltrados.valor=valor;
+        }
+        if(fecha != ""){
+            datosFiltrados.fecha=fecha;
+        }
+        if(etiquetas.length>0){
+            datosFiltrados.etiquetas=etiquetas;
+        }
+
+        document.getElementById("listado-gastos-completo").innerHTML="";
+        let gastoFiltro = gestionPresupuesto.filtrarGastos(datosFiltrados);
+
+        for(let gasto of gastoFiltro){
+            mostrarGastoWeb("listado-gastos-completo",gasto);
+        }
+    }
 }
+
 export {
     mostrarDatoEnId,
     mostrarGastoWeb,
