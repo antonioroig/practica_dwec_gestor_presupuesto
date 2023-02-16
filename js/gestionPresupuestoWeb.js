@@ -220,6 +220,9 @@ function CancelarHandleFormulario(){
         repintar();
     }
 }
+function filtrarGastosWeb(){
+    
+}
 export {
     mostrarDatoEnId,
     mostrarGastoWeb,
