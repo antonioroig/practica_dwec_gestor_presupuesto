@@ -222,12 +222,13 @@ botonNuevo.addEventListener('click', nuevoGastoWeb);
 function EditarHandle(){
     this.handleEvent = function (event)
     {
-        let descripcion = prompt('Introduce la nueva descripción del gasto');
-        let valor = prompt('Introduce el nuevo valor del gasto');
+        let descripcion = prompt("Introduzca la descripcion: ");
+        let valor = prompt("introduzca el valor: ");
         valor = parseFloat(valor);
-        let fecha = prompt('Introduce la fecha del gasto en formato yyyy-mm-dd');
-        let etiqueta = prompt('Introduce las etiquetas del gasto separadas por ,');
-        let etiquetas = etiqueta.split(',');
+        let fecha = prompt("Introduzca la fecha: ");
+        let etiqueta = prompt("Introduzca las etiquetas separadas por comas ,: ");
+        let etiquetas  = etiqueta.split(',');
+
         this.gasto.actualizarValor(valor);
         this.gasto.actualizarDescripcion(descripcion);
         this.gasto.actualizarFecha(fecha);
@@ -274,8 +275,8 @@ function nuevoGastoWebFormulario(){
   
 
     //Botón del método de la práctica async
-    let apiEnviar = form.querySelector("button.gasto-enviar-api");
-    apiEnviar.addEventListener("click", EnviarGastoApi);
+    let apiEnviar = formulario.querySelector("button.gasto-enviar-api");
+    apiEnviar.addEventListener("click", new EnviarGastoApi);
 
     repintar();
 }
@@ -426,13 +427,16 @@ cargarForm.addEventListener("click", cargar);
 
 function CargarGastosApi(){
     let usuario = document.getElementById('nombre_usuario').value;
-
     if(usuario != '')
     {
         let url =  `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario}`;
 
-        fetch(url, { method: "GET"})
+        fetch(url, {
+
+            method: "GET",
+        })
         .then(response => response.json())
+
         .then(function(gastosAPI)
         {
             gestionPresupuesto.cargarGastos(gastosAPI);
@@ -441,7 +445,7 @@ function CargarGastosApi(){
         .catch(err => alert(err));
     }else
     {
-        alert('No has introducido usuario');
+        alert('Introduzca un usuario');
     }
 }
 
@@ -483,56 +487,57 @@ function EnviarGastoApi(event)
 {
     this.handleEvent = function(event)
     {
-        let usuario = document.getElementById("nombre_usuario").value;
-        let url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario}`;
-        
-        let form = event.currentTarget.formulario;
-        let descripcion = form.elements.descripcion.value;
-        let valor = form.elements.valor.value;
-        valor = parseFloat(valor);
-        let fecha = form.elements.fecha.value;
-        let etiquetas = form.elements.etiquetas.value;
-        etiquetas = etiquetas.split(",");
 
-        let nuevoObjeto = {
-            descripcionObjeto: descripcion,
-            fechaObjeto: fecha,
-            valorObjeto: valor,
-            etiquetasObjeto: etiquetas
-        }
+    let usuario = document.getElementById("nombre_usuario").value;
+    let url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario}`;
+   
+    let form = event.currentTarget.form;
+    let descripcion = form.elements.descripcion.value;
+    let valor = form.elements.valor.value;
+    let fecha = form.elements.fecha.value;
+    let etiquetas = form.elements.etiquetas.value;
+    valor = parseFloat(valor);
+    etiquetas = etiquetas.split(",");
 
-        console.log(nuevoObjeto);
+    let nObjeto = {
+        descripcion: descripcion,
+        fecha: fecha,
+        valor: valor,
+        etiquetas: etiquetas
+    }
 
-        if(usuario == "")
-        {
-            console.log("Nombre de usuario vacio");
-        }
-        
-        else
-        {
-            fetch(url, {
-                method: 'POST', 
-                body: JSON.stringify(nuevoObjeto),
-                headers:{
-                    'Content-Type': 'application/json'
-                }
-            })
-            .then(response => {
-                
-                if(response.ok)
-                {
-                    console.log("Añadido Correctamente");
-                    CargarGastosApi();
-                }
-                
-                else
-                {
-                    console.log("Añadido Incorrectamente");
-                }
-            })
-            .catch(err => console.error(err));
-        }
-    }   
+    console.log(nObjeto);
+
+    if(usuario == "")
+    {
+        console.log("No ha introducido el nombre de usuario");
+    }
+   
+    else
+    {
+        fetch(url, {
+            method: 'POST',
+            body: JSON.stringify(nObjeto),
+            headers:{
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(response => {
+           
+            if(response.ok)
+            {
+                console.log("Se ha añadido Correctamente");
+                CargarGastosApi();
+            }
+           
+            else
+            {
+                console.log("Se ha añadido Incorrectamente");
+            }
+        })
+        .catch(err => console.error(err));
+    }
+  }
 }
 
 
