@@ -224,24 +224,32 @@ function filtrarGastosWeb(){
     this.handleEvent=function(event){
 
         let formulario=event.currentTarget;
-        let descripcion=formulario.elements.descripcion.value;
-        let valor=parseFloat(formulario.elements.valor.value);
-        let fecha=formulario.elements.fecha.value;
-        let etiquetas=formulario.elements.etiquetas.value;
+        let descripcion=formulario.elements["formulario-filtrado-descripcion"].value;
+        let valorMaximo=parseFloat(formulario.elements["formulario-filtrado-valor-maximo"].value);
+        let valorMinimo=parseFloat(formulario.elements["formulario-filtrado-valor-minimo"].value);
+        let fechaDesde=formulario.elements["formulario-filtrado-fecha-desde"].value;
+        let fechaHasta=formulario.elements["formulario-filtrado-fecha-hasta"].value;
+        let etiquetas=formulario.elements["formulario-filtrado-etiquetas-tiene"].value;
 
         let datosFiltrados={};
 
         if(descripcion != ""){
             datosFiltrados.descripcionContiene=descripcion;
         }
-        if(!isNaN(valor)){
-            datosFiltrados.valor=valor;
+        if(!isNaN(valorMaximo)){
+            datosFiltrados.valorMaximo=valorMaximo;
         }
-        if(fecha != ""){
-            datosFiltrados.fecha=fecha;
+        if(!isNaN(valorMinimo)){
+            datosFiltrados.valorMinimo=valorMinimo;
+        }
+        if(fechaDesde != ""){
+            datosFiltrados.fechaDesde=fechaDesde;
+        }
+        if(fechaHasta != ""){
+            datosFiltrados.fechaHasta=fechaHasta;
         }
         if(etiquetas.length>0){
-            datosFiltrados.etiquetas=etiquetas;
+            datosFiltrados.etiquetasTiene=gestionPresupuesto.transformarListadoEtiquetas(etiquetas);
         }
 
         document.getElementById("listado-gastos-completo").innerHTML="";
