@@ -82,7 +82,7 @@ function mostrarGastoWeb(idElemento,gasto){
     divGasto.append(btnEditarForm);
 
     //boton borrar API
-    let  btnBorrarApi = document.createElement('button');
+    let btnBorrarApi = document.createElement('button');
     btnBorrarApi.type = 'button';
     btnBorrarApi.className = 'gasto-borrar-api';
     btnBorrarApi.textContent = 'Borrar (API)';
@@ -94,28 +94,51 @@ function mostrarGastoWeb(idElemento,gasto){
 };
 
 function mostrarGastosAgrupadosWeb(idElemento,agrup,periodo){
-    // Obtener la capa donde se muestran los datos agrupados por el período indicado.
+     // Obtener la capa donde se muestran los datos agrupados por el período indicado.
     // Seguramente este código lo tengas ya hecho pero el nombre de la variable sea otro.
     // Puedes reutilizarlo, por supuesto. Si lo haces, recuerda cambiar también el nombre de la variable en el siguiente bloque de código
     var divP = document.getElementById(idElemento);
     // Borrar el contenido de la capa para que no se duplique el contenido al repintar
     divP.innerHTML = "";
 
-    let divAgrup = `<div class="agrupacion"> <h1>Gastos agrupados por ${periodo}</h1>`;
+    let elem = document.getElementById(idElemento);
 
-    for(let agrupacion in agrup){
-        divAgrup +=`<div class="agrupacion-dato"><span class="agrupacion-dato-clave">${agrupacion}</span>
-        <span class="agrupacion-dato-valor">${agrup[agrupacion]}</span></div>`;
+    let divAgrupacion = document.createElement('div');
+
+    divAgrupacion.className = 'agrupacion';
+
+    let titulo = document.createElement('h1');
+
+    titulo.textContent = `Gastos agrupados por ${periodo}`;
+
+    divAgrupacion.append(titulo);
+
+    for(let propiedad of Object.keys(agrup))
+    {
+        let divDato = document.createElement('div');
+        divDato.className = 'agrupacion-dato';
+        divAgrupacion.append(divDato);
+
+        let spanClave = document.createElement('span');
+        spanClave.className = 'agrupacion-dato-clave';
+        spanClave.textContent += `${propiedad}`;
+        divDato.append(spanClave);
+
+        let spanValor = document.createElement('span');
+        spanValor.className = 'agrupacion-dato-valor';
+        spanValor.textContent += ` ${propiedad.valueOf()}`;
+        divDato.append(spanValor);
     }
-    divAgrup += '</div>';
-    divP.innerHTML = divAgrup;
-    
+
+    elem.append(divAgrupacion);
+
     // Estilos
-        divP.style.width = "33%";
-        divP.style.display = "inline-block";
+    divP.style.width = "33%";
+    divP.style.display = "inline-block";
+
     // Crear elemento <canvas> necesario para crear la gráfica
     // https://www.chartjs.org/docs/latest/getting-started/
-        let chart = document.createElement("canvas");
+    let chart = document.createElement("canvas");
     // Variable para indicar a la gráfica el período temporal del eje X
     // En función de la variable "periodo" se creará la variable "unit" (anyo -> year; mes -> month; dia -> day)
     let unit = "";
@@ -270,8 +293,12 @@ function filtrarGastosWeb(){
         filtrado.fechaHasta = fechaHasta;
         filtrado.etiquetas = etiquetas;
 
+        console.log(filtrado);
+
         document.getElementById("listado-gastos-completo").innerHTML = "";
         let gastosFiltrados = gestionPresupuesto.filtrarGastos(filtrado);
+
+        console.log(gastosFiltrados);
 
         for(let gasto of gastosFiltrados){
             mostrarGastoWeb("listado-gastos-completo",gasto);
@@ -435,14 +462,14 @@ async function cargarGastosApi(){
     this.handleEvent = function(event){
         let username = document.getElementById("nombre_usuario").value;
         let url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${username}`;
-        if (username != ''){
+        if (username !== '' || username != null){
             fetch(url, {method: 'GET'})
-            .then(response => response.json())
-            .then(function(gastos)
-            {
-                gestionPresupuesto.cargarGastos(gastos);
-                repintar();
-            })
+                .then(response => response.json())
+                .then(function(gastos)
+                {
+                    gestionPresupuesto.cargarGastos(gastos);
+                    repintar();
+                })
             .catch(error => {
                 console.error(error);
             });
@@ -461,7 +488,7 @@ function borrarGastosApi(){
         let username = document.getElementById("nombre_usuario").value;
         let url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${username}/${this.gasto.gastoId}`;
         try {
-            if (username != ''){
+            if (username != '' || username != null){
                 let resp = await fetch(url, {method: 'DELETE'});
                 if(resp.ok)
                 {
@@ -487,7 +514,7 @@ function enviarGastosApi(){
         let username = document.getElementById("nombre_usuario").value;
         let url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${username}/${this.gasto.gastoId}`;
 
-        if (username != ''){
+        if (username !== '' || username != null){
             let formulario = document.querySelector('#controlesprincipales form');
             let desc = formulario.elements.descripcion.value;
             let valor = parseFloat(formulario.elements.valor.value);
@@ -524,7 +551,7 @@ function EditarHandleApi(){
         let username = document.getElementById("nombre_usuario").value;
         let url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${username}/${this.gasto.gastoId}`;
         
-        if (username != ''){
+        if (username !== '' || username != null){
             let form = event.currentTarget.form;
             let descripcion = form.elements.descripcion.value;
             let valor = parseFloat(form.elements.valor.value);
@@ -538,8 +565,8 @@ function EditarHandleApi(){
                 etiquetas: etiquetas
             };
       
-             fetch(url, {method: 'PUT', body: JSON.stringify(gasto), headers: {'Content-type': 'application/json; charset=utf-8'}})
-             .then(function(resp){
+            fetch(url, {method: 'PUT', body: JSON.stringify(gasto), headers: {'Content-type': 'application/json; charset=utf-8'}})
+                .then(function(resp){
                 if(resp.ok){
                     console.log('Se ha editado el gasto');
                      cargarGastosApi();
