@@ -77,18 +77,22 @@ function mostrarGastoWeb(idElemento, gasto){
     divGastoEtiquetas.className = 'gasto-etiquetas';
     
     //Ahora necesitamos un bucle para recorrer los gastos
-    for(let i = 0; i < gasto.etiquetas.length; i++)
+    gasto.etiquetas.forEach((etiqueta)=> 
+        //i = 0; i < gasto.etiquetas.length; i++)
     {
         let spanEtiqueta = document.createElement('span');
         spanEtiqueta.className = 'gasto-etiquetas-etiqueta';
-        spanEtiqueta.textContent =  `${gasto.etiquetas[i]} `;
+        spanEtiqueta.textContent =  `${etiqueta} `;
 
         let borrarEtiquetas = new BorrarEtiquetasHandle();
         borrarEtiquetas.gasto = gasto;
-        borrarEtiquetas.etiqueta = gasto.etiquetas[i];
+        borrarEtiquetas.etiqueta = gasto.etiqueta;
         spanEtiqueta.addEventListener('click', borrarEtiquetas);
         divGastoEtiquetas.appendChild(spanEtiqueta);
     }
+    );
+    divGasto.appendChild(divGastoEtiquetas);
+    elemento2.appendChild(divGasto);
     // boton editar
     let btnEditar = document.createElement('button');
     btnEditar.textContent = 'Editar';
@@ -143,12 +147,10 @@ function mostrarGastoWeb(idElemento, gasto){
     botonEditarForm.addEventListener('click', editarForm);
 
     divGasto.appendChild(botonEditarForm);
-
-    divGasto.appendChild(divGastoEtiquetas);
-    elemento2.appendChild(divGasto);
 }
 
 function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo){
+    /*
     let elemento3 = document.getElementById(idElemento);
 
     let divAgrupacion = document.createElement('div');
@@ -175,11 +177,100 @@ function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo){
         spanValor.textContent = valor;
         divAgrupacionDato.append(spanValor);
     }
+    */
+
+
+    // Obtener la capa donde se muestran los datos agrupados por el período indicado.
+    // Seguramente este código lo tengas ya hecho pero el nombre de la variable sea otro.
+    // Puedes reutilizarlo, por supuesto. Si lo haces, recuerda cambiar también el nombre de la variable en el siguiente bloque de código
+    var divP = document.getElementById(idElemento);
+    // Borrar el contenido de la capa para que no se duplique el contenido al repintar
+    divP.innerHTML = "";
+    let Agrup = "";
+
+
+        for( let [nombre, valor] of Object.entries( agrup ) ){
+            Agrup += `
+                <div class="agrupacion-dato">
+                    <span class="agrupacion-dato-clave">${nombre}</span>
+                    <span class="agrupacion-dato-valor">${valor}</span>
+                </div>
+            `;
+        }
+
+
+        divP.innerHTML = `
+            <div class="agrupacion">
+                <h1>Gastos agrupados por ${periodo}</h1>
+                ${Agrup}
+            </div>
+        `;
+
+    // Estilos
+divP.style.width = "33%";
+divP.style.display = "inline-block";
+// Crear elemento <canvas> necesario para crear la gráfica
+// https://www.chartjs.org/docs/latest/getting-started/
+let chart = document.createElement("canvas");
+// Variable para indicar a la gráfica el período temporal del eje X
+// En función de la variable "periodo" se creará la variable "unit" (anyo -> year; mes -> month; dia -> day)
+let unit = "";
+switch (periodo) {
+case "anyo":
+    unit = "year";
+    break;
+case "mes":
+    unit = "month";
+    break;
+case "dia":
+default:
+    unit = "day";
+    break;
+}
+
+// Creación de la gráfica
+// La función "Chart" está disponible porque hemos incluido las etiquetas <script> correspondientes en el fichero HTML
+const myChart = new Chart(chart.getContext("2d"), {
+    // Tipo de gráfica: barras. Puedes cambiar el tipo si quieres hacer pruebas: https://www.chartjs.org/docs/latest/charts/line.html
+    type: 'bar',
+    data: {
+        datasets: [
+            {
+                // Título de la gráfica
+                label: `Gastos por ${periodo}`,
+                // Color de fondo
+                backgroundColor: "#555555",
+                // Datos de la gráfica
+                // "agrup" contiene los datos a representar. Es uno de los parámetros de la función "mostrarGastosAgrupadosWeb".
+                data: agrup
+            }
+        ],
+    },
+    options: {
+        scales: {
+            x: {
+                // El eje X es de tipo temporal
+                type: 'time',
+                time: {
+                    // Indicamos la unidad correspondiente en función de si utilizamos días, meses o años
+                    unit: unit
+                }
+            },
+            y: {
+                // Para que el eje Y empieza en 0
+                beginAtZero: true
+            }
+        }
+    }
+});
+// Añadimos la gráfica a la capa
+divP.append(chart);
 }
 
 // nueva práctica
 function repintar(){
 
+    /*
     //Limpia el contenido del div presupuesto, y lo muestra vacío.
     document.getElementById('presupuesto').innerHTML='';
     document.getElementById('gastos-totales').innerHTML='';
@@ -187,13 +278,46 @@ function repintar(){
     mostrarDatoEnId(gestionPresupuesto.mostrarPresupuesto(), 'presupuesto');
     mostrarDatoEnId(gestionPresupuesto.calcularTotalGastos(), 'gastos-totales');
     mostrarDatoEnId(gestionPresupuesto.calcularBalance(), 'balance-total');
-
+    */
     //Limpiamos toda la estructura HTML para volver a mostrarla vacía.
     let auxiliar = document.getElementById('listado-gastos-completo');
     auxiliar.innerHTML = '';
     gestionPresupuesto.listarGastos().forEach(gasto => {
         mostrarGastoWeb('listado-gastos-completo', gasto);
     });
+
+    let aux1 = document.getElementById("listado-gastos-filtrado-1");
+    aux1.innerHTML="";
+    gestionPresupuesto.filtrarGastos({fechaDesde: "2021-09-01", fechaHasta: "2021-09-30"}).forEach(a => {
+        mostrarGastoWeb(a,"listado-gastos-filtrado-1");
+    });
+
+    let aux2 = document.getElementById("listado-gastos-filtrado-2");
+    aux2.innerHTML = "";
+    gestionPresupuesto.filtrarGastos({valorMinimo: 50}).forEach(a => {
+        mostrarGastoWeb(a,"listado-gastos-filtrado-2");
+    });
+
+    let aux3 = document.getElementById("listado-gastos-filtrado-3");
+    aux3.innerHTML = "";
+    gestionPresupuesto.filtrarGastos({valorMinimo: 200, etiquetasTiene: ["guacamole"]}).forEach(a => {
+        mostrarGastoWeb(a,"listado-gastos-filtrado-3");
+    });
+
+    let aux4 = document.getElementById("listado-gastos-filtrado-4");
+    aux4.innerHTML = "";
+    gestionPresupuesto.filtrarGastos({valorMaximo: 50, etiquetasTiene: ["arroz" , "aceite"]}).forEach(a => {
+        mostrarGastoWeb(a,"listado-gastos-filtrado-4");
+    });
+
+    document.getElementById("agrupacion-dia").innerHTML="";
+    mostrarGastosAgrupadosWeb("agrupacion-dia", gestionPresupuesto.agruparGastos("dia"), "día");
+
+    document.getElementById("agrupacion-mes").innerHTML = "";
+    mostrarGastosAgrupadosWeb("agrupacion-mes", gestionPresupuesto.agruparGastos("mes"), "mes");
+
+    document.getElementById("agrupacion-anyo").innerHTML = "";
+    mostrarGastosAgrupadosWeb("agrupacion-anyo", gestionPresupuesto.agruparGastos("anyo"), "año");
 }
 
 function actualizarPresupuestoWeb(){
@@ -455,22 +579,22 @@ function CargarGastosApi(){
     }
 }
 
-let apiCargar = new cargarGastosWeb();
-apiCargar = document.getElementById("cargar-gastos-api");
-apiCargar.addEventListener("click", CargarGastosApi);
+//let apiCargar = new cargarGastosWeb();
+let botonCargaApi = document.getElementById("cargar-gastos-api");
+botonCargaApi.addEventListener("click", CargarGastosApi);
 
 function BorrarGastoApiHandle()
 {
-    
-    this.handleEvent = function(){
+   
+    this.handleEvent = function(event){
         let usuario = document.getElementById("nombre_usuario").value;
         let url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario}/${this.gasto.gastoId}`;
 
-        if (usuario == "") 
+        if (usuario == "")
         {
-            console.log("Input vacío sin nombre");
-        } 
-        else 
+            console.log("Campo vacio");
+        }
+        else
         {
             fetch(url, {method: 'DELETE'})
             .then(response => response.json())
@@ -478,8 +602,8 @@ function BorrarGastoApiHandle()
                 if(!datos.errorMessage)
                 {
                     CargarGastosApi();
-                } 
-                else 
+                }
+                else
                 {
                     console.log(datos.errorMessage);
                 }
