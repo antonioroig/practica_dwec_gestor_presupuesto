@@ -222,14 +222,15 @@ function CancelarHandleFormulario(){
 }
 function filtrarGastosWeb(){
     this.handleEvent=function(event){
+        event.preventDefault();
 
         let formulario=event.currentTarget;
-        let descripcion=formulario.elements["formulario-filtrado-descripcion"].value;
-        let valorMaximo=parseFloat(formulario.elements["formulario-filtrado-valor-maximo"].value);
-        let valorMinimo=parseFloat(formulario.elements["formulario-filtrado-valor-minimo"].value);
-        let fechaDesde=formulario.elements["formulario-filtrado-fecha-desde"].value;
-        let fechaHasta=formulario.elements["formulario-filtrado-fecha-hasta"].value;
-        let etiquetas=formulario.elements["formulario-filtrado-etiquetas-tiene"].value;
+        let descripcion=document.getElementById("formulario-filtrado-descripcion").value;
+        let valorMaximo=parseFloat(document.getElementById("formulario-filtrado-valor-maximo").value);
+        let valorMinimo=parseFloat(document.getElementById("formulario-filtrado-valor-minimo").value);
+        let fechaDesde=document.getElementById("formulario-filtrado-fecha-desde").value;
+        let fechaHasta=document.getElementById("formulario-filtrado-fecha-hasta").value;
+        let etiquetas=document.getElementById("formulario-filtrado-etiquetas-tiene").value
 
         let datosFiltrados={};
 
@@ -260,6 +261,9 @@ function filtrarGastosWeb(){
         }
     }
 }
+//BOTON Submit
+let botonSubmit=document.getElementById('formulario-filtrado');
+botonSubmit.addEventListener('submit', new filtrarGastosWeb());
 
 export {
     mostrarDatoEnId,
@@ -269,6 +273,7 @@ export {
     actualizarPresupuestoWeb,
     nuevoGastoWeb,
     nuevoGastoWebFormulario, 
+    filtrarGastosWeb,
     EditarHandle,
     BorrarHandle,
     BorrarEtiquetasHandle, 
