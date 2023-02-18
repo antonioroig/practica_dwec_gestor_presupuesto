@@ -266,10 +266,18 @@ let botonSubmit=document.getElementById('formulario-filtrado');
 botonSubmit.addEventListener('submit', new filtrarGastosWeb());
 
 function guardarGastosWeb(){
+    this.handleEvent = function(event){
+        event.preventDefault();
 
+        localStorage.setItem("GestorGastosDWEC",JSON.stringify(gestionPresupuesto.listarGastos()));
+    }
 }
+//Boton Guardar
+let botonGuardar=document.getElementById("guardar-gastos");
+botonGuardar.addEventListener("click", new guardarGastosWeb());
+
 function cargarGastosWeb(){
-    
+
 }
 
 export {
