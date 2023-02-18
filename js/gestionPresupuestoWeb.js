@@ -265,6 +265,13 @@ function filtrarGastosWeb(){
 let botonSubmit=document.getElementById('formulario-filtrado');
 botonSubmit.addEventListener('submit', new filtrarGastosWeb());
 
+function guardarGastosWeb(){
+
+}
+function cargarGastosWeb(){
+    
+}
+
 export {
     mostrarDatoEnId,
     mostrarGastoWeb,
@@ -280,5 +287,7 @@ export {
     EditarHandleFormulario,
     EnviarHandle,
     EnviarFormulario,
-    CancelarHandleFormulario
+    CancelarHandleFormulario,
+    guardarGastosWeb,
+    cargarGastosWeb
 }
