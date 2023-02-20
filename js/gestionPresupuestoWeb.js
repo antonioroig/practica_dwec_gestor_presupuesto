@@ -150,10 +150,14 @@ function nuevoGastoWebFormulario(){
     //BOTON ENVIAR
     let botonEnviar=new EnviarFormulario();
     formulario.addEventListener('submit',botonEnviar);
+    //BOTN ENVIAR API
+    let enviarApi=formulario.querySelector("button.gasto-enviar-api");
+    enviarApi.addEventListener('click',new enviarGastosApi());
 }
 //BOTON ANYADIR GASTO FORMULARIO
 let botonAnyadirGastoFormulario=document.getElementById('anyadirgasto-formulario');
 botonAnyadirGastoFormulario.addEventListener('click',nuevoGastoWebFormulario);
+
 function EditarHandleFormulario(){
     this.handleEvent=function(event){
         event.preventDefault();
@@ -295,7 +299,24 @@ let botonCargar=document.getElementById("cargar-gastos");
 botonCargar.addEventListener("click", new cargarGastosWeb());
 
 function cargarGastosApi(){
+    let nombreUsuario=document.getElementById("nombre_usuario").value;
+    let url=`https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${nombreUsuario}`;
 
+    if(nombreUsuario != ''){
+        await fetch(url, {method: 'GET'})
+             .then(response => response.json())
+             .then(function(gastos)
+             {
+                gestionPresupuesto.cargarGastos(gastos);
+                repintar();
+        })
+        .catch(error => {
+           console.log(error);
+        });
+    }
+    else{
+        alert('Introduzca un nombre de usuario');
+    }
 }
 
 
@@ -317,5 +338,6 @@ export {
     EnviarFormulario,
     CancelarHandleFormulario,
     guardarGastosWeb,
-    cargarGastosWeb
+    cargarGastosWeb,
+    cargarGastosApi
 }
