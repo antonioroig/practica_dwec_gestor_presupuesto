@@ -181,6 +181,11 @@ function EditarHandleFormulario(){
         botonEnviar.gasto=this.gasto;
         formulario.addEventListener('submit',botonEnviar);
         botonFormulario.setAttribute('disabled',"");
+        //BOTON EDITAR API
+        let api=new editarGastosApi();
+        let botonEnviarApi=formulario.querySelector('button.gasto-enviar-api');
+        api.gasto=gasto;
+        botonEnviarApi.addEventListener('click', api);
     }
 }
 function EnviarFormulario(){
@@ -302,21 +307,17 @@ function cargarGastosApi(){
     let nombreUsuario=document.getElementById("nombre_usuario").value;
     let url=`https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${nombreUsuario}`;
 
-    if(nombreUsuario != ''){
-        await fetch(url, {method: 'GET'})
-             .then(response => response.json())
-             .then(function(gastos)
-             {
+    if(nombreUsuario != '' || nombreUsuario == ""){
+        alert("Introduce nombre usuario: ");
+    }
+    fetch(url, {method: 'GET'})
+        .then(respuesta => respuesta.json())
+        .then(gastos =>
+            {
                 gestionPresupuesto.cargarGastos(gastos);
                 repintar();
-        })
-        .catch(error => {
-           console.log(error);
-        });
-    }
-    else{
-        alert('Introduzca un nombre de usuario');
-    }
+            })
+        .catch(error => console.log(error));
 }
 
 
