@@ -94,43 +94,22 @@ function mostrarGastoWeb(idElemento,gasto){
 };
 
 function mostrarGastosAgrupadosWeb(idElemento,agrup,periodo){
-    // Obtener la capa donde se muestran los datos agrupados por el período indicado.
+     // Obtener la capa donde se muestran los datos agrupados por el período indicado.
     // Seguramente este código lo tengas ya hecho pero el nombre de la variable sea otro.
     // Puedes reutilizarlo, por supuesto. Si lo haces, recuerda cambiar también el nombre de la variable en el siguiente bloque de código
     var divP = document.getElementById(idElemento);
     // Borrar el contenido de la capa para que no se duplique el contenido al repintar
     divP.innerHTML = "";
 
-    let elem = document.getElementById(idElemento);
+    let divAgrup = `<div class="agrupacion"> <h1>Gastos agrupados por ${periodo}</h1>`;
 
-    let divAgrupacion = document.createElement('div');
-
-    divAgrupacion.className = 'agrupacion';
-
-    let titulo = document.createElement('h1');
-
-    titulo.textContent = `Gastos agrupados por ${periodo}`;
-
-    divAgrupacion.append(titulo);
-
-    for(let propiedad of Object.keys(agrup))
-    {
-        let divDato = document.createElement('div');
-        divDato.className = 'agrupacion-dato';
-        divAgrupacion.append(divDato);
-
-        let spanClave = document.createElement('span');
-        spanClave.className = 'agrupacion-dato-clave';
-        spanClave.textContent += `${propiedad}`;
-        divDato.append(spanClave);
-
-        let spanValor = document.createElement('span');
-        spanValor.className = 'agrupacion-dato-valor';
-        spanValor.textContent += ` ${propiedad.valueOf()}`;
-        divDato.append(spanValor);
+    for(let agrupacion in agrup){
+        divAgrup +=`<div class="agrupacion-dato"><span class="agrupacion-dato-clave">${agrupacion}</span> <span class="agrupacion-dato-valor">${agrup[agrupacion]}€</span></div>`;
     }
 
-    elem.append(divAgrupacion);
+    divAgrup += '</div>';
+
+    divP.innerHTML = divAgrup;
 
     // Estilos
     divP.style.width = "33%";
@@ -198,10 +177,10 @@ function repintar(){
     document.getElementById('presupuesto').innerHTML = '';
     mostrarDatoEnId("presupuesto", gestionPresupuesto.mostrarPresupuesto());
 
-    document.getElementById('gastos-totales');
+    document.getElementById('gastos-totales').innerHTML = 'Tus gastos totales:';
     mostrarDatoEnId("gastos-totales", gestionPresupuesto.calcularTotalGastos());
 
-    document.getElementById('balance-total');
+    document.getElementById('balance-total').innerHTML = 'Tus balance total:';
     mostrarDatoEnId("balance-total", gestionPresupuesto.calcularBalance());
 
     document.getElementById("listado-gastos-completo").innerHTML = "";
@@ -222,7 +201,7 @@ function repintar(){
 };
 
 function actualizarPresupuestoWeb(){
-    let presupuesto = parseInt(prompt('Introduce un presupuesto:'));
+    let presupuesto = parseFloat(prompt('Introduce un presupuesto:'));
     if(presupuesto != undefined){
         presupuesto = parseFloat(presupuesto);
         gestionPresupuesto.actualizarPresupuesto(presupuesto);
@@ -514,7 +493,7 @@ function borrarGastosApi(){
 function enviarGastosApi(){
     this.handleEvent = function(event){
         let usuario = document.getElementById("nombre_usuario").value;
-        let url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario}/${this.gasto.gastoId}`;
+        let url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario}`;
         let form = document.querySelector('#controlesprincipales form');
 
         if (usuario !== '' || usuario != null){
