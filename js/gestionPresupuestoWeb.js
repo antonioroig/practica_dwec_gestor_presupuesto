@@ -283,29 +283,43 @@ function nuevoGastoWebFormulario(){
 
 document.getElementById("anyadirgasto-formulario").addEventListener("click", nuevoGastoWebFormulario);
 
-
-let filtrarGastosWeb1 = document.getElementById("filtrar-gastos")
-let filtrarGastosWeb2 = filtrarGastosWeb1.querySelector("form")
-filtrarGastosWeb2.addEventListener("submit", filtrarGastosWeb());
-
 function filtrarGastosWeb(){
     this.handleEvent = function(event) {
         event.preventDefault()
-        const form = event.currentTarget;
-        let a = form.elements
 
-        let desc = a["formulario-filtrado-descripcion"].value
-        let vMin = a["formulario-filtrado-valor-minimo"].value
-        let vMax = a["formulario-filtrado-valor-maximo"].value
-        let fechaInicial = a["formulario-filtrado-fecha-desde"].value
-        let fechaFinal = a["formulario-filtrado-fecha-hasta"].value
-        let etiquetas = a["formulario-filtrado-etiquetas-tiene"].value
+        let desc = this.formulario.elements["formulario-filtrado-descripcion"].value
+        let vMin = this.formulario.elements["formulario-filtrado-valor-minimo"].value
+        let vMax = this.formulario.elements["formulario-filtrado-valor-maximo"].value
+        let fechaInicial = this.formulario.elements["formulario-filtrado-fecha-desde"].value
+        let fechaFinal = this.formulario.elements["formulario-filtrado-fecha-hasta"].value
+        let etiquetas = this.formulario.elements["formulario-filtrado-etiquetas-tiene"].value
 
-        repintar()
+        let FiltrarPor = {
+            fechaDesde: fechaInicial,
+            fechaHasta: fechaFinal,
+            valorMinimo: vMin,
+            valorMaximo: vMax,
+            descripcionContiene: desc,
+            etiquetasTiene: etiquetas
+        }
+
+        let lgc = document.getElementById("listado-gastos-completo");
+        lgc.innerHTML="";
+
+        if(FiltrarPor.etiquetasTiene){
+            FiltrarPor.etiquetasTiene = gp.transformarListadoEtiquetas(FiltrarPor.etiquetasTiene);
+        }
+
+        gp.filtrarGastos(FiltrarPor).forEach(gasto => {
+            mostrarGastoWeb("listado-gastos-completo",gasto)
+        })
+
     }
 }
-
-
+let fgw = new filtrarGastosWeb()
+let filtrarGastosWebform = document.getElementById("formulario-filtrado")
+fgw.formulario = filtrarGastosWebform;
+filtrarGastosWebform.addEventListener("submit", fgw);
 
 export{
     mostrarDatoEnId,
