@@ -336,7 +336,7 @@ function cargarGastosWeb(){
     this.handleEvent = function(event){
         event.preventDefault();
         if(localStorage.getItem("GestorGastosDWEC")){
-            gp.cargarGastos(localStorage.getItem("GestorGastosDWEC"));
+            gp.cargarGastos(JSON.parse(localStorage.getItem("GestorGastosDWEC")));
         }else{
             gp.cargarGastos([]);
         }
