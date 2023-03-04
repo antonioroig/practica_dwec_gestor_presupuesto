@@ -71,15 +71,15 @@ function mostrarGastoWeb(idElemento, gasto){
     gastoD.appendChild(btnborrar);
 
 
-    //let objBorrar = new BorrarHandle();
-    //objBorrar.gasto=gasto;
+    let objBorrarApi = new borrarApi();
+    objBorrarApi.gasto=gasto;
 
     let btnborrarApi = document.createElement('button');
     btnborrarApi.type="button";
     btnborrarApi.textContent="Borrar (API)";
     btnborrarApi.classList="gasto-borrar-api";
 
-    //btnborrar.addEventListener("click", objBorrar);
+    btnborrarApi.addEventListener("click", objBorrarApi);
     gastoD.appendChild(btnborrarApi);  
     
 
@@ -367,8 +367,19 @@ function cargarGastosApi(){
         let json = await gastosUsuario.json();
         
         gp.cargarGastos(json);
-        
+        console.log("entra")
         repintar();
+    }
+}
+
+function borrarApi(){
+    this.handleEvent = async function(evento){
+        evento.preventDefault();
+        let usuario = document.getElementById("nombre_usuario").value;
+        let idGasto = this.gasto.gastoId;
+        
+        fetch(`https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario}/${idGasto}`, {method:'DELETE'})
+        cargarGastosApi();
     }
 }
 
