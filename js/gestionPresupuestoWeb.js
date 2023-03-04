@@ -2,7 +2,7 @@ import * as gestionPresupuesto from './gestionPresupuesto.js';
 'use strict';
 function mostrarDatoEnId(idElemento,valor){
     let elemento=document.getElementById(idElemento);
-    elemento.innerHTML += valor;
+    elemento.innerHTML = valor;
 }
 function mostrarGastoWeb(idElemento, gasto){
     let elemento=document.getElementById(idElemento);
@@ -35,12 +35,12 @@ function mostrarGastoWeb(idElemento, gasto){
     }
     divClase.append(divEtiquetas);
     //Boton editar
-    let botonEditar=document.createElement('button');
-    botonEditar.type='button';
-    botonEditar.className='gasto-editar';
-    botonEditar.textContent='Editar';
-    let editar=new EditarHandle(gasto);
-    editar.gasto=gasto;
+    let botonEditar = document.createElement('button');
+    botonEditar.type = 'button';
+    botonEditar.className = 'gasto-editar';
+    botonEditar.textContent = 'Editar';
+    let editar = new EditarHandle(gasto);
+    editar.gasto = gasto;
     botonEditar.addEventListener('click',editar);
     divClase.append(botonEditar);
     //Boton borrar
@@ -61,20 +61,38 @@ function mostrarGastoWeb(idElemento, gasto){
     editarFormulario.gasto = gasto;
     botonEditarForm.addEventListener('click', editarFormulario);
     divClase.appendChild(botonEditarForm);
+    //BOTON BORRAR API
+    let botonBorrarAPI = document.createElement('button');
+    botonBorrarAPI.className = 'gasto-borrar-api';
+    botonBorrarAPI.type = 'button';
+    botonBorrarAPI.textContent = 'Borrar (API)';
+    let borrarAPI = new borrarGastosApi(gasto);
+    borrarAPI.gasto = gasto;
+    botonBorrarAPI.addEventListener('click', borrarAPI);
+    divClase.append(botonBorrarAPI);
 }
 function mostrarGastosAgrupadosWeb(idElemento,agrup,periodo){
-    let grupo = document.getElementById(idElemento);
-    grupo.innerHTML='';
-    let divAgrupado=`<div class="agrupacion"> 
-                    <h1>Gastos agrupados por ${periodo}</h1>`;
-    for(let agrupacion in agrup){
-        divAgrupado+=`<div class="agrupacion-dato">
-                        <span class="agrupacion-dato-clave">${agrupacion}</span>
-                        <span class="agrupacion-dato-valor>${agrup[agrupacion]}</span>
-                        </div>`;
+    let elem = document.getElementById(idElemento);
+    let divAgrupacion = document.createElement('div');
+    divAgrupacion.className = 'agrupacion';
+    let titulo = document.createElement('h1');
+    titulo.textContent = `Gastos agrupados por ${periodo}`;
+    divAgrupacion.appendChild(titulo);
+    for(let propiedad of Object.keys(agrup))
+    {
+        let divDato = document.createElement('div');
+        divDato.className = 'agrupacion-dato';
+        divAgrupacion.appendChild(divDato);
+        let spanClave = document.createElement('span');
+        spanClave.className = 'agrupacion-dato-clave';
+        spanClave.textContent += `${propiedad}`;
+        divDato.appendChild(spanClave);
+        let spanValor = document.createElement('span');
+        spanValor.className = 'agrupacion-dato-valor';
+        spanValor.textContent += ` ${propiedad.valueOf()}`;
+        divDato.appendChild(spanValor);
     }
-    divAgrupado+='/<div>';
-    grupo.innerHTML=divAgrupado;
+    elem.appendChild(divAgrupacion);
 }
 function repintar(){
     document.getElementById('presupuesto');
@@ -114,8 +132,8 @@ function EditarHandle(){
         let nValor = parseFloat(prompt('Introduce nuevo valor: '));
         let nFecha = Date.parse(prompt('Introduce nueva fecha: '));
         let nEtiquetas = prompt('Introduce nuevas etiquetas separadas por comas: ').split(',');
-        this.gasto.actualizarValor(nValor);
         this.gasto.actualizarDescripcion(nDescripcion);
+        this.gasto.actualizarValor(nValor);
         this.gasto.actualizarFecha(nFecha);
         this.gasto.anyadirEtiquetas(...nEtiquetas);
         
@@ -182,10 +200,10 @@ function EditarHandleFormulario(){
         formulario.addEventListener('submit',botonEnviar);
         botonFormulario.setAttribute('disabled',"");
         //BOTON EDITAR API
-        let api=new editarGastosApi();
-        let botonEnviarApi=formulario.querySelector('button.gasto-enviar-api');
-        api.gasto=gasto;
-        botonEnviarApi.addEventListener('click', api);
+        //let api=new editarGastosApi();
+        //let botonEnviarApi=formulario.querySelector('button.gasto-enviar-api');
+        //api.gasto=gasto;
+        //botonEnviarApi.addEventListener('click', api);
     }
 }
 function EnviarHandleFormulario(){
@@ -324,12 +342,71 @@ let botonCargarAPI = document.getElementById('cargar-gastos-api');
 botonCargarAPI.addEventListener('click', cargarGastosApi);
 
 function borrarGastosApi(){
-
+    this.handleEvent = async function (event){
+        event.preventDefault();
+        let usuario = document.getElementById("nombre_usuario").value;
+        let url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario}/${this.gasto.gastoId}`;
+        try{
+            let respuestaActual = await fetch(url, {method: 'DELETE'});
+            if(respuestaActual.ok){
+                cargarGastosApi();
+            }            
+        }
+        catch(error){
+            console.log(error);
+        }
+    }
 }
 function enviarGastosApi(){
-
+    this.handleEvent = function(event){
+        let usuario = document.getElementById("nombre_usuario").value;
+        let url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario}`
+        let form = document.querySelector("#controlesprincipales form");
+        let gasto = {
+            "descripcion" : form.elements.descripcion.value,
+            "valor" : parseFloat(form.elements.valor.value),
+            "fecha" : form.elements.fecha.value,
+            "etiquetas" : form.elements.etiquetas.value.split(",")
+        }
+        try{
+            fetch(url, {method: 'POST', body: JSON.stringify(gasto), headers: {'Content-type': 'application/json; charset=utf-8'}})
+                .then(respuesta => respuesta.json())
+                .then(gastos =>{
+                        cargarGastosApi(gastos);
+                    })
+                .catch(error => console.log(error));
+        }
+        catch(error){
+            console.log(error);
+        }  
+    }
 }
 function editarGastosApi(){
+    this.handleEvent = function(event){
+        event.preventDefault();
+        let usuario = document.getElementById("nombre_usuario").value;
+        let url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario}/${this.gasto.gastoId}`;
+        let form = event.currentTarget.form;
+
+        let gasto = {
+            "descripcion" : form.elements.descripcion.value,
+            "valor" : parseFloat(form.elements.valor.value),
+            "fecha" : form.elements.fecha.value,
+            "etiquetas" : form.elements.etiquetas.value.split(",")
+        }
+        
+        try{
+            fetch(url, {method: 'PUT', body: JSON.stringify(gasto), headers: {'Content-type': 'application/json; charset=utf-8'}})
+                .then(respuesta => respuesta.json())
+                .then(gastos =>{
+                        cargarGastosApi(gastos);
+                    })
+                .catch(error => console.log(error))
+        }
+        catch(error){
+            console.log(error);
+        } 
+    }
 }
 
 export {
