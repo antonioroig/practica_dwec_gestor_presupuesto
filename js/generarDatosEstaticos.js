@@ -21,8 +21,8 @@ gp.anyadirGasto(gasto4);
 gp.anyadirGasto(gasto5);
 gp.anyadirGasto(gasto6);
 
-gpw.mostrarDatoEnId(gp.calcularTotalGastos(), "gastos-totales");
-gpw.mostrarDatoEnId(gp.calcularBalance(), "balance-total");
+gpw.mostrarDatoEnId("Gastos totales: " + gp.calcularTotalGastos(), "gastos-totales")
+gpw.mostrarDatoEnId("Balance total: " + gp.calcularBalance(), "balance-total")
 
 gp.listarGastos().forEach(g => gpw.mostrarGastoWeb("listado-gastos-completo", g));
 
