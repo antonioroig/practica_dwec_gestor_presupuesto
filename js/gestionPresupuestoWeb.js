@@ -70,6 +70,17 @@ function mostrarGastoWeb(idElemento, gasto){
     btnborrar.addEventListener("click", objBorrar);
     gastoD.appendChild(btnborrar);
 
+
+    //let objBorrar = new BorrarHandle();
+    //objBorrar.gasto=gasto;
+
+    let btnborrarApi = document.createElement('button');
+    btnborrarApi.type="button";
+    btnborrarApi.textContent="Borrar (API)";
+    btnborrarApi.classList="gasto-borrar-api";
+
+    //btnborrar.addEventListener("click", objBorrar);
+    gastoD.appendChild(btnborrarApi);  
     
 
     let btnEditarGastoForm = document.createElement("button");
