@@ -336,6 +336,15 @@ function EnviarFormHandle(){
     }
 };
 
+function CancelarHandleBut(){
+    this.handleEvent = function(event){
+        this.btnAnyadirGasto.disabled = false;
+        document.getElementById("anyadirgasto-formulario").disabled = false;
+        event.currentTarget.parentNode.remove();
+        repintar();
+    }
+};
+
 export{
     mostrarDatoEnId,
     mostrarGastoWeb,
