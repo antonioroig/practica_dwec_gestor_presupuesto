@@ -345,6 +345,39 @@ function CancelarHandleBut(){
     }
 };
 
+function EditarHandleFormulario(){
+    this.handleEvent = function(event){
+        let plantForm = document.getElementById("formulario-template").content.cloneNode(true);
+        var form = plantForm.querySelector("form");
+
+        let formControles = document.getElementById("controlesprincipales");
+        formControles.append(form);
+
+        let btnEditarForm = event.currentTarget;
+        btnEditarForm.after(form);
+        btnEditarForm.disabled = true;
+
+        let btnEditarAPI = form.querySelector("button.gasto-enviar-api");
+        let editAPI = new editarGastoApiHandle();
+        editAPI.gasto = this.gasto;
+        btnEditarAPI.addEventListener('click', editAPI);
+
+        form.elements.descripcion.value = this.gasto.descripcion;
+        form.elements.valor.value = this.gasto.valor;
+        form.elements.fecha.value = this.gasto.fecha
+        form.elements.etiquetas.value = this.gasto.etiquetas;
+
+        let envForm = new EditarHandleFormSubm();
+        envForm.gasto = this.gasto;
+        form.addEventListener('submit', envForm);
+
+        let cancelForm = new CancelarHandleBut();
+        cancelForm.btnAnyadirGasto = btnEditarForm;
+        let btnCancelHandle = form.querySelector("button.cancelar");
+        btnCancelHandle.addEventListener('click', cancelForm);
+    }
+};
+
 export{
     mostrarDatoEnId,
     mostrarGastoWeb,
