@@ -321,6 +321,17 @@ let filtrarGastosWebform = document.getElementById("formulario-filtrado")
 fgw.formulario = filtrarGastosWebform;
 filtrarGastosWebform.addEventListener("submit", fgw);
 
+
+function guardarGastosWeb(){
+    this.handleEvent = function(event){
+        event.preventDefault();
+        localStorage.setItem("GestorGastosDWEC", JSON.stringify(gp.listarGastos()));
+    }
+}
+
+let btnGuardarGastos = document.getElementById("guardar-gastos");
+btnGuardarGastos.addEventListener("click", new guardarGastosWeb());
+
 export{
     mostrarDatoEnId,
     mostrarGastoWeb,
