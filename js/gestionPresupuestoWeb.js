@@ -210,13 +210,12 @@ function nuevoGastoWebFormulario(){
     let cancelar = new CancelarHandleBut();
     cancelar.btnAnyadir = btnAnyadir;
     btnCancelar.addEventListener("click", cancelar);
-}
+};
 
 function guardarGastosWeb(){
     let guardarGasto = gestionPresupuesto.listarGastos();
     localStorage.GestorGastosDWEC = JSON.stringify(guardarGasto);
-} 
-
+};
 let guardarListado = document.getElementById("guardar-gastos");
 guardarListado.addEventListener("click", guardarGastosWeb);
 
@@ -227,10 +226,28 @@ function cargarGastosWeb(){
         gestionPresupuesto.cargarGastos(JSON.parse(localStorage.GestorGastosDWEC));
     }
     repintar();
-}
-
+};
 let cargarFormulario = document.getElementById("cargar-gastos");
 cargarFormulario.addEventListener("click", cargarGastosWeb);
+
+function cargarGastosApi(){
+    let nombreUsu = document.getElementById("nombre_usuario").value;
+    let url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${nombreUsu}`;
+
+    fetch (url, {method: 'GET'})
+
+    .then (response => response.json())
+    .then (data =>
+        {
+            console.log(data);
+            gestionPresupuesto.cargarGastos(data);
+            repintar();   
+        })
+    
+    .catch (error => console.log(error));
+};
+let btncargarGastoApi = document.getElementById("cargar-gastos-api");
+btncargarGastoApi.addEventListener('click',new cargarGastosApiHandle());
 
 function EditarHandle()
 {
