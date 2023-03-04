@@ -332,6 +332,21 @@ function guardarGastosWeb(){
 let btnGuardarGastos = document.getElementById("guardar-gastos");
 btnGuardarGastos.addEventListener("click", new guardarGastosWeb());
 
+function cargarGastosWeb(){
+    this.handleEvent = function(event){
+        event.preventDefault();
+        if(localStorage.getItem("GestorGastosDWEC")){
+            gp.cargarGastos(localStorage.getItem("GestorGastosDWEC"));
+        }else{
+            gp.cargarGastos([]);
+        }
+        repintar();
+    }
+}
+
+let btnCargarGastos = document.getElementById('cargar-gastos');
+btnCargarGastos.addEventListener("click", new cargarGastosWeb());
+
 export{
     mostrarDatoEnId,
     mostrarGastoWeb,
