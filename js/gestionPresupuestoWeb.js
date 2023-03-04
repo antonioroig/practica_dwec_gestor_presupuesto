@@ -378,6 +378,32 @@ function EditarHandleFormulario(){
     }
 };
 
+function EditarHandleFormSubm(){
+    this.handleEvent = function(event){
+        event.preventDefault();
+        let form = event.currentTarget;
+
+        let descripcion = form.elements.descripcion.value;
+        this.gasto.actualizarDescripcion(descripcion);
+
+        let valor = parseFloat(form.elements.valor.value);
+        this.gasto.actualizarValor(valor);
+
+        let fecha = form.elements.fecha.value;
+        this.gasto.actualizarFecha(fecha);
+
+        let etiq = form.elements.etiquetas.value;
+        this.gasto.anyadirEtiquetas(etiq);
+        repintar();
+    }
+};
+actualizarpresupuesto.addEventListener("click",actualizarPresupuestoWeb);
+anyadirgasto.addEventListener("click",nuevoGastoWeb);
+
+let anyadirgastoForm = document.getElementById("anyadirgasto-formulario");
+anyadirgastoForm.addEventListener('click', nuevoGastoWebFormulario);
+
+
 export{
     mostrarDatoEnId,
     mostrarGastoWeb,
