@@ -138,17 +138,17 @@ function BorrarEtiquetasHandle(){
     }
 }
 function nuevoGastoWebFormulario(){
-    let plantillaFormulario = document.getElementById("formulario-template").content.cloneNode(true);
-    let formulario = plantillaFormulario.querySelector("form");
+    let plantillaFormulario = document.getElementById('formulario-template').content.cloneNode(true);
+    let formulario = plantillaFormulario.querySelector('form');
     let controles=document.getElementById('controlesprincipales');
     controles.append(formulario);
     document.getElementById('anyadirgasto-formulario').setAttribute('disabled',"");
     //BOTON CANCELAR
-    let botoncancelar=new CancelarHandleFormulario();
+    let cancelar=new CancelarHandleFormulario();
     let botonCancelar=formulario.querySelector('button.cancelar');
-    botonCancelar.addEventListener('click', botoncancelar);
+    botonCancelar.addEventListener('click', cancelar);
     //BOTON ENVIAR
-    let botonEnviar=new EnviarFormulario();
+    let botonEnviar=new EnviarHandleFormulario();
     formulario.addEventListener('submit',botonEnviar);
     //BOTN ENVIAR API
     let enviarApi=formulario.querySelector("button.gasto-enviar-api");
@@ -177,7 +177,7 @@ function EditarHandleFormulario(){
         let botonCancelar=formulario.querySelector("button.cancelar");
         botonCancelar.addEventListener('click',botoncancelar);
         //BOTON ENVIAR
-        let botonEnviar=new EnviarHandle();
+        let botonEnviar=new EnviarHandleFormulario();
         botonEnviar.gasto=this.gasto;
         formulario.addEventListener('submit',botonEnviar);
         botonFormulario.setAttribute('disabled',"");
@@ -188,7 +188,7 @@ function EditarHandleFormulario(){
         botonEnviarApi.addEventListener('click', api);
     }
 }
-function EnviarFormulario(){
+function EnviarHandleFormulario(){
     this.handleEvent=function(event){
         event.preventDefault();
 
@@ -319,8 +319,18 @@ function cargarGastosApi(){
             })
         .catch(error => console.log(error));
 }
+//Boton cargarApi
+let botonCargarAPI = document.getElementById('cargar-gastos-api');
+botonCargarAPI.addEventListener('click', cargarGastosApi);
 
+function borrarGastosApi(){
 
+}
+function enviarGastosApi(){
+
+}
+function editarGastosApi(){
+}
 
 export {
     mostrarDatoEnId,
@@ -336,9 +346,12 @@ export {
     BorrarEtiquetasHandle, 
     EditarHandleFormulario,
     EnviarHandle,
-    EnviarFormulario,
+    EnviarHandleFormulario,
     CancelarHandleFormulario,
     guardarGastosWeb,
     cargarGastosWeb,
-    cargarGastosApi
+    cargarGastosApi,
+    borrarGastosApi,
+    enviarGastosApi,
+    editarGastosApi
 }
