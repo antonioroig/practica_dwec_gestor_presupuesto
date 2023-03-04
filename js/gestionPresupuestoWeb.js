@@ -361,15 +361,18 @@ btnCargarGastos.addEventListener("click", new cargarGastosWeb());
 function cargarGastosApi(){
     this.handleEvent = async function(evento){
         evento.preventDefault();
-        let usuario = document.getElementById("nombre_usuario").value;
-        let gastosUsuario = await fetch(`https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario}`);
-    
-        let json = await gastosUsuario.json();
-        
-        gp.cargarGastos(json);
-        console.log("entra")
-        repintar();
+        cargarGastosApiFuncion()
     }
+}
+
+async function cargarGastosApiFuncion(){
+    let usuario = document.getElementById("nombre_usuario").value;
+    let gastosUsuario = await fetch(`https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario}`);
+
+    let json = await gastosUsuario.json();
+    
+    gp.cargarGastos(json);
+    repintar();
 }
 
 function borrarApi(){
@@ -379,7 +382,7 @@ function borrarApi(){
         let idGasto = this.gasto.gastoId;
         
         fetch(`https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario}/${idGasto}`, {method:'DELETE'})
-        cargarGastosApi();
+        cargarGastosApiFuncion();
     }
 }
 
