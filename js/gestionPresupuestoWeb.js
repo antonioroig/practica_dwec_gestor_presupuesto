@@ -403,6 +403,12 @@ anyadirgasto.addEventListener("click",nuevoGastoWeb);
 let anyadirgastoForm = document.getElementById("anyadirgasto-formulario");
 anyadirgastoForm.addEventListener('click', nuevoGastoWebFormulario);
 
+function cargarGastosApiHandle(){
+    this.handleEvent = function(event)    {
+        event.preventDefault();
+        cargarGastosApi();
+    }
+};
 
 export{
     mostrarDatoEnId,
