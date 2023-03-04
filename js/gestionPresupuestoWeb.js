@@ -193,6 +193,24 @@ function nuevoGastoWeb()
     gastonew.addEventListener('click',nuevoGastoWeb);
 };
 
+function nuevoGastoWebFormulario(){
+    let plantillaFormulario = document.getElementById("formulario-template").content.cloneNode(true);
+    let form = plantillaFormulario.querySelector("form");
+
+    let formControl = document.getElementById("controlesprincipales");
+    formControl.appendChild(form);
+
+    let btnAnyadir = document.getElementById("anyadirgasto-formulario");
+    btnAnyadir.disabled = true;
+
+    let btnEnviar = new EnviarFormHandle();
+    form.addEventListener("submit", btnEnviar);
+
+    let btnCancelar = formControl.querySelector("button.cancelar");
+    let cancelar = new CancelarHandleBut();
+    cancelar.btnAnyadir = btnAnyadir;
+    btnCancelar.addEventListener("click", cancelar);
+}
 
 function EditarHandle()
 {
