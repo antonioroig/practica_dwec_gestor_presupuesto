@@ -10,33 +10,27 @@ function mostrarDatoEnId(idElemento, valor)
     }
 }
 
-function mostrarGastoWeb(idElemento, gasto)
-{
-    if(idElemento != undefined)
-    {
+function mostrarGastoWeb(idElemento, gasto){
+    if(idElemento != undefined){
         let elemento = document.getElementById(idElemento);
         let divGasto = document.createElement("div");
         divGasto.className="gasto";
-        elemento.append(divGasto);
 
-        if (gasto.descripcion)
-        {
+        if (gasto.descripcion){
             let divGastoDescripcion = document.createElement("div");
             divGastoDescripcion.className = "gasto-descripcion";
             divGastoDescripcion.innerHTML += gasto.descripcion;
             divGasto.append(divGastoDescripcion);
         }
 
-        if(gasto.valor)
-        {
+        if(gasto.valor){
             let divGastoValor = document.createElement("div");
             divGastoValor.className = "gasto-valor";
             divGastoValor.innerHTML += gasto.valor;
             divGasto.append(divGastoValor);
         }
 
-        if (gasto.fecha)
-        {
+        if (gasto.fecha){
             let divGastoFecha = document.createElement("div");
             divGastoFecha.className = "gasto-fecha";
             divGastoFecha.innerHTML += gasto.fecha;
@@ -52,17 +46,16 @@ function mostrarGastoWeb(idElemento, gasto)
             spanEtiquetas.textContent = gasto.etiquetas[i] + " ";
             divGastoEtiquetas.append(spanEtiquetas)
 
-            //evento borrar etiquetas practica 5
             let etBorradas = new BorrarEtiquetasHandle(gasto);
             etBorradas.gasto = gasto;
             etBorradas.etiquetas = gasto.etiquetas[i];
             spanEtiquetas.addEventListener('click',etBorradas);
         }
+        divGasto.append(gastoEtiqueta);
         
         let salto=document.createElement("br");
         divGasto.append(divGastoEtiquetas, salto);
 
-        //botones + eventos editar y borrar practica 5
         let btedit = document.createElement('button');
         btedit.type = 'button';
         btedit.className = 'gasto-editar';
@@ -82,6 +75,39 @@ function mostrarGastoWeb(idElemento, gasto)
         objborrar.gasto = gasto;
         btborrar.addEventListener('click', objborrar);
         divGasto.append(btborrar);
+
+        let btnGastosBorrarAPI = document.createElement("button");
+        btnGastosBorrarAPI.className = "gasto-borrar-api";
+        btnGastosBorrarAPI.elemento = "gasto-borrar-api";
+        btnGastosBorrarAPI.type = "button";
+        btnGastosBorrarAPI.textContent = "Borrar(API)";
+
+        let handleBorrarApi = new borrarApiHandle();
+        handleBorrarApi.gasto = gasto;
+
+        btnGastosBorrarAPI.addEventListener("click", handleBorrarApi);
+        divGasto.append(btnGastosBorrarAPI);
+
+        let btnEditForm = document.createElement("button");
+        btnEditForm.className = "gasto-editar-formulario";
+        btnEditForm.elemento = "gasto-editar-formulario";
+        btnEditForm.type = "button";
+        btnEditForm.textContent = "Editar (formulario)";
+
+
+        let handleEditForm = new EditarHandleFormulario();
+        handleEditForm.gasto = gasto;
+        btnEditForm.addEventListener('click', handleEditForm);
+        divGasto.append(btnEditForm);
+
+        let btnGastosEnviarAPI = document.createElement("button");
+        btnGastosEnviarAPI.className = "gasto-enviar-api";
+        btnGastosEnviarAPI.elemento = "gasto-enviar-api";
+        btnGastosEnviarAPI.type = "button";
+        btnGastosEnviarAPI.textContent = "Enviar(API)";
+
+        divGasto.append(divGastoEtiquetas);
+        elemento.append(divGasto);
     };
 };
 
