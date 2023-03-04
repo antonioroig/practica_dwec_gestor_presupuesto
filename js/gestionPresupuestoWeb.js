@@ -212,6 +212,26 @@ function nuevoGastoWebFormulario(){
     btnCancelar.addEventListener("click", cancelar);
 }
 
+function guardarGastosWeb(){
+    let guardarGasto = gestionPresupuesto.listarGastos();
+    localStorage.GestorGastosDWEC = JSON.stringify(guardarGasto);
+} 
+
+let guardarListado = document.getElementById("guardar-gastos");
+guardarListado.addEventListener("click", guardarGastosWeb);
+
+function cargarGastosWeb(){
+    if (localStorage.GestorGastosDWEC == null){
+        gestionPresupuesto.cargarGastos([]);
+    }else{
+        gestionPresupuesto.cargarGastos(JSON.parse(localStorage.GestorGastosDWEC));
+    }
+    repintar();
+}
+
+let cargarFormulario = document.getElementById("cargar-gastos");
+cargarFormulario.addEventListener("click", cargarGastosWeb);
+
 function EditarHandle()
 {
     this.handleEvent = function (event)
