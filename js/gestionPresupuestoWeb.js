@@ -157,6 +157,10 @@ function repintar()
    document.getElementById("listado-gastos-completo").innerHTML="";
 
    gestionPresupuesto.listarGastos.array.forEach(element => mostrarGastoWeb("listado-gastos-completo", element));
+
+   mostrarGastosAgrupadosWeb("agrupacion-dia", gestionPresupuesto.obtenerPeriodoAgrupacion("dia"));
+   mostrarGastosAgrupadosWeb("agrupacion-mes", gestionPresupuesto.obtenerPeriodoAgrupacion("mes"));
+   mostrarGastosAgrupadosWeb("agrupacion-anyo", gestionPresupuesto.obtenerPeriodoAgrupacion("anyo"));
 }
 
 function actualizarPresupuestoWeb()
