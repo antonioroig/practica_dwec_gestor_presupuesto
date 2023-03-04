@@ -19,6 +19,7 @@ function mostrarPresupuesto() {
 }
 
 function CrearGasto(Descripcion, valor, Fecha = Date.now(), ...etiquetas) {
+    this.valor=valor;
     this.descripcion = Descripcion;
     
     if (etiquetas===undefined){
@@ -239,6 +240,17 @@ function filtrarGastos({fechaDesde,fechaHasta,valorMinimo,valorMaximo,descripcio
     });
 
     return arrayFiltro;
+}
+
+function transformarListadoEtiquetas (etiqueta)
+{
+    let filtrado = /\s*[,\s.:;]+\s*/;
+
+    let filtroSinEspacio = etiqueta.replace(filtrado, ',');
+
+    let filtroConEspacio = filtroSinEspacio.split(',');
+
+    return filtroConEspacio;
 }
 
 function agruparGastos(periodo = "mes", etiquetas, fechaDesde, fechaHasta = Date.now()){

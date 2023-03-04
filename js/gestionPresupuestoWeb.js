@@ -436,7 +436,17 @@ export{
     repintar,
     actualizarPresupuestoWeb,
     nuevoGastoWeb,
+    nuevoGastoWebFormulario,
+    guardarGastosWeb,
+    cargarGastosWeb,
+    cargarGastosApi,
     EditarHandle,
     BorrarHandle,
-    BorrarEtiquetasHandle
+    BorrarEtiquetasHandle,
+    EnviarFormHandle,
+    EditarHandleFormulario,
+    CancelarHandleBut,
+    EditarHandleFormSubm,
+    cargarGastosApiHandle,
+    borrarApiHandle, 
 }
