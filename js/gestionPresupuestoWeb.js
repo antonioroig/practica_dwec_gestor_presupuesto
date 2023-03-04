@@ -259,7 +259,14 @@ function EditarHandleFormulario(){
 
     let cancelar = formulario.querySelector("button.cancelar")
     cancelar.addEventListener("click", new CancelarGastoHandle(this.btnEditar))
-    this.gastoD.appendChild(plantillaFormulario)
+
+    let editargastoApi = formulario.querySelector("button.gasto-enviar-api")
+    let apiEditar = new editarApi();
+    apiEditar.formulario = formulario;
+    apiEditar.gasto = this.gasto;
+    editargastoApi.addEventListener("click", apiEditar)
+
+    this.gastoD.appendChild(formulario)
     }
 }
 function EditarGastoHandleFormulario(){ 
@@ -386,7 +393,7 @@ function borrarApi(){
         let usuario = document.getElementById("nombre_usuario").value;
         let idGasto = this.gasto.gastoId;
         
-        fetch(`https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario}/${idGasto}`, {method:'DELETE'})
+        await fetch(`https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usuario}/${idGasto}`, {method:'DELETE'})
         cargarGastosApiFuncion();
     }
 }
@@ -405,11 +412,33 @@ function enviarApi(){
             new Date(this.formulario.elements.fecha.value),
             gp.transformarListadoEtiquetas(this.formulario.elements.etiquetas.value)
         )
+
         let json = JSON.stringify(nuevoGasto);
         let usuario = document.getElementById("nombre_usuario").value;
         let userApi = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/` + usuario;
         
-        fetch(userApi, {method: 'POST', body: json, headers: {
+        await fetch(userApi, {method: 'POST', body: json, headers: {
+            'Content-Type': 'application/json'
+        }})
+        cargarGastosApiFuncion();
+    }
+}
+
+function editarApi(){
+    this.handleEvent = async function(event){
+        event.preventDefault();
+        
+        let nuevoGasto = new gp.CrearGasto(
+            this.formulario.elements.descripcion.value,
+            Number(this.formulario.elements.valor.value),
+            new Date(this.formulario.elements.fecha.value),
+            gp.transformarListadoEtiquetas(this.formulario.elements.etiquetas.value)
+        )
+        let json = JSON.stringify(nuevoGasto);
+        let usuario = document.getElementById("nombre_usuario").value;
+        let userApi = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/` + usuario + `/` + this.gasto.gastoId;
+        
+        await fetch(userApi, {method: 'PUT', body: json, headers: {
             'Content-Type': 'application/json'
         }})
         cargarGastosApiFuncion();
