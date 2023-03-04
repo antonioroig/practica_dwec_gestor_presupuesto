@@ -318,6 +318,23 @@ function BorrarEtiquetasHandle()
     };
 };
 
+function EnviarFormHandle(){
+    this.handleEvent = function(event){
+        event.preventDefault();
+        let form = event.currentTarget;
+        let desc = form.elements.descripcion.value;
+        let valor = parseFloat(form.elements.valor.value)
+        let fecha = form.elements.fecha.value;
+        let etiq = form.elements.etiquetas.value;
+
+        let gastoEnviar = new gestionPresupuesto.CrearGasto(desc, valor, fecha, etiq);
+
+        gestionPresupuesto.anyadirGasto(gastoEnviar);
+        repintar();
+        let id = document.getElementById("anyadirgasto-formulario");
+        id.disabled = false;
+    }
+};
 
 export{
     mostrarDatoEnId,
