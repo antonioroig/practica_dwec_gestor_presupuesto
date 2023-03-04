@@ -270,10 +270,10 @@ function EditarHandleFormulario(){
         formulario.addEventListener('submit',botonEnviar);
         botonFormulario.setAttribute('disabled',"");
         //BOTON EDITAR API
-        //let api=new editarGastosApi();
-        //let botonEnviarApi=formulario.querySelector('button.gasto-enviar-api');
-        //api.gasto=gasto;
-        //botonEnviarApi.addEventListener('click', api);
+        let api=new editarGastosApi();
+        let botonEnviarApi=formulario.querySelector('button.gasto-enviar-api');
+        api.gasto=this.gasto;
+        botonEnviarApi.addEventListener('click', api);
     }
 }
 function EnviarHandleFormulario(){
