@@ -249,6 +249,39 @@ function cargarGastosApi(){
 let btncargarGastoApi = document.getElementById("cargar-gastos-api");
 btncargarGastoApi.addEventListener('click',new cargarGastosApiHandle());
 
+let filtrarGastosWeb = function (){
+    this.handleEvent = function(event){
+        event.preventDefault();
+
+        let valorMinimo = this.form.elements["formulario-filtrado-valor-minimo"].value;
+        let valorMaximo = this.form.elements["formulario-filtrado-valor-maximo"].value;
+        let fechaDesde = this.form.elements["formulario-filtrado-fecha-desde"].value;
+        let fechaHasta = this.form.elements["formulario-filtrado-fecha-hasta"].value;
+        let descripcionContiene = this.form.elements["formulario-filtrado-descripcion"].value;
+        let etiquetasTiene = this.form.elements["formulario-filtrado-etiquetas-tiene"].value;
+
+        if (etiquetasTiene)
+        {
+            etiquetasTiene = gestionPresupuesto.transformarListadoEtiquetas(etiquetasTiene);
+        }
+
+        document.getElementById("listado-gastos-completo").innerHTML = "";
+
+        let filtro = gestionPresupuesto.filtrarGastos({valorMinimo, valorMaximo, fechaDesde, fechaHasta, 
+            descripcionContiene, etiquetasTiene});
+
+        filtro.forEach(gasto => 
+        {
+            mostrarGastoWeb ("listado-gastos-completo", gasto);
+        });
+    } 
+};
+let formFiltrado = document.getElementById("formulario-filtrado");
+
+let formFiltradoRes = new filtrarGastosWeb();
+formFiltradoRes.form = formFiltrado;
+formFiltrado.addEventListener('submit', formFiltradoRes);
+
 function EditarHandle()
 {
     this.handleEvent = function (event)
