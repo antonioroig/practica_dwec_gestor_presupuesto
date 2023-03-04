@@ -35,12 +35,12 @@ function mostrarGastoWeb(idElemento, gasto){
     }
     divClase.append(divEtiquetas);
     //Boton editar
-    let botonEditar = document.createElement('button');
-    botonEditar.type = 'button';
-    botonEditar.className = 'gasto-editar';
-    botonEditar.textContent = 'Editar';
-    let editar = new EditarHandle(gasto);
-    editar.gasto = gasto;
+    let botonEditar=document.createElement('button');
+    botonEditar.type='button';
+    botonEditar.className='gasto-editar';
+    botonEditar.textContent='Editar';
+    let editar=new EditarHandle(gasto);
+    editar.gasto=gasto;
     botonEditar.addEventListener('click',editar);
     divClase.append(botonEditar);
     //Boton borrar
@@ -72,6 +72,8 @@ function mostrarGastoWeb(idElemento, gasto){
     divClase.append(botonBorrarAPI);
 }
 function mostrarGastosAgrupadosWeb(idElemento,agrup,periodo){
+    var divP = document.getElementById(idElemento);
+    divP.innerHTML = "";
     let elem = document.getElementById(idElemento);
     let divAgrupacion = document.createElement('div');
     divAgrupacion.className = 'agrupacion';
@@ -82,17 +84,76 @@ function mostrarGastosAgrupadosWeb(idElemento,agrup,periodo){
     {
         let divDato = document.createElement('div');
         divDato.className = 'agrupacion-dato';
-        divAgrupacion.appendChild(divDato);
+        divAgrupacion.append(divDato);
         let spanClave = document.createElement('span');
         spanClave.className = 'agrupacion-dato-clave';
         spanClave.textContent += `${propiedad}`;
-        divDato.appendChild(spanClave);
+        divDato.append(spanClave);
         let spanValor = document.createElement('span');
         spanValor.className = 'agrupacion-dato-valor';
         spanValor.textContent += ` ${propiedad.valueOf()}`;
-        divDato.appendChild(spanValor);
+        divDato.append(spanValor);
     }
-    elem.appendChild(divAgrupacion);
+    elem.append(divAgrupacion);
+    divP.style.width = "33%";
+    divP.style.display = "inline-block";
+
+    // Crear elemento <canvas> necesario para crear la gráfica
+    // https://www.chartjs.org/docs/latest/getting-started/
+    let chart = document.createElement("canvas");
+    // Variable para indicar a la gráfica el período temporal del eje X
+    // En función de la variable "periodo" se creará la variable "unit" (anyo -> year; mes -> month; dia -> day)
+    let unit = "";
+    switch (periodo) {
+    case "anyo":
+        unit = "year";
+        break;
+    case "mes":
+        unit = "month";
+        break;
+    case "dia":
+    default:
+        unit = "day";
+        break;
+    }
+
+    // Creación de la gráfica
+    // La función "Chart" está disponible porque hemos incluido las etiquetas <script> correspondientes en el fichero HTML
+    const myChart = new Chart(chart.getContext("2d"), {
+        // Tipo de gráfica: barras. Puedes cambiar el tipo si quieres hacer pruebas: https://www.chartjs.org/docs/latest/charts/line.html
+        type: 'bar',
+        data: {
+            datasets: [
+                {
+                    // Título de la gráfica
+                    label: `Gastos por ${periodo}`,
+                    // Color de fondo
+                    backgroundColor: "#555555",
+                    // Datos de la gráfica
+                    // "agrup" contiene los datos a representar. Es uno de los parámetros de la función "mostrarGastosAgrupadosWeb".
+                    data: agrup
+                }
+            ],
+        },
+        options: {
+            scales: {
+                x: {
+                    // El eje X es de tipo temporal
+                    type: 'time',
+                    time: {
+                        // Indicamos la unidad correspondiente en función de si utilizamos días, meses o años
+                        unit: unit
+                    }
+                },
+                y: {
+                    // Para que el eje Y empieza en 0
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+    // Añadimos la gráfica a la capa
+    divP.append(chart);
 }
 function repintar(){
     document.getElementById('presupuesto');
@@ -105,6 +166,14 @@ function repintar(){
     for(let listaCompleta of gestionPresupuesto.listarGastos()){
         mostrarGastoWeb('listado-gastos-completo',listaCompleta);
     }
+    let dia = gestionPresupuesto.agruparGastos("dia");
+    mostrarGastosAgrupadosWeb("agrupacion-dia",dia,"día");
+
+    let mes = gestionPresupuesto.agruparGastos("mes");
+    mostrarGastosAgrupadosWeb("agrupacion-mes",mes,"mes");
+
+    let anyo = gestionPresupuesto.agruparGastos("anyo");
+    mostrarGastosAgrupadosWeb("agrupacion-anyo",anyo,"año");
 };
 function actualizarPresupuestoWeb(){
     let presupuesto=parseInt(prompt('Introduce presupuesto: '));
@@ -132,12 +201,13 @@ function EditarHandle(){
         let nValor = parseFloat(prompt('Introduce nuevo valor: '));
         let nFecha = Date.parse(prompt('Introduce nueva fecha: '));
         let nEtiquetas = prompt('Introduce nuevas etiquetas separadas por comas: ').split(',');
-        this.gasto.actualizarDescripcion(nDescripcion);
         this.gasto.actualizarValor(nValor);
+        this.gasto.actualizarDescripcion(nDescripcion);
         this.gasto.actualizarFecha(nFecha);
         this.gasto.anyadirEtiquetas(...nEtiquetas);
         
         repintar();
+    
     }
 }
 function BorrarHandle(){
@@ -195,7 +265,7 @@ function EditarHandleFormulario(){
         let botonCancelar=formulario.querySelector("button.cancelar");
         botonCancelar.addEventListener('click',botoncancelar);
         //BOTON ENVIAR
-        let botonEnviar=new EnviarHandleFormulario();
+        let botonEnviar=new EnviarHandle();
         botonEnviar.gasto=this.gasto;
         formulario.addEventListener('submit',botonEnviar);
         botonFormulario.setAttribute('disabled',"");
@@ -209,7 +279,6 @@ function EditarHandleFormulario(){
 function EnviarHandleFormulario(){
     this.handleEvent=function(event){
         event.preventDefault();
-
         let formulario=event.currentTarget;
         let descripcion=formulario.elements.descripcion.value;
         let valor=parseFloat(formulario.elements.valor.value);
@@ -218,6 +287,7 @@ function EnviarHandleFormulario(){
 
         let nuevoGasto=new gestionPresupuesto.CrearGasto(descripcion,valor,fecha,...etiquetas);
         gestionPresupuesto.anyadirGasto(nuevoGasto);
+
         repintar();
         document.getElementById("anyadirgasto-formulario").removeAttribute("disabled");
     }
