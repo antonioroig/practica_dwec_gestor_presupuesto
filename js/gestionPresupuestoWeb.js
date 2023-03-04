@@ -234,8 +234,9 @@ function NuevoGastoHandle(){
 
 function CancelarGastoHandle(boton){ 
     this.handleEvent = function(event) {
+        const formulario = event.currentTarget.parentElement;
         
-        document.forms[0].remove();
+        formulario.remove();
         boton.removeAttribute("disabled");
     }
 }
